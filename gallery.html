@@ -324,7 +324,7 @@ function draw(){
     ctx.drawImage(img,sx,py,pw,ph);
 
     // Label plate on wall below frame
-    const lw=Math.min(pw*0.8, 180), lx=sx+pw/2-lw/2, ly=py+ph+FB*2+6;
+    const lw=Math.min(pw*0.6, 140), lx=sx+pw/2-lw/2, ly=py+ph+FB*2+6;
     ctx.fillStyle='#f5ecd5';
     ctx.beginPath(); ctx.roundRect(lx,ly,lw,30,3); ctx.fill();
     ctx.strokeStyle='#c8a050'; ctx.lineWidth=1; ctx.stroke();
