@@ -411,11 +411,34 @@ function update(){
     cat.y = catFloorY();
   }
 
-  // Clamp cat to frame bounds when on frame
+  // Clamp cat to frame bounds when on frame; jump to adjacent frame at edges
   if(cat.onFrame && cat.frameIdx >= 0){
     const l = frameLeft(cat.frameIdx), r = frameRight(cat.frameIdx);
-    cat.wx = Math.max(l + CW/2, Math.min(r - CW/2, cat.wx + dx));
-    dx = 0;
+    const nextWX = cat.wx + dx;
+    // Hit right edge → jump to next frame
+    if(dx > 0 && nextWX > r - CW/2 && cat.frameIdx < paintings.length-1){
+      const nextIdx = cat.frameIdx + 1;
+      const target = frameTopY(nextIdx);
+      cat.frameIdx = nextIdx;
+      cat.onFrame = false;
+      cat.jumping = true;
+      cat.jumpVy = -Math.sqrt(2 * 0.8 * Math.max(Math.abs(cat.y - target), 40));
+      cat.wx = r - CW/2;
+      dx = 0;
+    // Hit left edge → jump to prev frame
+    } else if(dx < 0 && nextWX < l + CW/2 && cat.frameIdx > 0){
+      const nextIdx = cat.frameIdx - 1;
+      const target = frameTopY(nextIdx);
+      cat.frameIdx = nextIdx;
+      cat.onFrame = false;
+      cat.jumping = true;
+      cat.jumpVy = -Math.sqrt(2 * 0.8 * Math.max(Math.abs(cat.y - target), 40));
+      cat.wx = l + CW/2;
+      dx = 0;
+    } else {
+      cat.wx = Math.max(l + CW/2, Math.min(r - CW/2, nextWX));
+      dx = 0;
+    }
   }
 
   cat.moving = dx!==0;
