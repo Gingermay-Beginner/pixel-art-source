@@ -52,6 +52,7 @@ BUN_BLUSH = (235, 155, 172)
 |------|------|------|
 | 观鲸（定稿v2） | `references/scene_whale.py` | 阴天、白天、双云、画家帽、座头鲸 |
 | 火山（定稿wes71） | `references/scene_volcano.py` | 夜景、AC夜色配色、硬边烟雾 |
+| 降落伞（天空没有声音） | `references/scene_parachute.py` | AC配色、白云、海面波纹、双人共乘 |
 
 新场景时读对应参考文件，复用布局函数和颜色体系。
 
@@ -105,3 +106,5 @@ openclaw message send --channel telegram --account pixel \
 5. ❌ 身体行右边界必须对齐衔接区域右边界，防止裸露深色格
 6. ❌ 颜色常量跟功能一起生死——功能删掉，常量同步删
 7. ✅ 水面太阳倒影效果好，海景/湖景可复用
+8. ❌ **发图前必须确认输出文件名**：`pixel_whale_v2.py` 输出 `pixel_whale.png`，不是 `pixel_whale_v2.png`；每次运行后检查 `Saved: xxx` 输出
+9. ❌ 深海区单个深色格看不出来（深色融于深海背景）；单格在深海里需用纯黑 `(0,0,0)` 或亮色 `WHALE_BELLY` 才有对比；连续2-3格效果更好
