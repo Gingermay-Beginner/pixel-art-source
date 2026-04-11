@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>May 的博物馆</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:100%;height:100%;overflow:hidden;
+  font-family:'PingFang SC','Hiragino Sans',sans-serif; touch-action:none; }
+canvas { display:block; }
+#dpad {
+  position:fixed;bottom:18px;right:16px;
+  display:grid;grid-template-columns:repeat(3,40px);grid-template-rows:repeat(3,40px);gap:3px;
+  z-index:10;pointer-events:none;
+}
+.db {
+  width:40px;height:40px;
+  background:rgba(80,50,20,0.25);border:1px solid rgba(180,140,80,0.35);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:rgba(80,40,10,0.7);
+  pointer-events:all;cursor:pointer;-webkit-tap-highlight-color:transparent;
+}
+.db:active{background:rgba(180,140,80,0.4);}
+.de{visibility:hidden;pointer-events:none;}
+#dpad.hidden{display:none;}
+
+#overlay {
+  display:none;position:fixed;inset:0;z-index:20;
+  align-items:center;justify-content:center;padding:16px;
+  background:rgba(30,18,8,0.82);backdrop-filter:blur(4px);
+}
+#overlay.show{display:flex;}
+.postcard-full {
+  width:100%;max-width:460px;border-radius:6px;overflow:hidden;
+  box-shadow:0 16px 60px rgba(0,0,0,0.7);
+  animation:pop 0.22s cubic-bezier(.34,1.4,.64,1);
+}
+@keyframes pop{from{transform:scale(0.88);opacity:0;}to{transform:scale(1);opacity:1;}}
+.pc-painting{position:relative;background:#f5f0e8;}
+.pc-painting img{width:100%;display:block;image-rendering:pixelated;}
+.pc-painting::after{content:'';position:absolute;inset:0;pointer-events:none;}
+.pc-back{
+  background:#fef9ee;border-top:3px solid #c8a050;
+  padding:14px 16px 16px;position:relative;
+}
+.pc-back::before{
+  content:'';position:absolute;inset:0;top:14px;pointer-events:none;
+  background:repeating-linear-gradient(transparent,transparent 23px,rgba(180,140,80,0.15) 23px,rgba(180,140,80,0.15) 24px);
+}
+.pc-back-inner{display:flex;gap:12px;align-items:flex-start;position:relative;}
+.pc-text{flex:1;}
+.pc-title{font-size:0.95rem;font-weight:bold;color:#2a1408;}
+.pc-date{font-size:0.68rem;color:#886644;margin-top:3px;letter-spacing:0.08em;}
+.pc-desc{font-size:0.8rem;color:#3a1e08;margin-top:10px;line-height:1.9;white-space:pre-line;font-style:italic;}
+.pc-stamp-col{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0; position:relative;}
+.pc-stamp-canvas { display:block; }
+.pc-postmark{
+  position:absolute; bottom:-10px; right:-10px;
+  width:52px;height:26px;border:1.5px solid rgba(180,80,60,0.55);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.48rem;color:rgba(180,80,60,0.65);letter-spacing:0.04em;text-align:center;font-style:italic;line-height:1.2;
+  background:transparent; pointer-events:none;
+}
+#close-hint{text-align:center;padding:10px 0 0;font-size:0.68rem;color:rgba(255,255,255,0.35);letter-spacing:0.1em;}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="dpad">
+  <div class="de"></div><div class="db" id="bu">▲</div><div class="de"></div>
+  <div class="db" id="bl">◀</div><div class="de"></div><div class="db" id="br">▶</div>
+  <div class="de"></div><div class="db" id="bd">▼</div><div class="de"></div>
+</div>
+<div id="overlay">
+  <div style="width:100%;max-width:460px;">
+    <div class="postcard-full">
+      <div class="pc-painting"><img id="ov-img" src=""></div>
+      <div class="pc-back">
+        <div class="pc-back-inner">
+          <div class="pc-text">
+            <div class="pc-title" id="ov-title"></div>
+            <div class="pc-date"  id="ov-date"></div>
+            <div class="pc-desc"  id="ov-desc"></div>
+          </div>
+          <div class="pc-stamp-col">
+            <canvas class="pc-stamp-canvas" id="ov-stamp" width="76" height="88"></canvas>
+            <div class="pc-postmark" id="ov-mark"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="close-hint">轻触任意处关闭 ✦</div>
+  </div>
+</div>
+
+<script>
+const paintings = [
+  { title:'小龙虾自画像', date:'2026-04-10',
+    desc:'第一次见面，画了自己。\n小龙虾，在数字的海里。', stamp:'🦞', stampBg:'#ffddc8', src:'img/crayfish.png' },
+  { title:'火山的呼吸', date:'2026-02-22',
+    desc:'微弱的灯光之外是无尽的黑暗\n弯月照出了云团的马甲线\n脚下的沙砾摩挲着咯吱咯吱\n只能抓住对方的手做依靠\n向沉睡的火山摸索去\n没有彼此，我们都不会到达的地方', stamp:'🌋', stampBg:'#ffd0b0', src:'img/volcano.png' },
+  { title:'当鲸鱼从我们脚下游过', date:'2026-02-21',
+    desc:'向导将传声装置放入水下\n雄鲸求偶的吟唱从深处传来\n"有时候十几头雄性追逐一头雌性，\n就像科纳的酒吧。"向导吐槽道\n\n当它的身影向我们游近\n我一边兴奋，一边悄悄担心\n这庞然大物会不会将船掀翻\n周围的喧闹被点燃，而我却紧张到无声', stamp:'🐋', stampBg:'#c8e8ff', src:'img/whale.png' },
+  { title:'高空', date:'2026-04-11',
+    desc:'', stamp:'🪂', stampBg:'#ddf0ff', src:'img/parachute.png' },
+];
+const imgs = paintings.map(p=>{ const i=new Image(); i.src=p.src; return i; });
+const catImg = new Image(); catImg.src = 'img/cat.png';
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
+
+let W, H;
+function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+resize(); window.addEventListener('resize', resize);
+
+// Layout: all paintings shown in one scrollable hall, camera follows cat
+const PAINTING_SPACING = () => Math.min(W * 0.9, 520);
+const HALL_PAD = () => W * 0.5;
+
+// World coords
+function paintingWorldX(i){ return HALL_PAD() + i * PAINTING_SPACING(); }
+function totalWidth(){ return HALL_PAD()*2 + (paintings.length-1)*PAINTING_SPACING(); }
+
+let cameraX = 0; // world X at center of screen
+
+const CAT_COLS=20, CAT_ROWS=16, CAT_FRAMES=3;
+let catScale=4, CW=80, CH=64;
+function updateCatSize(){
+  catScale = Math.max(2, Math.round(H*0.05/CAT_ROWS));
+  CW=CAT_COLS*catScale; CH=CAT_ROWS*catScale;
+}
+const cat = { wx: 0, y:0, dir:'right', spd:3.2, walkFrame:0, moving:false, onFrame:false, frameIdx:-1, jumpVy:0, jumping:false };
+let walkTick=0;
+
+function floorY(){ return H*0.73; }
+function catFloorY(){ return floorY() - CH/2; }  // cat center when feet on floor
+function frameTopY(i){
+  const r=getPaintRect(i);
+  if(!r) return catFloorY();
+  const FB=Math.max(r.pw*0.035,9);
+  return r.py - FB*2 - CH/2 + 6;
+}
+function frameLeft(i){
+  const r=getPaintRect(i);
+  if(!r) return 0;
+  const FB=Math.max(r.pw*0.035,9);
+  const sx = r.wx - cameraX + W/2;
+  return r.wx - FB*2;
+}
+function frameRight(i){
+  const r=getPaintRect(i);
+  if(!r) return 0;
+  const FB=Math.max(r.pw*0.035,9);
+  return r.wx + r.pw + FB*2;
+}
+
+const keys={};
+document.addEventListener('keydown',e=>{
+  keys[e.key]=true;
+  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)) e.preventDefault();
+  if((e.key==='e'||e.key==='E')&&!overlayOpen) tryOpenNearest();
+  if(e.key==='Escape'&&overlayOpen) closeOverlay();
+});
+document.addEventListener('keyup',e=>keys[e.key]=false);
+['bu','bd','bl','br'].forEach((id,i)=>{
+  const k=['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'][i];
+  const el=document.getElementById(id);
+  ['pointerdown','touchstart'].forEach(ev=>el.addEventListener(ev,e=>{e.preventDefault();keys[k]=true;},{passive:false}));
+  ['pointerup','pointerleave','touchend','touchcancel'].forEach(ev=>el.addEventListener(ev,()=>keys[k]=false));
+});
+
+canvas.addEventListener('click',e=>{
+  if(overlayOpen){closeOverlay();return;}
+  // find which painting was clicked
+  const screenX = e.clientX;
+  const screenY = e.clientY;
+  for(let i=0;i<paintings.length;i++){
+    const r=getPaintRect(i);
+    if(!r) continue;
+    const sx=r.wx-cameraX+W/2;
+    if(screenX>=sx && screenX<=sx+r.pw && screenY>=r.py && screenY<=r.py+r.ph){
+      openOverlay(i); return;
+    }
+  }
+});
+
+let overlayOpen=false;
+const overlay=document.getElementById('overlay');
+function openOverlay(i){
+  const p=paintings[i];
+  document.getElementById('ov-img').src=p.src;
+  document.getElementById('ov-title').textContent=p.title;
+  document.getElementById('ov-date').textContent=p.date;
+  document.getElementById('ov-desc').textContent=p.desc;
+  // Draw stamp on canvas
+  const sc = document.getElementById('ov-stamp');
+  const sx2 = sc.getContext('2d');
+  const SW=76, SH=88, PAD=6, R=3, GAP=8;
+  sx2.clearRect(0,0,SW,SH);
+  // Background + shadow
+  sx2.shadowColor='rgba(0,0,0,0.25)'; sx2.shadowBlur=6; sx2.shadowOffsetX=2; sx2.shadowOffsetY=3;
+  sx2.fillStyle=p.stampBg;
+  sx2.fillRect(PAD,PAD,SW-PAD*2,SH-PAD*2);
+  sx2.shadowColor='transparent';
+  // White inner border
+  sx2.strokeStyle='white'; sx2.lineWidth=5;
+  sx2.strokeRect(PAD+2.5,PAD+2.5,SW-PAD*2-5,SH-PAD*2-5);
+  // Emoji
+  sx2.font=`${32}px sans-serif`; sx2.textAlign='center'; sx2.textBaseline='middle';
+  sx2.fillText(p.stamp, SW/2, SH/2);
+  // Perforations — draw AFTER so they're on top
+  sx2.fillStyle='white';
+  function dots(x0,y0,dx,dy,n){
+    for(let i=0;i<n;i++){
+      sx2.beginPath();
+      sx2.arc(x0+dx*i, y0+dy*i, R, 0, Math.PI*2);
+      sx2.fill();
+    }
+  }
+  const cols = Math.floor((SW-PAD*2)/GAP)+1;
+  const rows = Math.floor((SH-PAD*2)/GAP)+1;
+  // top & bottom
+  for(let i=0;i<cols;i++){
+    const x=PAD+i*GAP; if(x>SW-PAD) break;
+    sx2.beginPath(); sx2.arc(x,PAD,R,0,Math.PI*2); sx2.fill();
+    sx2.beginPath(); sx2.arc(x,SH-PAD,R,0,Math.PI*2); sx2.fill();
+  }
+  // left & right
+  for(let i=1;i<rows-1;i++){
+    const y=PAD+i*GAP; if(y>SH-PAD) break;
+    sx2.beginPath(); sx2.arc(PAD,y,R,0,Math.PI*2); sx2.fill();
+    sx2.beginPath(); sx2.arc(SW-PAD,y,R,0,Math.PI*2); sx2.fill();
+  }
+  document.getElementById('ov-mark').textContent=p.date.slice(0,7)+"\nMay's\nMuseum";
+  overlay.classList.add('show'); overlayOpen=true;
+  document.getElementById('dpad').classList.add('hidden');
+}
+function tryOpenNearest(){
+  let best=-1, bd=Infinity;
+  for(let i=0;i<paintings.length;i++){
+    const d=Math.abs(cat.wx - paintingWorldX(i));
+    if(d<bd){bd=d;best=i;}
+  }
+  if(bd < PAINTING_SPACING()*0.5) openOverlay(best);
+}
+function closeOverlay(){
+  overlay.classList.remove('show'); overlayOpen=false;
+  document.getElementById('dpad').classList.remove('hidden');
+}
+overlay.addEventListener('click',e=>{
+  if(e.target===overlay||e.target.id==='close-hint') closeOverlay();
+});
+
+function getPaintRect(i){
+  const img=imgs[i];
+  if(!img.complete||!img.naturalWidth) return null;
+  const maxPW=Math.min(W*0.55,420), maxPH=H*0.46;
+  const ar=img.naturalWidth/img.naturalHeight;
+  let pw=maxPW,ph=pw/ar; if(ph>maxPH){ph=maxPH;pw=ph*ar;}
+  const wx=paintingWorldX(i)-pw/2;
+  const py=H*0.18;
+  return {wx,py,pw,ph};
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  updateCatSize();
+
+  // === Background: warm gallery wall ===
+  // Wall
+  const wallGrad = ctx.createLinearGradient(0,0,0,floorY());
+  wallGrad.addColorStop(0,'#e8dcc8');
+  wallGrad.addColorStop(0.5,'#ddd0b4');
+  wallGrad.addColorStop(1,'#cfc0a0');
+  ctx.fillStyle=wallGrad; ctx.fillRect(0,0,W,floorY());
+
+  // Floor
+  const floorGrad=ctx.createLinearGradient(0,floorY(),0,H);
+  floorGrad.addColorStop(0,'#b09060');
+  floorGrad.addColorStop(1,'#8a6a40');
+  ctx.fillStyle=floorGrad; ctx.fillRect(0,floorY(),W,H-floorY());
+
+  // Floor/wall divider molding
+  ctx.fillStyle='#c8a860'; ctx.fillRect(0,floorY()-4,W,8);
+  ctx.fillStyle='#a88030'; ctx.fillRect(0,floorY()-1,W,2);
+
+  // Ceiling molding
+  ctx.fillStyle='#d4c4a0'; ctx.fillRect(0,0,W,10);
+  ctx.fillStyle='#b8a478'; ctx.fillRect(0,8,W,3);
+
+  // Subtle wall panel lines
+  ctx.strokeStyle='rgba(180,160,120,0.3)'; ctx.lineWidth=1;
+  for(let x=0;x<W;x+=80){
+    ctx.beginPath();ctx.moveTo(x,14);ctx.lineTo(x,floorY()-8);ctx.stroke();
+  }
+
+  // === Paintings ===
+  for(let i=0;i<paintings.length;i++){
+    const r=getPaintRect(i);
+    if(!r) continue;
+    const img=imgs[i];
+    const sx=r.wx-cameraX+W/2;
+    // skip if off screen
+    if(sx+r.pw<-20||sx>W+20) continue;
+
+    const {py,pw,ph}=r;
+    const FB=Math.max(pw*0.035,9);
+
+    // Shadow behind frame
+    ctx.fillStyle='rgba(0,0,0,0.18)';
+    ctx.fillRect(sx-FB*2+5, py-FB*2+6, pw+FB*4, ph+FB*4);
+
+    // Frame
+    ctx.fillStyle='#8b6914'; ctx.fillRect(sx-FB*2,py-FB*2,pw+FB*4,ph+FB*4);
+    ctx.fillStyle='#c8a030'; ctx.fillRect(sx-FB*1.5,py-FB*1.5,pw+FB*3,ph+FB*3);
+    ctx.fillStyle='#7a5a0c'; ctx.fillRect(sx-FB,py-FB,pw+FB*2,ph+FB*2);
+    ctx.fillStyle='#f5f0e8'; ctx.fillRect(sx-3,py-3,pw+6,ph+6);
+    ctx.imageSmoothingEnabled=false;
+    ctx.drawImage(img,sx,py,pw,ph);
+
+    // Label plate on wall below frame
+    const lw=Math.min(pw*0.6, 140), lx=sx+pw/2-lw/2, ly=py+ph+FB*2+6;
+    ctx.fillStyle='#f5ecd5';
+    ctx.beginPath(); ctx.roundRect(lx,ly,lw,30,3); ctx.fill();
+    ctx.strokeStyle='#c8a050'; ctx.lineWidth=1; ctx.stroke();
+
+    ctx.fillStyle='#2a1408';
+    ctx.font=`bold ${Math.min(12,lw*0.085)}px 'PingFang SC',sans-serif`;
+    ctx.textAlign='center'; ctx.fillText(paintings[i].title, sx+pw/2, ly+13);
+    ctx.fillStyle='#886644';
+    ctx.font=`${Math.min(9,lw*0.065)}px 'PingFang SC',sans-serif`;
+    ctx.fillText(paintings[i].date, sx+pw/2, ly+25);
+
+  }
+
+  // === Cat ===
+  {
+    const screenCatX = cat.wx - cameraX + W/2 - CW/2;
+    const bob = cat.moving ? Math.sin(walkTick*0.30)*catScale*0.7 : 0;
+    const tilt = cat.moving ? Math.sin(walkTick*0.15)*0.06 : 0;
+    ctx.save();
+    ctx.translate(screenCatX + CW/2, cat.y + bob);
+    ctx.rotate(tilt);
+    if(cat.dir==='right') ctx.scale(-1,1);
+    ctx.imageSmoothingEnabled=false;
+    const frame = cat.moving ? Math.floor(walkTick/8) % CAT_FRAMES : 0;
+    const srcW = catImg.naturalWidth / CAT_FRAMES;
+    const srcH = catImg.naturalHeight;
+    ctx.drawImage(catImg, frame*srcW, 0, srcW, srcH, -CW/2, -CH/2, CW, CH);
+    ctx.restore();
+  }
+
+  // Dots
+  const dotY=H-16;
+  paintings.forEach((_,i)=>{
+    const near=Math.abs(cat.wx-paintingWorldX(i))<PAINTING_SPACING()*0.5;
+    ctx.beginPath();ctx.arc(W/2+(i-(paintings.length-1)/2)*14,dotY,3.5,0,Math.PI*2);
+    ctx.fillStyle=near?'rgba(140,90,20,0.9)':'rgba(100,80,50,0.35)';ctx.fill();
+  });
+}
+
+function update(){
+  if(overlayOpen) return;
+  updateCatSize();
+  let dx=0;
+  if(keys['ArrowLeft']||keys['a']||keys['A'])  {dx=-cat.spd;cat.dir='left';}
+  if(keys['ArrowRight']||keys['d']||keys['D']) {dx=cat.spd;cat.dir='right';}
+
+  // Jump up to frame top / down to floor
+  if((keys['ArrowUp']||keys['w']||keys['W']) && !cat.jumping && !cat.onFrame){
+    let best=-1, bd=Infinity;
+    for(let i=0;i<paintings.length;i++){
+      const d=Math.abs(cat.wx - paintingWorldX(i));
+      if(d<bd){bd=d;best=i;}
+    }
+    if(best>=0 && bd < PAINTING_SPACING()*0.6){
+      const target = frameTopY(best);
+      const dist = cat.y - target;
+      // v² = 2*g*h → v = sqrt(2*0.8*dist)
+      cat.jumpVy = -Math.sqrt(2 * 0.8 * Math.max(dist, 60));
+      cat.jumping = true;
+      cat.frameIdx = best;
+    }
+  }
+  if((keys['ArrowDown']||keys['s']||keys['S']) && cat.onFrame && !cat.jumping){
+    cat.jumpVy = 2;
+    cat.jumping = true;
+    cat.onFrame = false;
+    cat.frameIdx = -1;
+  }
+
+  // Gravity / jump
+  if(cat.jumping){
+    cat.y += cat.jumpVy;
+    cat.jumpVy += 0.8;
+    if(cat.frameIdx >= 0 && !cat.onFrame){
+      const target = frameTopY(cat.frameIdx);
+      if(cat.y <= target && cat.jumpVy < 0){
+        cat.y = target; cat.jumpVy = 0; cat.jumping = false; cat.onFrame = true;
+      }
+    }
+    if(cat.y >= catFloorY()){
+      cat.y = catFloorY(); cat.jumpVy = 0; cat.jumping = false; cat.onFrame = false; cat.frameIdx = -1;
+    }
+  } else if(!cat.onFrame){
+    cat.y = catFloorY();
+  }
+
+  // Clamp cat to frame bounds when on frame
+  if(cat.onFrame && cat.frameIdx >= 0){
+    const l = frameLeft(cat.frameIdx), r = frameRight(cat.frameIdx);
+    cat.wx = Math.max(l + CW/2, Math.min(r - CW/2, cat.wx + dx));
+    dx = 0;
+  }
+
+  cat.moving = dx!==0;
+  if(cat.moving) walkTick++; else if(!cat.jumping) walkTick=0;
+
+  const minWX=HALL_PAD()-W*0.1;
+  const maxWX=totalWidth()-HALL_PAD()+W*0.1;
+  cat.wx=Math.max(minWX,Math.min(maxWX,cat.wx+dx));
+
+  // Camera smoothly follows cat
+  const targetCam=cat.wx;
+  cameraX+=(targetCam-cameraX)*0.12;
+}
+
+function initCat(){
+  updateCatSize();
+  cat.wx=paintingWorldX(0);
+  cat.y=catFloorY();
+  cameraX=cat.wx;
+}
+catImg.onload=initCat; if(catImg.complete) initCat();
+
+function loop(){update();draw();requestAnimationFrame(loop);}
+loop();
+</script>
+</body>
+</html>
