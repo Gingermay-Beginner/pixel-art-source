@@ -142,20 +142,20 @@ function catFloorY(){ return floorY() - CH/2; }  // cat center when feet on floo
 function frameTopY(i){
   const r=getPaintRect(i);
   if(!r) return catFloorY();
-  const FB=Math.max(r.pw*0.035,9);
+  const FB=Math.max(r.pw*0.045,14);
   return r.py - FB*2 - CH/2 + 6;
 }
 function frameLeft(i){
   const r=getPaintRect(i);
   if(!r) return 0;
-  const FB=Math.max(r.pw*0.035,9);
+  const FB=Math.max(r.pw*0.045,14);
   const sx = r.wx - cameraX + W/2;
   return r.wx - FB*2;
 }
 function frameRight(i){
   const r=getPaintRect(i);
   if(!r) return 0;
-  const FB=Math.max(r.pw*0.035,9);
+  const FB=Math.max(r.pw*0.045,14);
   return r.wx + r.pw + FB*2;
 }
 
