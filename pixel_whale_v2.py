@@ -161,7 +161,7 @@ def draw():
     wrow(canvas, 27,  8, 32, WHALE_BELLY)  # 胸鳍左边x=31
     wrow(canvas, 28, 10, 34, WHALE_BELLY)  # 胸鳍左边x=33
     wrow(canvas, 29, 12, 36, WHALE_BELLY)
-    wrow(canvas, 30, 14, 37, WHALE_BELLY)
+    wrow(canvas, 30, 14, 36, WHALE_BELLY)
     # wrow(canvas, 31, 16, 38, WHALE_MID)  # 去掉：深色末行
     # 去掉：原来多余的深色末行
     # 腹部右截（左边界跟鳍右边缘走）
@@ -199,7 +199,9 @@ def draw():
     wrow(canvas, 27, 32, 39, WHALE_CORE)   # 右边缘 x=38
     wrow(canvas, 28, 34, 39, WHALE_CORE)
     wrow(canvas, 29, 36, 39, WHALE_CORE)
+    wrow(canvas, 30, 38, 38, WHALE_CORE)   # fin tip
     wrow(canvas, 30, 38, 39, WHALE_CORE)
+    wrow(canvas, 31, 39, 39, WHALE_CORE)   # fin tip y=31
     # wrow(canvas, 31, 39, 39, WHALE_CORE)  # 去掉
     set_px(canvas, 39, 32, WHALE_MID)
 
