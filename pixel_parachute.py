@@ -102,7 +102,12 @@ for (row, c1, c2) in dome_rows:
         if c == c1 or c == c2:
             col = CHUTE_DARK
         p(row, c, col)
-    # stripe boundary lines removed
+    # stripe boundary lines
+    for i in range(1, N_STRIPES):
+        sc = c1 + round(i * width / N_STRIPES)
+        if c1 < sc < c2:
+            r2, g2, b2 = stripe_cols[i-1]
+            p(row, sc, (max(r2-25,0), max(g2-25,0), max(b2-20,0)))
 
 for c in range(0, 0):  # top rim removed
     p(0, c, (248, 240, 225))
