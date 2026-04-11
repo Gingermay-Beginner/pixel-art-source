@@ -148,7 +148,7 @@ def draw():
     wrow(canvas, 21, 10, 52, WHALE_MID)
     wrow(canvas, 22,  7, 53, WHALE_CORE)
     wrow(canvas, 23,  5, 54, WHALE_CORE)
-    wrow(canvas, 24,  4, 54, WHALE_CORE)
+    wrow(canvas, 24,  4, 53, WHALE_CORE)   # 右下角减一格，更圆润
     wrow(canvas, 25,  5, 51, WHALE_CORE)   # 右截到腹部右边 x=51
     wrow(canvas, 26,  7, 48, WHALE_MID)    # 右截到腹部右边 x=48
     wrow(canvas, 27, 11, 45, WHALE_HAZE)   # 右截到腹部右边 x=45
