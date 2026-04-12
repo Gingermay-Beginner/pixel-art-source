@@ -110,20 +110,18 @@ def draw():
             set_px(canvas, SX - rw - 2, y, REFL_MID)
             set_px(canvas, SX + rw + 2, y, REFL_MID)
 
-    # 云海表面波纹（浅色横纹）
+    # 云海表面波纹（隔行错开2格，跳过右侧云丘区域）
     CLOUD_WAVE = (238, 205, 172)
-    for y in range(HORIZON+1, ROCK_TOP, 2):
-        for x in range(0, W, 4):
+    wave_rows = list(range(HORIZON+1, ROCK_TOP, 2)) + [28, 30]
+    for yi, y in enumerate(sorted(set(wave_rows))):
+        offset = (yi % 2) * 2
+        for x in range(offset, W, 4):
+            if x >= 42:
+                continue
             set_px(canvas, x, y, CLOUD_WAVE)
-            set_px(canvas, x+1, y, CLOUD_WAVE)
+            if x+1 < W: set_px(canvas, x+1, y, CLOUD_WAVE)
 
-    # ── 远处岛屿/山影改为远处云团 ────────────────────────────────────────────
-    CLOUD_FAR = (198, 158, 128)  # 远处云：暖灰
-    for y, x1, x2 in [
-        (20, 44, 58), (21, 42, 60), (22, 41, 62),
-    ]:
-        wrow(canvas, y, x1, x2, CLOUD_FAR)
-    wrow(canvas, 20, 44, 58, blend(CLOUD_FAR, ROCK_RIM, 0.4))
+    # 远处云团去掉
 
     # ── 云峰前景（角色坐在上面）────────────────────────────────────────────────
     # 主云峰：圆顶，中央隆起
@@ -159,19 +157,45 @@ def draw():
     ]:
         wrow(canvas, y, x1, x2, CLOUD_SHADOW)
 
-    # 左侧小云峰（往左移）
-    for y, x1, x2 in [
-        (25, -2, 4), (26, -2, 6), (27, -2, 8), (28, -2, 10),
-    ]:
-        wrow(canvas, y, max(0,x1), x2, ROCK)
-    wrow(canvas, 25, 0, 4, ROCK_RIM)
+    # 左侧小云峰去掉
 
-    # 右侧远云峰
+    # 右侧天文台圆顶（远景，同色系，人头大小）
+    OBS_X, OBS_Y = 55, 17
+    OBS_LIT   = (220, 200, 178)   # 受光：暖灰，贴近远景云色
+    OBS_DARK  = (168, 148, 158)   # 背光：偏冷紫灰
+    OBS_DOME  = (195, 175, 162)
+    # 圆顶（完整圆球，逆光：大部分暗，左边缘一圈亮）
+    for dy in range(-5, 6):
+        for dx in range(-5, 6):
+            if dx*dx*0.8 + dy*dy <= 22:
+                gy = OBS_Y + dy
+                gx = OBS_X + dx
+                if 0 <= gx < W and 0 <= gy < H:
+                    # 下半部分几乎全暗，只有最左一格亮
+                    if dy > 0:
+                        col = OBS_LIT if dx <= -4 else OBS_DARK
+                    else:
+                        if dx <= -3:
+                            col = OBS_LIT
+                        elif dx <= -1:
+                            col = OBS_DOME
+                        else:
+                            col = OBS_DARK
+                    set_px(canvas, gx, gy, col)
+
+    # 右下角小云丘（逆光：大部分暗，左上边缘亮）上移2格
+    CLOUD_DARK = (158, 138, 148)
+    CLOUD_LIT2 = (228, 208, 185)
     for y, x1, x2 in [
-        (25, 54, 60), (26, 52, 62), (27, 50, 63), (28, 48, 63),
+        (22, 48, 58), (23, 46, 60), (24, 44, 63), (25, 42, 63),
     ]:
-        wrow(canvas, y, x1, x2, ROCK)
-    wrow(canvas, 25, 54, 60, ROCK_RIM)
+        for x in range(x1, min(x2+1, W)):
+            if x == x1:  # 只有最左一格亮
+                set_px(canvas, x, y, CLOUD_LIT2)
+            else:
+                set_px(canvas, x, y, CLOUD_DARK)
+    # 顶边亮线
+    wrow(canvas, OBS_Y-5, OBS_X-1, OBS_X+1, OBS_LIT)
 
     # ── 姜饼人（左，GCX=27）坐姿 ──────────────────────────────────────────────
     GCX = 27
@@ -179,16 +203,13 @@ def draw():
     fill(canvas, 18, 23, GCX-3, GCX+3, GB)
     set_px(canvas, GCX-3, 18, blend(SKY_WARM, GB, 0.3))
     set_px(canvas, GCX+3, 18, blend(SKY_WARM, GB, 0.3))
-    # 糖霜点
-    for dx in [-2, 0, 2]:
-        set_px(canvas, GCX+dx, 18, GB_ICING)
     # 眼睛
     set_px(canvas, GCX-2, 20, GBE); set_px(canvas, GCX+2, 20, GBE)
     # 腮红
     set_px(canvas, GCX-3, 21, GB_CHEEK); set_px(canvas, GCX+3, 21, GB_CHEEK)
-    # 嘴（微笑）
+    # 嘴
     set_px(canvas, GCX-1, 22, GBE); set_px(canvas, GCX+1, 22, GBE)
-    set_px(canvas, GCX,   23, GBE)
+    set_px(canvas, GCX,   22, GBE)
     # 帽子
     set_px(canvas, GCX+1, 16, HAT_DARK)
     for dx in range(-1, 4): set_px(canvas, GCX+dx, 17, HAT_RED)
@@ -196,16 +217,18 @@ def draw():
     set_px(canvas, GCX-1, 17, HAT_DARK); set_px(canvas, GCX+3, 17, HAT_DARK)
     set_px(canvas, GCX-1, 18, HAT_DARK); set_px(canvas, GCX+3, 18, HAT_DARK)
     set_px(canvas, GCX,   17, HAT_LITE)
-    # 身体（坐姿，压缩）y=23–26
+    # 身体（坐姿）y=23–26
     fill(canvas, 23, 26, GCX-2, GCX+2, GB)
-    # 腿悬空 y=27–29（在礁石下）
+    # 纽扣
+    set_px(canvas, GCX, 24, GB_ICING)
+    # 腿悬空 y=27–29
     wrow(canvas, 27, GCX-2, GCX-1, GBD)
     wrow(canvas, 28, GCX-2, GCX-1, GBD)
     wrow(canvas, 29, GCX-2, GCX-1, GBD)
     wrow(canvas, 27, GCX+1, GCX+2, GBD)
     wrow(canvas, 28, GCX+1, GCX+2, GBD)
     wrow(canvas, 29, GCX+1, GCX+2, GBD)
-    # 手臂搭在礁石上
+    # 手臂
     set_px(canvas, GCX-3, 25, GB); set_px(canvas, GCX-4, 25, GB)
     set_px(canvas, GCX+3, 25, GB); set_px(canvas, GCX+4, 25, GB)
 
@@ -229,8 +252,9 @@ def draw():
     # 腮红
     set_px(canvas, BCX-3, 20, BUN_BLUSH); set_px(canvas, BCX+3, 20, BUN_BLUSH)
     # 嘴
-    set_px(canvas, BCX-1, 21, BUNE); set_px(canvas, BCX+1, 21, BUNE)
-    set_px(canvas, BCX,   22, BUNE)
+    BUN_SMILE = (242, 235, 220)
+    set_px(canvas, BCX-1, 21, BUN_SMILE); set_px(canvas, BCX+1, 21, BUN_SMILE)
+    set_px(canvas, BCX,   21, BUN_SMILE)
     # 身体 y=22–26
     fill(canvas, 22, 26, BCX-2, BCX+2, BUN)
     # 腿悬空 y=27–29
