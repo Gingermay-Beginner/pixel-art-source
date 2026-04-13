@@ -152,7 +152,7 @@ const HALL_PAD = () => W * 0.5;
 function paintingWorldX(i){ return HALL_PAD() + i * PAINTING_SPACING(); }
 function totalWidth(){ return HALL_PAD()*2 + (paintings.length-1)*PAINTING_SPACING(); }
 
-let cameraX = 0; // world X at center of screen
+let cameraX = -99999; // will be set by initCat
 
 const CAT_COLS=20, CAT_ROWS=16, CAT_FRAMES=3;
 let catScale=4, CW=80, CH=64;
