@@ -21,8 +21,8 @@ OCEAN_DEEP  = (10, 60, 92)
 WHALE_CORE  = (15, 48, 98)
 WHALE_MID   = (28, 72, 128)
 WHALE_HAZE  = (45, 102, 158)
-WHALE_BELLY = (125, 178, 208)
-BELLY_STR   = (100, 152, 188)
+WHALE_BELLY = (108, 185, 195)
+BELLY_STR   = (85, 158, 175)
 
 BOAT_HULL   = (238, 242, 245)
 BOAT_DARK   = (155, 175, 200)
@@ -72,8 +72,8 @@ def draw():
 
     # ── 5格海面色（海龟版 SEA_FAR）──
     SEA_FAR = (85, 162, 185)
-    for y in range(WL-5, WL):
-        t = (y-(WL-5))/5
+    for y in range(WL-3, WL):
+        t = (y-(WL-3))/3
         col = blend(SEA_FAR, blend(SEA_FAR,(42,105,135),0.5), t)
         for x in range(W):
             canvas[y][x] = col
@@ -103,6 +103,13 @@ def draw():
     SURF_LINE = (88, 198, 205)
     wrow(canvas, WL,   0, W-1, SURF_LINE)
     wrow(canvas, WL+1, 0, W-1, (68, 175, 185))
+    # 尾柄处 WL+1 恢复鲸鱼色
+    set_px(canvas, 53, WL+1, WHALE_CORE)
+    set_px(canvas, 54, WL+1, WHALE_CORE)
+    set_px(canvas, 55, WL+1, WHALE_CORE)
+    # WL行与尾柄交汇的3格用亮色
+    for tx in [53, 54, 55]:
+        set_px(canvas, tx, WL, (185, 245, 240))
     for rx in [CX-8, CX-3, CX+3, CX+8, CX+14, CX-14]:
         set_px(canvas, rx,   WL, (138, 228, 222))
         set_px(canvas, rx+1, WL, (118, 212, 208))
@@ -193,9 +200,7 @@ def draw():
 
     # 水线交界高光（尾巴出水处）
     TAIL_WET = (115, 198, 215)
-    for x in range(52, 57):
-        set_px(canvas, x, WL,   TAIL_WET)
-        set_px(canvas, x, WL+1, blend(TAIL_WET, OCEAN_SURF, 0.5))
+    # 水线完整切割尾柄，TAIL_WET去掉，wrow已覆盖
 
     # 尾鳍
     wrow(canvas, 12,  47, 53, WHALE_CORE)
@@ -206,10 +211,31 @@ def draw():
     wrow(canvas, 13, 55, 61, WHALE_CORE)
     wrow(canvas, 14, 55, 60, WHALE_CORE)
     wrow(canvas, 15, 55, 58, WHALE_CORE)
-    # V缺口
-    wrow(canvas, 12,  53, 55, SKY_MID)
-    wrow(canvas, 13, 53, 55, SKY_MID)
-    set_px(canvas, 54, 14, SKY_LOW)
+    # V缺口：用对应y的实际背景色（镂空）
+    SEA_FAR_C = (85, 162, 185)
+    for _y, _xs in [(12,[53,54,55]),(13,[53,54,55]),(14,[54])]:
+        if _y < WL-3:
+            _col = blend(SKY_TOP, SKY_MID, _y/WL)
+        else:
+            _t = (_y-(WL-3))/3
+            _col = blend(SEA_FAR_C, blend(SEA_FAR_C,(42,105,135),0.5), _t)
+        for _x in _xs:
+            set_px(canvas, _x, _y, _col)
+
+    # ── 水线重绘（覆盖鲸鱼尾柄）──
+    SURF_LINE = (88, 198, 205)
+    wrow(canvas, WL,   0, W-1, SURF_LINE)
+    wrow(canvas, WL+1, 0, W-1, (68, 175, 185))
+    # 尾柄处 WL+1 恢复鲸鱼色
+    set_px(canvas, 53, WL+1, WHALE_CORE)
+    set_px(canvas, 54, WL+1, WHALE_CORE)
+    set_px(canvas, 55, WL+1, WHALE_CORE)
+    # WL行与尾柄交汇的3格用亮色
+    for tx in [53, 54, 55]:
+        set_px(canvas, tx, WL, (185, 245, 240))
+    for rx in [CX-8, CX-3, CX+3, CX+8, CX+14, CX-14]:
+        set_px(canvas, rx,   WL, (138, 228, 222))
+        set_px(canvas, rx+1, WL, (118, 212, 208))
 
     # ── 小船 ──
     for x in range(25, 40):
@@ -220,13 +246,18 @@ def draw():
     for y in range(BOAT_RIM, WL):
         set_px(canvas, 24, y, BOAT_HULL); set_px(canvas, 23, y, BOAT_SIDE)
         set_px(canvas, 40, y, BOAT_HULL); set_px(canvas, 41, y, BOAT_SIDE)
-    for x in range(26, 39):
-        t = abs(x-CX)/8.0
-        set_px(canvas, x, WL, blend(BOAT_HULL, BOAT_DARK, t*0.6))
-    set_px(canvas, 24, WL,   BOAT_DARK); set_px(canvas, 25, WL,   BOAT_DARK)
+    # 船底触水行：中心最亮，向两侧渐暗，带水光反射
+    # 船底用海水亮色，中心最亮，两侧稍深
+    for x in range(24, 42):
+        t = abs(x - CX) / 9.0
+        col = blend((165, 240, 235), (115, 215, 218), t**0.4)
+        set_px(canvas, x, WL, col)
     set_px(canvas, 23, WL-1, BOAT_DARK); set_px(canvas, 24, WL-1, BOAT_DARK)
-    set_px(canvas, 39, WL,   BOAT_DARK); set_px(canvas, 40, WL,   BOAT_DARK)
     set_px(canvas, 41, WL-1, BOAT_DARK); set_px(canvas, 40, WL-1, BOAT_DARK)
+    # 船体水下部分（WL+2，15格居中）
+    HULL_SHADOW = (185, 245, 240)
+    for x in range(CX-7, CX+8):
+        set_px(canvas, x, WL+1, HULL_SHADOW)
     for x in range(23, 42):
         set_px(canvas, x, BOAT_RIM, BOAT_LIGHT)
     set_px(canvas, 22, BOAT_RIM, BOAT_HULL)
@@ -276,6 +307,26 @@ def draw():
 
     draw_gb(GB_CX, FIG_Y)
     draw_bun(BUN_CX, FIG_Y)
+
+
+    # ── 海底杂质（避开鲸鱼区域，颜色偏暗）──
+    import random as _rnd
+    _rnd.seed(42)
+    DEBRIS_COLORS = [
+        (55, 145, 158), (65, 155, 168), (45, 132, 148),
+        (72, 162, 175), (50, 138, 155), (60, 150, 162),
+    ]
+    for _ in range(55):
+        _dx = _rnd.randint(1, W-2)
+        _dy = _rnd.randint(WL+4, H-2)
+        # 避开鲸鱼主体区域 x:1~56, y:19~33
+        if 1 <= _dx <= 56 and 19 <= _dy <= 33:
+            continue
+        set_px(canvas, _dx, _dy, _rnd.choice(DEBRIS_COLORS))
+
+    # 左下角补几颗
+    for _dx, _dy in [(3,30),(6,32),(2,32),(5,28),(4,25)]:
+        set_px(canvas, _dx, _dy, (60, 150, 162))
 
     return canvas
 
