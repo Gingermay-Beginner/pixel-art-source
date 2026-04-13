@@ -516,6 +516,11 @@ paintings.forEach((p,i)=>{
     cat.wx = paintingWorldX(i);
     navPanel.classList.remove('open');
   });
+  navPanel.appendChild(el);
+});
+document.getElementById('btn-nav').addEventListener('click',()=>{
+  navPanel.classList.toggle('open');
+});
 </script>
 </body>
 </html>
