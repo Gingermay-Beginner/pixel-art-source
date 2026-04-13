@@ -132,6 +132,7 @@ const paintings = [
     desc:'其实那天没有夕阳\n云层也很厚\n只有你在', stamp:'📷', stampBg:'#f5e8d8', src:'img/beach_sunset.png' },
   { title:'魔鬼鱼夜潜', date:'2026-02-22',
     desc:'夜里的海水很凉\n魔鬼鱼翻着肚皮游过来\n像只找人取暖的大猫', stamp:'🤿', stampBg:'#d0e8f0', src:'img/manta.png' },];
+paintings.reverse();
 const imgs = paintings.map(p=>{ const i=new Image(); i.src=p.src2||p.src; return i; });
 const catImg = new Image(); catImg.src = 'img/cat.png';
 
@@ -268,10 +269,10 @@ function openOverlay(i){
   if(p.src2){
     const btn=document.createElement('div');
     btn.id='ver-toggle';
-    btn.textContent='查看新版 →';
+    btn.innerHTML='🔄'; btn.title='切换版本'; btn.style.fontSize='18px';
     btn.style.cssText='margin-top:8px;cursor:pointer;font-size:11px;background:#f5f0e8;border:1px solid #c8b89a;border-radius:6px;padding:5px 10px;color:#6b5a3e;text-align:center;';
     let cur=0;
-    btn.onclick=(e)=>{e.stopPropagation();cur=(cur+1)%2;document.getElementById('ov-img').src=cur?p.src2:p.src;btn.textContent=cur?'查看原版 ←':'查看新版 →';};
+    btn.onclick=(e)=>{e.stopPropagation();cur=(cur+1)%2;document.getElementById('ov-img').src=cur?p.src2:p.src;};
     document.querySelector('.pc-stamp-col').appendChild(btn);
   }
   overlay.classList.add('show'); overlayOpen=true;
