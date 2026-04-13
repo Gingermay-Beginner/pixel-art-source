@@ -101,7 +101,7 @@ const paintings = [
   { title:'火山的呼吸', date:'2026-02-22',
     desc:'在黑暗中抓紧手\n向注定不会苏醒的火山走去\n没有彼此\n我们都不会到达的地方', stamp:'🌋', stampBg:'#ffd0b0', src:'img/volcano.png' },
   { title:'当鲸鱼从我们脚下游过', date:'2026-02-21',
-    desc:'它的歌声从深处传来\n当庞然大物游近船底\n周围的喧闹被点燃\n而我紧张到无声', stamp:'🐋', stampBg:'#c8e8ff', src:'img/whale.png' },
+    desc:'它的歌声从深处传来\n当庞然大物游近船底\n周围的喧闹被点燃\n而我紧张到无声', stamp:'🐋', stampBg:'#c8e8ff', src:'img/whale.png', src2:'img/whale_v3.png' },
   { title:'天空没有声音', date:'2026-02-23',
     desc:'没有想象的惊险\n像从脚下的世界瞬间抽离\n安静得有点点局促', stamp:'🪂', stampBg:'#ddf0ff', src:'img/parachute.png' },
   { title:'星空下泡澡', date:'2026-02-21',
@@ -242,6 +242,18 @@ function openOverlay(i){
     sx2.beginPath(); sx2.arc(SW-PAD,y,R,0,Math.PI*2); sx2.fill();
   }
   document.getElementById('ov-mark').textContent=p.date.slice(0,7)+"\nMay's\nMuseum";
+  // 版本切换按钮
+  const existBtn=document.getElementById('ver-toggle');
+  if(existBtn) existBtn.remove();
+  if(p.src2){
+    const btn=document.createElement('div');
+    btn.id='ver-toggle';
+    btn.textContent='查看新版 →';
+    btn.style.cssText='margin-top:8px;cursor:pointer;font-size:11px;background:#f5f0e8;border:1px solid #c8b89a;border-radius:6px;padding:5px 10px;color:#6b5a3e;text-align:center;';
+    let cur=0;
+    btn.onclick=(e)=>{e.stopPropagation();cur=(cur+1)%2;document.getElementById('ov-img').src=cur?p.src2:p.src;btn.textContent=cur?'查看原版 ←':'查看新版 →';};
+    document.querySelector('.pc-stamp-col').appendChild(btn);
+  }
   overlay.classList.add('show'); overlayOpen=true;
   document.getElementById('dpad').classList.add('hidden');
 }
