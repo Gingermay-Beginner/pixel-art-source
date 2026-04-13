@@ -214,7 +214,7 @@ let overlayOpen=false;
 const overlay=document.getElementById('overlay');
 function openOverlay(i){
   const p=paintings[i];
-  document.getElementById('ov-img').src=p.src;
+  document.getElementById('ov-img').src=p.src2||p.src;
   document.getElementById('ov-title').textContent=p.title;
   document.getElementById('ov-date').textContent=p.date;
   document.getElementById('ov-desc').textContent=p.desc;
