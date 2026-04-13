@@ -44,8 +44,8 @@ BUN_BLUSH = (235, 155, 172)
 
 # ── 布局 ──
 WL       = 18   # 水线 y（画面 15/36 ≈ 42%，接近黄金分割）
-BOAT_RIM = 14
-FIG_Y    = 24
+BOAT_RIM = 13
+FIG_Y    = 23
 GB_CX    = 28
 BUN_CX   = 36
 CX       = 32
@@ -182,17 +182,9 @@ def draw():
     set_px(canvas, 39, wy(32), WHALE_MID)
 
     # 尾柄（向上穿过水线）
-    for y in range(12, 24):
+    for y in range(11, 23):
         for x in range(53, 56):
             set_px(canvas, x, y, WHALE_CORE)
-    # 去掉尾柄右下角单格
-    set_px(canvas, 55, 23, canvas[23][54] if False else (0,0,0))
-    # 用海水色覆盖
-    import math
-    _t = (23-WL-2)/(H-WL-2)
-    _col = blend((48,172,178), blend((28,122,148),(10,60,92),_t), _t)
-    set_px(canvas, 55, 23, _col)
-
     # 尾柄斜坡接身体
     wrow(canvas, wy(22), 49, 52, WHALE_CORE)
     wrow(canvas, wy(21), 51, 52, WHALE_CORE)
@@ -202,18 +194,26 @@ def draw():
     TAIL_WET = (115, 198, 215)
     # 水线完整切割尾柄，TAIL_WET去掉，wrow已覆盖
 
+    # WL-1 行尾柄：同行海水色略压暗
+    _y17 = WL-1
+    _t17 = (_y17-(WL-3))/3
+    _col17 = blend((85,162,185), blend((85,162,185),(42,105,135),0.5), _t17)
+    _col17 = blend(WHALE_CORE, (85,162,185), 0.25)
+    for x in range(53, 56):
+        set_px(canvas, x, _y17, _col17)
+
     # 尾鳍
-    wrow(canvas, 12,  47, 53, WHALE_CORE)
-    wrow(canvas, 13, 47, 53, WHALE_CORE)
-    wrow(canvas, 14, 48, 53, WHALE_CORE)
-    wrow(canvas, 15, 50, 53, WHALE_CORE)
-    wrow(canvas, 12,  55, 61, WHALE_CORE)
-    wrow(canvas, 13, 55, 61, WHALE_CORE)
-    wrow(canvas, 14, 55, 60, WHALE_CORE)
-    wrow(canvas, 15, 55, 58, WHALE_CORE)
+    wrow(canvas, 11,  47, 53, WHALE_CORE)
+    wrow(canvas, 12, 47, 53, WHALE_CORE)
+    wrow(canvas, 13, 48, 53, WHALE_CORE)
+    wrow(canvas, 14, 50, 53, WHALE_CORE)
+    wrow(canvas, 11,  55, 61, WHALE_CORE)
+    wrow(canvas, 12, 55, 61, WHALE_CORE)
+    wrow(canvas, 13, 55, 60, WHALE_CORE)
+    wrow(canvas, 14, 55, 58, WHALE_CORE)
     # V缺口：用对应y的实际背景色（镂空）
     SEA_FAR_C = (85, 162, 185)
-    for _y, _xs in [(12,[53,54,55]),(13,[53,54,55]),(14,[54])]:
+    for _y, _xs in [(11,[53,54,55]),(12,[53,54,55]),(13,[54])]:
         if _y < WL-3:
             _col = blend(SKY_TOP, SKY_MID, _y/WL)
         else:
@@ -240,10 +240,10 @@ def draw():
     # ── 小船 ──
     for x in range(25, 40):
         set_px(canvas, x, WL, blend(OCEAN_SURF, BOAT_DARK, 0.35))
-    for y in range(BOAT_RIM+1, WL):
+    for y in range(BOAT_RIM+1, WL-1):
         for x in range(25, 40):
             set_px(canvas, x, y, BOAT_INSIDE)
-    for y in range(BOAT_RIM, WL):
+    for y in range(BOAT_RIM, WL-1):
         set_px(canvas, 24, y, BOAT_HULL); set_px(canvas, 23, y, BOAT_SIDE)
         set_px(canvas, 40, y, BOAT_HULL); set_px(canvas, 41, y, BOAT_SIDE)
     # 船底触水行：中心最亮，向两侧渐暗，带水光反射
@@ -252,8 +252,6 @@ def draw():
         t = abs(x - CX) / 9.0
         col = blend((165, 240, 235), (115, 215, 218), t**0.4)
         set_px(canvas, x, WL, col)
-    set_px(canvas, 23, WL-1, BOAT_DARK); set_px(canvas, 24, WL-1, BOAT_DARK)
-    set_px(canvas, 41, WL-1, BOAT_DARK); set_px(canvas, 40, WL-1, BOAT_DARK)
     # 船体水下部分（WL+2，15格居中）
     HULL_SHADOW = (185, 245, 240)
     for x in range(CX-7, CX+8):
@@ -263,7 +261,7 @@ def draw():
     set_px(canvas, 22, BOAT_RIM, BOAT_HULL)
     set_px(canvas, 42, BOAT_RIM, BOAT_HULL)
     for x in range(26, 40, 4):
-        for y in range(BOAT_RIM+1, WL):
+        for y in range(BOAT_RIM+1, WL-1):
             set_px(canvas, x, y, blend(BOAT_INSIDE, BOAT_DARK, 0.2))
 
     # ── 角色 ──
