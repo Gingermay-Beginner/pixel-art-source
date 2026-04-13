@@ -69,6 +69,8 @@ canvas { display:block; }
   padding:10px 8px;display:none;flex-direction:column;gap:6px;
   z-index:20;max-height:70vh;overflow-y:auto;min-width:160px;
 }
+#btn-view{position:fixed;bottom:72px;left:16px;z-index:20;}
+#btn-nav{position:fixed;bottom:16px;left:16px;z-index:20;}
 .cat-btn {
   width:48px;height:48px;
   background:rgba(80,50,20,0.25);border:1px solid rgba(180,140,80,0.35);border-radius:12px;
@@ -80,8 +82,7 @@ canvas { display:block; }
 <body>
 <canvas id="c"></canvas>
 <div class="cat-btn" id="btn-view" title="查看大图">🖼️</div>
-  <div class="cat-btn" id="btn-nav" title="快速导航">🗺️</div>
-</div>
+<div class="cat-btn" id="btn-nav" title="快速导航">🗺️</div>
 <div id="nav-panel"></div>
 <div id="dpad">
   <div class="de"></div><div class="db" id="bu">▲</div><div class="de"></div>
