@@ -63,10 +63,26 @@ canvas { display:block; }
   background:transparent; pointer-events:none;
 }
 #close-hint{text-align:center;padding:10px 0 0;font-size:0.68rem;color:rgba(255,255,255,0.35);letter-spacing:0.1em;}
+#nav-panel {
+  position:fixed;bottom:80px;left:16px;
+  background:rgba(40,25,10,0.92);border:1px solid rgba(180,140,80,0.4);border-radius:12px;
+  padding:10px 8px;display:none;flex-direction:column;gap:6px;
+  z-index:20;max-height:70vh;overflow-y:auto;min-width:160px;
+}
+.cat-btn {
+  width:48px;height:48px;
+  background:rgba(80,50,20,0.25);border:1px solid rgba(180,140,80,0.35);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;cursor:pointer;pointer-events:all;-webkit-tap-highlight-color:transparent;
+}
 </style>
 </head>
 <body>
 <canvas id="c"></canvas>
+<div class="cat-btn" id="btn-view" title="查看大图">🖼️</div>
+  <div class="cat-btn" id="btn-nav" title="快速导航">🗺️</div>
+</div>
+<div id="nav-panel"></div>
 <div id="dpad">
   <div class="de"></div><div class="db" id="bu">▲</div><div class="de"></div>
   <div class="db" id="bl">◀</div><div class="de"></div><div class="db" id="br">▶</div>
@@ -480,6 +496,26 @@ catImg.onload=initCat; if(catImg.complete) initCat();
 
 function loop(){update();draw();requestAnimationFrame(loop);}
 loop();
+// 查看大图按钮
+document.getElementById('btn-view').addEventListener('click',()=>{
+  let best=-1, bd=Infinity;
+  for(let i=0;i<paintings.length;i++){
+    const d=Math.abs(cat.wx - paintingWorldX(i));
+    if(d<bd){bd=d;best=i;}
+  }
+  if(best>=0) openOverlay(best);
+});
+
+// 导航按钮
+const navPanel = document.getElementById('nav-panel');
+paintings.forEach((p,i)=>{
+  const el=document.createElement('div');
+  el.className='nav-item';
+  el.textContent=p.stamp+' '+p.title;
+  el.addEventListener('click',()=>{
+    cat.wx = paintingWorldX(i);
+    navPanel.classList.remove('open');
+  });
 </script>
 </body>
 </html>
