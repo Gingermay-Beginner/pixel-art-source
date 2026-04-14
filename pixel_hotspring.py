@@ -205,47 +205,59 @@ def draw():
 
     # ── Steam (hard pixel blocks) ─────────────────────────────────────────────
     for sy, sx, sw in [
-        (16, 24, 2), (15, 35, 2),
+        (16, 24, 2),
     ]:
         wrow(canvas, sy, sx, sx+sw-1, STEAM)
 
     # ── GB (left, cx=27) ─────────────────────────────────────────────────────
+    # 姜饼人语义区域（GCX=27，WY=24）：
+    # 帽子小啾啾：(GCX+1, 15) = (28,15)
+    # 帽身：x=GCX-1~GCX+3 (26~30), y=16~17
+    # 头：x=GCX-3~GCX+3 (24~30), y=17~22  ← 四角 (24,17)(30,17) 为 SKY_MID
+    # 脖子：x=GCX-2~GCX+2 (25~29), y=23~24
+    # 肩膀水线：x=GCX-3~GCX+3 (24~30), y=24
+    # 肩膀亮蓝：(GCX-4, 24)=(23,24), (GCX+4, 24)=(31,24)
+    # 左臂：(GCX-3~GCX-7, WY~WY-4) = (24~20, 24~20)，斜上
+    # 水下身体：x=GCX-2~GCX+2 (25~29), y=WY+1~WY+3 (25~27)，blend色
     GCX = 27
 
     # Head rows 16-21 (6×7)
-    fill(canvas, 16, 21, GCX-3, GCX+3, GB)
-    set_px(canvas, GCX-3, 16, SKY_MID); set_px(canvas, GCX+3, 16, SKY_MID)
-    set_px(canvas, GCX-3, WY-1, WATER_HI); set_px(canvas, GCX+3, WY-1, WATER_HI)
+    fill(canvas, 17, 22, GCX-3, GCX+3, GB)
+    set_px(canvas, GCX-3, 17, SKY_MID); set_px(canvas, GCX+3, 17, SKY_MID)
+
+
     # Eyes: y=18 and y=20 (竖向两点，火山风格)
-    set_px(canvas, GCX-2, 18, GBE);  set_px(canvas, GCX+2, 18, GBE)
-    set_px(canvas, GCX-2, 20, GBE);  set_px(canvas, GCX+2, 20, GBE)
+    set_px(canvas, GCX-2, 19, GBE);  set_px(canvas, GCX+2, 19, GBE)
+    set_px(canvas, GCX-2, 21, GBE);  set_px(canvas, GCX+2, 21, GBE)
     # Cheeks: y=19
-    set_px(canvas, GCX-3, 19, GB_CHEEK)
-    set_px(canvas, GCX+3, 19, GB_CHEEK)
+    set_px(canvas, GCX-3, 20, GB_CHEEK)
+    set_px(canvas, GCX+3, 20, GB_CHEEK)
     # Mouth: U形（嘴角y=20，中间y=21）
-    set_px(canvas, GCX-2, 20, GBE); set_px(canvas, GCX+2, 20, GBE)
-    set_px(canvas, GCX-1, 21, GBE); set_px(canvas, GCX, 21, GBE); set_px(canvas, GCX+1, 21, GBE)
+    set_px(canvas, GCX-2, 21, GBE); set_px(canvas, GCX+2, 21, GBE)
+    set_px(canvas, GCX-1, 22, GBE); set_px(canvas, GCX, 22, GBE); set_px(canvas, GCX+1, 22, GBE)
     # Neck/body y=22-23 (connects head to water)
-    fill(canvas, 22, 23, GCX-2, GCX+2, GB)
+    fill(canvas, 23, 24, GCX-2, GCX+2, GB)
     # Hat (painter beret, same as volcano)
     HAT_RED  = (198, 42, 32)
     HAT_DARK = (140, 26, 20)
     HAT_LITE = (225, 72, 55)
-    set_px(canvas, GCX+1, 14, HAT_DARK)                              # 小啾啾
-    for dx in range(-1, 4): set_px(canvas, GCX+dx, 15, HAT_RED)     # 帽身第1行
-    for dx in range(-1, 4): set_px(canvas, GCX+dx, 16, HAT_RED)     # 帽身第2行
-    set_px(canvas, GCX-1, 15, HAT_DARK); set_px(canvas, GCX+3, 15, HAT_DARK)
+    set_px(canvas, GCX+1, 15, HAT_DARK)                              # 小啾啾
+    for dx in range(-1, 4): set_px(canvas, GCX+dx, 16, HAT_RED)     # 帽身第1行
+    for dx in range(-1, 4): set_px(canvas, GCX+dx, 17, HAT_RED)     # 帽身第2行
     set_px(canvas, GCX-1, 16, HAT_DARK); set_px(canvas, GCX+3, 16, HAT_DARK)
-    set_px(canvas, GCX,   15, HAT_LITE)
+    set_px(canvas, GCX-1, 17, HAT_DARK); set_px(canvas, GCX+3, 17, HAT_DARK)
+    set_px(canvas, GCX,   16, HAT_LITE)
     # Shoulders at water line row 22
     wrow(canvas, WY, GCX-3, GCX+3, GB)
+    # 水面边缘亮蓝
+    set_px(canvas, GCX-4, WY, (128, 220, 235)); set_px(canvas, GCX+4, WY, (128, 220, 235))
     # Left arm raised (holding glass)
     # Left arm — 2px wide, diagonal out (starts at water surface)
     for ax, ay in [(GCX-3, WY),(GCX-4, WY-1),(GCX-5, WY-2),(GCX-6, WY-3),(GCX-7, WY-4)]:
         set_px(canvas, ax, ay, GB)
         set_px(canvas, ax, ay+1, GB)
     # Submerged (blended)
-    fill(canvas, WY+1, WY+4, GCX-2, GCX+2, blend(GB, WATER_MID, 0.55))
+    fill(canvas, WY+1, WY+3, GCX-2, GCX+2, blend(GB, WATER_MID, 0.55))
 
     # Wine glass (GB left, moved further out)
     set_px(canvas, GCX-8, WY-7, STAR_MED)   # 杯口左壁
@@ -260,45 +272,64 @@ def draw():
     set_px(canvas, GCX-6, WY-5, WINE)
 
     # ── BUN (right, cx=37) ───────────────────────────────────────────────────
+    # 蓝兔子语义区域（BCX=37，WY=24）：
+    # 耳朵：x=BCX-3~BCX-2 (34~35) 左耳, x=BCX~BCX+1 (37~38) 右耳, y=13~17
+    #       耳朵外侧粉色 BUNK：(34,13~17), (38,13~17)
+    #       耳内高光 BUN_LT：(34,14), (38,14) ← 手动覆盖为粉色
+    # 头顶角点：(34,16)(38,16) ← 手动覆盖为粉色
+    # 头：x=BCX-3~BCX+3 (34~40), y=17~22  ← 四角 (34,17)(40,17) 为 SKY_MID
+    # 眼睛高光：(34,18)=BUN_LT
+    # 脸颊：(34,20)(40,20)=BUN_BLUSH
+    # 鼻子：(37,20)=BUNK
+    # 嘴：y=21~22
+    # 脖子：x=BCX-2~BCX+2 (35~39), y=23~24
+    # 肩膀水线：x=BCX-3~BCX+3 (34~40), y=24
+    # 肩膀亮蓝：(BCX-4, 24)=(33,24), (BCX+4, 24)=(41,24)
+    # 右臂出水亮蓝：(42,24)
+    # 右臂：(BCX+3~BCX+7, WY~WY-4) = (40~44, 24~20)，斜上
+    # 水下身体：x=BCX-2~BCX+2 (35~39), y=WY+1~WY+3 (25~27)，blend色
     BCX = 37
 
     # Ears rows 12-16 (2px wide each, inner=BUN blue, outer=BUNK pink)
-    fill(canvas, 12, 16, BCX-3, BCX-2, BUN)
-    fill(canvas, 12, 16, BCX-3, BCX-3, BUNK)  # outer column pink
-    set_px(canvas, BCX-3, 13, BUN_LT)
-    fill(canvas, 12, 16, BCX, BCX+1, BUN)
-    fill(canvas, 12, 16, BCX+1, BCX+1, BUNK)  # outer column pink
-    set_px(canvas, BCX+1, 13, BUN_LT)
+    fill(canvas, 13, 17, BCX-3, BCX-2, BUN)
+    fill(canvas, 13, 17, BCX-3, BCX-3, BUNK)  # outer column pink
+    set_px(canvas, BCX-3, 14, BUN_LT)
+    fill(canvas, 13, 17, BCX, BCX+1, BUN)
+    fill(canvas, 13, 17, BCX+1, BCX+1, BUNK)  # outer column pink
+    set_px(canvas, BCX+1, 14, BUN_LT)
 
     # Head rows 16-21
-    fill(canvas, 16, 21, BCX-3, BCX+3, BUN)
-    set_px(canvas, BCX-3, 16, SKY_MID); set_px(canvas, BCX+3, 16, SKY_MID)
-    set_px(canvas, BCX-3, WY-1, WATER_HI); set_px(canvas, BCX+3, WY-1, WATER_HI)
+    fill(canvas, 17, 22, BCX-3, BCX+3, BUN)
+    set_px(canvas, BCX-3, 17, SKY_MID); set_px(canvas, BCX+3, 17, SKY_MID)
+
+
     # Eyes: y=18 单格 (火山风格)
-    set_px(canvas, BCX-2, 18, BUNE);  set_px(canvas, BCX+2, 18, BUNE)
+    set_px(canvas, BCX-2, 19, BUNE);  set_px(canvas, BCX+2, 19, BUNE)
     # 眼睛左侧高光
-    set_px(canvas, BCX-3, 17, BUN_LT)
+    set_px(canvas, BCX-3, 18, BUN_LT)
     # 耳内高光（已在耳朵里）
-    set_px(canvas, BCX-3, 13, BUN_LT); set_px(canvas, BCX+1, 13, BUN_LT)
+    set_px(canvas, BCX-3, 14, BUN_LT); set_px(canvas, BCX+1, 14, BUN_LT)
     # 脸颊 y=19
-    set_px(canvas, BCX-3, 19, BUN_BLUSH)
-    set_px(canvas, BCX+3, 19, BUN_BLUSH)
+    set_px(canvas, BCX-3, 20, BUN_BLUSH)
+    set_px(canvas, BCX+3, 20, BUN_BLUSH)
     # 鼻子 y=19 中间
-    set_px(canvas, BCX, 19, BUNK)
+    set_px(canvas, BCX, 20, BUNK)
     # 嘴：U形（嘴角y=20，中间y=21），白色
-    set_px(canvas, BCX-2, 20, BUN_SMILE); set_px(canvas, BCX+2, 20, BUN_SMILE)
-    set_px(canvas, BCX-1, 21, BUN_SMILE); set_px(canvas, BCX, 21, BUN_SMILE); set_px(canvas, BCX+1, 21, BUN_SMILE)
+    set_px(canvas, BCX-2, 21, BUN_SMILE); set_px(canvas, BCX+2, 21, BUN_SMILE)
+    set_px(canvas, BCX-1, 22, BUN_SMILE); set_px(canvas, BCX, 22, BUN_SMILE); set_px(canvas, BCX+1, 22, BUN_SMILE)
     # Neck/body y=22-23
-    fill(canvas, 22, 23, BCX-2, BCX+2, BUN)
+    fill(canvas, 23, 24, BCX-2, BCX+2, BUN)
     # Shoulders
     wrow(canvas, WY, BCX-3, BCX+3, BUN)
+    # 水面边缘亮蓝
+    set_px(canvas, BCX-4, WY, (128, 220, 235)); set_px(canvas, BCX+4, WY, (128, 220, 235))
     # Right arm raised (holding cup)
     # Right arm — 2px wide, diagonal out (starts at water surface)
     for ax, ay in [(BCX+3, WY),(BCX+4, WY-1),(BCX+5, WY-2),(BCX+6, WY-3),(BCX+7, WY-4)]:
         set_px(canvas, ax, ay, BUN)
         set_px(canvas, ax, ay+1, BUN)
     # Submerged
-    fill(canvas, WY+1, WY+4, BCX-2, BCX+2, blend(BUN, WATER_MID, 0.55))
+    fill(canvas, WY+1, WY+3, BCX-2, BCX+2, blend(BUN, WATER_MID, 0.55))
 
     # Cup — wine glass style, yellow instead of red
     YLIQ = (222, 185, 88)   # yellow liquid (same as CUP)
@@ -326,5 +357,49 @@ for y in range(H):
             for dx in range(S):
                 px[x*S+dx, y*S+dy] = c
 
+# 胸前水面边缘（直接写px，最后绘制）
+GCX = 27; BCX = 37; WY = 24
+EDGE = (128, 220, 235)
+for cx, cy in [(GCX+dx, WY+1) for dx in range(-4,5)] + [(BCX+dx, WY+1) for dx in range(-4,5)]:
+    for dy in range(S):
+        for dx in range(S):
+            px[cx*S+dx, cy*S+dy] = EDGE
+
+# 覆盖 y=16 x=24,25 多余格子（用天空渐变色）
+_t = 16/35
+_sky16 = tuple(int(a + (_t*(b-a))) for a,b in zip((20,12,58),(72,58,135)))
+for _cx, _cy in [(24,16),(25,16)]:
+    for _dy in range(S):
+        for _dx in range(S):
+            px[_cx*S+_dx, _cy*S+_dy] = _sky16
+
+# 覆盖 BCX 头顶角点残影 y=16 x=34,38
+for _cx, _cy in [(34,16),(38,16)]:
+    for _dy in range(S):
+        for _dx in range(S):
+            px[_cx*S+_dx, _cy*S+_dy] = _sky16
+
+# 覆盖耳朵上亮蓝点 (34,14) (38,14)
+for _cx, _cy in [(34,14),(38,14)]:
+    for _dy in range(S):
+        for _dx in range(S):
+            px[_cx*S+_dx, _cy*S+_dy] = _sky16
+
+# 补回 (34,16)(38,16) 亮蓝色
+for _cx, _cy in [(34,16),(38,16)]:
+    for _dy in range(S):
+        for _dx in range(S):
+            px[_cx*S+_dx, _cy*S+_dy] = (228, 148, 168)
+
+# 补回 (34,14)(38,14) 粉色 BUNK
+for _cx, _cy in [(34,14),(38,14)]:
+    for _dy in range(S):
+        for _dx in range(S):
+            px[_cx*S+_dx, _cy*S+_dy] = (228, 148, 168)
+
+# 兔子胳膊出水处 (42,24) 亮蓝
+for _dy in range(S):
+    for _dx in range(S):
+        px[42*S+_dx, 24*S+_dy] = (128, 220, 235)
 img.save("/home/azureuser/.openclaw/workspace/pixel_hotspring.png")
 print(f"Saved: {W*S}×{H*S}px")
