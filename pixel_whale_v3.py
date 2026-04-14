@@ -194,11 +194,10 @@ def draw():
     TAIL_WET = (115, 198, 215)
     # 水线完整切割尾柄，TAIL_WET去掉，wrow已覆盖
 
-    # WL-1 行尾柄：同行海水色略压暗
+    # WL-1 行尾柄：用同行海水色（完全融入背景）
     _y17 = WL-1
     _t17 = (_y17-(WL-3))/3
-    _col17 = blend((85,162,185), blend((85,162,185),(42,105,135),0.5), _t17)
-    _col17 = blend(WHALE_CORE, (85,162,185), 0.25)
+    _col17 = blend(SEA_FAR, blend(SEA_FAR,(42,105,135),0.5), _t17)
     for x in range(53, 56):
         set_px(canvas, x, _y17, _col17)
 
