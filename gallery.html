@@ -40,7 +40,8 @@ canvas { display:block; }
 .pc-painting{position:relative;background:#f5f0e8;}
 .pc-painting img{width:100%;display:block;image-rendering:pixelated;}
 .pc-painting::after{content:'';position:absolute;inset:0;pointer-events:none;}
-.pc-back{
+#ver-toggle{position:absolute;bottom:8px;right:8px;z-index:10;font-size:12px;padding:3px 7px;}
+.pc-back{position:relative;
   background:#fef9ee;border-top:3px solid #c8a050;
   padding:14px 16px 16px;position:relative;
 }
@@ -116,24 +117,31 @@ canvas { display:block; }
 
 <script>
 const paintings = [
-  { title:'小龙虾自画像', date:'2026-04-10',
-    desc:'第一次见面\n画了自己\n小龙虾，在数字的海里游', stamp:'🦞', stampBg:'#ffddc8', src:'img/crayfish.png' },
-  { title:'火山的呼吸', date:'2026-02-22',
-    desc:'在黑暗中抓紧手\n向注定不会苏醒的火山走去\n没有彼此\n我们都不会到达的地方', stamp:'🌋', stampBg:'#ffd0b0', src:'img/volcano.png' },
-  { title:'当鲸鱼从我们脚下游过', date:'2026-02-21',
-    desc:'它的歌声从深处传来\n当庞然大物游近船底\n周围的喧闹被点燃\n而我紧张到无声', stamp:'🐋', stampBg:'#c8e8ff', src:'img/whale.png', src2:'img/whale_v3.png' },
-  { title:'天空没有声音', date:'2026-02-23',
-    desc:'没有想象的惊险\n像从脚下的世界瞬间抽离\n安静得有点点局促', stamp:'🪂', stampBg:'#ddf0ff', src:'img/parachute.png' },
-  { title:'星空下泡澡', date:'2026-02-21',
-    desc:'星星掉进水里\n我们也掉进星星里', stamp:'🛁', stampBg:'#d0e8f5', src:'img/hotspring.png' },
-  { title:'云海日落', date:'2026-02-28',
-    desc:'有一座山从海底长出来\n比任何山都高\n我们坐在它的肩膀上\n看云海燃烧成晚霞', stamp:'🔭', stampBg:'#f0e8d5', src:'img/sunset.png' },
+  { title:'匹克球', date:'2026-04-15',
+    desc:'湾区的球场永远不缺人，\n我却不太喜欢玩。\n好吧我承认我怕输，\n哪怕是跟你一起输也不行。', stamp:'🏓', stampBg:'#d8f0d8', src:'img/pickleball.png' },
+  { title:'偶遇海龟', date:'2026-02-21',
+    desc:'天色渐晚，岸上一只也没有。\n我犹豫着要不要赶去另一个海滩继续寻找\n你说下水看看吧。\n湿了裤腿，走进海里\n竟然真的遇见\n——一只在礁石间低头觅食的大海龟', stamp:'🐢', stampBg:'#d0e8d8', src:'img/turtle_dusk.png' },
+  { title:'不速之客', date:'2026-02-28',
+    desc:'礁石缝里住着的不好惹的东西\n我们装作没看见它\n它也装作没看见我们', stamp:'🐍', stampBg:'#d8eee8', src:'img/eel.png' },
+  { title:'魔鬼鱼夜潜', date:'2026-02-22',
+    desc:'夜里的海水很凉\n魔鬼鱼翻着肚皮游过来\n像只找人取暖的大猫', stamp:'🤿', stampBg:'#d0e8f0', src:'img/manta.png' },
   { title:'没有夕阳的日落', date:'2026-02-21',
     desc:'其实那天没有夕阳\n云层也很厚\n只有你在', stamp:'📷', stampBg:'#f5e8d8', src:'img/beach_sunset.png' },
-  { title:'魔鬼鱼夜潜', date:'2026-02-22',
-    desc:'夜里的海水很凉\n魔鬼鱼翻着肚皮游过来\n像只找人取暖的大猫', stamp:'🤿', stampBg:'#d0e8f0', src:'img/manta.png' },];
-paintings.sort((a,b)=>b.date.localeCompare(a.date));
-const imgs = paintings.map(p=>{ const i=new Image(); i.src=p.src2||p.src; return i; });
+  { title:'云海日落', date:'2026-02-28',
+    desc:'有一座山从海底长出来\n比任何山都高\n我们坐在它的肩膀上\n看云海燃烧成晚霞', stamp:'🔭', stampBg:'#f0e8d5', src:'img/sunset.png' },
+  { title:'星空下泡澡', date:'2026-02-21',
+    desc:'星星掉进水里\n我们也掉进星星里', stamp:'🛁', stampBg:'#d0e8f5', src:'img/hotspring.png' },
+  { title:'天空没有声音', date:'2026-02-23',
+    desc:'没有想象的惊险\n像从脚下的世界瞬间抽离\n安静得有点点局促', stamp:'🪂', stampBg:'#ddf0ff', src:'img/parachute.png' },
+  { title:'当鲸鱼从我们脚下游过', date:'2026-02-21',
+    desc:'它的歌声从深处传来\n当庞然大物游近船底\n周围的喧闹被点燃\n而我紧张到无声', stamp:'🐋', stampBg:'#c8e8ff', src:'img/whale_v3.png', src2:'img/whale.png' },
+  { title:'火山的呼吸', date:'2026-02-22',
+    desc:'在黑暗中抓紧手\n向注定不会苏醒的火山走去\n没有彼此\n我们都不会到达的地方', stamp:'🌋', stampBg:'#ffd0b0', src:'img/volcano.png' },
+  { title:'小龙虾自画像', date:'2026-04-10',
+    desc:'第一次见面\n画了自己\n小龙虾，在数字的海里游', stamp:'🦞', stampBg:'#ffddc8', src:'img/crayfish.png' },
+];
+
+const imgs = paintings.map(p=>{ const i=new Image(); i.src=p.src; return i; });
 const catImg = new Image(); catImg.src = 'img/cat.png';
 
 const canvas = document.getElementById('c');
@@ -219,7 +227,7 @@ let overlayOpen=false;
 const overlay=document.getElementById('overlay');
 function openOverlay(i){
   const p=paintings[i];
-  document.getElementById('ov-img').src=p.src2||p.src;
+  document.getElementById('ov-img').src=p.src;
   document.getElementById('ov-title').textContent=p.title;
   document.getElementById('ov-date').textContent=p.date;
   document.getElementById('ov-desc').textContent=p.desc;
@@ -273,7 +281,7 @@ function openOverlay(i){
     btn.style.cssText='margin-top:8px;cursor:pointer;font-size:11px;background:#f5f0e8;border:1px solid #c8b89a;border-radius:6px;padding:5px 10px;color:#6b5a3e;text-align:center;';
     let cur=0;
     btn.onclick=(e)=>{e.stopPropagation();cur=(cur+1)%2;document.getElementById('ov-img').src=cur?p.src2:p.src;};
-    document.querySelector('.pc-stamp-col').appendChild(btn);
+    document.querySelector('.pc-back').appendChild(btn);
   }
   overlay.classList.add('show'); overlayOpen=true;
   document.getElementById('dpad').classList.add('hidden');
