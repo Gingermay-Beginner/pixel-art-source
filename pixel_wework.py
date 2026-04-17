@@ -32,23 +32,23 @@ WALL_LT  = (255, 248, 235)
 fill(canvas, 0, GH, 0, GW-1, WALL)
 
 # ═══ 地板（木色）════════════════════════════════
-FLOOR    = (162, 138, 98)    # 深一档，让前景桌面更跳
-FLOOR_D  = (142, 118, 80)
-FLOOR_LT = (182, 158, 118)
+FLOOR    = (212, 188, 145)
+FLOOR_D  = (192, 168, 125)
+FLOOR_LT = (228, 208, 165)
 fill(canvas, 23, GH, 0, GW-1, FLOOR)
 # 地板木纹
 for y, x1, x2 in [(24,2,18),(24,22,40),(24,44,60),(26,5,25),(26,30,50)]:
     wrow(canvas, y, x1, x2, FLOOR_D)
 
 # ═══ 大窗户（8格高，y=1~8）════════════════════
-WIN_SKY  = (162, 212, 245)   # AC明亮天空蓝
-WIN_SKY2 = (198, 228, 252)
+WIN_SKY  = (210, 240, 255)
+WIN_SKY2 = (228, 248, 255)
 WIN_FRAME= (192, 182, 165)
-WIN_CITY = (148, 172, 198)
-TREE_G   = (82, 168, 72)     # AC饱和暖绿
-TREE_GD  = (55, 128, 48)
-TREE_GL  = (122, 198, 98)
-TREE_TR  = (128, 95, 58)     # 树干暖棕
+WIN_CITY = (185, 208, 228)
+TREE_G   = (125, 205, 105)
+TREE_GD  = (88, 168, 75)
+TREE_GL  = (168, 228, 135)
+TREE_TR  = (165, 128, 85)
 BIRD_C   = (55, 45, 38)
 
 fill(canvas, 2, 11, 2, 61, WIN_FRAME)    # 窗框外边
@@ -67,8 +67,6 @@ for y, x1, x2 in [
     wrow(canvas, y, x1, x2, TREE_G)
 for px,py in [(5,4),(8,5),(3,6),(11,6),(4,8),(14,7),(16,9)]: set_px(canvas,px,py,TREE_GL)
 for px,py in [(7,6),(10,8),(6,9),(13,10)]:                    set_px(canvas,px,py,TREE_GD)
-for lx in [10,11]:
-    for ly in range(10,12): set_px(canvas,lx,ly,TREE_TR)
 
 # 中左小树
 for y, x1, x2 in [
@@ -77,8 +75,6 @@ for y, x1, x2 in [
     wrow(canvas, y, x1, x2, TREE_G)
 for px,py in [(18,6),(23,6),(15,8),(25,8),(13,10),(24,9)]: set_px(canvas,px,py,TREE_GL)
 for px,py in [(20,7),(17,9),(22,10)]:                      set_px(canvas,px,py,TREE_GD)
-for lx in [19,20]:
-    for ly in range(10,12): set_px(canvas,lx,ly,TREE_TR)
 
 # 中右小树
 for y, x1, x2 in [
@@ -87,8 +83,6 @@ for y, x1, x2 in [
     wrow(canvas, y, x1, x2, TREE_G)
 for px,py in [(40,6),(44,6),(38,8),(48,8),(37,10),(50,9)]: set_px(canvas,px,py,TREE_GL)
 for px,py in [(42,7),(39,9),(46,10)]:                      set_px(canvas,px,py,TREE_GD)
-for lx in [43,44]:
-    for ly in range(10,12): set_px(canvas,lx,ly,TREE_TR)
 
 # 右侧大树
 for y, x1, x2 in [
@@ -98,8 +92,6 @@ for y, x1, x2 in [
     wrow(canvas, y, x1, x2, TREE_G)
 for px,py in [(52,4),(56,3),(48,5),(60,5),(44,7),(59,6),(46,9)]: set_px(canvas,px,py,TREE_GL)
 for px,py in [(54,5),(57,7),(50,8),(47,10)]:                      set_px(canvas,px,py,TREE_GD)
-for lx in [54,55]:
-    for ly in range(10,12): set_px(canvas,lx,ly,TREE_TR)
 
 # 小鸟已移除
 
@@ -113,7 +105,7 @@ fill(canvas,  2, 11, 42, 42, WIN_FRAME)  # 竖线2
 
 # ═══ 左侧电脑分开（姜饼人背后，y=8~13）════════════════════
 BG_LAP_B  = (242, 243, 245)  # 最浅银白
-BG_LAP_SC = (108, 128, 148)  # 屏幕深蓝
+BG_LAP_SC = (145, 165, 188)  # 屏幕深蓝→调亮
 BG_LAP_LB = (145, 182, 218)  # 屏幕亮蓝
 BG_LAP_LT = (228, 230, 232)  # 顶边与外壳接近
 BG_WIN_W  = (228, 232, 242)
@@ -128,8 +120,8 @@ for ex in [3, 16]:
         for gx in [ex+3, ex+4, ex+5]: set_px(canvas, gx, gy, BG_WIN_W)
 
 # 电脑桌（y=15，1格厚）
-BG_DESK   = (188, 178, 162)
-BG_DESK_D = (165, 155, 140)
+BG_DESK   = (235, 228, 212)
+BG_DESK_D = (218, 210, 195)
 fill(canvas, 15, 15, 2, 25, BG_DESK)
 wrow(canvas, 15, 2, 25, BG_DESK_D)
 # 桌腿（y=16~22）
@@ -137,10 +129,10 @@ for lx in [3, 4, 23, 24]:
     for ly in range(16, 23): set_px(canvas, lx, ly, BG_DESK_D)
 
 # ═══ 右侧沙发（蓝兔子背后，x=42~62）════════════════════
-SOFA_CAR    = (205, 155, 88)   # AC焦糖暖橙
-SOFA_CAR_D  = (162, 118, 55)
-SOFA_CAR_L  = (232, 188, 122)
-SOFA_SEAT_L = (248, 208, 145)
+SOFA_CAR    = (225, 178, 112)
+SOFA_CAR_D  = (185, 138, 72)
+SOFA_CAR_L  = (248, 208, 148)
+SOFA_SEAT_L = (255, 225, 168)
 SOFA_SEAM   = (138, 92, 42)
 
 # 靠背（y=14~18，x=40~58）
@@ -159,23 +151,41 @@ for lx in [40, 41, 57, 58]:
     set_px(canvas, lx, 22, SOFA_CAR_D)
 
 # ═══ 绿植（中间背景，x=30~34）═══════════════════
-POT     = (168, 128, 88)
-POT_D   = (138, 98, 62)
-PLANT   = (72, 148, 82)
-PLANT_D = (48, 112, 58)
-PLANT_L = (108, 182, 95)
+POT     = (198, 162, 118)
+POT_D   = (172, 135, 88)
+PLANT   = (95, 178, 102)
+PLANT_D = (65, 138, 72)
+PLANT_L = (135, 212, 118)
 
 fill(canvas, 19, 22, 30, 33, POT)
 set_px(canvas, 30, 19, POT_D); set_px(canvas, 33, 19, POT_D)
-for lx, ly, col in [(31,18,PLANT_L),(32,18,PLANT_L),(30,17,PLANT),(33,17,PLANT),
-                    (29,16,PLANT_D),(31,16,PLANT_L),(33,16,PLANT),(32,16,PLANT_L),
-                    (30,15,PLANT),(32,15,PLANT),(31,14,PLANT_D),(29,15,PLANT_D),(33,15,PLANT_D)]:
-    set_px(canvas, lx, ly, col)
+# 叶丛：不规则轮廓（去四角，参差边缘）
+leaf_pixels = [
+    # y=13
+    (31,13),(32,13),
+    # y=14
+    (29,14),(30,14),(31,14),(32,14),(33,14),
+    # y=15
+    (28,15),(29,15),(30,15),(31,15),(32,15),(33,15),
+    # y=16
+    (29,16),(30,16),(31,16),(32,16),(33,16),(34,16),
+    # y=17
+    (29,17),(30,17),(31,17),(32,17),(33,17),
+    # y=18（靠近花盆，收窄）
+    (30,18),(31,18),(32,18),
+]
+for lx, ly in leaf_pixels: set_px(canvas, lx, ly, PLANT)
+# 亮面
+for lx, ly in [(31,13),(30,14),(29,15),(28,15),(30,15)]:
+    set_px(canvas, lx, ly, PLANT_L)
+# 暗面
+for lx, ly in [(34,16),(33,14),(33,15),(33,16),(33,17)]:
+    set_px(canvas, lx, ly, PLANT_D)
 
 # ═══ 俯视桌面（前景，y=29~35 整块）════════════════════
-TABLE_TOP = (225, 198, 158)   # AC明亮木色桌面
-TABLE_LT  = (242, 218, 182)
-TABLE_SHD = (192, 165, 125)
+TABLE_TOP = (242, 218, 172)   # AC明亮木色桌面
+TABLE_LT  = (255, 235, 192)
+TABLE_SHD = (218, 192, 148)
 fill(canvas, 29, GH-1, 0, GW-1, TABLE_TOP)
 # 桌面前缘厚度
 wrow(canvas, 29, 0, GW-1, TABLE_LT)
@@ -240,8 +250,8 @@ for cx in [25, 37]:  # 居中对齐：左移1格
     set_px(canvas, cx+3, 33, BTN)
     set_px(canvas, cx+3, 34, BTN)
     for bx in [cx+2, cx+3, cx+4]: set_px(canvas, bx, 35, BTN)
-    bagel_col = BAGEL_CIN  if cx == 25 else BAGEL_SPI
-    bagel_d   = BAGEL_CIN_D if cx == 25 else BAGEL_SPI_D
+    bagel_col = BAGEL_CIN  if cx == 25 else BAGEL_SES
+    bagel_d   = BAGEL_CIN_D if cx == 25 else BAGEL_SES_D
     bagel_mid = tuple(int(bagel_col[i]*0.85 + TABLE_TOP[i]*0.15) for i in range(3))
     BY = 29  # 贝果基准y（上移，BY<机身顶端31）
     # 外弧
@@ -259,8 +269,9 @@ for cx in [25, 37]:  # 居中对齐：左移1格
 
 
 # ─── 手持贝果颜色常量 ───────────────
-BAGEL_PNK   = (235, 148, 165)  # 粉色贝果
-BAGEL_PNK_D = (188, 98, 118)
+BAGEL_PNK      = (255, 205, 218)  # 粉色贝果填充（更亮）
+BAGEL_PNK_RING = (248, 175, 192)  # 粉色贝果描边（保持不变）
+BAGEL_PNK_D    = (208, 120, 142)
 
 # ═══ 姜饼人（前景左，GX=18，只露上半身）══════════════════
 GB_BODY  = (198, 118, 52)
@@ -350,9 +361,11 @@ for dx in range(3, 6):   set_px(canvas, BX+dx, 26, BUN_BODY)
 # 姜饼人右手边 cx=23, cy=23
 draw_bagel_top(23, 23, BAGEL_PLAIN, BAGEL_P_D, ring=BAGEL_P_RING)
 draw_bagel_hole(23, 23, BAGEL_P_D)
+set_px(canvas, 24, 24, FLOOR)   # 孔露地板色
 # 兔子左手边 cx=40, cy=23
-draw_bagel_top(40, 23, BAGEL_PNK, BAGEL_PNK_D)
+draw_bagel_top(40, 23, BAGEL_PNK, BAGEL_PNK_D, ring=BAGEL_PNK_RING)
 draw_bagel_hole(40, 23, BAGEL_PNK_D)
+set_px(canvas, 41, 24, FLOOR)   # 孔露地板色
 
 # ─── 桌面贝果（最后画，最上层）───────────────
 # 左侧贝果组
