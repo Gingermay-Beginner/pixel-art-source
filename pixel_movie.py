@@ -352,6 +352,30 @@ set_px(canvas, RX-6,  RY+10, GLASS); set_px(canvas, RX+6,  RY+10, GLASS)
 set_px(canvas, RX-5,  RY+10, GLASS); set_px(canvas, RX+5,  RY+10, GLASS)
 set_px(canvas, RX-4,  RY+11, GLASS); set_px(canvas, RX+4,  RY+11, GLASS)
 # highlight removed
+set_px(canvas, 28, 12, GLASS)  # test point
+set_px(canvas, 23, 17, GLASS)  # point
+RED_M = (255, 50, 50)
+set_px(canvas, 21, 9,  RED_M)  # left side top
+set_px(canvas, 21, 15, RED_M)  # left side bottom
+set_px(canvas, 29, 3,  RED_M)  # top edge left
+set_px(canvas, 35, 3,  RED_M)  # top edge right
+set_px(canvas, 43, 9,  RED_M)  # right side top
+# line from (21,8) to (28,12)
+def draw_line_1px(x0, y0, x1, y1, col):
+    dx = abs(x1-x0); dy = abs(y1-y0)
+    sx = 1 if x1>x0 else -1; sy = 1 if y1>y0 else -1
+    err = dx - dy
+    while True:
+        set_px(canvas, x0, y0, col)
+        if x0==x1 and y0==y1: break
+        e2 = 2*err
+        if e2 > -dy: err -= dy; x0 += sx
+        if e2 < dx:  err += dx; y0 += sy
+draw_line_1px(21, 8, 28, 12, GLASS)
+draw_line_1px(29, 3, 28, 12, GLASS)
+draw_line_1px(43, 9, 28, 12, GLASS)
+draw_line_1px(36, 20, 28, 12, GLASS)
+draw_line_1px(23, 17, 28, 12, GLASS)
 # clear (38,14)(38,15) — overwrite leg pixels
 set_px(canvas, 38, 14, SPACE_D)
 set_px(canvas, 38, 15, SPACE_D)
