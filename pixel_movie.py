@@ -171,24 +171,48 @@ for y in range(0, 19):
     set_px(canvas, 3, y, SCR_GLOW)
     set_px(canvas, 60, y, SCR_GLOW)
 
-# Rocky (clean circle, center screen)
+# Rocky (side view, spider-like: stone body + 4 downward umbrella legs)
 RX, RY = 32, 9
-# outer ring
-for dx,dy in [(-3,0),(3,0),(0,-3),(0,3),(-2,-2),(2,-2),(-2,2),(2,2),(-3,-1),(3,-1),(-3,1),(3,1),(-1,-3),(1,-3),(-1,3),(1,3)]:
-    set_px(canvas, RX+dx, RY+dy, (118,78,198))
-# main body
+ROCKY    = (148, 118, 78)
+ROCKY_D  = (108,  85, 52)
+ROCKY_LT = (188, 158, 108)
+# Central stone body (taller oval)
+for dx in range(-3, 4):
+    for dy in range(-3, 4):
+        if dx**2*0.35 + dy**2 <= 6.5:
+            set_px(canvas, RX+dx, RY+dy, ROCKY)
+# Body highlight
+for dx,dy in [(0,-2),(1,-2),(-1,-2),(0,-1),(1,-1)]:
+    set_px(canvas, RX+dx, RY+dy, ROCKY_LT)
+# Body shadow bottom
 for dx in range(-2,3):
-    for dy in range(-2,3):
-        if dx**2+dy**2 <= 6:
-            set_px(canvas, RX+dx, RY+dy, (178,138,255))
-# bright core
-for dx,dy in [(0,0),(1,0),(-1,0),(0,1),(0,-1)]:
-    set_px(canvas, RX+dx, RY+dy, (218,195,255))
-# cross glow
-for i in range(-5,6):
-    if abs(i) > 2:
-        set_px(canvas, RX+i, RY, (148,108,228))
-        set_px(canvas, RX, RY+i, (148,108,228))
+    set_px(canvas, RX+dx, RY+3, ROCKY_D)
+
+def draw_leg(canvas, x0, y0, x1, y1, col):
+    """Bresenham line, no gaps"""
+    dx = abs(x1-x0); dy = abs(y1-y0)
+    sx = 1 if x1>x0 else -1; sy = 1 if y1>y0 else -1
+    err = dx - dy
+    while True:
+        set_px(canvas, x0, y0, col)
+        if x0==x1 and y0==y1: break
+        e2 = 2*err
+        if e2 > -dy: err -= dy; x0 += sx
+        if e2 < dx:  err += dx; y0 += sy
+
+# 4 legs all going downward, umbrella spread
+# left outer: steep left-down
+draw_leg(canvas, RX-3, RY+3, RX-11, RY+12, ROCKY)
+set_px(canvas, RX-12, RY+13, ROCKY_D)
+# left inner: gentle left-down
+draw_leg(canvas, RX-2, RY+3, RX-6, RY+12, ROCKY)
+set_px(canvas, RX-7, RY+13, ROCKY_D)
+# right inner: gentle right-down
+draw_leg(canvas, RX+2, RY+3, RX+6, RY+12, ROCKY)
+set_px(canvas, RX+7, RY+13, ROCKY_D)
+# right outer: steep right-down
+draw_leg(canvas, RX+3, RY+3, RX+11, RY+12, ROCKY)
+set_px(canvas, RX+12, RY+13, ROCKY_D)
 
 # Ryland Grace (clearer silhouette, left)
 # head
