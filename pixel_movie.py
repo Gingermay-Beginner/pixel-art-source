@@ -74,8 +74,8 @@ def draw_gb_topdown(cx, cy):
             if dx**2 + dy**2 <= 5:
                 set_px(canvas, cx+dx, cy+dy+3, GB_LT if dx==0 and dy==0 else GB)
     # Eyes (looking toward screen = upward)
-    set_px(canvas, cx-1, cy+4, (40,25,10))
-    set_px(canvas, cx+1, cy+4, (40,25,10))
+    set_px(canvas, cx-1, cy+3, (40,25,10))
+    set_px(canvas, cx+1, cy+3, (40,25,10))
     # Smile
     set_px(canvas, cx-1, cy+5, GB)
     set_px(canvas, cx,   cy+6, GBD)
@@ -118,8 +118,8 @@ def draw_bun_topdown(cx, cy):
             if dx**2 + dy**2 <= 5:
                 set_px(canvas, cx+dx, cy+dy+3, BUN_LT if dx==0 and dy==0 else BUN)
     # Eyes
-    set_px(canvas, cx-1, cy+4, (25,45,88))
-    set_px(canvas, cx+1, cy+4, (25,45,88))
+    set_px(canvas, cx-1, cy+3, (25,45,88))
+    set_px(canvas, cx+1, cy+3, (25,45,88))
     # Nose
     set_px(canvas, cx, cy+5, (228,148,165))
     # Smile
@@ -158,12 +158,17 @@ for dy in range(1, 18):
             col = blend(NEBULA, SPACE_D, t**0.7)
             set_px(canvas, dx, dy, blend(canvas[dy][dx], col, 0.4))
 
-# Stars (fewer, cleaner)
+# Stars (fewer, cleaner) — avoid glass dome area (x=21~43, y=3~16)
 random.seed(77)
-for _ in range(40):
+star_count = 0
+attempts = 0
+while star_count < 40 and attempts < 500:
     sx = random.randint(5, 58)
     sy = random.randint(1, 16)
-    set_px(canvas, sx, sy, STAR_W)
+    if not (21 <= sx <= 43 and 3 <= sy <= 16):
+        set_px(canvas, sx, sy, STAR_W)
+        star_count += 1
+    attempts += 1
 
 # Screen glow border
 wrow(canvas, 0, 3, 60, SCR_GLOW)
@@ -176,43 +181,69 @@ RX, RY = 32, 9
 ROCKY    = (148, 118, 78)
 ROCKY_D  = (108,  85, 52)
 ROCKY_LT = (188, 158, 108)
+ROCKY_LEG = (118, 92, 58)  # outer legs slightly darker
 # Central stone body (taller oval)
 for dx in range(-3, 4):
-    for dy in range(-3, 4):
-        if dx**2*0.35 + dy**2 <= 6.5:
+    for dy in range(-2, 3):
+        if dx**2*0.35 + dy**2 <= 2.2:
             set_px(canvas, RX+dx, RY+dy, ROCKY)
 # Body highlight
 for dx,dy in [(0,-2),(1,-2),(-1,-2),(0,-1),(1,-1)]:
     set_px(canvas, RX+dx, RY+dy, ROCKY_LT)
-# Body shadow bottom
-for dx in range(-2,3):
-    set_px(canvas, RX+dx, RY+3, ROCKY_D)
 
 def draw_leg(canvas, x0, y0, x1, y1, col):
-    """Bresenham line, no gaps"""
+    """Bresenham line, 2px thick"""
     dx = abs(x1-x0); dy = abs(y1-y0)
     sx = 1 if x1>x0 else -1; sy = 1 if y1>y0 else -1
     err = dx - dy
     while True:
         set_px(canvas, x0, y0, col)
+        set_px(canvas, x0, y0+1, col)
         if x0==x1 and y0==y1: break
         e2 = 2*err
         if e2 > -dy: err -= dy; x0 += sx
         if e2 < dx:  err += dx; y0 += sy
 
 # 4 legs all going downward, umbrella spread
-# left outer: steep left-down
-draw_leg(canvas, RX-3, RY+3, RX-11, RY+12, ROCKY)
-set_px(canvas, RX-12, RY+13, ROCKY_D)
-# left inner: gentle left-down
-draw_leg(canvas, RX-2, RY+3, RX-6, RY+12, ROCKY)
-set_px(canvas, RX-7, RY+13, ROCKY_D)
-# right inner: gentle right-down
-draw_leg(canvas, RX+2, RY+3, RX+6, RY+12, ROCKY)
-set_px(canvas, RX+7, RY+13, ROCKY_D)
-# right outer: steep right-down
-draw_leg(canvas, RX+3, RY+3, RX+11, RY+12, ROCKY)
-set_px(canvas, RX+12, RY+13, ROCKY_D)
+JOINT = (97, 168, 129)
+
+# left outer: spread wide at top, slightly curve in at bottom
+draw_leg(canvas, RX-5, RY-1, RX-7, RY+2, ROCKY_LEG)   # upper half: spread out
+set_px(canvas, RX-7, RY+2, JOINT); set_px(canvas, RX-7, RY+3, JOINT)
+set_px(canvas, RX-6, RY+2, JOINT); set_px(canvas, RX-6, RY+3, JOINT)  # joint 2×2
+draw_leg(canvas, RX-7, RY+2, RX-6, RY+5, ROCKY_LEG)  # lower half: slight curve in
+set_px(canvas, RX-6, RY+6, ROCKY_D)
+# left inner: bracket ( shape — curves left then back
+draw_leg(canvas, RX-2, RY-1, RX-4, RY+1, ROCKY)   # upper arc going left
+draw_leg(canvas, RX-4, RY+1, RX-4, RY+3, ROCKY)    # vertical middle
+draw_leg(canvas, RX-4, RY+3, RX-3, RY+5, ROCKY)    # lower arc coming back
+set_px(canvas, RX-4, RY+1, JOINT); set_px(canvas, 30, 8, JOINT)  # joint
+set_px(canvas, RX-4, RY+3, JOINT)  # joint (drawn after leg)
+set_px(canvas, 28, 8, ROCKY_LEG)  # extra pixel (drawn after leg)
+set_px(canvas, 36, 8, ROCKY_LEG)  # mirror extra pixel
+# shift (26,14)(26,15) left by 1
+set_px(canvas, 26, 14, SPACE_D)
+set_px(canvas, 26, 15, SPACE_D)
+set_px(canvas, 25, 14, ROCKY_LEG)
+set_px(canvas, 25, 15, ROCKY_LEG)
+# mirror: shift (38,14)(38,15) right by 1
+# mirror: shift (38,14)(38,15) right by 1 — cleared after draw_leg
+# (moved to end to avoid being overwritten by draw_leg)
+# mirror: shift (38,14)(38,15) right by 1 — cleared after draw_leg
+# (moved to end to avoid being overwritten by draw_leg)
+# right inner: bracket ) shape
+draw_leg(canvas, RX+2, RY-1, RX+4, RY+1, ROCKY)
+set_px(canvas, RX+4, RY+1, JOINT); set_px(canvas, 34, 8, JOINT)  # joint
+draw_leg(canvas, RX+4, RY+1, RX+4, RY+3, ROCKY)
+draw_leg(canvas, RX+4, RY+3, RX+3, RY+5, ROCKY)
+set_px(canvas, RX+4, RY+3, JOINT)  # joint (drawn after leg)
+# right outer: spread wide at top, slightly curve in at bottom
+draw_leg(canvas, RX+5, RY-1, RX+7, RY+2, ROCKY_LEG)   # upper half: spread out
+set_px(canvas, RX+7, RY+2, JOINT); set_px(canvas, RX+7, RY+3, JOINT)
+set_px(canvas, RX+6, RY+2, JOINT); set_px(canvas, RX+6, RY+3, JOINT)  # joint 2×2
+draw_leg(canvas, RX+7, RY+2, RX+6, RY+5, ROCKY_LEG)  # lower half: slight curve in
+set_px(canvas, RX+6, RY+6, ROCKY_D)
+# Body shadow bottom moved to end of file
 
 # Ryland Grace (clearer silhouette, left)
 # head
@@ -229,16 +260,10 @@ set_px(canvas, 15, 7, (168,128,88)); set_px(canvas, 16, 7, (168,128,88))
 set_px(canvas, 13, 10, (148,108,68)); set_px(canvas, 13, 11, (148,108,68))
 set_px(canvas, 15, 10, (148,108,68)); set_px(canvas, 15, 11, (148,108,68))
 
-# Planet (right, cleaner)
-for dx in range(-2,4):
-    for dy in range(-2,4):
-        if dx**2+dy**2 <= 8:
-            set_px(canvas, 50+dx, 8+dy, blend((88,178,138),(58,138,108),0.3))
-# highlight
-set_px(canvas, 49, 6, (138,218,178)); set_px(canvas, 50,6,(138,218,178)); set_px(canvas, 51,6,(138,218,178))
+# Planet removed
 
 # Screen title text area (bottom of screen)
-wrow(canvas, 13, 8, 55, blend(SPACE_D,(18,12,48),0.5))
+# Screen title text area removed
 
 # Curtains
 for y in range(0, 19):
@@ -278,6 +303,60 @@ for xa, xb in ARMS:
 # cy=26: feet at y=21, head at y=31
 draw_gb_topdown(25, 26)
 draw_bun_topdown(36, 26)
+# Remove arm pixels at y=25 (cy-1)
+set_px(canvas, 27, 25, SEAT_R)
+set_px(canvas, 34, 25, SEAT_R)
+
+# Holding hands — extend arms across the armrest
+for x in range(28, 31):
+    set_px(canvas, x, 26, GB)    # GB right arm reaching right
+for x in range(31, 35):
+    set_px(canvas, x, 26, BUN)   # BUN left arm reaching left
+# clasped hands at x=30,31
+set_px(canvas, 30, 26, GB)
+set_px(canvas, 31, 26, BUN)
+
+# Rocky body shadow bottom — drawn last so nothing overwrites it
+for dx in range(-1,2):
+    set_px(canvas, RX+dx, RY+2, ROCKY)   # fill gap between body and shadow
+for dx in range(-1,2):
+    set_px(canvas, RX+dx, RY+3, ROCKY_D)
+
+# Glass dome around Rocky — smooth arc, no gaps
+GLASS   = (98, 158, 188)
+GLASS_H = (178, 228, 248)
+
+# top flat edge
+for dx in range(-3, 4):
+    set_px(canvas, RX+dx, RY-6, GLASS)
+# upper arc — no gaps (each step ≤1px)
+set_px(canvas, RX-4,  RY-5, GLASS); set_px(canvas, RX+4,  RY-5, GLASS)
+set_px(canvas, RX-5,  RY-5, GLASS); set_px(canvas, RX+5,  RY-5, GLASS)
+set_px(canvas, RX-6,  RY-4, GLASS); set_px(canvas, RX+6,  RY-4, GLASS)
+set_px(canvas, RX-7,  RY-4, GLASS); set_px(canvas, RX+7,  RY-4, GLASS)
+set_px(canvas, RX-8,  RY-3, GLASS); set_px(canvas, RX+8,  RY-3, GLASS)
+set_px(canvas, RX-9,  RY-3, GLASS); set_px(canvas, RX+9,  RY-3, GLASS)
+set_px(canvas, RX-10, RY-2, GLASS); set_px(canvas, RX+10, RY-2, GLASS)
+set_px(canvas, RX-11, RY-1, GLASS); set_px(canvas, RX+11, RY-1, GLASS)
+# sides
+for dy in range(0, 7):
+    set_px(canvas, RX-11, RY+dy, GLASS)
+    set_px(canvas, RX+11, RY+dy, GLASS)
+# lower arc (cropped by screen)
+set_px(canvas, RX-11, RY+7,  GLASS); set_px(canvas, RX+11, RY+7,  GLASS)
+set_px(canvas, RX-10, RY+8,  GLASS); set_px(canvas, RX+10, RY+8,  GLASS)
+set_px(canvas, RX-9,  RY+8,  GLASS); set_px(canvas, RX+9,  RY+8,  GLASS)
+set_px(canvas, RX-8,  RY+9,  GLASS); set_px(canvas, RX+8,  RY+9,  GLASS)
+set_px(canvas, RX-7,  RY+9,  GLASS); set_px(canvas, RX+7,  RY+9,  GLASS)
+set_px(canvas, RX-6,  RY+10, GLASS); set_px(canvas, RX+6,  RY+10, GLASS)
+set_px(canvas, RX-5,  RY+10, GLASS); set_px(canvas, RX+5,  RY+10, GLASS)
+set_px(canvas, RX-4,  RY+11, GLASS); set_px(canvas, RX+4,  RY+11, GLASS)
+# highlight removed
+# clear (38,14)(38,15) — overwrite leg pixels
+set_px(canvas, 38, 14, SPACE_D)
+set_px(canvas, 38, 15, SPACE_D)
+set_px(canvas, 39, 14, ROCKY_LEG)
+set_px(canvas, 39, 15, ROCKY_LEG)
 
 
 # ── RENDER ─────────────────────────────────
