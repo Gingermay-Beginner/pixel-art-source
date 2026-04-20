@@ -240,29 +240,6 @@ for y in range(8,13): set_px(canvas, HX2-3, y, HUT_SH)
 fill(canvas, 12, SY-1, 31, 33, HUT_DOOR)
 
 # ══════════════════════════════════════════
-# KAYAK — x=11~52, y=24~26
-# ══════════════════════════════════════════
-KX1, KX2 = 11, 52
-KY1, KY2 = 24, 26
-
-# Top row (narrower)
-wrow(canvas, KY1,   KX1+4, KX2-4, KAYAK_YL)
-# Middle row (widest, with tapered tips)
-wrow(canvas, KY1+1, KX1+2, KX2-2, KAYAK_Y)
-set_px(canvas, KX1+1, KY1+1, KAYAK_Y)
-set_px(canvas, KX1,   KY1+1, KAYAK_Y)
-set_px(canvas, KX2-1, KY1+1, KAYAK_Y)
-set_px(canvas, KX2,   KY1+1, KAYAK_Y)
-# Bottom row (narrower)
-wrow(canvas, KY2,   KX1+4, KX2-4, KAYAK_YD)
-# Rim lines
-wrow(canvas, KY1-1, KX1+4, KX2-4, KAYAK_RIM)
-wrow(canvas, KY2+1, KX1+4, KX2-4, KAYAK_RIM)
-# Cockpits
-fill(canvas, KY1, KY1+1, 17, 22, KAYAK_IN)
-fill(canvas, KY1, KY1+1, 40, 45, KAYAK_IN)
-
-# ══════════════════════════════════════════
 # GINGERBREAD — front puller (GCX=12, GFY=26)
 # ══════════════════════════════════════════
 GCX, GFY = 12, 24
@@ -321,6 +298,42 @@ for dx in [-1,0,1]: set_px(canvas, BCX+dx, BFY-7, BUN_SMILE)
 # Back arm
 set_px(canvas, BCX+3, BFY-4, BUN)
 set_px(canvas, BCX+4, BFY-3, BUN)
+
+# ══════════════════════════════════════════
+# KAYAK — x=11~52, y=24~26
+# ══════════════════════════════════════════
+KX1, KX2 = 11, 52
+KY1, KY2 = 24, 26
+
+# Top row (narrower)
+wrow(canvas, KY1,   10, 53, KAYAK_YL)
+# Middle row (widest, with tapered tips)
+wrow(canvas, KY1+1, KX1+2, KX2-2, KAYAK_Y)
+set_px(canvas, KX1+1, KY1+1, KAYAK_Y)
+set_px(canvas, KX1,   KY1+1, KAYAK_Y)
+set_px(canvas, KX2-1, KY1+1, KAYAK_Y)
+set_px(canvas, KX2,   KY1+1, KAYAK_Y)
+# Bottom row (narrower)
+wrow(canvas, KY2,   13, 50, KAYAK_YD)
+# Rim lines
+wrow(canvas, KY1-1, 11, 52, KAYAK_Y)
+wrow(canvas, KY2+1, KX1+4, KX2-4, KAYAK_RIM)
+# Cockpits
+fill(canvas, KY1, KY1+1, 17, 22, KAYAK_IN)
+fill(canvas, KY1, KY1+1, 40, 45, KAYAK_IN)
+
+# Arms redrawn after kayak
+# GB forward arm (left)
+set_px(canvas, GCX-3, GFY-4, GB); set_px(canvas, GCX-4, GFY-3, GB)
+# GB inner arm (right, toward kayak)
+set_px(canvas, GCX+3, GFY-4, GB); set_px(canvas, GCX+4, GFY-3, GB)
+set_px(canvas, GCX+5, GFY-2, GB)
+set_px(canvas, GCX+5, GFY-1, GB)
+# BUN back arm (right)
+set_px(canvas, BCX+3, BFY-4, BUN); set_px(canvas, BCX+4, BFY-3, BUN)
+# BUN inner arm (left, toward kayak)
+set_px(canvas, BCX-3, BFY-4, BUN); set_px(canvas, BCX-4, BFY-3, BUN)
+set_px(canvas, BCX-5, BFY-2, BUN); set_px(canvas, BCX-5, BFY-1, BUN)
 
 # ══════════════════════════════════════════
 # Save
