@@ -230,7 +230,7 @@ for x in [5,11,17,24,31,37,44,51,58]:   set_px(canvas, x, 39 if 39<H else H-1, O
 
 # ── Silhouette palms (bottom layer) ──
 # ── Coloured palms (above silhouettes) ──
-draw_palm(52, 17, lean_dir=1)
+draw_palm(50, 17, lean_dir=2, crown_dx=-1)
 draw_palm(14,  17, lean_dir=-2, crown_dx=1)
 draw_palm(50, 15, lean_dir=-3)
 draw_palm(16,  16, lean_dir=2)
