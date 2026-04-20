@@ -197,7 +197,7 @@ draw_palm(49, 19, lean_dir=-1)  # right mid, medium
 # HUT — centered at x=27~37, elevated on stilts
 # ══════════════════════════════════════════
 HX1, HX2 = 27, 37
-SY = 15              # deck level (-4)
+SY = 18              # deck level (-4)
 
 # Stilts
 for sx in [28,29,35,36]:
@@ -205,18 +205,12 @@ for sx in [28,29,35,36]:
 wrow(canvas, 17, 28, 36, HUT_STLT)  # cross-brace
 
 # Deck platform
-wrow(canvas, SY,   HX1-1, HX2+1, HUT_W)
 wrow(canvas, SY+1, HX1-1, HX2+1, HUT_SH)
 
 # Railing
-wrow(canvas, SY-1, HX1+1, HX2-1, HUT_RAIL)
-for rx in [HX1+1, HX2-1]:
-    set_px(canvas, rx, SY-2, HUT_RAIL)
-    set_px(canvas, rx, SY-1, HUT_RAIL)
-
 # Walls
 fill(canvas, 7, SY-1, HX1, HX2, HUT_W)
-fill(canvas, 7, SY-1, HX2, HX2, HUT_SH)
+fill(canvas, 7, SY-1, HX2, HX2, HUT_W)
 
 # Roof pitched
 wrow(canvas, 6, HX1-1, HX2+1, HUT_RFD)
@@ -236,8 +230,17 @@ fill(canvas, 8, 12, HX2-4, HX2-1, HUT_WIN)
 wrow(canvas, 10, HX2-4, HX2-1, HUT_SH)
 for y in range(8,13): set_px(canvas, HX2-3, y, HUT_SH)
 
+wrow(canvas, SY, HX1-1, HX2+1, HUT_RAIL)  # top rail
+wrow(canvas, SY-3, HX1-1, HX2+1, HUT_RAIL)  # bottom rail
+for rx in [HX1-1, HX2+1]:
+    for ry in range(SY-3, SY+1): set_px(canvas, rx, ry, HUT_RAIL)
+# vertical pickets every 2 cols
+for px in range(HX1+1, HX2+1, 2):
+    for ry in range(SY-3, SY+1): set_px(canvas, px, ry, HUT_RAIL)
+
+
 # Door
-fill(canvas, 12, SY-1, 31, 33, HUT_DOOR)
+# Door is on the side/back, not visible
 
 # ══════════════════════════════════════════
 # GINGERBREAD — front puller (GCX=12, GFY=26)
