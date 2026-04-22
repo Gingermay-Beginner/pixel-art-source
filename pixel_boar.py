@@ -222,8 +222,7 @@ def draw_boar(ox, oy, facing='right'):
     lfl(4,10, 7,17, BOAR_L)
     for lx,ly in [(17,4),(17,10)]: lsp(lx,ly,GROUND)
     for _ly in range(4,11): lsp(17,_ly,GROUND)
-    for _ly in range(4,11): lsp(8,_ly,GROUND)
-    lsp(7,4,BOAR_B); lsp(7,10,BOAR_B); lsp(7,5,BOAR_B)
+    lsp(7,4,GROUND); lsp(7,10,GROUND); lsp(7,5,GROUND)
     # 耳朵
     lfl(2,4, 8,10, BOAR_LT)
     lfl(2,4, 14,16, BOAR_LT)
