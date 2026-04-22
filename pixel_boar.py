@@ -4,25 +4,25 @@ W, H = 64, 36
 S = 12
 
 # ── 颜色 ──
-SKY       = (178, 210, 235)
-WALL      = (238, 228, 210)
-WALL_D    = (210, 198, 178)
-ROOF      = (148, 108,  78)
-ROOF_D    = (118,  85,  58)
+SKY       = (185, 218, 242)
+WALL      = (225, 212, 188)
+WALL_D    = (198, 185, 162)
+ROOF      = (178, 195, 125)
+ROOF_D    = (152, 172, 102)
 WIN_FRAME = (142, 108,  72)
 WIN_FRAME_D=(108,  80,  52)
-WIN_IN    = ( 85,  95, 108)
+WIN_IN    = ( 55,  62,  78)
 
-GROUND    = (148, 178, 105)
-GROUND_D  = (118, 148,  82)
-GROUND_L  = (175, 205, 128)
+GROUND    = (142, 188,  98)
+GROUND_D  = (112, 158,  75)
+GROUND_L  = (168, 215, 118)
 
-AZA_P     = (225,  95, 148)
-AZA_PD    = (185,  65, 118)
-AZA_PL    = (248, 148, 185)
-AZA_LEAF  = ( 72, 128,  58)
-AZA_LEAF_D=( 52,  98,  42)
-AZA_W     = (248, 225, 235)
+AZA_P     = (228,  72,  88)
+AZA_PD    = (188,  48,  58)
+AZA_PL    = (248, 138, 112)
+AZA_LEAF  = ( 78, 138,  55)
+AZA_LEAF_D=( 58, 108,  42)
+AZA_W     = (195, 192, 198)
 
 BOAR      = ( 88,  72,  62)
 BOAR_L    = (118,  98,  85)
@@ -65,10 +65,10 @@ fl(0, 7, 0, 63, SKY)
 fl(8, 21, 18, 63, WALL)
 
 # 左侧绿树（房子左方天空区）
-TREE_G  = ( 32,  75,  32)   # 绿色主色
-TREE_GD = ( 22,  55,  22)   # 深绿
-TREE_GL = ( 48,  98,  42)   # 亮绿
-TREE_WH = (245, 245, 240)   # 白花
+TREE_G  = ( 58, 118,  42)   # 绿色主色
+TREE_GD = ( 42,  88,  28)   # 深绿
+TREE_GL = ( 78, 148,  55)   # 亮绿
+TREE_WH = (228, 235, 245)   # 白花
 TREE_TK2= ( 78,  55,  28)   # 树干
 
 def sp2(x, y, c):
@@ -89,10 +89,10 @@ for y, x1, x2 in [
 ]:
     wrow2(y, x1, x2, TREE_G)
 # 深绿阴影
-for x,y in [(15,16),(10,17),(16,18),(7,18),(13,20),(8,19),(14,21),(9,21),(12,15),(6,16)]:
+for x,y in [(16,18),(13,20),(14,21),(12,15)]:
     sp2(x,y,TREE_GD)
 # 亮绿高光
-for x,y in [(13,15),(8,16),(11,17),(15,19),(6,18)]:
+for x,y in [(13,15),(11,17)]:
     sp2(x,y,TREE_GL)
 # 大白花（5朵）
 for fx,fy in [(8,13),(13,14),(10,17),(15,16),(11,19),(9,5),(14,6),(11,8),(7,7),(13,9)]:
@@ -107,13 +107,13 @@ if False:
 for _ry in range(5, 12):
     _rx_left = round(18 - 8*(_ry-5)/6)
     for _rx in range(_rx_left, 64):
-        canvas[_ry][_rx] = (80, 160, 80)
+        canvas[_ry][_rx] = (148, 195, 105)
 
 # 门（窗户右边）
 DOOR_F = WIN_FRAME
 DOOR_D = WIN_FRAME_D
 DOOR_IN_UP = WIN_IN
-DOOR_IN_LO = ROOF
+DOOR_IN_LO = WIN_FRAME
 DX1, DX2 = 45, 51
 DY1, DY2 = 12, 21
 fl(DY1, DY2, DX1, DX2, DOOR_F)
@@ -145,13 +145,13 @@ for _ry in range(5, 12):
     _rx_left = round(18 - 8*(_ry-5)/6)
     _offset = (_ry % 2) * 3
     for _rx in range(_rx_left, 64):
-        if canvas[_ry][_rx] == (80, 160, 80):
+        if canvas[_ry][_rx] == (148, 195, 105):
             # 每隔4格一道暗色竖缝（错位）
             if (_rx - _offset) % 4 == 0:
-                canvas[_ry][_rx] = (55, 130, 55)
+                canvas[_ry][_rx] = (112, 158,  75)
             # 偶数行底边暗一格
             elif _ry % 2 == 1:
-                canvas[_ry][_rx] = (65, 145, 65)
+                canvas[_ry][_rx] = (128, 175,  88)
 wrow(11, 10, 63, ROOF)
 wrow(12, 10, 63, ROOF_D)
 
@@ -290,8 +290,9 @@ def dense_aza(x1, x2, top_y, bottom_y, side='left'):
         if rng.random() < 0.2:
             sp(x, ty-2, AZA_LEAF_D)
     # 点缀明显花朵
-    for fy in range(top_y+3, bottom_y-2, 5):
-        fx = (x1+x2)//2 + rng.randint(-1, 1)
+    offsets = [-2, 2, -1, 3, 0, -3, 1, -1, 2, -2]
+    for i, fy in enumerate(range(top_y+3, bottom_y-2, 4)):
+        fx = (x1+x2)//2 + offsets[i % len(offsets)]
         for dx, dy in [(-1,-1),(0,-1),(1,-1),(-1,0),(1,0)]:
             sp(fx+dx, fy+dy, AZA_P)
         sp(fx, fy, AZA_PD)
