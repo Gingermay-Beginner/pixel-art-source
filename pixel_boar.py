@@ -265,6 +265,7 @@ def draw_boar(ox, oy, facing='right'):
     lsp(0,6,BOAR_STRIPE_L)  # (8,26) 花纹亮色
     lsp(1,6,BOAR_STRIPE_L)  # (9,26) 花纹亮色
     lsp(11,4,BOAR_B)  # (19,24) 身体主色
+    lsp(7,1,GROUND); lsp(8,1,GROUND)  # (15-16,21) 草色顶层
     lsp(11,5,(108,85,65))  # (19,25) 花纹暗色（身体顶层）
     lsp(12,5,BOAR_B)  # (20,25) 身体主色（顶层覆盖）
     lsp(1,9,BOAR_L)  # (9,29) 腿色
