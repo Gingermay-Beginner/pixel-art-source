@@ -179,8 +179,6 @@ sp(26, 18, WIN_IN); sp(31, 18, WIN_IN)
 sp(28, 19, BUN_EYE); sp(30, 19, BUN_EYE)
 
 # 姜饼人（右半窗）：露帽子 + 头顶
-fl(17, 19, 35, 38, HAT_RED)
-wrow(17, 35, 38, HAT_RED)
 sp(38, 17, WIN_IN)
 sp(38, 15, WIN_IN)
 sp(36, 16, HAT_LITE)
@@ -215,7 +213,7 @@ def draw_boar(ox, oy, facing='right'):
     for lx,ly in [(2,1),(9,1),(1,2),(1,3),(1,10),(2,10),(0,10)]: lsp(lx,ly,GROUND)
     # 腿（3条，1格高）
     lfl(9,10, 0,1, BOAR_L)
-    lfl(9,10, 6,7, BOAR_L)
+    lfl(9,10, 7,8, BOAR_L)
     lfl(9,10, 12,13, BOAR_L)
     # 尾巴
     lsp(0,3,BOAR_L); lsp(1,2,BOAR_L)
@@ -362,6 +360,8 @@ for dx,dy in [(0,0),(1,0),(-1,0),(2,0),(-2,0),(0,-1),(1,-1)]:
     sp(38+dx, 33+dy, DIRT)
 sp(37,32,DIRT_D); sp(39,32,DIRT_D); sp(38,32,DIRT_L)
 sp(6, 12, TREE_G)  # 屋檐遮树叶修正
+fl(17, 18, 35, 37, HAT_RED)
+wrow(17, 35, 37, HAT_RED)
 # ── 渲染 ──
 img = Image.new('RGB', (W*S, H*S))
 px = img.load()
