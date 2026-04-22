@@ -272,7 +272,7 @@ def draw_boar(ox, oy, facing='right'):
 # 野猪1：左前景，向右
 draw_boar(8, 20, 'right')
 # 野猪2：右前景，向左
-draw_boar(32, 21, 'left')
+draw_boar(33, 21, 'left')
 
 # ── 两侧茂密杜鹃花枝 ──
 def dense_aza(x1, x2, top_y, bottom_y, side='left'):
