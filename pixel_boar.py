@@ -219,7 +219,7 @@ def draw_boar(ox, oy, facing='right'):
         lsp(sx, 3+boff, BOAR_STRIPE)
         lsp(sx, 2+boff, BOAR_STRIPE_L)
     # 头（最后画，盖身体/花纹）
-    lfl(4,10, 7,17, BOAR_L)
+    lfl(4,10, 8,17, BOAR_L)
     for lx,ly in [(17,4),(17,10)]: lsp(lx,ly,GROUND)
     for _ly in range(4,11): lsp(17,_ly,GROUND)
     lsp(7,4,BOAR_B); lsp(7,10,BOAR_B); lsp(7,5,BOAR_B)
