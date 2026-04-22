@@ -5,30 +5,30 @@ S = 12
 
 # ── 颜色 ──
 SKY       = (185, 218, 242)
-WALL      = (225, 212, 188)
-WALL_D    = (198, 185, 162)
-ROOF      = (178, 195, 125)
-ROOF_D    = (152, 172, 102)
-WIN_FRAME = (142, 108,  72)
-WIN_FRAME_D=(108,  80,  52)
-WIN_IN    = ( 55,  62,  78)
+WALL      = (215, 208, 198)
+WALL_D    = (188, 182, 172)
+ROOF      = (168, 188, 148)
+ROOF_D    = (142, 165, 122)
+WIN_FRAME = (168, 162, 155)
+WIN_FRAME_D=(168, 162, 155)
+WIN_IN    = (185, 188, 195)
 
-GROUND    = (142, 188,  98)
-GROUND_D  = (112, 158,  75)
+GROUND    = (148, 178, 115)
+GROUND_D  = (118, 150,  95)
 GROUND_L  = (168, 215, 118)
 
-AZA_P     = (228,  72,  88)
-AZA_PD    = (188,  48,  58)
-AZA_PL    = (248, 138, 112)
-AZA_LEAF  = ( 78, 138,  55)
-AZA_LEAF_D=( 58, 108,  42)
+AZA_P     = (235,  55,  75)
+AZA_PD    = (198,  35,  50)
+AZA_PL    = (252, 128,  98)
+AZA_LEAF  = ( 72, 148,  45)
+AZA_LEAF_D=( 52, 118,  35)
 AZA_W     = (195, 192, 198)
 
 BOAR      = ( 88,  72,  62)
 BOAR_L    = (118,  98,  85)
-BOAR_LT   = (155, 132, 112)
-BOAR_B    = (168, 145, 125)
-BOAR_SN   = (205, 158, 138)
+BOAR_LT   = (168, 145, 118)
+BOAR_B    = (182, 158, 132)
+BOAR_SN   = (215, 165, 140)
 BOAR_EY   = ( 22,  15,  10)
 EYE_W     = (245, 242, 238)
 BOAR_TK   = (238, 225, 192)
@@ -38,7 +38,7 @@ BUN_BODY  = ( 95, 158, 215)
 BUN_INNER = (210, 168, 190)
 BUN_EYE   = ( 38,  22,  60)
 HAT_RED   = (198,  42,  32)
-HAT_DARK  = (140,  26,  20)
+HAT_DARK  = (165,  52,  42)
 HAT_LITE  = (225,  72,  55)
 GB_BODY   = (185, 108,  48)
 
@@ -58,6 +58,8 @@ def wrow(y, x1, x2, c):
 
 # ── 天空 ──
 fl(0, 7, 0, 63, SKY)
+# 右侧加盖墙（x=32~63，y=0~4）
+fl(0, 4, 32, 63, WALL)
 
 # ── 屋顶下沿（y=6~7） ──
 
@@ -65,10 +67,10 @@ fl(0, 7, 0, 63, SKY)
 fl(8, 21, 18, 63, WALL)
 
 # 左侧绿树（房子左方天空区）
-TREE_G  = ( 58, 118,  42)   # 绿色主色
-TREE_GD = ( 42,  88,  28)   # 深绿
-TREE_GL = ( 78, 148,  55)   # 亮绿
-TREE_WH = (228, 235, 245)   # 白花
+TREE_G  = ( 92, 118, 112)   # 绿色主色
+TREE_GD = ( 72,  88,  85)   # 深绿
+TREE_GL = (105, 148, 135)   # 亮绿
+TREE_WH = (222, 228, 238)   # 白花
 TREE_TK2= ( 78,  55,  28)   # 树干
 
 def sp2(x, y, c):
@@ -139,7 +141,7 @@ fl(WY1+1, WY2-1, WX1+1, WX2-1, WIN_IN)
 
 MX = (WX1+WX2)//2   # 32
 MY = (WY1+WY2)//2   # 15
-for y in range(WY1+1, WY2): sp(MX, y, WIN_FRAME)
+for y in range(WY1+1, WY2): sp(MX, y, (168, 162, 155))
 # 屋顶材质（瓦片横纹）
 for _ry in range(5, 12):
     _rx_left = round(18 - 8*(_ry-5)/6)
@@ -148,13 +150,24 @@ for _ry in range(5, 12):
         if canvas[_ry][_rx] == (148, 195, 105):
             # 每隔4格一道暗色竖缝（错位）
             if (_rx - _offset) % 4 == 0:
-                canvas[_ry][_rx] = (112, 158,  75)
+                canvas[_ry][_rx] = (140, 178, 112)
             # 偶数行底边暗一格
             elif _ry % 2 == 1:
-                canvas[_ry][_rx] = (128, 175,  88)
+                canvas[_ry][_rx] = (143, 182, 116)
 wrow(11, 10, 63, ROOF)
 wrow(12, 10, 63, ROOF_D)
 
+# 二层窗户（x=45~61, y=-∞~8，距屋顶1格）
+W2X1, W2X2 = 45, 61
+W2Y1, W2Y2 = 0, 3   # 上移5格
+fl(W2Y1+1, W2Y2-1, W2X1, W2X2, (195, 190, 182))
+for y in range(W2Y1, W2Y2+1): sp(W2X1, y, (168, 162, 155))
+for y in range(W2Y1, W2Y2+1): sp(W2X2, y, (168, 162, 155))
+for x in range(W2X1, W2X2+1): sp(x, W2Y2, (168, 162, 155))
+for x in range(W2X1+1, W2X2): sp(x, 0, (185, 188, 195))  # y=0延伸窗色
+fl(W2Y1+1, W2Y2-1, W2X1+1, W2X2-1, (185, 188, 195))
+MX2 = (W2X1+W2X2)//2  # 53
+for y in range(W2Y1, W2Y2): sp(MX2, y, (168, 162, 155))
 # ── 窗内角色（偷看） ──
 # 兔子（左半窗）：露耳朵 + 眼睛
 fl(14, 17, 27, 27, BUN_BODY)
@@ -167,7 +180,7 @@ sp(28, 19, BUN_EYE); sp(30, 19, BUN_EYE)
 
 # 姜饼人（右半窗）：露帽子 + 头顶
 fl(17, 19, 35, 38, HAT_RED)
-wrow(17, 35, 38, HAT_DARK)
+wrow(17, 35, 38, HAT_RED)
 sp(38, 17, WIN_IN)
 sp(38, 15, WIN_IN)
 sp(36, 16, HAT_LITE)
@@ -177,7 +190,7 @@ sp(34, 19, BUN_EYE); sp(36, 19, BUN_EYE)
 
 # ── 地面（y=22~35） ──
 fl(22, 35, 0, 63, GROUND)
-wrow(22, 0, 63, GROUND_L)
+# wrow(22, 0, 63, GROUND_L)
 for x in range(0, 64, 4):
     sp(x, 25, GROUND_D)
     sp(x+2, 28, GROUND_D)
@@ -201,9 +214,9 @@ def draw_boar(ox, oy, facing='right'):
     lsp(6,1,BOAR_B); lsp(9,4,BOAR_B)
     for lx,ly in [(2,1),(9,1),(1,2),(1,3),(1,10),(2,10),(0,10)]: lsp(lx,ly,GROUND)
     # 腿（3条，1格高）
-    lfl(9,10, 0,1, BOAR_B)
-    lfl(9,10, 6,7, BOAR_B)
-    lfl(9,10, 12,13, BOAR_B)
+    lfl(9,10, 0,1, BOAR_L)
+    lfl(9,10, 6,7, BOAR_L)
+    lfl(9,10, 12,13, BOAR_L)
     # 尾巴
     lsp(0,3,BOAR_L); lsp(1,2,BOAR_L)
     # 横纹（在头之前画）
@@ -255,7 +268,7 @@ def draw_boar(ox, oy, facing='right'):
 # 野猪1：左前景，向右
 draw_boar(8, 20, 'right')
 # 野猪2：右前景，向左
-draw_boar(28, 21, 'left')
+draw_boar(32, 21, 'left')
 
 # ── 两侧茂密杜鹃花枝 ──
 def dense_aza(x1, x2, top_y, bottom_y, side='left'):
@@ -318,6 +331,36 @@ def azalea(cx, cy):
 
 # 地面花暂时去掉
 
+
+# 两猪中间小土堆
+DIRT   = (148, 118,  78)
+DIRT_D = (118,  92,  58)
+DIRT_L = (178, 148, 105)
+# 土堆1 x=34, y=28
+for dx,dy in [(0,0),(1,0),(-1,0),(2,0),(-2,0),(0,-1),(1,-1),(-1,-1)]:
+    sp(31+dx, 28+dy, DIRT)
+sp(30,27,DIRT_D); sp(32,27,DIRT_D); sp(31,27,DIRT_L)
+# 土堆2 x=39, y=29
+for dx,dy in [(0,0),(1,0),(-1,0),(2,0),(0,-1),(1,-1)]:
+    sp(36+dx, 29+dy, DIRT)
+sp(35,28,DIRT_D); sp(37,28,DIRT_D); sp(36,28,DIRT_L)
+# 土堆3 x=30, y=29（小）
+for dx,dy in [(0,0),(1,0),(-1,0),(0,-1)]:
+    sp(27+dx, 29+dy, DIRT)
+sp(27,28,DIRT_L)
+# 额外小土堆
+for dx,dy in [(0,0),(1,0),(-1,0),(0,-1)]:
+    sp(33+dx, 31+dy, DIRT)
+sp(33,30,DIRT_L)
+for dx,dy in [(0,0),(1,0),(-1,0),(2,0),(-2,0),(0,-1),(1,-1)]:
+    sp(40+dx, 26+dy, DIRT)
+sp(39,25,DIRT_D); sp(41,25,DIRT_D); sp(40,25,DIRT_L)
+for dx,dy in [(0,0),(1,0),(-1,0),(0,-1)]:
+    sp(29+dx, 32+dy, DIRT)
+sp(29,31,DIRT_L)
+for dx,dy in [(0,0),(1,0),(-1,0),(2,0),(-2,0),(0,-1),(1,-1)]:
+    sp(38+dx, 33+dy, DIRT)
+sp(37,32,DIRT_D); sp(39,32,DIRT_D); sp(38,32,DIRT_L)
 # ── 渲染 ──
 img = Image.new('RGB', (W*S, H*S))
 px = img.load()
