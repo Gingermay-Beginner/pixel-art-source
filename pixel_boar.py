@@ -44,6 +44,13 @@ GB_BODY   = (185, 108,  48)
 
 canvas = [[SKY]*W for _ in range(H)]
 
+# ── 树叶底层（最底，被其他元素覆盖）──
+_RTREE_G_EARLY  = (122, 158, 148)
+for _ty in range(0, 36):
+    for _tx in range(14, 31):
+        canvas[_ty][_tx] = _RTREE_G_EARLY
+
+
 def sp(x, y, c):
     if 0 <= x < W and 0 <= y < H:
         canvas[y][x] = c
@@ -105,6 +112,25 @@ if False:
     for dx,dy in [(0,0),(1,0),(-1,0),(0,-1),(0,1)]:
         sp2(fx+dx,fy+dy,TREE_WH)
 
+
+# ── 屋顶上小树（偏左，自然形态）──
+RTREE_G  = (108, 155, 138)
+RTREE_GD = ( 85, 122, 108)
+RTREE_GL = (132, 182, 162)
+RTREE_TK = ( 88,  62,  35)
+for y, x1, x2 in [
+    (2, 19, 22),
+    (3, 17, 25),
+    (4, 16, 27),
+    (5, 16, 28),
+    (6, 17, 27),
+]:
+    for x in range(x1, x2+1): canvas[y][x] = RTREE_G
+for x,y in [(24,3),(18,5),(22,6)]: canvas[y][x] = RTREE_GD
+for x,y in [(21,3),(19,4),(23,5)]: canvas[y][x] = RTREE_GL
+# 树干
+canvas[7][21] = RTREE_TK; canvas[7][22] = RTREE_TK
+
 # 绿色屋顶（斜线填充）
 for _ry in range(5, 12):
     _rx_left = round(18 - 8*(_ry-5)/6)
@@ -156,6 +182,7 @@ for _ry in range(5, 12):
                 canvas[_ry][_rx] = (143, 182, 116)
 wrow(11, 10, 63, ROOF)
 wrow(12, 10, 63, ROOF_D)
+sp(62, 8, (148, 195, 105)); sp(63, 8, (148, 195, 105))  # 屋顶延伸
 
 # 二层窗户（x=45~61, y=-∞~8，距屋顶1格）
 W2X1, W2X2 = 45, 61
