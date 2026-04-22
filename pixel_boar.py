@@ -70,7 +70,7 @@ fl(8, 21, 18, 63, WALL)
 TREE_G  = ( 92, 118, 112)   # 绿色主色
 TREE_GD = ( 72,  88,  85)   # 深绿
 TREE_GL = (105, 148, 135)   # 亮绿
-TREE_WH = (222, 228, 238)   # 白花
+TREE_WH = (238, 242, 248)   # 白花
 TREE_TK2= ( 78,  55,  28)   # 树干
 
 def sp2(x, y, c):
@@ -126,7 +126,7 @@ fl(DY1+1, DY1+4, DX1+1, DX2-1, DOOR_IN_UP)
 # 下半实心
 fl(DY1+5, DY2-1, DX1+1, DX2-1, DOOR_IN_LO)
 # 门把手
-sp(DX1+1, (DY1+DY2)//2, DOOR_D)
+sp(DX1+1, (DY1+DY2)//2, WIN_IN)
 
 fl(8, 21, 60, 63, WALL_D)
 
@@ -361,6 +361,7 @@ sp(29,31,DIRT_L)
 for dx,dy in [(0,0),(1,0),(-1,0),(2,0),(-2,0),(0,-1),(1,-1)]:
     sp(38+dx, 33+dy, DIRT)
 sp(37,32,DIRT_D); sp(39,32,DIRT_D); sp(38,32,DIRT_L)
+sp(6, 12, TREE_G)  # 屋檐遮树叶修正
 # ── 渲染 ──
 img = Image.new('RGB', (W*S, H*S))
 px = img.load()
