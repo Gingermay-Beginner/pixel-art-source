@@ -213,7 +213,7 @@ def draw_boar(ox, oy, facing='right'):
     for lx,ly in [(2,1),(9,1),(1,2),(1,3),(1,10),(2,10),(0,10)]: lsp(lx,ly,GROUND)
     # 腿（3条，1格高）
     lfl(9,10, 0,1, BOAR_L)
-    lfl(9,10, 7,8, BOAR_L)
+    lfl(9,10, 5,6, BOAR_L)
     lfl(9,10, 12,13, BOAR_L)
     # 尾巴
     lsp(0,3,BOAR_L); lsp(1,2,BOAR_L)
@@ -226,42 +226,48 @@ def draw_boar(ox, oy, facing='right'):
         lsp(sx, 5+off, BOAR_STRIPE)
         lsp(sx, 6+off, BOAR_STRIPE_L)
         lsp(sx, 8+off, BOAR_STRIPE)
-    back_offsets = {0:0, 1:0, 2:-1, 3:-1, 4:-2, 5:-2, 6:-1, 7:-1, 8:0}
+    back_offsets = {0:0, 1:0, 2:-1, 3:-1, 4:-1, 5:-1, 6:-1, 7:-1, 8:0}
     for sx in range(0, 9):
         boff = back_offsets.get(sx, 0)
         lsp(sx, 3+boff, BOAR_STRIPE)
         if not (sx in [4,5] and 2+boff < 1) and not (sx == 7 and 2+boff == 1): lsp(sx, 2+boff, BOAR_STRIPE_L)
     # 头（最后画，盖身体/花纹）
-    lfl(4,5, 7,13, BOAR_L)   # 上两行窄（x=7~13）
-    lfl(6,8, 6,15, BOAR_L)   # 下三行全宽
-    lsp(15,9,GROUND)
-    lsp(15,3,BOAR)
-    for _ly in range(3,10): lsp(15,_ly,GROUND)
-    # x=-1 y=3~8 延伸列（跟右侧同色）
-    lsp(-1,4,BOAR_STRIPE); lsp(-1,5,BOAR_B); lsp(-1,6,BOAR_STRIPE); lsp(-1,7,BOAR_STRIPE_L)
-    # y=1 x=6~8 花纹暗色（身体）
-    lsp(6,1,BOAR_STRIPE)
-    # y=3 x=9~10 花纹暗色（身体）
-    for _bx in range(9,11): lsp(_bx,3,BOAR_STRIPE)
-    # y=2 x=6~8 身体亮色
-    for _bx in range(5,8): lsp(_bx,2,BOAR_B)
-    # y=2 x=8~10 花纹暗色
-    for _bx in range(7,9): lsp(_bx,2,BOAR_STRIPE)
+    lfl(6,7, 9,15, BOAR_L)   # 上两行窄（x=9~15）
+    lfl(8,10, 8,17, BOAR_L)   # 下三行全宽
+    lsp(17,11,GROUND)
+    lsp(17,5,BOAR)
+    for _ly in range(5,12): lsp(17,_ly,GROUND)
+    # x=1 延伸列
+    lsp(1,6,BOAR_STRIPE); lsp(1,7,BOAR_B); lsp(1,8,BOAR_STRIPE); lsp(1,9,BOAR_STRIPE_L)
+    # 花纹暗色（身体）
+    lsp(7,2,BOAR_STRIPE)
     # 耳朵
-    lfl(3,3, 7,8, BOAR_STRIPE_L); lsp(8,4,BOAR_STRIPE_L)
-    lfl(3,3, 12,13, BOAR_STRIPE_L); lsp(12,4,BOAR_STRIPE_L)
-    lsp(7,3,BOAR_STRIPE_L); lsp(7,4,BOAR)
-    lsp(13,3,BOAR_STRIPE_L); lsp(13,4,BOAR)
-    lsp(15,4,GROUND)
+    lfl(5,5, 9,10, BOAR_STRIPE_L); lsp(10,6,BOAR_STRIPE_L)
+    lfl(5,5, 14,15, BOAR_STRIPE_L); lsp(14,6,BOAR_STRIPE_L)
+    lsp(9,5,BOAR_STRIPE_L); lsp(9,6,BOAR)
+    lsp(15,5,BOAR_STRIPE_L); lsp(15,6,BOAR)
+    lsp(17,6,GROUND)
     # 鼻吻
-    lfl(6,8, 8,12, BOAR_SN)
-    lsp(8,6,BOAR_L)
-    lsp(9,7,NOSTRIL); lsp(11,7,NOSTRIL)
-    lsp(8,8,BOAR_SN); lsp(10,8,BOAR_SN); lsp(12,8,BOAR_SN)
+    lfl(8,10, 10,14, BOAR_SN)
+    lsp(10,8,BOAR_L)
+    lsp(11,9,NOSTRIL); lsp(13,9,NOSTRIL)
+    lsp(10,10,BOAR_SN); lsp(12,10,BOAR_SN); lsp(14,10,BOAR_SN)
     # 獠牙
-    lsp(7,8,BOAR_TK); lsp(13,8,BOAR_TK)
+    lsp(9,10,BOAR_TK); lsp(15,10,BOAR_TK)
     # 眼睛
-    lsp(8,6,BOAR_EY); lsp(12,6,BOAR_EY)
+    lsp(10,8,BOAR_EY); lsp(14,8,BOAR_EY)
+    # 背部花纹（顶层）
+    for _bx in range(10,12): lsp(_bx,4,BOAR_STRIPE)
+    for _bx in range(6,9): lsp(_bx,2,BOAR_B)
+    for _bx in range(8,10): lsp(_bx,3,BOAR_STRIPE)
+    lsp(5,2,BOAR_STRIPE); lsp(6,2,BOAR_STRIPE)
+    lsp(7,2,BOAR_STRIPE); lsp(9,3,BOAR_STRIPE)
+    lsp(0,6,BOAR_STRIPE_L)  # (8,26) 花纹亮色
+    lsp(1,6,BOAR_STRIPE_L)  # (9,26) 花纹亮色
+    lsp(11,4,BOAR_B)  # (19,24) 身体主色
+    lsp(11,5,(108,85,65))  # (19,25) 花纹暗色（身体顶层）
+    lsp(12,5,BOAR_B)  # (20,25) 身体主色（顶层覆盖）
+    lsp(1,9,BOAR_L)  # (9,29) 腿色
 
 # 野猪1：左前景，向右
 draw_boar(8, 20, 'right')
