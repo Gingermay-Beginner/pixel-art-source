@@ -162,23 +162,21 @@ wrow(24, 36, 41, MATCHA_F)
 # 柄（顶部露出，y=20~22，中间2格）
 wcol(44, 20, 22, WHISK)
 wcol(45, 20, 22, WHISK)
-# 扇形：每行逐渐变宽，交替颜色做条纹，底部凹凸
-# 中心 cx=44.5，每往下1行两侧各扩0.6格
+# 扇形（2/3大小）：7行，扩散0.6格/行
 cx = 44
-for fy in range(22, 32):
-    spread = int((fy - 22) * 0.7)
+for fy in range(22, 29):
+    spread = int((fy - 22) * 0.6)
     x1 = cx - spread
     x2 = cx + 1 + spread
     for bx in range(x1, x2+1):
-        # 交替亮暗做条纹（按列）
         bc = WHISK if (bx % 2 == 0) else WHISK_D
         sp(bx, fy, bc)
-# 底部凹凸（最后2行做锯齿）
-for bx in range(cx-6, cx+8):
-    if (bx + 0) % 2 == 0:
-        sp(bx, 32, WHISK_D)
+# 底部凹凸锯齿
+for bx in range(cx-3, cx+5):
+    if bx % 2 == 0:
+        sp(bx, 29, WHISK_D)
     else:
-        sp(bx, 31, WHISK)
+        sp(bx, 28, WHISK)
 
 # 透明杯（x=49~55, y=20~31）
 fl(20, 31, 49, 55, CUP_W)
