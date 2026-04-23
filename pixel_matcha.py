@@ -130,14 +130,11 @@ wcol(32, 11, 15, MATCHA_TD)
 sp(30, 13, MATCHA_F); sp(31, 13, MATCHA_F)
 
 # ── 俯视桌面（y=19~35, x=4~59）──
-fl(19, 35, 4, 59, TABLE)
+fl(19, 35, 0, 63, TABLE)
 # 木纹（横向）
 for row in range(21, 36, 4):
-    wrow(row, 4, 59, TABLE_D)
+    wrow(row, 0, 63, TABLE_D)
 # 桌边（上边 = 近景前缘）
-wrow(35, 4, 59, TABLE_E)
-wcol(4, 19, 35, TABLE_E)
-wcol(59, 19, 35, TABLE_E)
 
 # ── 桌上物品（俯视桌面上，侧视物品）──
 
@@ -145,18 +142,20 @@ wcol(59, 19, 35, TABLE_E)
 syrup_colors = [SYR_CO, SYR_MG, SYR_PS, SYR_ST, SYR_BL]
 for i, sc in enumerate(syrup_colors):
     bx = 6 + i*5
-    fl(26, 32, bx, bx+3, sc)
-    fl(23, 25, bx+1, bx+2, sc)
-    sp(bx+1, 22, WALL_D); sp(bx+2, 22, WALL_D)
-    wcol(bx+3, 26, 32, (max(0,sc[0]-35), max(0,sc[1]-35), max(0,sc[2]-35)))
+    fl(24, 28, bx, bx+3, sc)       # 瓶身（上方，宽）
+    fl(29, 30, bx+1, bx+2, sc)     # 瓶颈（下方，窄）
+    sp(bx+1, 31, WALL_D); sp(bx+2, 31, WALL_D)   # 倒置瓶盖（最下）
+    wcol(bx+3, 24, 28, (max(0,sc[0]-35), max(0,sc[1]-35), max(0,sc[2]-35)))
 
-# 抹茶碗（x=35~42, y=23~28）
+# 抹茶碗（x=35~42, y=23~28，带底座）
 fl(24, 28, 35, 42, BOWL_W)
 wrow(23, 36, 41, BOWL_D)
 wcol(35, 24, 28, BOWL_D)
 wcol(42, 24, 28, BOWL_D)
 fl(24, 26, 36, 41, MATCHA)
 wrow(24, 36, 41, MATCHA_F)
+# 碗底座（窄，居中，y=29）
+wrow(29, 37, 40, BOWL_D)
 
 # 茶筅：短柄 + 扇形发散刷条
 # 柄（顶部露出，y=20~22，中间2格）
