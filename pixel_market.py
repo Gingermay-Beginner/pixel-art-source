@@ -359,14 +359,14 @@ wrow(28, 20, 22, PINE_Y)
 sp(20, 24, PINE_YL)
 sp(19, 25, PINE_YD); sp(23, 25, PINE_YD)
 
-# 右手豌豆荚（上移6格，x=30~31, y=22~28）
-sp(30, 22, PEA_G)
-sp(30, 23, PEA_L); sp(31, 23, PEA_G)
-sp(30, 24, PEA_G); sp(31, 24, PEA_G)
-sp(30, 25, PEA_L); sp(31, 25, PEA_G)
-sp(30, 26, PEA_G); sp(31, 26, PEA_G)
-sp(30, 27, PEA_L); sp(31, 27, PEA_G)
-sp(30, 28, PEA_G)
+# 右手豌豆荚（x=30~31, y=23~29）
+sp(31, 23, PEA_G)
+sp(30, 24, PEA_L); sp(31, 24, PEA_G)
+sp(30, 25, PEA_G); sp(31, 25, PEA_G)
+sp(30, 26, PEA_L); sp(31, 26, PEA_G)
+sp(30, 27, PEA_G); sp(31, 27, PEA_G)
+sp(30, 28, PEA_L); sp(31, 28, PEA_G)
+sp(31, 29, PEA_G)
 # ── 蓝兔子（坐，居中右区）──
 BCX, BCY = 37, 21
 # 耳朵（粉色外侧）
