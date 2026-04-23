@@ -24,40 +24,47 @@ def wcol(x, y1, y2, c):
         sp(x, y, c)
 
 # ── 颜色 ──
-SKY      = (235, 240, 248)   # 室内背景（浅蓝灰）
-WALL     = (225, 218, 205)   # 墙面
-WALL_D   = (198, 190, 175)   # 墙面暗
-FLOOR    = (198, 182, 158)   # 地板暖木色
-FLOOR_D  = (175, 158, 132)   # 地板纹
-FLOOR_L  = (218, 205, 182)   # 地板亮
+WALL     = (225, 218, 205)
+WALL_D   = (198, 190, 175)
+SKY      = (235, 240, 248)
+FLOOR    = (198, 182, 158)
+FLOOR_D  = (175, 158, 132)
+FLOOR_L  = (218, 205, 182)
 
-TABLE    = (228, 215, 192)   # 桌面
-TABLE_D  = (195, 182, 158)   # 桌面暗边
-TABLE_E  = (175, 162, 138)   # 桌沿
+# 俯视桌面（暖木色，参考 Bagel Day）
+TABLE    = (188, 162, 118)
+TABLE_D  = (168, 142,  98)
+TABLE_E  = (138, 112,  72)
 
-# 抹茶相关
-MATCHA   = ( 88, 148,  72)   # 抹茶绿
-MATCHA_L = (118, 178,  95)   # 抹茶亮
-MATCHA_F = (148, 198, 118)   # 抹茶泡沫
-CUP_W    = (245, 248, 252)   # 透明杯（接近白）
-CUP_T    = (195, 215, 232)   # 杯壁透明感
-BOWL_W   = (238, 232, 220)   # 茶碗米白
-BOWL_D   = (205, 198, 182)   # 茶碗暗
-ICE      = (215, 235, 248)   # 冰块
-MILK     = (248, 245, 238)   # 牛奶白
+# 后台架子
+SHELF    = (212, 200, 178)
+SHELF_D  = (185, 172, 148)
 
-# 糖浆瓶颜色
-SYR_CO   = (228, 195, 148)   # 椰子
-SYR_MG   = (235, 178,  72)   # 芒果
-SYR_PS   = (228, 118,  88)   # 热情果
-SYR_ST   = (215,  72,  88)   # 草莓
-SYR_BL   = ( 88, 115, 195)   # 蓝莓
+MATCHA   = ( 88, 148,  72)
+MATCHA_L = (118, 178,  95)
+MATCHA_F = (148, 198, 118)
+CUP_W    = (245, 248, 252)
+CUP_T    = (195, 215, 232)
+ICE      = (215, 235, 248)
+MILK     = (248, 245, 238)
+MILK_D   = (215, 210, 200)
 
-# 茶筅（小扫帚刷）
-WHISK    = (148, 118,  72)   # 竹色
-WHISK_D  = (108,  82,  48)   # 竹暗
+SYR_CO   = (228, 195, 148)
+SYR_MG   = (235, 178,  72)
+SYR_PS   = (228, 118,  88)
+SYR_ST   = (215,  72,  88)
+SYR_BL   = ( 88, 115, 195)
 
-# 角色
+WHISK    = (148, 118,  72)
+WHISK_D  = (108,  82,  48)
+BOWL_W   = (238, 232, 220)
+BOWL_D   = (205, 198, 182)
+
+ICE_BK   = (175, 192, 208)
+ICE_BK_D = (148, 168, 188)
+MATCHA_TIN = ( 72, 128,  58)
+MATCHA_TD  = ( 52, 105,  42)
+
 GB       = (185, 108,  48)
 GBD      = (140,  82,  35)
 GB_EYE   = ( 62,  35,  15)
@@ -66,154 +73,170 @@ HAT_RED  = (188,  55,  48)
 HAT_DARK = (135,  32,  28)
 HAT_LITE = (215,  88,  72)
 
-BUN_B    = ( 88, 158, 228)   # 蓝兔子身体
-BUN_IN   = (228, 185, 195)   # 耳朵内粉
+BUN_B    = ( 88, 158, 228)
+BUN_IN   = (228, 185, 195)
 BUN_EYE  = ( 35,  55, 105)
-BUN_D    = ( 62, 118, 188)   # 暗蓝
+BUN_D    = ( 62, 118, 188)
 
 # ── 背景 ──
-# 墙
-fl(0, 22, 0, 63, WALL)
-# 窗户（WeWork大窗）
-fl(2, 18, 4, 28, SKY)
-fl(2, 18, 32, 58, SKY)
-# 窗框
-wrow(1, 4, 28, WALL_D)
-wrow(1, 32, 58, WALL_D)
-wrow(19, 4, 28, WALL_D)
-wrow(19, 32, 58, WALL_D)
-wcol(3, 2, 18, WALL_D)
-wcol(29, 2, 18, WALL_D)
-wcol(31, 2, 18, WALL_D)
-wcol(59, 2, 18, WALL_D)
-# 中间隔断
-wcol(30, 0, 22, WALL)
+fl(0, 18, 0, 63, WALL)
 
-# 地板
-fl(23, 35, 0, 63, FLOOR)
-# 地板木纹
-for row in range(23, 36, 3):
+# 窗（两扇）
+fl(1, 16, 2, 22, SKY)
+fl(1, 16, 40, 61, SKY)
+for wx1, wx2 in [(2,22),(40,61)]:
+    wrow(0, wx1, wx2, WALL_D)
+    wrow(17, wx1, wx2, WALL_D)
+    wcol(wx1-1, 1, 16, WALL_D)
+    wcol(wx2+1, 1, 16, WALL_D)
+
+# 地板（桌子下方可见）
+fl(19, 35, 0, 63, FLOOR)
+for row in range(20, 36, 3):
     wrow(row, 0, 63, FLOOR_L)
-for row in range(25, 36, 3):
+for row in range(22, 36, 3):
     wrow(row, 0, 63, FLOOR_D)
 
-# WeWork logo 区域（墙中间）
-fl(8, 12, 30, 32, WALL_D)
+# ── 后台架子（y=16~18, x=4~59）──
+fl(16, 18, 4, 59, SHELF)
+wrow(16, 4, 59, SHELF_D)
+wrow(18, 4, 59, SHELF_D)
 
-# ── 操作台（桌子）──
-# 桌面 y=20~22，x=8~55
-fl(20, 21, 8, 55, TABLE)
-wrow(20, 8, 55, TABLE_D)   # 桌面前缘暗边
-wrow(22, 8, 55, TABLE_E)   # 桌沿底
-wcol(8, 20, 22, TABLE_D)
-wcol(55, 20, 22, TABLE_D)
+# 架子上物品：3个牛奶盒 + 冰桶 + 抹茶粉罐
+# 牛奶盒（x=5~8, 10~13, 15~18）
+for mx in [5, 10, 15]:
+    fl(12, 15, mx, mx+3, MILK)
+    wcol(mx, 12, 15, MILK_D)
+    wcol(mx+3, 12, 15, MILK_D)
+    wrow(15, mx, mx+3, MILK_D)
+    sp(mx+1, 11, MILK); sp(mx+2, 11, MILK)
+    sp(mx, 12, MILK_D); sp(mx+3, 12, MILK_D)
+    sp(mx+1, 10, MILK); sp(mx+2, 10, MILK)
 
-# ── 糖浆瓶（5个，x=10~28，y=13~20）──
+# 冰桶（x=21~26, y=10~15）
+fl(10, 15, 21, 26, ICE_BK)
+fl(11, 14, 22, 25, ICE)
+sp(22, 12, CUP_W); sp(24, 13, CUP_W)
+wcol(21, 10, 15, ICE_BK_D)
+wcol(26, 10, 15, ICE_BK_D)
+wrow(15, 21, 26, ICE_BK_D)
+sp(20, 10, ICE_BK_D); sp(27, 10, ICE_BK_D)
+
+# 抹茶粉罐（x=29~32, y=11~15）
+fl(11, 15, 29, 32, MATCHA_TIN)
+wrow(10, 29, 32, MATCHA_TD)
+wcol(29, 11, 15, MATCHA_TD)
+wcol(32, 11, 15, MATCHA_TD)
+sp(30, 13, MATCHA_F); sp(31, 13, MATCHA_F)
+
+# ── 俯视桌面（y=19~35, x=4~59）──
+fl(19, 35, 4, 59, TABLE)
+# 木纹（横向）
+for row in range(21, 36, 4):
+    wrow(row, 4, 59, TABLE_D)
+# 桌边（上边 = 近景前缘）
+wrow(35, 4, 59, TABLE_E)
+wcol(4, 19, 35, TABLE_E)
+wcol(59, 19, 35, TABLE_E)
+
+# ── 桌上物品（俯视桌面上，侧视物品）──
+
+# 5个糖浆瓶（前排，x=6~28, y=25~33）
 syrup_colors = [SYR_CO, SYR_MG, SYR_PS, SYR_ST, SYR_BL]
 for i, sc in enumerate(syrup_colors):
-    bx = 10 + i*4
-    # 瓶身
-    fl(15, 20, bx, bx+2, sc)
-    # 瓶颈
-    fl(13, 14, bx+1, bx+1, sc)
-    # 瓶盖
-    sp(bx+1, 12, WALL_D)
-    # 瓶身暗边
-    wcol(bx+2, 15, 20, (max(0,sc[0]-30), max(0,sc[1]-30), max(0,sc[2]-30)))
+    bx = 6 + i*5
+    fl(26, 32, bx, bx+3, sc)
+    fl(23, 25, bx+1, bx+2, sc)
+    sp(bx+1, 22, WALL_D); sp(bx+2, 22, WALL_D)
+    wcol(bx+3, 26, 32, (max(0,sc[0]-35), max(0,sc[1]-35), max(0,sc[2]-35)))
 
-# ── 抹茶碗（x=35~41, y=17~20）──
-fl(18, 20, 35, 41, BOWL_W)
-wrow(17, 36, 40, BOWL_D)   # 碗口
-wcol(35, 18, 20, BOWL_D)
-wcol(41, 18, 20, BOWL_D)
-# 抹茶液
-fl(18, 19, 36, 40, MATCHA)
-wrow(18, 36, 40, MATCHA_F)  # 泡沫
+# 抹茶碗（x=35~42, y=23~28）
+fl(24, 28, 35, 42, BOWL_W)
+wrow(23, 36, 41, BOWL_D)
+wcol(35, 24, 28, BOWL_D)
+wcol(42, 24, 28, BOWL_D)
+fl(24, 26, 36, 41, MATCHA)
+wrow(24, 36, 41, MATCHA_F)
 
-# ── 茶筅（x=43~44, y=14~20）──
-# 柄
-wcol(43, 14, 18, WHISK)
-wcol(44, 14, 18, WHISK)
-# 刷毛（下端散开）
-for fx in range(41, 47):
-    sp(fx, 19, WHISK_D)
+# 茶筅：短柄（y=20~21）+ 长刷条（y=22~28）
+# 柄（1/3）
+wcol(44, 20, 21, WHISK)
+wcol(45, 20, 21, WHISK)
+# 刷条（2/3，向下散开）
+for fx in range(41, 50):
+    if fx in [44, 45]:
+        for fy in range(22, 29): sp(fx, fy, WHISK)
+    elif fx in [42, 43, 46, 47]:
+        for fy in range(23, 29): sp(fx, fy, WHISK_D)
+    elif fx in [41, 48]:
+        for fy in range(25, 29): sp(fx, fy, WHISK_D)
+# 刷条底端散开
+for fx in range(40, 51):
     if fx % 2 == 0:
-        sp(fx, 20, WHISK_D)
+        sp(fx, 29, WHISK_D)
 
-# ── 透明杯（x=47~52, y=13~20）──
-fl(13, 20, 47, 52, CUP_W)
-wcol(47, 13, 20, CUP_T)
-wcol(52, 13, 20, CUP_T)
-wrow(20, 47, 52, CUP_T)
-# 冰块
-fl(16, 19, 48, 51, ICE)
-for ix in [48, 50]:
-    sp(ix, 17, CUP_W)
-# 抹茶层（底部）
-wrow(20, 48, 51, MATCHA)
-wrow(19, 48, 51, MATCHA_L)
-# 杯盖
-fl(12, 12, 47, 52, CUP_T)
-wrow(11, 48, 51, CUP_T)
-# 吸管
-wcol(50, 9, 12, MATCHA)
+# 透明杯（x=49~55, y=20~31）
+fl(20, 31, 49, 55, CUP_W)
+wcol(49, 20, 31, CUP_T)
+wcol(55, 20, 31, CUP_T)
+wrow(31, 49, 55, CUP_T)
+fl(23, 29, 50, 54, ICE)
+sp(50, 25, CUP_W); sp(53, 26, CUP_W)
+wrow(31, 50, 54, MATCHA)
+wrow(30, 50, 54, MATCHA_L)
+fl(18, 19, 49, 55, CUP_T)
+wrow(17, 50, 54, CUP_T)
+wcol(52, 13, 18, MATCHA)  # 吸管
 
-# ── 牛奶盒（x=32~34, y=14~20）──
-fl(14, 20, 32, 34, MILK)
-wrow(14, 32, 34, WALL_D)
-wcol(32, 14, 20, TABLE_D)
-wcol(34, 14, 20, TABLE_D)
-# 牛奶盒顶三角
-sp(32, 13, MILK); sp(33, 12, MILK); sp(34, 13, MILK)
-
-# ── 姜饼人（打抹茶，站在桌后 x=38~44, y=10~19）──
-GCX, GCY = 40, 10
+# ── 姜饼人（左，x=14~24, y=3~18）──
+GCX, GCY = 18, 3
 # 帽子
-fl(GCY, GCY+1, GCX-2, GCX+2, HAT_RED)
-sp(GCX, GCY-1, HAT_DARK)  # 小啾啾
-wcol(GCX-2, GCY, GCY+1, HAT_DARK)
-wcol(GCX+2, GCY, GCY+1, HAT_DARK)
-sp(GCX-1, GCY, HAT_LITE)
-# 头
-fl(GCY+2, GCY+5, GCX-3, GCX+3, GB)
-sp(GCX-3, GCY+2, WALL); sp(GCX+3, GCY+2, WALL)  # 圆角
-sp(GCX-3, GCY+5, WALL); sp(GCX+3, GCY+5, WALL)
-# 眼睛腮红
-sp(GCX-1, GCY+3, GB_EYE); sp(GCX+1, GCY+3, GB_EYE)
-sp(GCX-2, GCY+4, GB_CHEEK); sp(GCX+2, GCY+4, GB_CHEEK)
-sp(GCX-1, GCY+5, GBD); sp(GCX, GCY+5, GBD)  # 嘴
-# 身体
-fl(GCY+6, GCY+9, GCX-2, GCX+2, GB)
-sp(GCX, GCY+7, GB_CHEEK); sp(GCX, GCY+9, GB_CHEEK)  # 扣子
-# 手臂（往下持茶筅）
-sp(GCX-3, GCY+7, GB); sp(GCX-3, GCY+8, GB)
-sp(GCX+3, GCY+7, GB); sp(GCX+3, GCY+8, GB)
-sp(GCX+4, GCY+8, GB)  # 右手延伸持茶筅
+fl(GCY, GCY+2, GCX-3, GCX+3, HAT_RED)
+sp(GCX, GCY-1, HAT_DARK)
+wcol(GCX-3, GCY, GCY+2, HAT_DARK)
+wcol(GCX+3, GCY, GCY+2, HAT_DARK)
+sp(GCX-2, GCY, HAT_LITE)
+# 头（9宽）
+fl(GCY+3, GCY+8, GCX-4, GCX+4, GB)
+sp(GCX-4, GCY+3, WALL); sp(GCX+4, GCY+3, WALL)
+sp(GCX-4, GCY+8, WALL); sp(GCX+4, GCY+8, WALL)
+sp(GCX-2, GCY+5, GB_EYE); sp(GCX+2, GCY+5, GB_EYE)
+sp(GCX-3, GCY+6, GB_CHEEK); sp(GCX+3, GCY+6, GB_CHEEK)
+sp(GCX-1, GCY+7, GBD); sp(GCX, GCY+7, GBD); sp(GCX+1, GCY+7, GBD)
+# 脖子
+sp(GCX-1, GCY+9, GB); sp(GCX, GCY+9, GB); sp(GCX+1, GCY+9, GB)
+# 身体（藏桌后）
+fl(GCY+10, GCY+14, GCX-3, GCX+3, GB)
+sp(GCX, GCY+11, GB_CHEEK); sp(GCX, GCY+13, GB_CHEEK)
+# 手臂搭桌（y=19）
+sp(GCX-4, GCY+10, GB); sp(GCX-4, GCY+11, GB)
+sp(GCX+4, GCY+10, GB); sp(GCX+4, GCY+11, GB)
+sp(GCX+5, GCY+12, GB)
 
-# ── 蓝兔子（选糖浆，x=16~22, y=10~19）──
-BCX, BCY = 18, 10
+# ── 蓝兔子（右，x=38~48, y=2~18）──
+BCX, BCY = 43, 3
 # 耳朵
 fl(BCY-3, BCY, BCX-1, BCX-1, BUN_B)
 fl(BCY-3, BCY, BCX+1, BCX+1, BUN_B)
 fl(BCY-2, BCY, BCX-2, BCX-2, BUN_IN)
 fl(BCY-2, BCY, BCX+2, BCX+2, BUN_IN)
-# 头
-fl(BCY+1, BCY+4, BCX-3, BCX+3, BUN_B)
-sp(BCX-3, BCY+1, WALL); sp(BCX+3, BCY+1, WALL)
-sp(BCX-3, BCY+4, WALL); sp(BCX+3, BCY+4, WALL)
-# 连心眉
-for bx in [BCX-2, BCX-1]: sp(bx, BCY+2, BUN_D)
-sp(BCX, BCY+2, BUN_IN)
-for bx in [BCX+1, BCX+2]: sp(bx, BCY+2, BUN_D)
-# 眼睛腮红
-sp(BCX-1, BCY+3, BUN_EYE); sp(BCX+1, BCY+3, BUN_EYE)
-sp(BCX-2, BCY+4, BUN_IN); sp(BCX+2, BCY+4, BUN_IN)
-sp(BCX-1, BCY+5, BUN_B); sp(BCX, BCY+5, BUN_B); sp(BCX+1, BCY+5, BUN_B)  # 嘴白
-# 身体
-fl(BCY+5, BCY+9, BCX-2, BCX+2, BUN_B)
-sp(BCX-3, BCY+6, BUN_B); sp(BCX-3, BCY+7, BUN_B)  # 手臂
-sp(BCX+3, BCY+6, BUN_B); sp(BCX+3, BCY+7, BUN_B)
-sp(BCX+4, BCY+7, BUN_B)  # 右手伸向糖浆瓶
+# 头（9宽）
+fl(BCY+1, BCY+6, BCX-4, BCX+4, BUN_B)
+sp(BCX-4, BCY+1, WALL); sp(BCX+4, BCY+1, WALL)
+sp(BCX-4, BCY+6, WALL); sp(BCX+4, BCY+6, WALL)
+for bx in [BCX-3, BCX-2]: sp(bx, BCY+3, BUN_D)
+sp(BCX-1, BCY+3, BUN_IN); sp(BCX, BCY+3, BUN_IN); sp(BCX+1, BCY+3, BUN_IN)
+for bx in [BCX+2, BCX+3]: sp(bx, BCY+3, BUN_D)
+sp(BCX-2, BCY+4, BUN_EYE); sp(BCX+2, BCY+4, BUN_EYE)
+sp(BCX-3, BCY+5, BUN_IN); sp(BCX+3, BCY+5, BUN_IN)
+sp(BCX-1, BCY+6, BUN_B); sp(BCX, BCY+6, BUN_B); sp(BCX+1, BCY+6, BUN_B)
+# 脖子
+sp(BCX-1, BCY+7, BUN_B); sp(BCX, BCY+7, BUN_B); sp(BCX+1, BCY+7, BUN_B)
+# 身体（藏桌后）
+fl(BCY+8, BCY+14, BCX-3, BCX+3, BUN_B)
+# 手臂
+sp(BCX-4, BCY+9, BUN_B); sp(BCX-4, BCY+10, BUN_B)
+sp(BCX+4, BCY+9, BUN_B); sp(BCX+4, BCY+10, BUN_B)
 
 img.save('pixel_matcha.png')
 print(f"Saved: {W*S}x{H*S}px")
