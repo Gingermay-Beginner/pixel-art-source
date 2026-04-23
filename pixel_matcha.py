@@ -158,22 +158,27 @@ wcol(42, 24, 28, BOWL_D)
 fl(24, 26, 36, 41, MATCHA)
 wrow(24, 36, 41, MATCHA_F)
 
-# 茶筅：短柄（y=20~21）+ 长刷条（y=22~28）
-# 柄（1/3）
-wcol(44, 20, 21, WHISK)
-wcol(45, 20, 21, WHISK)
-# 刷条（2/3，向下散开）
-for fx in range(41, 50):
-    if fx in [44, 45]:
-        for fy in range(22, 29): sp(fx, fy, WHISK)
-    elif fx in [42, 43, 46, 47]:
-        for fy in range(23, 29): sp(fx, fy, WHISK_D)
-    elif fx in [41, 48]:
-        for fy in range(25, 29): sp(fx, fy, WHISK_D)
-# 刷条底端散开
-for fx in range(40, 51):
-    if fx % 2 == 0:
-        sp(fx, 29, WHISK_D)
+# 茶筅：短柄 + 扇形发散刷条
+# 柄（顶部露出，y=20~22，中间2格）
+wcol(44, 20, 22, WHISK)
+wcol(45, 20, 22, WHISK)
+# 扇形：每行逐渐变宽，交替颜色做条纹，底部凹凸
+# 中心 cx=44.5，每往下1行两侧各扩0.6格
+cx = 44
+for fy in range(22, 32):
+    spread = int((fy - 22) * 0.7)
+    x1 = cx - spread
+    x2 = cx + 1 + spread
+    for bx in range(x1, x2+1):
+        # 交替亮暗做条纹（按列）
+        bc = WHISK if (bx % 2 == 0) else WHISK_D
+        sp(bx, fy, bc)
+# 底部凹凸（最后2行做锯齿）
+for bx in range(cx-6, cx+8):
+    if (bx + 0) % 2 == 0:
+        sp(bx, 32, WHISK_D)
+    else:
+        sp(bx, 31, WHISK)
 
 # 透明杯（x=49~55, y=20~31）
 fl(20, 31, 49, 55, CUP_W)
