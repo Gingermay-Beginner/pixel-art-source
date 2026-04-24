@@ -115,37 +115,38 @@ for row in range(20, 36, 3):
 for row in range(22, 36, 3):
     wrow(row, 0, 63, FLOOR_D)
 
-# ── 后台架子（y=16~18, x=4~59）──
-fl(16, 18, 4, 59, SHELF)
-wrow(16, 4, 59, SHELF_D)
-wrow(18, 4, 59, SHELF_D)
+# ── 墙上架子（y=9~10, x=2~61）──
+fl(9, 10, 2, 61, SHELF)
+wrow(9, 2, 61, SHELF_D)
+wrow(10, 2, 61, SHELF_D)
 
-# 架子上物品：3个牛奶盒 + 冰桶 + 抹茶粉罐
-# 牛奶盒（x=5~8, 10~13, 15~18）
+# 架子上物品：3个牛奶盒（尖顶） + 抹茶粉罐
+# 牛奶盒（x=5~8, 10~13, 15~18），盒体 y=3~9，尖顶
 for mx in [5, 10, 15]:
-    fl(12, 15, mx, mx+3, MILK)
-    wcol(mx, 12, 15, MILK_D)
-    wcol(mx+3, 12, 15, MILK_D)
-    wrow(15, mx, mx+3, MILK_D)
-    sp(mx+1, 11, MILK); sp(mx+2, 11, MILK)
-    sp(mx, 12, MILK_D); sp(mx+3, 12, MILK_D)
-    sp(mx+1, 10, MILK); sp(mx+2, 10, MILK)
+    fl(3, 9, mx, mx+3, MILK)
+    wcol(mx, 3, 9, MILK_D)
+    wcol(mx+3, 3, 9, MILK_D)
+    wrow(9, mx, mx+3, MILK_D)
+    sp(mx+1, 2, MILK); sp(mx+2, 2, MILK)
+    sp(mx+1, 1, MILK); sp(mx+2, 1, MILK)
+    sp(mx, 2, MILK_D); sp(mx+3, 2, MILK_D)
+    sp(mx+1, 0, MILK_D)
 
-# 冰桶（x=21~26, y=10~15）
-fl(10, 15, 21, 26, ICE_BK)
-fl(11, 14, 22, 25, ICE)
-sp(22, 12, CUP_W); sp(24, 13, CUP_W)
-wcol(21, 10, 15, ICE_BK_D)
-wcol(26, 10, 15, ICE_BK_D)
-wrow(15, 21, 26, ICE_BK_D)
-sp(20, 10, ICE_BK_D); sp(27, 10, ICE_BK_D)
+# 抹茶粉罐（x=20~23, y=3~9）
+fl(3, 9, 20, 23, MATCHA_TIN)
+wrow(2, 20, 23, MATCHA_TD)
+wcol(20, 3, 9, MATCHA_TD)
+wcol(23, 3, 9, MATCHA_TD)
+sp(21, 5, MATCHA_F); sp(22, 5, MATCHA_F)
 
-# 抹茶粉罐（x=29~32, y=11~15）
-fl(11, 15, 29, 32, MATCHA_TIN)
-wrow(10, 29, 32, MATCHA_TD)
-wcol(29, 11, 15, MATCHA_TD)
-wcol(32, 11, 15, MATCHA_TD)
-sp(30, 13, MATCHA_F); sp(31, 13, MATCHA_F)
+# 冰桶（右边，x=50~57, y=3~9）
+fl(3, 9, 50, 57, ICE_BK)
+fl(4, 8, 51, 56, ICE)
+sp(51, 5, CUP_W); sp(53, 6, CUP_W); sp(55, 5, CUP_W)
+wcol(50, 3, 9, ICE_BK_D)
+wcol(57, 3, 9, ICE_BK_D)
+wrow(9, 50, 57, ICE_BK_D)
+sp(49, 3, ICE_BK_D); sp(58, 3, ICE_BK_D)
 
 # ── 俯视桌面（y=19~35, x=4~59）──
 fl(19, 35, 0, 63, TABLE)
