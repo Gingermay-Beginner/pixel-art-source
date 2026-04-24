@@ -206,12 +206,12 @@ sp(GCX-1, GCY+1, HAT_DARK); sp(GCX, GCY+1, HAT_LITE); sp(GCX+3, GCY+1, HAT_DARK)
 # 身体（藏桌后）
 fl(GCY+10, GCY+14, GCX-2, GCX+2, GB)
 sp(GCX, GCY+11, GB_CHEEK); sp(GCX, GCY+13, GB_CHEEK)
-# 手臂伸向茶器（2格宽，肩膀圆角）
-sp(GCX-3, GCY+9, GB)
-for _ay in range(GCY+10, GCY+17):
+# 手臂伸向茶器（2格宽，肩膀下移1格，手不动）
+sp(GCX-3, GCY+10, GB)
+for _ay in range(GCY+11, GCY+17):
     sp(GCX-3, _ay, GB); sp(GCX-4, _ay, GB)
-sp(GCX+3, GCY+9, GB)
-for _ay in range(GCY+10, GCY+17):
+sp(GCX+3, GCY+10, GB)
+for _ay in range(GCY+11, GCY+17):
     sp(GCX+3, _ay, GB); sp(GCX+4, _ay, GB)
 # 左臂延伸 x=13，右臂延伸 x=23（镜像）
 sp(GCX-5, GCY+15, GB); sp(GCX-5, GCY+16, GB)
@@ -247,12 +247,12 @@ sp(BCX-1, BCY+6, BUN_B); sp(BCX, BCY+6, BUN_B); sp(BCX+1, BCY+6, BUN_B)
 sp(BCX-2, BCY+7, BUN_B); sp(BCX-1, BCY+7, BUN_B); sp(BCX, BCY+7, BUN_B); sp(BCX+1, BCY+7, BUN_B); sp(BCX+2, BCY+7, BUN_B)
 # 身体（藏桌后）
 fl(BCY+8, BCY+12, BCX-2, BCX+2, BUN_B)
-# 手臂伸向茶器（2格宽，肩膀圆角=外列从+1行开始）
-sp(BCX-3, BCY+7, BUN_B)
-for _ay in range(BCY+8, BCY+15):
+# 手臂伸向茶器（肩膀下移1格，手不动）
+sp(BCX-3, BCY+8, BUN_B)
+for _ay in range(BCY+9, BCY+15):
     sp(BCX-3, _ay, BUN_B); sp(BCX-4, _ay, BUN_B)
-sp(BCX+3, BCY+7, BUN_B)
-for _ay in range(BCY+8, BCY+15):
+sp(BCX+3, BCY+8, BUN_B)
+for _ay in range(BCY+9, BCY+15):
     sp(BCX+3, _ay, BUN_B); sp(BCX+4, _ay, BUN_B)
 # 两臂延伸（镜像）
 sp(BCX-5, BCY+13, BUN_B); sp(BCX-5, BCY+14, BUN_B)
