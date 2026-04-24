@@ -289,10 +289,12 @@ wrow(25, 45, 48, BOWL_D)
 sp(51, 21, BOWL_D)
 sp(50, 21, MATCHA)
 
-# 茶筅（右移2格，y=18~25）
-sp(40,18,WHISK); sp(41,18,WHISK)
-sp(40,19,WHISK); sp(41,19,WHISK_D)
-sp(40,20,WHISK); sp(41,20,WHISK_D)
+# 茶筅（定稿：手柄提亮）
+HANDLE_W = (232, 218, 155)
+HANDLE_D2= (225, 208, 135)
+sp(40,18,HANDLE_W); sp(41,18,HANDLE_W)
+sp(40,19,HANDLE_W); sp(41,19,HANDLE_D2)
+sp(40,20,HANDLE_W); sp(41,20,HANDLE_D2)
 sp(39,21,WHISK_D); sp(40,21,WHISK); sp(41,21,WHISK_D); sp(42,21,WHISK)
 sp(39,22,WHISK_D); sp(40,22,WHISK); sp(41,22,WHISK_D); sp(42,22,WHISK)
 sp(38,23,WHISK); sp(39,23,WHISK_D); sp(40,23,WHISK); sp(41,23,WHISK_D); sp(42,23,WHISK); sp(43,23,WHISK_D)
@@ -344,10 +346,10 @@ wrow(25, 20, 23, BOWL_D)
 # 碗口右侧尖嘴
 sp(26, 21, BOWL_D)
 sp(25, 21, MATCHA)
-# 茶筅（右移2格，y=18~25）
-sp(15,18,WHISK); sp(16,18,WHISK)
-sp(15,19,WHISK); sp(16,19,WHISK_D)
-sp(15,20,WHISK); sp(16,20,WHISK_D)
+# 茶筅（姜饼人前，定稿：手柄提亮）
+sp(15,18,HANDLE_W); sp(16,18,HANDLE_W)
+sp(15,19,HANDLE_W); sp(16,19,HANDLE_D2)
+sp(15,20,HANDLE_W); sp(16,20,HANDLE_D2)
 sp(14,21,WHISK_D); sp(15,21,WHISK); sp(16,21,WHISK_D); sp(17,21,WHISK)
 sp(14,22,WHISK_D); sp(15,22,WHISK); sp(16,22,WHISK_D); sp(17,22,WHISK)
 sp(13,23,WHISK); sp(14,23,WHISK_D); sp(15,23,WHISK); sp(16,23,WHISK_D); sp(17,23,WHISK); sp(18,23,WHISK_D)
