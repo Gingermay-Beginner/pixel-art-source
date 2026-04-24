@@ -117,30 +117,30 @@ fl(10, 11, 2, 61, SHELF)
 wrow(11, 2, 61, SHELF_D)
 
 # ── 架子左边马克杯金字塔（底2顶1）──
-MUG     = ( 42,  38,  35)
-MUG_L   = ( 68,  62,  58)
-MUG_IN  = ( 28,  25,  22)
+MUG     = (178, 168, 155)
+MUG_L   = (185, 176, 163)
+MUG_IN  = (165, 156, 144)
 
-# 底层左杯（x=2~6, y=6~9）
-fl(7, 9, 2, 6, MUG)
-wrow(6, 2, 6, MUG_L)
-wrow(9, 2, 6, MUG)
-sp(7, 7, MUG); sp(7, 8, MUG)
-fl(7, 8, 3, 5, MUG_IN)
+# 底层左杯（x=4~7, y=6~9，4格宽）
+fl(7, 9, 4, 7, MUG)
+wrow(6, 4, 7, MUG_L)
+wrow(9, 4, 7, MUG)
+sp(8, 7, MUG); sp(8, 8, MUG)
+fl(7, 8, 5, 6, MUG_IN)
 
-# 底层右杯（x=8~12, y=6~9，间隔1格）
-fl(7, 9, 8, 12, MUG)
-wrow(6, 8, 12, MUG_L)
-wrow(9, 8, 12, MUG)
+# 底层右杯（x=9~12, y=6~9，4格宽，间隔1格）
+fl(7, 9, 9, 12, MUG)
+wrow(6, 9, 12, MUG_L)
+wrow(9, 9, 12, MUG)
 sp(13, 7, MUG); sp(13, 8, MUG)
-fl(7, 8, 9, 11, MUG_IN)
+fl(7, 8, 10, 11, MUG_IN)
 
-# 顶层杯（x=4~9, y=2~5，上移1格）
-fl(3, 5, 4, 9, MUG)
-wrow(2, 4, 9, MUG_L)
-wrow(5, 4, 9, MUG)
+# 顶层杯（x=6~9, y=2~5，4格宽居中）
+fl(3, 5, 6, 9, MUG)
+wrow(2, 6, 9, MUG_L)
+wrow(5, 6, 9, MUG)
 sp(10, 3, MUG); sp(10, 4, MUG)
-fl(3, 4, 5, 8, MUG_IN)
+fl(3, 4, 7, 8, MUG_IN)
 
 wrow(11, 2, 61, SHELF_D)
 
