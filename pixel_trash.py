@@ -75,51 +75,65 @@ fl(32, 35, 0, 63, ROAD)
 
 # ── 房子 x=17~47 ──
 HX1, HX2, HC = 13, 51, 32
-fl(11, 27, HX1, HX2, WALL)
-wcol(HX1, 11, 27, WALL_D); wcol(HX2, 11, 27, WALL_D)
-fl(11, 13, HX1+1, HX2-1, WALL_S)
+WALL_B  = (195, 172, 138)
+WALL_BD = (158, 135, 102)
+WALL_BL = (218, 198, 165)
+ROOF_B  = (115,  75,  48)
+ROOF_BL = (145,  98,  65)
+RIDGE_B = ( 82,  52,  32)
+DOOR_B  = ( 88,  52,  35)
+DOOR_BD = ( 62,  35,  22)
+DOOR_BW = (215, 198, 165)
+WIN_B   = (185, 215, 235)
+WIN_BD  = ( 75, 128, 168)
+WIN_BF  = (108, 165, 205)
+BRICK   = (188, 105,  72)
+BRICK_D = (155,  78,  48)
+BEAM    = (142, 105,  68)
 
-# 斜屋顶（峰顶y=5，屋檐y=12）
-for y in range(3, 12):
-    t = (y - 3) / 8
-    x1 = round(HC - t * (HC - HX1))
-    x2 = round(HC + t * (HX2 - HC))
+fl(11, 27, HX1, HX2, WALL_B)
+wcol(HX1, 11, 27, WALL_BD); wcol(HX2, 11, 27, WALL_BD)
+# 砖石腰线
+fl(20, 21, HX1, HX2, BRICK)
+wrow(20, HX1, HX2, BRICK_D); wrow(21, HX1, HX2, BRICK_D)
+for bx in range(HX1, HX2+1, 3): sp(bx, 20, BRICK_D); sp(bx+1, 21, BRICK_D)
+# 屋顶（宽屋檐，伸出2格）
+for y in range(3, 11):
+    t = (y - 3) / 7
+    x1 = round(HC - t * (HC - (HX1-2)))
+    x2 = round(HC + t * ((HX2+2) - HC))
     for x in range(x1, x2+1):
-        sp(x, y, ROOF_L if x < HC else (RIDGE if x == HC else ROOF_R))
-wrow(11, HX1, HX2, ROOF_E)
-
-# 正门（x=27~37，y=12~27）拱门
-fl(15, 27, 27, 37, DOOR)
-wcol(27, 15, 27, DOOR_D); wcol(37, 15, 27, DOOR_D)
-wrow(27, 27, 37, DOOR_D)
-for dx in range(-4, 5): sp(32+dx, 14, DOOR)
-sp(27, 14, WALL); sp(37, 14, WALL)
-for dx in [-3,-2,-1,0,1,2,3]: sp(32+dx, 13, DOOR)
-for dx in [-2,-1,0,1,2]: sp(32+dx, 12, DOOR)
-fl(15, 20, 28, 36, DOOR_W)
-wcol(28, 15, 20, DOOR_D); wcol(36, 15, 20, DOOR_D)
-wrow(15, 28, 36, DOOR_D)
-wcol(32, 20, 27, DOOR_D)
-sp(36, 23, (215, 188, 95)); sp(36, 24, (215, 188, 95))
-wrow(28, 26, 38, WALL_D)
-
-# 左窗（x=18~25）
-fl(13, 19, 18, 25, WIN)
-wcol(18, 13, 19, WIN_D); wcol(25, 13, 19, WIN_D)
-wrow(13, 18, 25, WIN_D); wrow(19, 18, 25, WIN_D)
-fl(14, 18, 19, 24, WIN_G)
-wcol(21, 13, 19, WIN_F); wrow(16, 18, 25, WIN_F)
-for wy in [14,15,17,18]: wrow(wy, 19, 20, WIN_D); wrow(wy, 22, 24, WIN_D)
-wrow(20, 17, 26, WALL_D)
-
-# 右窗（x=39~46）
-fl(13, 19, 39, 46, WIN)
-wcol(39, 13, 19, WIN_D); wcol(46, 13, 19, WIN_D)
-wrow(13, 39, 46, WIN_D); wrow(19, 39, 46, WIN_D)
-fl(14, 18, 40, 45, WIN_G)
-wcol(42, 13, 19, WIN_F); wrow(16, 39, 46, WIN_F)
-for wy in [14,15,17,18]: wrow(wy, 40, 41, WIN_D); wrow(wy, 43, 45, WIN_D)
-wrow(20, 38, 47, WALL_D)
+        sp(x, y, ROOF_BL if x < HC else (RIDGE_B if x == HC else ROOF_B))
+wrow(11, HX1-2, HX2+2, BEAM)
+# 烟囱
+fl(4, 10, 35, 37, BRICK); wrow(3, 35, 37, BRICK_D); wrow(10, 35, 37, WALL_BL)
+for bx in [35, 36, 37]: sp(bx, 5, BRICK_D)
+# 大门（深棕木板纹拱门）
+fl(16, 27, 28, 36, DOOR_B)
+wcol(28, 16, 27, DOOR_BD); wcol(36, 16, 27, DOOR_BD); wrow(27, 28, 36, DOOR_BD)
+for dx in range(-3, 4): sp(32+dx, 15, DOOR_B)
+sp(28, 15, WALL_B); sp(36, 15, WALL_B)
+sp(29, 14, DOOR_B); sp(30, 14, DOOR_B); sp(31, 14, DOOR_B)
+sp(33, 14, DOOR_B); sp(34, 14, DOOR_B); sp(35, 14, DOOR_B)
+sp(31, 13, DOOR_B); sp(32, 13, DOOR_B); sp(33, 13, DOOR_B)
+fl(16, 21, 29, 35, DOOR_BW)
+wcol(29, 16, 21, DOOR_BD); wcol(35, 16, 21, DOOR_BD); wrow(16, 29, 35, DOOR_BD)
+for dy in range(22, 27, 2): wrow(dy, 29, 35, DOOR_BD)
+wcol(32, 21, 27, DOOR_BD)
+sp(35, 24, (215, 188, 95)); sp(35, 25, (215, 188, 95))
+wrow(28, 27, 37, BEAM)
+# 左窗
+fl(13, 19, 16, 22, WIN_B)
+wcol(16, 13, 19, WIN_BD); wcol(22, 13, 19, WIN_BD)
+wrow(13, 16, 22, WIN_BD); wrow(19, 16, 22, WIN_BD)
+wcol(19, 13, 19, WIN_BF); wrow(16, 16, 22, WIN_BF)
+wrow(20, 15, 23, BEAM)
+# 右窗
+fl(13, 19, 43, 49, WIN_B)
+wcol(43, 13, 19, WIN_BD); wcol(49, 13, 19, WIN_BD)
+wrow(13, 43, 49, WIN_BD); wrow(19, 43, 49, WIN_BD)
+wcol(46, 13, 19, WIN_BF); wrow(16, 43, 49, WIN_BF)
+wrow(20, 42, 50, BEAM)
 
 # ── 灌木（全宽，门前断开）──
 rng = random.Random(7)
