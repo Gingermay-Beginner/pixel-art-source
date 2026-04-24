@@ -363,24 +363,29 @@ sp(49, 27, STRAW_R); sp(49, 28, STRAW_R); sp(49, 29, STRAW_R); sp(49, 30, STRAW_
 sp(50, 27, STRAW); sp(50, 28, STRAW); sp(50, 29, STRAW); sp(50, 30, STRAW)
 
 
-# ── 餐巾纸叠（右下角，x=55~61, y=29~34）──
+# ── 餐巾纸+托盘（右下角，总高6格 y=29~34）──
 NAPKIN   = (252, 250, 244)
 NAPKIN_D = (225, 220, 210)
-NAPKIN_S = (205, 200, 188)
+TRAY2    = (145, 118,  82)
+TRAY2_D  = (118,  92,  58)
+TRAY2_L  = (172, 145, 105)
 
-fl(32, 34, 55, 61, NAPKIN)
-wrow(31, 55, 61, NAPKIN_D)
-wcol(55, 32, 34, NAPKIN_D)
-wcol(61, 32, 34, NAPKIN_D)
-wrow(34, 55, 61, NAPKIN_S)
-fl(30, 32, 56, 60, NAPKIN)
-wrow(29, 56, 60, NAPKIN_D)
-wcol(56, 30, 32, NAPKIN_D)
-wcol(60, 30, 32, NAPKIN_D)
-fl(28, 30, 57, 59, NAPKIN)
-wrow(27, 57, 59, NAPKIN_D)
-wcol(57, 28, 30, NAPKIN_D)
-wcol(59, 28, 30, NAPKIN_D)
+# 底层纸（x=55~61, y=31~32）
+fl(31, 32, 55, 61, NAPKIN)
+wrow(30, 55, 61, NAPKIN_D)
+wcol(55, 31, 32, NAPKIN_D)
+wcol(61, 31, 32, NAPKIN_D)
+# 顶层纸（x=56~60, y=29~31）
+fl(29, 31, 56, 60, NAPKIN)
+wrow(28, 56, 60, NAPKIN_D)
+wcol(56, 29, 31, NAPKIN_D)
+wcol(60, 29, 31, NAPKIN_D)
+# 托盘（x=54~62, y=33~34）
+fl(33, 34, 54, 62, TRAY2)
+wrow(32, 54, 62, TRAY2_L)
+wrow(34, 54, 62, TRAY2_D)
+wcol(54, 32, 34, TRAY2_D)
+wcol(62, 32, 34, TRAY2_D)
 
 
 img.save("pixel_matcha.png")
