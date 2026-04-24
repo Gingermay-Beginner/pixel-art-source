@@ -115,19 +115,46 @@ for row in range(22, 36, 3):
 # ── 墙上架子（y=9~10, x=2~61）──
 fl(10, 11, 2, 61, SHELF)
 wrow(11, 2, 61, SHELF_D)
+
+# ── 架子左边马克杯金字塔（底2顶1）──
+MUG     = ( 42,  38,  35)
+MUG_L   = ( 68,  62,  58)
+MUG_IN  = ( 28,  25,  22)
+
+# 底层左杯（x=2~6, y=6~9）
+fl(7, 9, 2, 6, MUG)
+wrow(6, 2, 6, MUG_L)
+wrow(9, 2, 6, MUG)
+sp(7, 7, MUG); sp(7, 8, MUG)
+fl(7, 8, 3, 5, MUG_IN)
+
+# 底层右杯（x=8~12, y=6~9，间隔1格）
+fl(7, 9, 8, 12, MUG)
+wrow(6, 8, 12, MUG_L)
+wrow(9, 8, 12, MUG)
+sp(13, 7, MUG); sp(13, 8, MUG)
+fl(7, 8, 9, 11, MUG_IN)
+
+# 顶层杯（x=4~9, y=2~5，上移1格）
+fl(3, 5, 4, 9, MUG)
+wrow(2, 4, 9, MUG_L)
+wrow(5, 4, 9, MUG)
+sp(10, 3, MUG); sp(10, 4, MUG)
+fl(3, 4, 5, 8, MUG_IN)
+
 wrow(11, 2, 61, SHELF_D)
 
 # 架子上物品：3个牛奶盒（尖顶） + 抹茶粉罐
 # 牛奶盒（x=5~8, 10~13, 15~18），盒体 y=3~9，尖顶
-for mx in [5, 10, 15]:
-    fl(3, 9, mx, mx+3, MILK)
-    wcol(mx, 3, 9, MILK_D)
-    wcol(mx+3, 3, 9, MILK_D)
+for mx in [26, 31, 36]:
+    fl(4, 9, mx, mx+3, MILK)
+    wcol(mx, 4, 9, MILK_D)
+    wcol(mx+3, 4, 9, MILK_D)
     wrow(9, mx, mx+3, MILK_D)
+    sp(mx+1, 3, MILK); sp(mx+2, 3, MILK)
     sp(mx+1, 2, MILK); sp(mx+2, 2, MILK)
-    sp(mx+1, 1, MILK); sp(mx+2, 1, MILK)
-    sp(mx, 2, MILK_D); sp(mx+3, 2, MILK_D)
-    sp(mx+1, 0, MILK_D)
+    sp(mx, 3, MILK_D); sp(mx+3, 3, MILK_D)
+    sp(mx+1, 1, MILK_D)
 
 # 抹茶粉罐（x=30~33, y=3~9，居中）
 
@@ -274,7 +301,7 @@ sp(38,25,WHISK_D); sp(39,25,WHISK); sp(40,25,WHISK_D); sp(41,25,WHISK); sp(42,25
 
 
 # 草莓抹茶杯（左，cx=5，x=3~7，内移3格）
-wcol(8, 12, 17, STRAW)
+wcol(8, 13, 17, STRAW)
 wrow(16, 6, 9, CUP_T)
 wrow(17, 5, 10, CUP_T)
 fl(23, 25, 6, 9, SYRUP)
@@ -287,7 +314,7 @@ sp(6, 20, ICE); sp(6, 21, ICE)
 sp(8, 21, ICE)
 
 # 芒果抹茶杯（右，cx=58，x=56~60，内移3格）
-wcol(55, 12, 17, STRAW)
+wcol(55, 13, 17, STRAW)
 wrow(16, 54, 57, CUP_T)
 wrow(17, 53, 58, CUP_T)
 fl(23, 25, 54, 57, MANGO)
@@ -334,20 +361,20 @@ PITCHER_W = (235, 245, 252)
 PITCHER_D = (168, 195, 215)
 WATER_C   = (148, 205, 235)
 
-fl(23, 34, 28, 34, PITCHER_G)
-fl(25, 34, 29, 33, WATER_C)
-wcol(28, 23, 34, PITCHER_D)
-wcol(34, 23, 34, PITCHER_D)
+fl(25, 34, 28, 34, PITCHER_G)
+fl(27, 34, 29, 33, WATER_C)
+wcol(28, 25, 34, PITCHER_D)
+wcol(34, 25, 34, PITCHER_D)
 wrow(34, 28, 34, PITCHER_D)
-wcol(29, 23, 34, PITCHER_W)
-wrow(22, 28, 34, PITCHER_D)
-wrow(23, 28, 34, PITCHER_G)
-sp(29, 25, CUP_W); sp(31, 26, CUP_W); sp(33, 25, CUP_W)
-sp(30, 28, CUP_W); sp(32, 29, CUP_W)
-sp(35, 26, PITCHER_D); sp(35, 30, PITCHER_D)
-sp(36, 26, PITCHER_D); sp(36, 27, PITCHER_D)
-sp(36, 28, PITCHER_D)
-sp(36, 29, PITCHER_D); sp(36, 30, PITCHER_D)
+wcol(29, 25, 34, PITCHER_W)
+wrow(24, 28, 34, PITCHER_D)
+wrow(25, 28, 34, PITCHER_G)
+sp(29, 27, CUP_W); sp(31, 28, CUP_W); sp(33, 27, CUP_W)
+sp(30, 30, CUP_W); sp(32, 31, CUP_W)
+sp(35, 28, PITCHER_D); sp(35, 32, PITCHER_D)
+sp(36, 28, PITCHER_D); sp(36, 29, PITCHER_D)
+sp(36, 30, PITCHER_D)
+sp(36, 31, PITCHER_D); sp(36, 32, PITCHER_D)
 
 # ── 吸管筒（x=51~55, y=22~31）──
 HOLDER   = ( 72,  58,  48)
