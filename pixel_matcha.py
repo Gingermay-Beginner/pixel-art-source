@@ -132,12 +132,12 @@ for mx in [5, 10, 15]:
     sp(mx, 2, MILK_D); sp(mx+3, 2, MILK_D)
     sp(mx+1, 0, MILK_D)
 
-# 抹茶粉罐（x=20~23, y=3~9）
-fl(3, 9, 20, 23, MATCHA_TIN)
-wrow(2, 20, 23, MATCHA_TD)
-wcol(20, 3, 9, MATCHA_TD)
-wcol(23, 3, 9, MATCHA_TD)
-sp(21, 5, MATCHA_F); sp(22, 5, MATCHA_F)
+# 抹茶粉罐（x=30~33, y=3~9，居中）
+fl(3, 9, 30, 33, MATCHA_TIN)
+wrow(2, 30, 33, MATCHA_TD)
+wcol(30, 3, 9, MATCHA_TD)
+wcol(33, 3, 9, MATCHA_TD)
+sp(31, 5, MATCHA_F); sp(32, 5, MATCHA_F)
 
 # 冰桶（右边，x=50~57, y=3~9）
 fl(3, 9, 50, 57, ICE_BK)
