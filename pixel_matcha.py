@@ -130,11 +130,6 @@ for mx in [5, 10, 15]:
     sp(mx+1, 0, MILK_D)
 
 # 抹茶粉罐（x=30~33, y=3~9，居中）
-fl(4, 9, 30, 33, MATCHA_TIN)
-wrow(3, 30, 33, MATCHA_TD)
-wcol(30, 4, 9, MATCHA_TD)
-wcol(33, 4, 9, MATCHA_TD)
-sp(31, 6, MATCHA_F); sp(32, 6, MATCHA_F)
 
 # 冰桶（右边，x=50~57, y=3~9）
 fl(3, 9, 50, 57, ICE_BK)
@@ -153,6 +148,14 @@ GRAIN = [(128,118,105),(105,95,85),(138,128,115)]
 for _ in range(200):
     gx = _rng.randint(1, 62); gy = _rng.randint(19, 35)
     sp(gx, gy, _rng.choice(GRAIN))
+
+fl(28, 34, 38, 45, MATCHA_TIN)
+wrow(27, 38, 45, MATCHA_TD)
+wrow(34, 38, 45, MATCHA_TD)
+wcol(38, 28, 34, MATCHA_TD)
+wcol(45, 28, 34, MATCHA_TD)
+sp(40, 30, MATCHA_F); sp(41, 30, MATCHA_F); sp(42, 30, MATCHA_F); sp(43, 30, MATCHA_F); sp(44, 30, MATCHA_F)
+sp(40, 31, MATCHA_F); sp(41, 31, MATCHA_F); sp(42, 31, MATCHA_F); sp(43, 31, MATCHA_F); sp(44, 31, MATCHA_F)
 # 桌边（上边 = 近景前缘）
 
 GCX, GCY = 20, 3
@@ -233,7 +236,7 @@ sp(BCX+5, BCY+14, BUN_B); sp(BCX+5, BCY+15, BUN_B)
 # 5个糖浆瓶（底部居中，x=20~44, y=28~35）
 syrup_colors = [SYR_CO, SYR_MG, SYR_PS, SYR_ST, SYR_BL]
 for i, sc in enumerate(syrup_colors):
-    bx = 20 + i*5
+    bx = 2 + i*5
     fl(28, 32, bx, bx+3, sc)
     fl(33, 34, bx+1, bx+2, sc)
     sp(bx+1, 34, (245, 242, 235)); sp(bx+2, 34, (245, 242, 235))
@@ -271,30 +274,30 @@ sp(38,25,WHISK_D); sp(39,25,WHISK); sp(40,25,WHISK_D); sp(41,25,WHISK); sp(42,25
 
 
 # 草莓抹茶杯（左，cx=5，x=3~7，内移3格）
-wcol(5, 17, 22, STRAW)
-wrow(21, 3, 6, CUP_T)
-wrow(22, 2, 7, CUP_T)
-fl(29, 31, 3, 6, SYRUP)
-wrow(29, 3, 6, SYRUP_L)
-fl(27, 28, 3, 6, MILK)
-fl(23, 25, 3, 6, MATCHA_L)
-wrow(23, 3, 6, MATCHA)
-sp(5, 24, ICE); sp(6, 24, ICE)
-sp(3, 25, ICE); sp(3, 26, ICE)
-sp(5, 26, ICE)
+wcol(8, 12, 17, STRAW)
+wrow(16, 6, 9, CUP_T)
+wrow(17, 5, 10, CUP_T)
+fl(23, 25, 6, 9, SYRUP)
+wrow(23, 6, 9, SYRUP_L)
+fl(21, 22, 6, 9, MILK)
+fl(18, 20, 6, 9, MATCHA_L)
+wrow(18, 6, 9, MATCHA)
+sp(8, 19, ICE); sp(9, 19, ICE)
+sp(6, 20, ICE); sp(6, 21, ICE)
+sp(8, 21, ICE)
 
 # 芒果抹茶杯（右，cx=58，x=56~60，内移3格）
-wcol(58, 17, 22, STRAW)
-wrow(21, 57, 60, CUP_T)
-wrow(22, 56, 61, CUP_T)
-fl(29, 31, 57, 60, MANGO)
-wrow(29, 57, 60, MANGO_L)
-fl(27, 28, 57, 60, MILK)
-fl(23, 25, 57, 60, MATCHA_L)
-wrow(23, 57, 60, MATCHA)
-sp(57, 24, ICE); sp(58, 24, ICE)
-sp(60, 25, ICE); sp(60, 26, ICE)
-sp(58, 26, ICE)
+wcol(55, 12, 17, STRAW)
+wrow(16, 54, 57, CUP_T)
+wrow(17, 53, 58, CUP_T)
+fl(23, 25, 54, 57, MANGO)
+wrow(23, 54, 57, MANGO_L)
+fl(21, 22, 54, 57, MILK)
+fl(18, 20, 54, 57, MATCHA_L)
+wrow(18, 54, 57, MATCHA)
+sp(54, 19, ICE); sp(55, 19, ICE)
+sp(57, 20, ICE); sp(57, 21, ICE)
+sp(55, 21, ICE)
 
 # ── 姜饼人（左，x=16~26, y=3~18）──
 
@@ -324,4 +327,60 @@ sp(13,23,WHISK); sp(14,23,WHISK_D); sp(15,23,WHISK); sp(16,23,WHISK_D); sp(17,23
 sp(13,24,WHISK_D); sp(14,24,WHISK); sp(15,24,WHISK_D); sp(16,24,WHISK); sp(17,24,WHISK_D); sp(18,24,WHISK)
 sp(13,25,WHISK_D); sp(14,25,WHISK); sp(15,25,WHISK_D); sp(16,25,WHISK); sp(17,25,WHISK_D); sp(18,25,WHISK)
 print(f"Saved: {W*S}x{H*S}px")
+
+# ── 大凉水杯（x=29~35，居中，底部 y=35）──
+PITCHER_G = (205, 228, 242)
+PITCHER_W = (235, 245, 252)
+PITCHER_D = (168, 195, 215)
+WATER_C   = (148, 205, 235)
+
+fl(23, 34, 28, 34, PITCHER_G)
+fl(25, 34, 29, 33, WATER_C)
+wcol(28, 23, 34, PITCHER_D)
+wcol(34, 23, 34, PITCHER_D)
+wrow(34, 28, 34, PITCHER_D)
+wcol(29, 23, 34, PITCHER_W)
+wrow(22, 28, 34, PITCHER_D)
+wrow(23, 28, 34, PITCHER_G)
+sp(29, 25, CUP_W); sp(31, 26, CUP_W); sp(33, 25, CUP_W)
+sp(30, 28, CUP_W); sp(32, 29, CUP_W)
+sp(35, 26, PITCHER_D); sp(35, 30, PITCHER_D)
+sp(36, 26, PITCHER_D); sp(36, 27, PITCHER_D)
+sp(36, 28, PITCHER_D)
+sp(36, 29, PITCHER_D); sp(36, 30, PITCHER_D)
+
+# ── 吸管筒（x=51~55, y=22~31）──
+HOLDER   = ( 72,  58,  48)
+HOLDER_L = ( 95,  78,  62)
+STRAW_R  = (215,  88,  72)
+
+fl(31, 34, 47, 51, HOLDER)
+wcol(47, 31, 34, HOLDER_L)
+wrow(30, 47, 51, HOLDER)
+wrow(34, 47, 51, HOLDER)
+sp(48, 27, STRAW); sp(48, 28, STRAW); sp(48, 29, STRAW); sp(48, 30, STRAW)
+sp(49, 27, STRAW_R); sp(49, 28, STRAW_R); sp(49, 29, STRAW_R); sp(49, 30, STRAW_R)
+sp(50, 27, STRAW); sp(50, 28, STRAW); sp(50, 29, STRAW); sp(50, 30, STRAW)
+
+
+# ── 餐巾纸叠（右下角，x=55~61, y=29~34）──
+NAPKIN   = (252, 250, 244)
+NAPKIN_D = (225, 220, 210)
+NAPKIN_S = (205, 200, 188)
+
+fl(32, 34, 55, 61, NAPKIN)
+wrow(31, 55, 61, NAPKIN_D)
+wcol(55, 32, 34, NAPKIN_D)
+wcol(61, 32, 34, NAPKIN_D)
+wrow(34, 55, 61, NAPKIN_S)
+fl(30, 32, 56, 60, NAPKIN)
+wrow(29, 56, 60, NAPKIN_D)
+wcol(56, 30, 32, NAPKIN_D)
+wcol(60, 30, 32, NAPKIN_D)
+fl(28, 30, 57, 59, NAPKIN)
+wrow(27, 57, 59, NAPKIN_D)
+wcol(57, 28, 30, NAPKIN_D)
+wcol(59, 28, 30, NAPKIN_D)
+
+
 img.save("pixel_matcha.png")
