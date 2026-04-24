@@ -141,90 +141,7 @@ for row in range(21, 36, 4):
     wrow(row, 0, 63, TABLE_D)
 # 桌边（上边 = 近景前缘）
 
-# ── 桌上物品（俯视桌面上，侧视物品）──
-
-# 5个糖浆瓶（底部居中，x=20~44, y=28~35）
-syrup_colors = [SYR_CO, SYR_MG, SYR_PS, SYR_ST, SYR_BL]
-for i, sc in enumerate(syrup_colors):
-    bx = 20 + i*5
-    fl(28, 32, bx, bx+3, sc)
-    fl(33, 34, bx+1, bx+2, sc)
-    sp(bx+1, 35, WALL_D); sp(bx+2, 35, WALL_D)
-    wcol(bx+3, 28, 32, (max(0,sc[0]-35), max(0,sc[1]-35), max(0,sc[2]-35)))
-
-# 抹茶碗（x=41~48, y=19~24，下移2格）
-fl(20, 24, 41, 48, BOWL_W)
-wrow(19, 42, 47, BOWL_D)
-wcol(41, 20, 24, BOWL_D)
-wcol(48, 20, 24, BOWL_D)
-fl(20, 22, 42, 47, MATCHA)
-wrow(20, 42, 47, MATCHA_F)
-# 碗底座
-wrow(25, 43, 46, BOWL_D)
-# 碗口右侧尖嘴（镜像）
-sp(49, 21, BOWL_D)
-sp(48, 21, MATCHA)
-
-# 茶筅（下移2格，y=18~25）
-sp(38,18,WHISK); sp(39,18,WHISK)
-sp(38,19,WHISK); sp(39,19,WHISK_D)
-sp(38,20,WHISK); sp(39,20,WHISK_D)
-sp(37,21,WHISK_D); sp(38,21,WHISK); sp(39,21,WHISK_D); sp(40,21,WHISK)
-sp(37,22,WHISK_D); sp(38,22,WHISK); sp(39,22,WHISK_D); sp(40,22,WHISK)
-sp(36,23,WHISK); sp(37,23,WHISK_D); sp(38,23,WHISK); sp(39,23,WHISK_D); sp(40,23,WHISK); sp(41,23,WHISK_D)
-sp(36,24,WHISK_D); sp(37,24,WHISK); sp(38,24,WHISK_D); sp(39,24,WHISK); sp(40,24,WHISK_D); sp(41,24,WHISK)
-sp(36,25,WHISK_D); sp(37,25,WHISK); sp(38,25,WHISK_D); sp(39,25,WHISK); sp(40,25,WHISK_D); sp(41,25,WHISK)
-
-
-# 草莓抹茶杯（左，cx=5，x=3~7，内移3格）
-wcol(5, 16, 21, STRAW)
-wrow(20, 3, 7, CUP_T)
-wrow(21, 2, 8, CUP_T)
-fl(29, 31, 3, 7, SYRUP)
-wrow(29, 3, 7, SYRUP_L)
-fl(25, 28, 3, 7, MILK)
-fl(22, 24, 3, 7, MATCHA_L)
-wrow(22, 3, 7, MATCHA)
-sp(6, 23, ICE); sp(7, 23, ICE)
-sp(4, 24, ICE); sp(4, 25, ICE)
-sp(6, 25, ICE)
-
-# 芒果抹茶杯（右，cx=58，x=56~60，内移3格）
-wcol(58, 16, 21, STRAW)
-wrow(20, 56, 60, CUP_T)
-wrow(21, 55, 61, CUP_T)
-fl(29, 31, 56, 60, MANGO)
-wrow(29, 56, 60, MANGO_L)
-fl(25, 28, 56, 60, MILK)
-fl(22, 24, 56, 60, MATCHA_L)
-wrow(22, 56, 60, MATCHA)
-sp(57, 23, ICE); sp(58, 23, ICE)
-sp(59, 24, ICE); sp(59, 25, ICE)
-sp(57, 25, ICE)
-
-# ── 姜饼人（左，x=14~24, y=3~18）──
-
-# 姜饼人面前茶器（整体居中 GCX=18，碗x=17~23，茶筅cx=16，下移2格）
-fl(20, 24, 17, 23, BOWL_W)
-wrow(19, 18, 22, BOWL_D)
-wcol(17, 20, 24, BOWL_D)
-wcol(23, 20, 24, BOWL_D)
-fl(20, 22, 18, 22, MATCHA)
-wrow(20, 18, 22, MATCHA_F)
-wrow(25, 19, 22, BOWL_D)
-# 碗口右侧尖嘴
-sp(24, 21, BOWL_D)
-sp(23, 21, MATCHA)
-# 茶筅（下移2格，y=18~25）
-sp(16,18,WHISK); sp(17,18,WHISK)
-sp(16,19,WHISK); sp(17,19,WHISK_D)
-sp(16,20,WHISK); sp(17,20,WHISK_D)
-sp(15,21,WHISK_D); sp(16,21,WHISK); sp(17,21,WHISK_D); sp(18,21,WHISK)
-sp(15,22,WHISK_D); sp(16,22,WHISK); sp(17,22,WHISK_D); sp(18,22,WHISK)
-sp(14,23,WHISK); sp(15,23,WHISK_D); sp(16,23,WHISK); sp(17,23,WHISK_D); sp(18,23,WHISK); sp(19,23,WHISK_D)
-sp(14,24,WHISK_D); sp(15,24,WHISK); sp(16,24,WHISK_D); sp(17,24,WHISK); sp(18,24,WHISK_D); sp(19,24,WHISK)
-sp(14,25,WHISK_D); sp(15,25,WHISK); sp(16,25,WHISK_D); sp(17,25,WHISK); sp(18,25,WHISK_D); sp(19,25,WHISK)
-GCX, GCY = 18, 3
+GCX, GCY = 20, 3
 # 头（9宽）
 # 头（四角挖代码圆角）
 wrow(GCY+3, GCX-3, GCX+3, GB)
@@ -257,7 +174,7 @@ sp(GCX-5, GCY+16, GB); sp(GCX-5, GCY+17, GB)
 sp(GCX+5, GCY+16, GB); sp(GCX+5, GCY+17, GB)
 
 # ── 蓝兔子（右，x=38~48, y=2~18）──
-BCX, BCY = 43, 5
+BCX, BCY = 45, 5
 # 耳朵（左）顶部1格圆角在内侧
 sp(BCX-1, BCY-3, BUN_B)
 for _ey in range(BCY-2, BCY+1): sp(BCX-2, _ey, BUN_B); sp(BCX-1, _ey, BUN_B)
@@ -297,5 +214,89 @@ for _ay in range(BCY+9, BCY+16):
 sp(BCX-5, BCY+14, BUN_B); sp(BCX-5, BCY+15, BUN_B)
 sp(BCX+5, BCY+14, BUN_B); sp(BCX+5, BCY+15, BUN_B)
 
-img.save('pixel_matcha.png')
+# ── 桌上物品（俯视桌面上，侧视物品）──
+
+# 5个糖浆瓶（底部居中，x=20~44, y=28~35）
+syrup_colors = [SYR_CO, SYR_MG, SYR_PS, SYR_ST, SYR_BL]
+for i, sc in enumerate(syrup_colors):
+    bx = 20 + i*5
+    fl(28, 32, bx, bx+3, sc)
+    fl(33, 34, bx+1, bx+2, sc)
+    sp(bx+1, 35, WALL_D); sp(bx+2, 35, WALL_D)
+    wcol(bx+3, 28, 32, (max(0,sc[0]-35), max(0,sc[1]-35), max(0,sc[2]-35)))
+
+# 抹茶碗（x=41~48, y=19~24，下移2格）
+fl(20, 24, 43, 50, BOWL_W)
+wrow(19, 44, 49, BOWL_D)
+wcol(43, 20, 24, BOWL_D)
+wcol(50, 20, 24, BOWL_D)
+fl(20, 22, 44, 49, MATCHA)
+wrow(20, 44, 49, MATCHA_F)
+# 碗底座
+wrow(25, 45, 48, BOWL_D)
+# 碗口右侧尖嘴（镜像）
+sp(51, 21, BOWL_D)
+sp(50, 21, MATCHA)
+
+# 茶筅（右移2格，y=18~25）
+sp(40,18,WHISK); sp(41,18,WHISK)
+sp(40,19,WHISK); sp(41,19,WHISK_D)
+sp(40,20,WHISK); sp(41,20,WHISK_D)
+sp(39,21,WHISK_D); sp(40,21,WHISK); sp(41,21,WHISK_D); sp(42,21,WHISK)
+sp(39,22,WHISK_D); sp(40,22,WHISK); sp(41,22,WHISK_D); sp(42,22,WHISK)
+sp(38,23,WHISK); sp(39,23,WHISK_D); sp(40,23,WHISK); sp(41,23,WHISK_D); sp(42,23,WHISK); sp(43,23,WHISK_D)
+sp(38,24,WHISK_D); sp(39,24,WHISK); sp(40,24,WHISK_D); sp(41,24,WHISK); sp(42,24,WHISK_D); sp(43,24,WHISK)
+sp(38,25,WHISK_D); sp(39,25,WHISK); sp(40,25,WHISK_D); sp(41,25,WHISK); sp(42,25,WHISK_D); sp(43,25,WHISK)
+
+
+# 草莓抹茶杯（左，cx=5，x=3~7，内移3格）
+wcol(5, 16, 21, STRAW)
+wrow(20, 3, 7, CUP_T)
+wrow(21, 2, 8, CUP_T)
+fl(29, 31, 3, 7, SYRUP)
+wrow(29, 3, 7, SYRUP_L)
+fl(25, 28, 3, 7, MILK)
+fl(22, 24, 3, 7, MATCHA_L)
+wrow(22, 3, 7, MATCHA)
+sp(6, 23, ICE); sp(7, 23, ICE)
+sp(4, 24, ICE); sp(4, 25, ICE)
+sp(6, 25, ICE)
+
+# 芒果抹茶杯（右，cx=58，x=56~60，内移3格）
+wcol(58, 16, 21, STRAW)
+wrow(20, 56, 60, CUP_T)
+wrow(21, 55, 61, CUP_T)
+fl(29, 31, 56, 60, MANGO)
+wrow(29, 56, 60, MANGO_L)
+fl(25, 28, 56, 60, MILK)
+fl(22, 24, 56, 60, MATCHA_L)
+wrow(22, 56, 60, MATCHA)
+sp(57, 23, ICE); sp(58, 23, ICE)
+sp(59, 24, ICE); sp(59, 25, ICE)
+sp(57, 25, ICE)
+
+# ── 姜饼人（左，x=16~26, y=3~18）──
+
+# 姜饼人面前茶器（右移4格，碗x=18~25）
+fl(20, 24, 18, 25, BOWL_W)
+wrow(19, 19, 24, BOWL_D)
+wcol(18, 20, 24, BOWL_D)
+wcol(25, 20, 24, BOWL_D)
+fl(20, 22, 19, 24, MATCHA)
+wrow(20, 19, 24, MATCHA_F)
+# 碗底座
+wrow(25, 20, 23, BOWL_D)
+# 碗口右侧尖嘴
+sp(26, 21, BOWL_D)
+sp(25, 21, MATCHA)
+# 茶筅（右移2格，y=18~25）
+sp(15,18,WHISK); sp(16,18,WHISK)
+sp(15,19,WHISK); sp(16,19,WHISK_D)
+sp(15,20,WHISK); sp(16,20,WHISK_D)
+sp(14,21,WHISK_D); sp(15,21,WHISK); sp(16,21,WHISK_D); sp(17,21,WHISK)
+sp(14,22,WHISK_D); sp(15,22,WHISK); sp(16,22,WHISK_D); sp(17,22,WHISK)
+sp(13,23,WHISK); sp(14,23,WHISK_D); sp(15,23,WHISK); sp(16,23,WHISK_D); sp(17,23,WHISK); sp(18,23,WHISK_D)
+sp(13,24,WHISK_D); sp(14,24,WHISK); sp(15,24,WHISK_D); sp(16,24,WHISK); sp(17,24,WHISK_D); sp(18,24,WHISK)
+sp(13,25,WHISK_D); sp(14,25,WHISK); sp(15,25,WHISK_D); sp(16,25,WHISK); sp(17,25,WHISK_D); sp(18,25,WHISK)
 print(f"Saved: {W*S}x{H*S}px")
+img.save("pixel_matcha.png")
