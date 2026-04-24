@@ -156,6 +156,104 @@ BCY-10~-6  : 身体（约5格高）
 - **嘴**：3格白色，y=BCY+4
 - **耳朵格子纹（运动场景）**：右耳用 BUN_INNER 和 BUN_BODY 间隔排列（交错偏移）
 
+---
+
+## 上半身模板（pixel_matcha 版，2026-04-24 定稿）
+
+> 画布 S=12（768×432），适用于桌面场景。两人坐桌前，身体藏桌下，只露上半身+手臂。
+
+### 姜饼人上半身模板
+
+```python
+# 颜色
+GB       = (185, 108,  48)
+GBD      = (140,  82,  35)
+GB_EYE   = ( 62,  38,  18)
+GB_CHEEK = (215, 138,  82)
+HAT_RED  = (188,  55,  48)
+HAT_DARK = (135,  32,  28)
+HAT_LITE = (215,  88,  72)
+
+GCX, GCY = 18, 3   # 中心坐标（可调）
+
+# 头（四角挖代码圆角）
+wrow(GCY+3, GCX-3, GCX+3, GB)
+fl(GCY+4, GCY+7, GCX-4, GCX+4, GB)
+wrow(GCY+8, GCX-3, GCX+3, GB)
+sp(GCX-2, GCY+5, GB_EYE); sp(GCX+2, GCY+5, GB_EYE)
+sp(GCX-3, GCY+6, GB_CHEEK); sp(GCX+3, GCY+6, GB_CHEEK)
+sp(GCX-1, GCY+7, GBD); sp(GCX, GCY+7, GBD); sp(GCX+1, GCY+7, GBD)
+
+# 帽子（右偏1格，顶行挖圆角，最后画）
+wrow(GCY+1, GCX-1, GCX+3, HAT_RED)
+fl(GCY+2, GCY+3, GCX-2, GCX+4, HAT_RED)
+sp(GCX+1, GCY, HAT_DARK)
+wcol(GCX-2, GCY+2, GCY+3, HAT_DARK)
+wcol(GCX+4, GCY+2, GCY+3, HAT_DARK)
+sp(GCX-1, GCY+1, HAT_DARK); sp(GCX, GCY+1, HAT_LITE); sp(GCX+3, GCY+1, HAT_DARK)
+
+# 身体（桌面遮住，只露上部）
+fl(GCY+10, GCY+14, GCX-2, GCX+2, GB)
+sp(GCX, GCY+11, GB_CHEEK); sp(GCX, GCY+13, GB_CHEEK)  # 扣子
+
+# 手臂（2格宽，肩膀圆角，末端延伸）
+sp(GCX-3, GCY+10, GB)
+for _ay in range(GCY+11, GCY+18):
+    sp(GCX-3, _ay, GB); sp(GCX-4, _ay, GB)
+sp(GCX+3, GCY+10, GB)
+for _ay in range(GCY+11, GCY+18):
+    sp(GCX+3, _ay, GB); sp(GCX+4, _ay, GB)
+sp(GCX-5, GCY+16, GB); sp(GCX-5, GCY+17, GB)
+sp(GCX+5, GCY+16, GB); sp(GCX+5, GCY+17, GB)
+```
+
+### 蓝兔子上半身模板
+
+```python
+# 颜色
+BUN_B    = ( 88, 158, 228)
+BUN_IN   = (228, 185, 195)
+BUN_EYE  = ( 35,  55, 105)
+BUN_D    = ( 62, 118, 188)
+
+BCX, BCY = 43, 5   # 中心坐标（可调）
+
+# 耳朵（左）顶部1格圆角在内侧，粉色在内列
+sp(BCX-1, BCY-3, BUN_B)
+for _ey in range(BCY-2, BCY+1): sp(BCX-2, _ey, BUN_B); sp(BCX-1, _ey, BUN_B)
+for _ey in range(BCY-2, BCY): sp(BCX-1, _ey, BUN_IN)
+# 耳朵（右）
+sp(BCX+1, BCY-3, BUN_B)
+for _ey in range(BCY-2, BCY+1): sp(BCX+1, _ey, BUN_B); sp(BCX+2, _ey, BUN_B)
+for _ey in range(BCY-2, BCY): sp(BCX+1, _ey, BUN_IN)
+sp(BCX, BCY, BUN_B)  # 耳朵间底部
+
+# 头（四角挖代码圆角）
+wrow(BCY+1, BCX-3, BCX+3, BUN_B)
+fl(BCY+2, BCY+5, BCX-4, BCX+4, BUN_B)
+wrow(BCY+6, BCX-3, BCX+3, BUN_B)
+# 眉毛（两端深，中间略浅）
+for bx in [BCX-3, BCX-2, BCX-1]: sp(bx, BCY+2, BUN_EYE)
+sp(BCX, BCY+2, BUN_D)
+for bx in [BCX+1, BCX+2, BCX+3]: sp(bx, BCY+2, BUN_EYE)
+sp(BCX-2, BCY+3, BUN_EYE); sp(BCX+2, BCY+3, BUN_EYE)  # 眼睛
+sp(BCX-3, BCY+4, BUN_IN); sp(BCX+3, BCY+4, BUN_IN)     # 腮红
+sp(BCX-1, BCY+5, (245,240,235)); sp(BCX, BCY+5, (245,240,235)); sp(BCX+1, BCY+5, (245,240,235))  # 嘴（白）
+sp(BCX-1, BCY+6, BUN_B); sp(BCX, BCY+6, BUN_B); sp(BCX+1, BCY+6, BUN_B)
+
+# 身体
+fl(BCY+8, BCY+12, BCX-2, BCX+2, BUN_B)
+# 手臂（2格宽，末端延伸）
+sp(BCX-3, BCY+8, BUN_B)
+for _ay in range(BCY+9, BCY+16):
+    sp(BCX-3, _ay, BUN_B); sp(BCX-4, _ay, BUN_B)
+sp(BCX+3, BCY+8, BUN_B)
+for _ay in range(BCY+9, BCY+16):
+    sp(BCX+3, _ay, BUN_B); sp(BCX+4, _ay, BUN_B)
+sp(BCX-5, BCY+14, BUN_B); sp(BCX-5, BCY+15, BUN_B)
+sp(BCX+5, BCY+14, BUN_B); sp(BCX+5, BCY+15, BUN_B)
+```
+
 ### 共同规范
 
 - **嘴型**：O 型嘴，竖向两格，下格稍浅
