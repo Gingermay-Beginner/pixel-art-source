@@ -409,12 +409,12 @@ fl(29, 31, 55, 59, NAPKIN)
 wrow(28, 55, 59, NAPKIN_D)
 wcol(55, 29, 31, NAPKIN_D)
 wcol(59, 29, 31, NAPKIN_D)
-# 托盘（x=53~60, y=33~34）
-fl(33, 34, 53, 60, TRAY2)
-wrow(32, 53, 60, TRAY2_L)
-wrow(34, 53, 60, TRAY2_D)
+# 托盘（x=53~61, y=33~34）
+fl(33, 34, 53, 61, TRAY2)
+wrow(32, 53, 61, TRAY2_L)
+wrow(34, 53, 61, TRAY2_D)
 wcol(53, 32, 34, TRAY2_D)
-wcol(60, 32, 34, TRAY2_D)
+wcol(61, 32, 34, TRAY2_D)
 
 
 img.save("pixel_matcha.png")
