@@ -383,13 +383,13 @@ HOLDER   = ( 72,  58,  48)
 HOLDER_L = ( 95,  78,  62)
 STRAW_R  = (232, 220, 195)
 
-fl(31, 34, 57, 61, HOLDER)
-wcol(57, 31, 34, HOLDER_L)
-wrow(30, 57, 61, HOLDER)
-wrow(34, 57, 61, HOLDER)
-sp(58, 27, STRAW); sp(58, 28, STRAW); sp(58, 29, STRAW); sp(58, 30, STRAW)
-sp(59, 27, STRAW_R); sp(59, 28, STRAW_R); sp(59, 29, STRAW_R); sp(59, 30, STRAW_R)
-sp(60, 27, STRAW); sp(60, 28, STRAW); sp(60, 29, STRAW); sp(60, 30, STRAW)
+fl(31, 34, 47, 51, HOLDER)
+wcol(47, 31, 34, HOLDER_L)
+wrow(30, 47, 51, HOLDER)
+wrow(34, 47, 51, HOLDER)
+sp(48, 27, STRAW); sp(48, 28, STRAW); sp(48, 29, STRAW); sp(48, 30, STRAW)
+sp(49, 27, STRAW_R); sp(49, 28, STRAW_R); sp(49, 29, STRAW_R); sp(49, 30, STRAW_R)
+sp(50, 27, STRAW); sp(50, 28, STRAW); sp(50, 29, STRAW); sp(50, 30, STRAW)
 
 
 # ── 餐巾纸+托盘（右下角，总高6格 y=29~34）──
@@ -400,21 +400,21 @@ TRAY2_D  = (118,  92,  58)
 TRAY2_L  = (172, 145, 105)
 
 # 底层纸（x=49~55, y=31~32）
-fl(31, 32, 48, 54, NAPKIN)
-wrow(30, 48, 54, NAPKIN_D)
-wcol(48, 31, 32, NAPKIN_D)
+fl(31, 32, 54, 60, NAPKIN)
+wrow(30, 54, 60, NAPKIN_D)
 wcol(54, 31, 32, NAPKIN_D)
-# 顶层纸（x=49~53, y=29~31）
-fl(29, 31, 49, 53, NAPKIN)
-wrow(28, 49, 53, NAPKIN_D)
-wcol(49, 29, 31, NAPKIN_D)
-wcol(53, 29, 31, NAPKIN_D)
-# 托盘（x=47~55, y=33~34）
-fl(33, 34, 47, 55, TRAY2)
-wrow(32, 47, 55, TRAY2_L)
-wrow(34, 47, 55, TRAY2_D)
-wcol(47, 32, 34, TRAY2_D)
-wcol(55, 32, 34, TRAY2_D)
+wcol(60, 31, 32, NAPKIN_D)
+# 顶层纸（x=55~59, y=29~31）
+fl(29, 31, 55, 59, NAPKIN)
+wrow(28, 55, 59, NAPKIN_D)
+wcol(55, 29, 31, NAPKIN_D)
+wcol(59, 29, 31, NAPKIN_D)
+# 托盘（x=53~60, y=33~34）
+fl(33, 34, 53, 60, TRAY2)
+wrow(32, 53, 60, TRAY2_L)
+wrow(34, 53, 60, TRAY2_D)
+wcol(53, 32, 34, TRAY2_D)
+wcol(60, 32, 34, TRAY2_D)
 
 
 img.save("pixel_matcha.png")
