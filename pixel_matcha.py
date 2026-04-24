@@ -31,10 +31,10 @@ FLOOR    = (198, 182, 158)
 FLOOR_D  = (175, 158, 132)
 FLOOR_L  = (218, 205, 182)
 
-# 俯视桌面（暖木色，参考 Bagel Day）
-TABLE    = (188, 162, 118)
-TABLE_D  = (168, 142,  98)
-TABLE_E  = (138, 112,  72)
+# 俯视桌面（浅灰混凝土色）
+TABLE    = (205, 205, 200)
+TABLE_D  = (188, 188, 182)
+TABLE_E  = (165, 165, 158)
 
 # 后台架子
 SHELF    = (212, 200, 178)
@@ -43,6 +43,7 @@ SHELF_D  = (185, 172, 148)
 MATCHA   = ( 88, 148,  72)
 MATCHA_L = (118, 178,  95)
 MATCHA_F = (148, 198, 118)
+FOAM     = (198, 228, 168)  # 泡沫亮点
 CUP_W    = (245, 248, 252)
 STRAW    = (228, 218, 198)
 SYRUP    = (225,  80, 100)
@@ -84,16 +85,28 @@ BUN_EYE  = ( 35,  55, 105)
 BUN_D    = ( 62, 118, 188)
 
 # ── 背景 ──
-fl(0, 18, 0, 63, WALL)
-
-# 窗（两扇）
-fl(1, 16, 2, 22, SKY)
-fl(1, 16, 40, 61, SKY)
-for wx1, wx2 in [(2,22),(40,61)]:
-    wrow(0, wx1, wx2, WALL_D)
-    wrow(17, wx1, wx2, WALL_D)
-    wcol(wx1-1, 1, 16, WALL_D)
-    wcol(wx2+1, 1, 16, WALL_D)
+# 橘黄色方格瓷砖墙
+TILE_A = (228, 148,  72)   # 主色
+TILE_B = (215, 132,  58)   # 暗格
+TILE_G = (188, 108,  45)   # 缝隙
+TILE_W = 4                  # 每块瓷砖宽/高（格子单位）
+fl(0, 18, 0, 63, TILE_A)
+# 缝隙（竖向）
+for tx in range(0, 64, TILE_W):
+    wcol(tx, 0, 18, TILE_G)
+# 缝隙（横向）
+for ty in range(0, 19, TILE_W):
+    wrow(ty, 0, 63, TILE_G)
+# 隔行偏移效果（砖缝错位）
+for ty in range(TILE_W, 19, TILE_W*2):
+    for tx in range(TILE_W//2, 64, TILE_W):
+        wcol(tx, ty, ty+TILE_W-1, TILE_G)
+# 暗格（交错）
+import random as _r2; _rng2 = _r2.Random(33)
+for ty in range(0, 18, TILE_W):
+    for tx in range(0, 63, TILE_W):
+        if _rng2.random() < 0.3:
+            fl(ty+1, ty+TILE_W-1, tx+1, tx+TILE_W-1, TILE_B)
 
 # 地板（桌子下方可见）
 fl(19, 35, 0, 63, FLOOR)
@@ -136,9 +149,12 @@ sp(30, 13, MATCHA_F); sp(31, 13, MATCHA_F)
 
 # ── 俯视桌面（y=19~35, x=4~59）──
 fl(19, 35, 0, 63, TABLE)
-# 木纹（横向）
-for row in range(21, 36, 4):
-    wrow(row, 0, 63, TABLE_D)
+# 杂质点（随机散布，模拟混凝土质感）
+import random; _rng = random.Random(77)
+GRAIN = [(178,178,172),(215,215,210),(168,168,162)]
+for _ in range(200):
+    gx = _rng.randint(1, 62); gy = _rng.randint(19, 35)
+    sp(gx, gy, _rng.choice(GRAIN))
 # 桌边（上边 = 近景前缘）
 
 GCX, GCY = 20, 3
@@ -232,6 +248,10 @@ wcol(43, 20, 24, BOWL_D)
 wcol(50, 20, 24, BOWL_D)
 fl(20, 22, 44, 49, MATCHA)
 wrow(20, 44, 49, MATCHA_F)
+# 泡沫点
+sp(44,20,FOAM); sp(46,20,FOAM); sp(48,20,FOAM)
+sp(45,21,FOAM); sp(47,21,FOAM); sp(49,21,FOAM)
+sp(44,22,FOAM); sp(46,22,FOAM); sp(48,22,FOAM)
 # 碗底座
 wrow(25, 45, 48, BOWL_D)
 # 碗口右侧尖嘴（镜像）
@@ -284,6 +304,10 @@ wcol(18, 20, 24, BOWL_D)
 wcol(25, 20, 24, BOWL_D)
 fl(20, 22, 19, 24, MATCHA)
 wrow(20, 19, 24, MATCHA_F)
+# 泡沫点
+sp(19,20,FOAM); sp(21,20,FOAM); sp(23,20,FOAM)
+sp(20,21,FOAM); sp(22,21,FOAM); sp(24,21,FOAM)
+sp(19,22,FOAM); sp(21,22,FOAM); sp(23,22,FOAM)
 # 碗底座
 wrow(25, 20, 23, BOWL_D)
 # 碗口右侧尖嘴
