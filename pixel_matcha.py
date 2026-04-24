@@ -44,6 +44,11 @@ MATCHA   = ( 88, 148,  72)
 MATCHA_L = (118, 178,  95)
 MATCHA_F = (148, 198, 118)
 CUP_W    = (245, 248, 252)
+STRAW    = (228, 218, 198)
+SYRUP    = (225,  80, 100)
+SYRUP_L  = (245, 140, 155)
+MANGO    = (235, 148,  45)
+MANGO_L  = (248, 198,  95)
 CUP_T    = (195, 215, 232)
 ICE      = (215, 235, 248)
 MILK     = (248, 245, 238)
@@ -138,62 +143,87 @@ for row in range(21, 36, 4):
 
 # ── 桌上物品（俯视桌面上，侧视物品）──
 
-# 5个糖浆瓶（前排，x=6~28, y=25~33）
+# 5个糖浆瓶（底部居中，x=20~44, y=28~35）
 syrup_colors = [SYR_CO, SYR_MG, SYR_PS, SYR_ST, SYR_BL]
 for i, sc in enumerate(syrup_colors):
-    bx = 6 + i*5
-    fl(24, 28, bx, bx+3, sc)       # 瓶身（上方，宽）
-    fl(29, 30, bx+1, bx+2, sc)     # 瓶颈（下方，窄）
-    sp(bx+1, 31, WALL_D); sp(bx+2, 31, WALL_D)   # 倒置瓶盖（最下）
-    wcol(bx+3, 24, 28, (max(0,sc[0]-35), max(0,sc[1]-35), max(0,sc[2]-35)))
+    bx = 20 + i*5
+    fl(28, 32, bx, bx+3, sc)
+    fl(33, 34, bx+1, bx+2, sc)
+    sp(bx+1, 35, WALL_D); sp(bx+2, 35, WALL_D)
+    wcol(bx+3, 28, 32, (max(0,sc[0]-35), max(0,sc[1]-35), max(0,sc[2]-35)))
 
-# 抹茶碗（x=35~42, y=23~28，带底座）
-fl(24, 28, 35, 42, BOWL_W)
-wrow(23, 36, 41, BOWL_D)
-wcol(35, 24, 28, BOWL_D)
-wcol(42, 24, 28, BOWL_D)
-fl(24, 26, 36, 41, MATCHA)
-wrow(24, 36, 41, MATCHA_F)
-# 碗底座（窄，居中，y=29）
-wrow(29, 37, 40, BOWL_D)
-# 碗口左侧尖嘴（最后画，不被覆盖）
-sp(34, 25, BOWL_D)
-sp(35, 25, MATCHA)
+# 抹茶碗（x=41~48, y=19~24，下移2格）
+fl(20, 24, 41, 48, BOWL_W)
+wrow(19, 42, 47, BOWL_D)
+wcol(41, 20, 24, BOWL_D)
+wcol(48, 20, 24, BOWL_D)
+fl(20, 22, 42, 47, MATCHA)
+wrow(20, 42, 47, MATCHA_F)
+# 碗底座
+wrow(25, 43, 46, BOWL_D)
+# 碗口右侧尖嘴（镜像）
+sp(49, 21, BOWL_D)
+sp(48, 21, MATCHA)
 
-# 茶筅：短柄 + 扇形发散刷条
-# 柄（顶部露出，y=20~22，中间2格）
-wcol(44, 20, 22, WHISK)
-wcol(45, 20, 22, WHISK)
-# 扇形（2/3大小）：7行，扩散0.6格/行
-cx = 44
-for fy in range(22, 29):
-    spread = int((fy - 22) * 0.6)
-    x1 = cx - spread
-    x2 = cx + 1 + spread
-    for bx in range(x1, x2+1):
-        bc = WHISK if (bx % 2 == 0) else WHISK_D
-        sp(bx, fy, bc)
-# 底部凹凸锯齿
-for bx in range(cx-3, cx+5):
-    if bx % 2 == 0:
-        sp(bx, 29, WHISK_D)
-    else:
-        sp(bx, 28, WHISK)
+# 茶筅（下移2格，y=18~25）
+sp(38,18,WHISK); sp(39,18,WHISK)
+sp(38,19,WHISK); sp(39,19,WHISK_D)
+sp(38,20,WHISK); sp(39,20,WHISK_D)
+sp(37,21,WHISK_D); sp(38,21,WHISK); sp(39,21,WHISK_D); sp(40,21,WHISK)
+sp(37,22,WHISK_D); sp(38,22,WHISK); sp(39,22,WHISK_D); sp(40,22,WHISK)
+sp(36,23,WHISK); sp(37,23,WHISK_D); sp(38,23,WHISK); sp(39,23,WHISK_D); sp(40,23,WHISK); sp(41,23,WHISK_D)
+sp(36,24,WHISK_D); sp(37,24,WHISK); sp(38,24,WHISK_D); sp(39,24,WHISK); sp(40,24,WHISK_D); sp(41,24,WHISK)
+sp(36,25,WHISK_D); sp(37,25,WHISK); sp(38,25,WHISK_D); sp(39,25,WHISK); sp(40,25,WHISK_D); sp(41,25,WHISK)
 
-# 透明杯（x=49~55, y=20~31）
-fl(20, 31, 49, 55, CUP_W)
-wcol(49, 20, 31, CUP_T)
-wcol(55, 20, 31, CUP_T)
-wrow(31, 49, 55, CUP_T)
-fl(23, 29, 50, 54, ICE)
-sp(50, 25, CUP_W); sp(53, 26, CUP_W)
-wrow(31, 50, 54, MATCHA)
-wrow(30, 50, 54, MATCHA_L)
-fl(18, 19, 49, 55, CUP_T)
-wrow(17, 50, 54, CUP_T)
-wcol(52, 13, 18, MATCHA)  # 吸管
+
+# 草莓抹茶杯（左，cx=5，x=3~7，内移3格）
+wcol(5, 16, 21, STRAW)
+wrow(20, 3, 7, CUP_T)
+wrow(21, 2, 8, CUP_T)
+fl(29, 31, 3, 7, SYRUP)
+wrow(29, 3, 7, SYRUP_L)
+fl(25, 28, 3, 7, MILK)
+fl(22, 24, 3, 7, MATCHA_L)
+wrow(22, 3, 7, MATCHA)
+sp(6, 23, ICE); sp(7, 23, ICE)
+sp(4, 24, ICE); sp(4, 25, ICE)
+sp(6, 25, ICE)
+
+# 芒果抹茶杯（右，cx=58，x=56~60，内移3格）
+wcol(58, 16, 21, STRAW)
+wrow(20, 56, 60, CUP_T)
+wrow(21, 55, 61, CUP_T)
+fl(29, 31, 56, 60, MANGO)
+wrow(29, 56, 60, MANGO_L)
+fl(25, 28, 56, 60, MILK)
+fl(22, 24, 56, 60, MATCHA_L)
+wrow(22, 56, 60, MATCHA)
+sp(57, 23, ICE); sp(58, 23, ICE)
+sp(59, 24, ICE); sp(59, 25, ICE)
+sp(57, 25, ICE)
 
 # ── 姜饼人（左，x=14~24, y=3~18）──
+
+# 姜饼人面前茶器（整体居中 GCX=18，碗x=17~23，茶筅cx=16，下移2格）
+fl(20, 24, 17, 23, BOWL_W)
+wrow(19, 18, 22, BOWL_D)
+wcol(17, 20, 24, BOWL_D)
+wcol(23, 20, 24, BOWL_D)
+fl(20, 22, 18, 22, MATCHA)
+wrow(20, 18, 22, MATCHA_F)
+wrow(25, 19, 22, BOWL_D)
+# 碗口右侧尖嘴
+sp(24, 21, BOWL_D)
+sp(23, 21, MATCHA)
+# 茶筅（下移2格，y=18~25）
+sp(16,18,WHISK); sp(17,18,WHISK)
+sp(16,19,WHISK); sp(17,19,WHISK_D)
+sp(16,20,WHISK); sp(17,20,WHISK_D)
+sp(15,21,WHISK_D); sp(16,21,WHISK); sp(17,21,WHISK_D); sp(18,21,WHISK)
+sp(15,22,WHISK_D); sp(16,22,WHISK); sp(17,22,WHISK_D); sp(18,22,WHISK)
+sp(14,23,WHISK); sp(15,23,WHISK_D); sp(16,23,WHISK); sp(17,23,WHISK_D); sp(18,23,WHISK); sp(19,23,WHISK_D)
+sp(14,24,WHISK_D); sp(15,24,WHISK); sp(16,24,WHISK_D); sp(17,24,WHISK); sp(18,24,WHISK_D); sp(19,24,WHISK)
+sp(14,25,WHISK_D); sp(15,25,WHISK); sp(16,25,WHISK_D); sp(17,25,WHISK); sp(18,25,WHISK_D); sp(19,25,WHISK)
 GCX, GCY = 18, 3
 # 帽子
 fl(GCY, GCY+2, GCX-3, GCX+3, HAT_RED)
@@ -209,39 +239,55 @@ sp(GCX-2, GCY+5, GB_EYE); sp(GCX+2, GCY+5, GB_EYE)
 sp(GCX-3, GCY+6, GB_CHEEK); sp(GCX+3, GCY+6, GB_CHEEK)
 sp(GCX-1, GCY+7, GBD); sp(GCX, GCY+7, GBD); sp(GCX+1, GCY+7, GBD)
 # 脖子
-sp(GCX-1, GCY+9, GB); sp(GCX, GCY+9, GB); sp(GCX+1, GCY+9, GB)
+sp(GCX-2, GCY+9, GB); sp(GCX-1, GCY+9, GB); sp(GCX, GCY+9, GB); sp(GCX+1, GCY+9, GB); sp(GCX+2, GCY+9, GB)
 # 身体（藏桌后）
 fl(GCY+10, GCY+14, GCX-3, GCX+3, GB)
 sp(GCX, GCY+11, GB_CHEEK); sp(GCX, GCY+13, GB_CHEEK)
-# 手臂搭桌（y=19）
-sp(GCX-4, GCY+10, GB); sp(GCX-4, GCY+11, GB)
-sp(GCX+4, GCY+10, GB); sp(GCX+4, GCY+11, GB)
-sp(GCX+5, GCY+12, GB)
+# 手臂伸向茶器（2格宽，肩膀圆角）
+sp(GCX-4, GCY+11, GB)
+for _ay in range(GCY+12, GCY+21):
+    sp(GCX-4, _ay, GB); sp(GCX-5, _ay, GB)
+sp(GCX+4, GCY+11, GB)
+for _ay in range(GCY+12, GCY+21):
+    sp(GCX+4, _ay, GB); sp(GCX+5, _ay, GB)
 
 # ── 蓝兔子（右，x=38~48, y=2~18）──
-BCX, BCY = 43, 3
-# 耳朵
-fl(BCY-3, BCY, BCX-1, BCX-1, BUN_B)
-fl(BCY-3, BCY, BCX+1, BCX+1, BUN_B)
-fl(BCY-2, BCY, BCX-2, BCX-2, BUN_IN)
-fl(BCY-2, BCY, BCX+2, BCX+2, BUN_IN)
+BCX, BCY = 43, 5
+# 耳朵（左）顶部1格圆角在外侧
+sp(BCX-2, BCY-3, BUN_B)
+for _ey in range(BCY-2, BCY+1): sp(BCX-2, _ey, BUN_B); sp(BCX-1, _ey, BUN_B)
+# 左耳内芯
+for _ey in range(BCY-2, BCY): sp(BCX-2, _ey, BUN_IN)
+# 耳朵（右）顶部1格圆角在外侧
+sp(BCX+2, BCY-3, BUN_B)
+for _ey in range(BCY-2, BCY+1): sp(BCX+1, _ey, BUN_B); sp(BCX+2, _ey, BUN_B)
+# 右耳内芯
+for _ey in range(BCY-2, BCY): sp(BCX+2, _ey, BUN_IN)
+# 耳朵间底部
+sp(BCX, BCY, BUN_B)
 # 头（9宽）
 fl(BCY+1, BCY+6, BCX-4, BCX+4, BUN_B)
 sp(BCX-4, BCY+1, WALL); sp(BCX+4, BCY+1, WALL)
 sp(BCX-4, BCY+6, WALL); sp(BCX+4, BCY+6, WALL)
-for bx in [BCX-3, BCX-2]: sp(bx, BCY+3, BUN_D)
-sp(BCX-1, BCY+3, BUN_IN); sp(BCX, BCY+3, BUN_IN); sp(BCX+1, BCY+3, BUN_IN)
-for bx in [BCX+2, BCX+3]: sp(bx, BCY+3, BUN_D)
-sp(BCX-2, BCY+4, BUN_EYE); sp(BCX+2, BCY+4, BUN_EYE)
-sp(BCX-3, BCY+5, BUN_IN); sp(BCX+3, BCY+5, BUN_IN)
+for bx in [BCX-3, BCX-2, BCX-1]: sp(bx, BCY+2, BUN_EYE)
+sp(BCX, BCY+2, BUN_D)
+for bx in [BCX+1, BCX+2, BCX+3]: sp(bx, BCY+2, BUN_EYE)
+sp(BCX-2, BCY+3, BUN_EYE); sp(BCX+2, BCY+3, BUN_EYE)
+sp(BCX-3, BCY+4, BUN_IN); sp(BCX+3, BCY+4, BUN_IN)
+# 嘴
+sp(BCX-1, BCY+5, (245,240,235)); sp(BCX, BCY+5, (245,240,235)); sp(BCX+1, BCY+5, (245,240,235))
 sp(BCX-1, BCY+6, BUN_B); sp(BCX, BCY+6, BUN_B); sp(BCX+1, BCY+6, BUN_B)
 # 脖子
-sp(BCX-1, BCY+7, BUN_B); sp(BCX, BCY+7, BUN_B); sp(BCX+1, BCY+7, BUN_B)
+sp(BCX-2, BCY+7, BUN_B); sp(BCX-1, BCY+7, BUN_B); sp(BCX, BCY+7, BUN_B); sp(BCX+1, BCY+7, BUN_B); sp(BCX+2, BCY+7, BUN_B)
 # 身体（藏桌后）
-fl(BCY+8, BCY+14, BCX-3, BCX+3, BUN_B)
-# 手臂
-sp(BCX-4, BCY+9, BUN_B); sp(BCX-4, BCY+10, BUN_B)
-sp(BCX+4, BCY+9, BUN_B); sp(BCX+4, BCY+10, BUN_B)
+fl(BCY+8, BCY+12, BCX-3, BCX+3, BUN_B)
+# 手臂伸向茶器（2格宽，肩膀圆角=外列从+1行开始）
+sp(BCX-4, BCY+9, BUN_B)
+for _ay in range(BCY+10, BCY+19):
+    sp(BCX-4, _ay, BUN_B); sp(BCX-5, _ay, BUN_B)
+sp(BCX+4, BCY+9, BUN_B)
+for _ay in range(BCY+10, BCY+19):
+    sp(BCX+4, _ay, BUN_B); sp(BCX+5, _ay, BUN_B)
 
 img.save('pixel_matcha.png')
 print(f"Saved: {W*S}x{H*S}px")
