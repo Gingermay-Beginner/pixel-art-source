@@ -225,31 +225,36 @@ sp(14,23,WHISK); sp(15,23,WHISK_D); sp(16,23,WHISK); sp(17,23,WHISK_D); sp(18,23
 sp(14,24,WHISK_D); sp(15,24,WHISK); sp(16,24,WHISK_D); sp(17,24,WHISK); sp(18,24,WHISK_D); sp(19,24,WHISK)
 sp(14,25,WHISK_D); sp(15,25,WHISK); sp(16,25,WHISK_D); sp(17,25,WHISK); sp(18,25,WHISK_D); sp(19,25,WHISK)
 GCX, GCY = 18, 3
-# 帽子
-fl(GCY, GCY+2, GCX-3, GCX+3, HAT_RED)
-sp(GCX, GCY-1, HAT_DARK)
-wcol(GCX-3, GCY, GCY+2, HAT_DARK)
-wcol(GCX+3, GCY, GCY+2, HAT_DARK)
-sp(GCX-2, GCY, HAT_LITE)
 # 头（9宽）
-fl(GCY+3, GCY+8, GCX-4, GCX+4, GB)
-sp(GCX-4, GCY+3, WALL); sp(GCX+4, GCY+3, WALL)
-sp(GCX-4, GCY+8, WALL); sp(GCX+4, GCY+8, WALL)
+# 头（四角挖代码圆角）
+wrow(GCY+3, GCX-3, GCX+3, GB)
+fl(GCY+4, GCY+7, GCX-4, GCX+4, GB)
+wrow(GCY+8, GCX-3, GCX+3, GB)
 sp(GCX-2, GCY+5, GB_EYE); sp(GCX+2, GCY+5, GB_EYE)
 sp(GCX-3, GCY+6, GB_CHEEK); sp(GCX+3, GCY+6, GB_CHEEK)
 sp(GCX-1, GCY+7, GBD); sp(GCX, GCY+7, GBD); sp(GCX+1, GCY+7, GBD)
 # 脖子
 sp(GCX-2, GCY+9, GB); sp(GCX-1, GCY+9, GB); sp(GCX, GCY+9, GB); sp(GCX+1, GCY+9, GB); sp(GCX+2, GCY+9, GB)
+# 帽子（右移1格，下移1格，顶行挖圆角）
+wrow(GCY+1, GCX-1, GCX+3, HAT_RED)
+fl(GCY+2, GCY+3, GCX-2, GCX+4, HAT_RED)
+sp(GCX+1, GCY, HAT_DARK)
+wcol(GCX-2, GCY+2, GCY+3, HAT_DARK)
+wcol(GCX+4, GCY+2, GCY+3, HAT_DARK)
+sp(GCX-1, GCY+1, HAT_DARK); sp(GCX, GCY+1, HAT_LITE); sp(GCX+3, GCY+1, HAT_DARK)
 # 身体（藏桌后）
-fl(GCY+10, GCY+14, GCX-3, GCX+3, GB)
+fl(GCY+10, GCY+14, GCX-2, GCX+2, GB)
 sp(GCX, GCY+11, GB_CHEEK); sp(GCX, GCY+13, GB_CHEEK)
 # 手臂伸向茶器（2格宽，肩膀圆角）
-sp(GCX-4, GCY+11, GB)
-for _ay in range(GCY+12, GCY+21):
-    sp(GCX-4, _ay, GB); sp(GCX-5, _ay, GB)
-sp(GCX+4, GCY+11, GB)
-for _ay in range(GCY+12, GCY+21):
-    sp(GCX+4, _ay, GB); sp(GCX+5, _ay, GB)
+sp(GCX-3, GCY+10, GB)
+for _ay in range(GCY+11, GCY+18):
+    sp(GCX-3, _ay, GB); sp(GCX-4, _ay, GB)
+sp(GCX+3, GCY+10, GB)
+for _ay in range(GCY+11, GCY+18):
+    sp(GCX+3, _ay, GB); sp(GCX+4, _ay, GB)
+# 左臂延伸 x=13，右臂延伸 x=23（镜像）
+sp(GCX-5, GCY+16, GB); sp(GCX-5, GCY+17, GB)
+sp(GCX+5, GCY+16, GB); sp(GCX+5, GCY+17, GB)
 
 # ── 蓝兔子（右，x=38~48, y=2~18）──
 BCX, BCY = 43, 5
@@ -265,10 +270,10 @@ for _ey in range(BCY-2, BCY+1): sp(BCX+1, _ey, BUN_B); sp(BCX+2, _ey, BUN_B)
 for _ey in range(BCY-2, BCY): sp(BCX+1, _ey, BUN_IN)
 # 耳朵间底部
 sp(BCX, BCY, BUN_B)
-# 头（9宽）
-fl(BCY+1, BCY+6, BCX-4, BCX+4, BUN_B)
-sp(BCX-4, BCY+1, WALL); sp(BCX+4, BCY+1, WALL)
-sp(BCX-4, BCY+6, WALL); sp(BCX+4, BCY+6, WALL)
+# 头（9宽，四角挖代码圆角）
+wrow(BCY+1, BCX-3, BCX+3, BUN_B)
+fl(BCY+2, BCY+5, BCX-4, BCX+4, BUN_B)
+wrow(BCY+6, BCX-3, BCX+3, BUN_B)
 for bx in [BCX-3, BCX-2, BCX-1]: sp(bx, BCY+2, BUN_EYE)
 sp(BCX, BCY+2, BUN_D)
 for bx in [BCX+1, BCX+2, BCX+3]: sp(bx, BCY+2, BUN_EYE)
@@ -280,14 +285,17 @@ sp(BCX-1, BCY+6, BUN_B); sp(BCX, BCY+6, BUN_B); sp(BCX+1, BCY+6, BUN_B)
 # 脖子
 sp(BCX-2, BCY+7, BUN_B); sp(BCX-1, BCY+7, BUN_B); sp(BCX, BCY+7, BUN_B); sp(BCX+1, BCY+7, BUN_B); sp(BCX+2, BCY+7, BUN_B)
 # 身体（藏桌后）
-fl(BCY+8, BCY+12, BCX-3, BCX+3, BUN_B)
+fl(BCY+8, BCY+12, BCX-2, BCX+2, BUN_B)
 # 手臂伸向茶器（2格宽，肩膀圆角=外列从+1行开始）
-sp(BCX-4, BCY+9, BUN_B)
-for _ay in range(BCY+10, BCY+19):
-    sp(BCX-4, _ay, BUN_B); sp(BCX-5, _ay, BUN_B)
-sp(BCX+4, BCY+9, BUN_B)
-for _ay in range(BCY+10, BCY+19):
-    sp(BCX+4, _ay, BUN_B); sp(BCX+5, _ay, BUN_B)
+sp(BCX-3, BCY+8, BUN_B)
+for _ay in range(BCY+9, BCY+16):
+    sp(BCX-3, _ay, BUN_B); sp(BCX-4, _ay, BUN_B)
+sp(BCX+3, BCY+8, BUN_B)
+for _ay in range(BCY+9, BCY+16):
+    sp(BCX+3, _ay, BUN_B); sp(BCX+4, _ay, BUN_B)
+# 两臂延伸（镜像）
+sp(BCX-5, BCY+14, BUN_B); sp(BCX-5, BCY+15, BUN_B)
+sp(BCX+5, BCY+14, BUN_B); sp(BCX+5, BCY+15, BUN_B)
 
 img.save('pixel_matcha.png')
 print(f"Saved: {W*S}x{H*S}px")
