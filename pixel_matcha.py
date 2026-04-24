@@ -27,9 +27,9 @@ def wcol(x, y1, y2, c):
 WALL     = (225, 218, 205)
 WALL_D   = (198, 190, 175)
 SKY      = (235, 240, 248)
-FLOOR    = (198, 182, 158)
-FLOOR_D  = (175, 158, 132)
-FLOOR_L  = (218, 205, 182)
+FLOOR    = (148, 138, 128)   # 深灰棕，与背景区分
+FLOOR_D  = (128, 118, 108)
+FLOOR_L  = (165, 155, 142)
 
 # 俯视桌面（浅灰混凝土色）
 TABLE    = (205, 205, 200)
@@ -37,8 +37,8 @@ TABLE_D  = (188, 188, 182)
 TABLE_E  = (165, 165, 158)
 
 # 后台架子
-SHELF    = (212, 200, 178)
-SHELF_D  = (185, 172, 148)
+SHELF    = (178, 155, 122)   # 暖木色架子，和地板区分
+SHELF_D  = (148, 128,  95)
 
 MATCHA   = ( 88, 148,  72)
 MATCHA_L = (118, 178,  95)
@@ -86,9 +86,9 @@ BUN_D    = ( 62, 118, 188)
 
 # ── 背景 ──
 # 橘黄色方格瓷砖墙
-TILE_A = (228, 148,  72)   # 主色
-TILE_B = (215, 132,  58)   # 暗格
-TILE_G = (188, 108,  45)   # 缝隙
+TILE_A = (215, 168,  95)   # 主色（偏黄米，远离橙）
+TILE_B = (200, 158,  85)   # 暗格（微暗，低调）
+TILE_G = (225, 182, 112)   # 缝隙（比主色亮，柔和）
 TILE_W = 4                  # 每块瓷砖宽/高（格子单位）
 fl(0, 18, 0, 63, TILE_A)
 # 缝隙（竖向）
@@ -97,10 +97,6 @@ for tx in range(0, 64, TILE_W):
 # 缝隙（横向）
 for ty in range(0, 19, TILE_W):
     wrow(ty, 0, 63, TILE_G)
-# 隔行偏移效果（砖缝错位）
-for ty in range(TILE_W, 19, TILE_W*2):
-    for tx in range(TILE_W//2, 64, TILE_W):
-        wcol(tx, ty, ty+TILE_W-1, TILE_G)
 # 暗格（交错）
 import random as _r2; _rng2 = _r2.Random(33)
 for ty in range(0, 18, TILE_W):
@@ -116,9 +112,9 @@ for row in range(22, 36, 3):
     wrow(row, 0, 63, FLOOR_D)
 
 # ── 墙上架子（y=9~10, x=2~61）──
-fl(9, 10, 2, 61, SHELF)
-wrow(9, 2, 61, SHELF_D)
-wrow(10, 2, 61, SHELF_D)
+fl(10, 11, 2, 61, SHELF)
+wrow(11, 2, 61, SHELF_D)
+wrow(11, 2, 61, SHELF_D)
 
 # 架子上物品：3个牛奶盒（尖顶） + 抹茶粉罐
 # 牛奶盒（x=5~8, 10~13, 15~18），盒体 y=3~9，尖顶
@@ -133,11 +129,11 @@ for mx in [5, 10, 15]:
     sp(mx+1, 0, MILK_D)
 
 # 抹茶粉罐（x=30~33, y=3~9，居中）
-fl(3, 9, 30, 33, MATCHA_TIN)
-wrow(2, 30, 33, MATCHA_TD)
-wcol(30, 3, 9, MATCHA_TD)
-wcol(33, 3, 9, MATCHA_TD)
-sp(31, 5, MATCHA_F); sp(32, 5, MATCHA_F)
+fl(4, 9, 30, 33, MATCHA_TIN)
+wrow(3, 30, 33, MATCHA_TD)
+wcol(30, 4, 9, MATCHA_TD)
+wcol(33, 4, 9, MATCHA_TD)
+sp(31, 6, MATCHA_F); sp(32, 6, MATCHA_F)
 
 # 冰桶（右边，x=50~57, y=3~9）
 fl(3, 9, 50, 57, ICE_BK)
