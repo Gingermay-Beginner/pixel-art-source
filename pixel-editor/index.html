@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🦞 像素画编辑器</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #1a1a1e; color: #e8e4d8; font-family: 'Segoe UI', sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+#toolbar { display: flex; align-items: center; gap: 12px; padding: 8px 14px; background: #242428; border-bottom: 1px solid #38383e; flex-shrink: 0; flex-wrap: wrap; }
+#toolbar h1 { font-size: 15px; font-weight: 600; color: #e8c87a; margin-right: 4px; }
+
+.tool-group { display: flex; gap: 6px; align-items: center; }
+.sep { width: 1px; height: 24px; background: #48484e; }
+
+button { background: #38383e; border: 1px solid #52525a; color: #d8d4c8; padding: 5px 11px; border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.15s; }
+button:hover { background: #48484e; }
+button.active { background: #e8c87a; color: #1a1a1e; border-color: #e8c87a; font-weight: 600; }
+button.danger { border-color: #c85a5a; color: #c85a5a; }
+button.danger:hover { background: #c85a5a; color: #fff; }
+
+.color-pick-wrap { position: relative; }
+#colorPicker { width: 32px; height: 32px; border: 2px solid #58585e; border-radius: 6px; cursor: pointer; padding: 0; background: none; }
+#colorHex { width: 72px; background: #2e2e34; border: 1px solid #48484e; color: #e8e4d8; padding: 5px 7px; border-radius: 6px; font-size: 12px; font-family: monospace; }
+
+#palette-wrap { display: flex; gap: 4px; flex-wrap: wrap; max-width: 220px; }
+.swatch { width: 20px; height: 20px; border-radius: 4px; cursor: pointer; border: 2px solid transparent; transition: transform 0.1s; }
+.swatch:hover { transform: scale(1.2); }
+.swatch.active-swatch { border-color: #fff; }
+
+#size-label { font-size: 12px; color: #888; }
+#brushSize { width: 60px; accent-color: #e8c87a; }
+
+#main { display: flex; flex: 1; overflow: hidden; }
+
+#canvas-area { flex: 1; overflow: auto; display: flex; align-items: flex-start; justify-content: flex-start; padding: 16px; background: #141418; position: relative; }
+#canvas { cursor: crosshair; image-rendering: pixelated; display: block; border: 1px solid #38383e; }
+#canvas.eyedropper-cursor { cursor: crosshair; }
+
+#sidebar { width: 180px; flex-shrink: 0; background: #1e1e22; border-left: 1px solid #38383e; display: flex; flex-direction: column; overflow-y: auto; }
+.sidebar-section { padding: 12px; border-bottom: 1px solid #2e2e34; }
+.sidebar-section h3 { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+
+#layers { display: flex; flex-direction: column; gap: 4px; }
+.layer-item { display: flex; align-items: center; gap: 6px; padding: 5px 7px; background: #2a2a30; border-radius: 6px; cursor: pointer; font-size: 12px; }
+.layer-item.active { background: #38383e; border: 1px solid #e8c87a33; }
+.layer-vis { width: 14px; height: 14px; border-radius: 3px; border: 1px solid #555; cursor: pointer; background: #e8c87a; }
+.layer-vis.hidden { background: #444; }
+
+#history-list { display: flex; flex-direction: column; gap: 2px; max-height: 140px; overflow-y: auto; }
+.hist-item { font-size: 11px; color: #aaa; padding: 3px 6px; border-radius: 4px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hist-item:hover { background: #2e2e34; color: #e8e4d8; }
+.hist-item.current { color: #e8c87a; }
+
+#grid-info { font-size: 11px; color: #666; padding: 8px 12px; }
+
+#status { position: fixed; bottom: 8px; left: 50%; transform: translateX(-50%); background: #2a2a30cc; backdrop-filter: blur(8px); padding: 5px 14px; border-radius: 20px; font-size: 12px; color: #aaa; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+#status.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <h1>🦞 像素画</h1>
+  <div class="sep"></div>
+
+  <div class="tool-group">
+    <button id="btn-pencil" class="active" title="画笔 (P)" onclick="setTool('pencil')">✏️ 画</button>
+    <button id="btn-eraser" title="橡皮 (E)" onclick="setTool('eraser')">🧹 擦</button>
+    <button id="btn-fill"   title="填充 (F)" onclick="setTool('fill')">🪣 填</button>
+    <button id="btn-picker" title="取色 (I)" onclick="setTool('picker')">💉 取色</button>
+    <button id="btn-rect"   title="矩形 (R)" onclick="setTool('rect')">⬜ 矩形</button>
+    <button id="btn-line"   title="直线 (L)" onclick="setTool('line')">╱ 线</button>
+    <button id="btn-move"   title="移动选区 (M)" onclick="setTool('move')">✥ 移</button>
+  </div>
+  <div class="sep"></div>
+
+  <div class="tool-group">
+    <span id="size-label">笔刷</span>
+    <input type="range" id="brushSize" min="1" max="5" value="1" oninput="brushSize=+this.value">
+  </div>
+  <div class="sep"></div>
+
+  <div class="tool-group color-pick-wrap">
+    <input type="color" id="colorPicker" value="#e8c87a" oninput="setColorFromPicker(this.value)">
+    <input type="text"  id="colorHex"   value="#e8c87a" onchange="setColorFromHex(this.value)" spellcheck="false">
+  </div>
+  <div class="sep"></div>
+
+  <div id="palette-wrap"></div>
+  <div class="sep"></div>
+
+  <div class="tool-group">
+    <button onclick="undo()" title="撤销 Ctrl+Z">↩ 撤销</button>
+    <button onclick="redo()" title="重做 Ctrl+Y">↪ 重做</button>
+  </div>
+  <div class="sep"></div>
+
+  <div class="tool-group">
+    <button onclick="clearCanvas()" class="danger">🗑 清空</button>
+    <button onclick="exportPNG()">💾 导出 PNG</button>
+    <button onclick="loadPNG()">📂 导入 PNG</button>
+    <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFileLoad(event)">
+    <button onclick="toggleGrid()"># 网格</button>
+    <select id="zoomSel" onchange="setZoom(+this.value)" style="background:#38383e;border:1px solid #52525a;color:#d8d4c8;padding:5px;border-radius:6px;font-size:13px;">
+      <option value="8">8x</option>
+      <option value="12" selected>12x</option>
+      <option value="16">16x</option>
+      <option value="20">20x</option>
+    </select>
+  </div>
+</div>
+
+<div id="main">
+  <div id="canvas-area">
+    <canvas id="canvas"></canvas>
+  </div>
+  <div id="sidebar">
+    <div class="sidebar-section">
+      <h3>颜色历史</h3>
+      <div id="recent-colors" style="display:flex;flex-wrap:wrap;gap:4px;"></div>
+    </div>
+    <div class="sidebar-section">
+      <h3>撤销历史</h3>
+      <div id="history-list"></div>
+    </div>
+    <div id="grid-info">坐标: —</div>
+  </div>
+</div>
+
+<div id="status"></div>
+
+<script>
+const CW = 64, CH = 36;
+let SCALE = 12;
+let tool = 'pencil';
+let brushSize = 1;
+let currentColor = '#e8c87a';
+let showGrid = true;
+let painting = false;
+let lastX = -1, lastY = -1;
+let rectStart = null;
+let lineStart = null;
+let moveStart = null;
+let moveSnapshot = null;
+
+// 像素数据（RGBA flat array per pixel 用 hex string）
+let pixels = new Array(CW * CH).fill('');
+let undoStack = [], redoStack = [];
+let recentColors = [];
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+const PALETTE = [
+  '#e8e4d8','#c8c0a8','#888070','#484038','#181410',
+  '#e8a878','#c87848','#985828','#683818','#381808',
+  '#f8e888','#e8c848','#c89828','#986808','#584808',
+  '#a8e878','#68b848','#389828','#186808','#084808',
+  '#88c8f8','#4898e8','#1868c8','#084898','#083868',
+  '#d888f8','#a848e8','#7828c8','#481898','#280868',
+  '#f88898','#e84858','#c81828','#980818','#580808',
+  '#ffffff','#e0e0e0','#b0b0b0','#787878','#404040','#000000',
+];
+
+function initPalette() {
+  const wrap = document.getElementById('palette-wrap');
+  PALETTE.forEach(c => {
+    const s = document.createElement('div');
+    s.className = 'swatch';
+    s.style.background = c;
+    s.title = c;
+    s.onclick = () => { setColor(c); };
+    wrap.appendChild(s);
+  });
+}
+
+function setColor(hex) {
+  currentColor = hex;
+  document.getElementById('colorPicker').value = hex;
+  document.getElementById('colorHex').value = hex;
+  document.querySelectorAll('.swatch').forEach(s => {
+    s.classList.toggle('active-swatch', s.style.background === hexToCss(hex));
+  });
+  addRecentColor(hex);
+}
+
+function hexToCss(hex) {
+  // convert #rrggbb to rgb(r, g, b) for comparison
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+function setColorFromPicker(hex) { setColor(hex); }
+function setColorFromHex(val) {
+  if (/^#[0-9a-fA-F]{6}$/.test(val)) setColor(val);
+}
+
+function addRecentColor(hex) {
+  recentColors = [hex, ...recentColors.filter(c => c !== hex)].slice(0, 16);
+  renderRecentColors();
+}
+
+function renderRecentColors() {
+  const wrap = document.getElementById('recent-colors');
+  wrap.innerHTML = '';
+  recentColors.forEach(c => {
+    const s = document.createElement('div');
+    s.className = 'swatch';
+    s.style.background = c;
+    s.title = c;
+    s.onclick = () => setColor(c);
+    wrap.appendChild(s);
+  });
+}
+
+function setTool(t) {
+  tool = t;
+  document.querySelectorAll('[id^="btn-"]').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('btn-' + t);
+  if (btn) btn.classList.add('active');
+}
+
+function setZoom(z) {
+  SCALE = z;
+  resizeCanvas();
+  render();
+}
+
+function toggleGrid() {
+  showGrid = !showGrid;
+  render();
+}
+
+function resizeCanvas() {
+  canvas.width  = CW * SCALE;
+  canvas.height = CH * SCALE;
+}
+
+function idx(x, y) { return y * CW + x; }
+
+function getPixel(x, y) {
+  if (x < 0 || x >= CW || y < 0 || y >= CH) return null;
+  return pixels[idx(x, y)] || '';
+}
+
+function setPixel(x, y, color) {
+  if (x < 0 || x >= CW || y < 0 || y >= CH) return;
+  pixels[idx(x, y)] = color;
+}
+
+function render(overlay) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // background checkerboard
+  for (let y = 0; y < CH; y++) {
+    for (let x = 0; x < CW; x++) {
+      const c = pixels[idx(x,y)];
+      if (c) {
+        ctx.fillStyle = c;
+      } else {
+        ctx.fillStyle = ((x+y)%2===0) ? '#2a2a2a' : '#222222';
+      }
+      ctx.fillRect(x*SCALE, y*SCALE, SCALE, SCALE);
+    }
+  }
+  // overlay (rect/line preview)
+  if (overlay) {
+    overlay.forEach(([ox,oy,oc]) => {
+      ctx.fillStyle = oc;
+      ctx.fillRect(ox*SCALE, oy*SCALE, SCALE, SCALE);
+    });
+  }
+  // grid
+  if (showGrid && SCALE >= 8) {
+    ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x <= CW; x++) {
+      ctx.beginPath(); ctx.moveTo(x*SCALE, 0); ctx.lineTo(x*SCALE, CH*SCALE); ctx.stroke();
+    }
+    for (let y = 0; y <= CH; y++) {
+      ctx.beginPath(); ctx.moveTo(0, y*SCALE); ctx.lineTo(CW*SCALE, y*SCALE); ctx.stroke();
+    }
+  }
+}
+
+function getCanvasXY(e) {
+  const rect = canvas.getBoundingClientRect();
+  const cx = e.clientX - rect.left, cy = e.clientY - rect.top;
+  return [Math.floor(cx / SCALE), Math.floor(cy / SCALE)];
+}
+
+// ── 填充 ──
+function floodFill(sx, sy, newColor) {
+  const target = getPixel(sx, sy);
+  if (target === newColor) return;
+  const stack = [[sx, sy]];
+  const visited = new Set();
+  while (stack.length) {
+    const [x, y] = stack.pop();
+    if (x < 0 || x >= CW || y < 0 || y >= CH) continue;
+    const key = y*CW+x;
+    if (visited.has(key)) continue;
+    if (getPixel(x,y) !== target) continue;
+    visited.add(key);
+    setPixel(x, y, newColor);
+    stack.push([x+1,y],[x-1,y],[x,y+1],[x,y-1]);
+  }
+}
+
+// ── 画笔（多格）──
+function paintAt(x, y, color) {
+  const r = Math.floor((brushSize-1)/2);
+  for (let dy = -r; dy <= r; dy++)
+    for (let dx = -r; dx <= r; dx++)
+      setPixel(x+dx, y+dy, color);
+}
+
+// ── 矩形 overlay ──
+function getRectPixels(x0,y0,x1,y1,color) {
+  const res = [];
+  const xa=Math.min(x0,x1), xb=Math.max(x0,x1), ya=Math.min(y0,y1), yb=Math.max(y0,y1);
+  for (let y=ya;y<=yb;y++) for (let x=xa;x<=xb;x++) res.push([x,y,color]);
+  return res;
+}
+
+// ── 直线 overlay (Bresenham) ──
+function getLinePixels(x0,y0,x1,y1,color) {
+  const res = [];
+  let dx=Math.abs(x1-x0), dy=Math.abs(y1-y0);
+  let sx=x0<x1?1:-1, sy=y0<y1?1:-1, err=dx-dy;
+  let cx=x0, cy=y0;
+  while(true) {
+    res.push([cx,cy,color]);
+    if(cx===x1&&cy===y1) break;
+    const e2=2*err;
+    if(e2>-dy){err-=dy;cx+=sx;}
+    if(e2<dx){err+=dx;cy+=sy;}
+  }
+  return res;
+}
+
+// ── 取色 ──
+function pickColor(x, y) {
+  const c = getPixel(x, y);
+  if (c) setColor(c);
+}
+
+// ── 撤销/重做 ──
+function saveHistory(label) {
+  undoStack.push({ pixels: [...pixels], label: label || '操作' });
+  if (undoStack.length > 60) undoStack.shift();
+  redoStack = [];
+  renderHistory();
+}
+
+function undo() {
+  if (!undoStack.length) return;
+  redoStack.push({ pixels: [...pixels], label: '当前' });
+  const s = undoStack.pop();
+  pixels = [...s.pixels];
+  render(); renderHistory(); showStatus('撤销');
+}
+
+function redo() {
+  if (!redoStack.length) return;
+  undoStack.push({ pixels: [...pixels], label: '重做前' });
+  const s = redoStack.pop();
+  pixels = [...s.pixels];
+  render(); renderHistory(); showStatus('重做');
+}
+
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  list.innerHTML = '';
+  const items = [...undoStack].reverse().slice(0, 20);
+  items.forEach((h, i) => {
+    const d = document.createElement('div');
+    d.className = 'hist-item' + (i === 0 ? ' current' : '');
+    d.textContent = h.label;
+    d.onclick = () => {
+      const targetIdx = undoStack.length - 1 - i;
+      redoStack.push({ pixels: [...pixels], label: '跳转前' });
+      pixels = [...undoStack[targetIdx].pixels];
+      undoStack.splice(targetIdx);
+      render(); renderHistory();
+    };
+    list.appendChild(d);
+  });
+}
+
+// ── 导出 ──
+function exportPNG() {
+  const off = document.createElement('canvas');
+  off.width = CW; off.height = CH;
+  const oc = off.getContext('2d');
+  for (let y=0;y<CH;y++) for (let x=0;x<CW;x++) {
+    const c = pixels[idx(x,y)];
+    if (c) { oc.fillStyle=c; oc.fillRect(x,y,1,1); }
+  }
+  const a = document.createElement('a');
+  a.download = 'pixel_' + Date.now() + '.png';
+  a.href = off.toDataURL('image/png');
+  a.click();
+  showStatus('已导出 PNG');
+}
+
+function loadPNG() { document.getElementById('fileInput').click(); }
+function handleFileLoad(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const im = new Image();
+    im.onload = () => {
+      const off = document.createElement('canvas');
+      off.width = CW; off.height = CH;
+      const oc = off.getContext('2d');
+      oc.drawImage(im, 0, 0, CW, CH);
+      const d = oc.getImageData(0,0,CW,CH).data;
+      saveHistory('导入前');
+      for (let i=0;i<CW*CH;i++) {
+        const r=d[i*4],g=d[i*4+1],b=d[i*4+2],a=d[i*4+3];
+        if (a>10) pixels[i] = `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+        else pixels[i] = '';
+      }
+      render(); showStatus('导入完成');
+    };
+    im.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+}
+
+function clearCanvas() {
+  if (!confirm('确认清空画布？')) return;
+  saveHistory('清空前');
+  pixels = new Array(CW * CH).fill('');
+  render(); showStatus('已清空');
+}
+
+// ── 状态提示 ──
+let statusTimer;
+function showStatus(msg) {
+  const s = document.getElementById('status');
+  s.textContent = msg; s.classList.add('show');
+  clearTimeout(statusTimer);
+  statusTimer = setTimeout(() => s.classList.remove('show'), 1800);
+}
+
+// ── 鼠标事件 ──
+canvas.addEventListener('mousedown', e => {
+  const [x, y] = getCanvasXY(e);
+  if (x<0||x>=CW||y<0||y>=CH) return;
+  painting = true;
+  if (tool === 'picker') { pickColor(x,y); setTool('pencil'); return; }
+  if (tool === 'fill') { saveHistory('填充'); floodFill(x,y,e.button===2?'':currentColor); render(); return; }
+  if (tool === 'rect') { rectStart = [x,y]; return; }
+  if (tool === 'line') { lineStart = [x,y]; return; }
+  if (tool === 'move') { moveStart=[x,y]; moveSnapshot=[...pixels]; return; }
+  saveHistory('画笔');
+  paintAt(x, y, tool==='eraser' ? '' : currentColor);
+  lastX=x; lastY=y;
+  render();
+});
+
+canvas.addEventListener('mousemove', e => {
+  const [x, y] = getCanvasXY(e);
+  document.getElementById('grid-info').textContent = `坐标: (${x}, ${y})`;
+  if (!painting) return;
+  if (tool === 'rect' && rectStart) {
+    render(getRectPixels(rectStart[0],rectStart[1],x,y,currentColor));
+    return;
+  }
+  if (tool === 'line' && lineStart) {
+    render(getLinePixels(lineStart[0],lineStart[1],x,y,currentColor));
+    return;
+  }
+  if (tool === 'move' && moveStart && moveSnapshot) {
+    const dx = x - moveStart[0], dy = y - moveStart[1];
+    const newPx = new Array(CW*CH).fill('');
+    for (let py=0;py<CH;py++) for (let px=0;px<CW;px++) {
+      const c = moveSnapshot[idx(px,py)];
+      if (c && px+dx>=0&&px+dx<CW&&py+dy>=0&&py+dy<CH) newPx[idx(px+dx,py+dy)]=c;
+    }
+    pixels = newPx; render(); return;
+  }
+  if ((tool==='pencil'||tool==='eraser') && (x!==lastX||y!==lastY)) {
+    paintAt(x, y, tool==='eraser' ? '' : currentColor);
+    lastX=x; lastY=y;
+    render();
+  }
+});
+
+canvas.addEventListener('mouseup', e => {
+  if (!painting) return;
+  painting = false;
+  const [x, y] = getCanvasXY(e);
+  if (tool === 'rect' && rectStart) {
+    saveHistory('矩形');
+    getRectPixels(rectStart[0],rectStart[1],x,y,currentColor).forEach(([px,py,pc])=>setPixel(px,py,pc));
+    rectStart = null; render(); return;
+  }
+  if (tool === 'line' && lineStart) {
+    saveHistory('直线');
+    getLinePixels(lineStart[0],lineStart[1],x,y,currentColor).forEach(([px,py,pc])=>setPixel(px,py,pc));
+    lineStart = null; render(); return;
+  }
+  if (tool === 'move') { moveStart=null; moveSnapshot=null; saveHistory('移动'); }
+});
+
+canvas.addEventListener('mouseleave', () => {
+  document.getElementById('grid-info').textContent = '坐标: —';
+});
+
+canvas.addEventListener('contextmenu', e => e.preventDefault());
+
+// ── 键盘快捷键 ──
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if ((e.ctrlKey||e.metaKey) && e.key==='z') { e.preventDefault(); undo(); return; }
+  if ((e.ctrlKey||e.metaKey) && (e.key==='y'||e.key==='Z')) { e.preventDefault(); redo(); return; }
+  if ((e.ctrlKey||e.metaKey) && e.key==='s') { e.preventDefault(); exportPNG(); return; }
+  switch(e.key.toLowerCase()) {
+    case 'p': setTool('pencil'); break;
+    case 'e': setTool('eraser'); break;
+    case 'f': setTool('fill'); break;
+    case 'i': setTool('picker'); break;
+    case 'r': setTool('rect'); break;
+    case 'l': setTool('line'); break;
+    case 'm': setTool('move'); break;
+    case '[': brushSize=Math.max(1,brushSize-1); document.getElementById('brushSize').value=brushSize; break;
+    case ']': brushSize=Math.min(5,brushSize+1); document.getElementById('brushSize').value=brushSize; break;
+    case 'g': toggleGrid(); break;
+  }
+});
+
+// ── 初始化 ──
+initPalette();
+setColor('#e8c87a');
+resizeCanvas();
+render();
+showStatus('欢迎使用 🦞 像素画编辑器！');
+</script>
+</body>
+</html>
