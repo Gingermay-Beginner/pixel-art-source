@@ -45,12 +45,12 @@ MATCHA_L = (118, 178,  95)
 MATCHA_F = (148, 198, 118)
 FOAM     = (198, 228, 168)  # 泡沫亮点
 CUP_W    = (245, 248, 252)
-STRAW    = (178, 158, 118)
+STRAW    = (245, 235, 215)
 SYRUP    = (225,  80, 100)
 SYRUP_L  = (245, 140, 155)
 MANGO    = (235, 148,  45)
 MANGO_L  = (248, 198,  95)
-CUP_T    = (148, 188, 218)   # 杯盖（加深蓝，更显眼）
+CUP_T    = (210, 235, 252)   # 杯盖（加深蓝，更显眼）
 ICE      = (215, 235, 248)
 MILK     = (248, 245, 238)
 MILK_D   = (215, 210, 200)
@@ -65,7 +65,7 @@ CAP_DARK = (245, 242, 235)   # 瓶盖深色
 WHISK    = (208, 192,  95)
 WHISK_D  = (168, 152,  68)
 BOWL_W   = (238, 232, 220)
-BOWL_D   = (205, 198, 182)
+BOWL_D   = (228, 222, 210)
 
 ICE_BK   = (175, 192, 208)
 ICE_BK_D = (148, 168, 188)
@@ -159,13 +159,13 @@ for mx in [26, 31, 36]:
 # 抹茶粉罐（x=30~33, y=3~9，居中）
 
 # 冰桶（右边，x=50~57, y=3~9）
-fl(3, 9, 50, 57, ICE_BK)
+fl(3, 9, 51, 58, ICE_BK)
 fl(4, 8, 51, 56, ICE)
 sp(51, 5, CUP_W); sp(53, 6, CUP_W); sp(55, 5, CUP_W)
-wcol(50, 3, 9, ICE_BK_D)
-wcol(57, 3, 9, ICE_BK_D)
-wrow(9, 50, 57, ICE_BK_D)
-sp(49, 3, ICE_BK_D); sp(58, 3, ICE_BK_D)
+wcol(51, 3, 9, ICE_BK_D)
+wcol(58, 3, 9, ICE_BK_D)
+wrow(9, 51, 58, ICE_BK_D)
+sp(50, 3, ICE_BK_D); sp(59, 3, ICE_BK_D)
 
 # ── 俯视桌面（y=19~35, x=4~59）──
 fl(18, 35, 0, 63, TABLE)
@@ -207,15 +207,15 @@ sp(GCX-1, GCY+1, HAT_DARK); sp(GCX, GCY+1, HAT_LITE); sp(GCX+3, GCY+1, HAT_DARK)
 fl(GCY+10, GCY+14, GCX-2, GCX+2, GB)
 sp(GCX, GCY+11, GB_CHEEK); sp(GCX, GCY+13, GB_CHEEK)
 # 手臂伸向茶器（2格宽，肩膀圆角）
-sp(GCX-3, GCY+10, GB)
-for _ay in range(GCY+11, GCY+18):
+sp(GCX-3, GCY+9, GB)
+for _ay in range(GCY+10, GCY+17):
     sp(GCX-3, _ay, GB); sp(GCX-4, _ay, GB)
-sp(GCX+3, GCY+10, GB)
-for _ay in range(GCY+11, GCY+18):
+sp(GCX+3, GCY+9, GB)
+for _ay in range(GCY+10, GCY+17):
     sp(GCX+3, _ay, GB); sp(GCX+4, _ay, GB)
 # 左臂延伸 x=13，右臂延伸 x=23（镜像）
-sp(GCX-5, GCY+16, GB); sp(GCX-5, GCY+17, GB)
-sp(GCX+5, GCY+16, GB); sp(GCX+5, GCY+17, GB)
+sp(GCX-5, GCY+15, GB); sp(GCX-5, GCY+16, GB)
+sp(GCX+5, GCY+15, GB); sp(GCX+5, GCY+16, GB)
 
 # ── 蓝兔子（右，x=38~48, y=2~18）──
 BCX, BCY = 45, 5
@@ -248,15 +248,15 @@ sp(BCX-2, BCY+7, BUN_B); sp(BCX-1, BCY+7, BUN_B); sp(BCX, BCY+7, BUN_B); sp(BCX+
 # 身体（藏桌后）
 fl(BCY+8, BCY+12, BCX-2, BCX+2, BUN_B)
 # 手臂伸向茶器（2格宽，肩膀圆角=外列从+1行开始）
-sp(BCX-3, BCY+8, BUN_B)
-for _ay in range(BCY+9, BCY+16):
+sp(BCX-3, BCY+7, BUN_B)
+for _ay in range(BCY+8, BCY+15):
     sp(BCX-3, _ay, BUN_B); sp(BCX-4, _ay, BUN_B)
-sp(BCX+3, BCY+8, BUN_B)
-for _ay in range(BCY+9, BCY+16):
+sp(BCX+3, BCY+7, BUN_B)
+for _ay in range(BCY+8, BCY+15):
     sp(BCX+3, _ay, BUN_B); sp(BCX+4, _ay, BUN_B)
 # 两臂延伸（镜像）
-sp(BCX-5, BCY+14, BUN_B); sp(BCX-5, BCY+15, BUN_B)
-sp(BCX+5, BCY+14, BUN_B); sp(BCX+5, BCY+15, BUN_B)
+sp(BCX-5, BCY+13, BUN_B); sp(BCX-5, BCY+14, BUN_B)
+sp(BCX+5, BCY+13, BUN_B); sp(BCX+5, BCY+14, BUN_B)
 
 # ── 桌上物品（俯视桌面上，侧视物品）──
 
