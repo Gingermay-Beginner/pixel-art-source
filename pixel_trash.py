@@ -237,5 +237,27 @@ wcol(BX+2, 27, BY-1, BUN); wcol(BX+3, 27, BY-1, BUN)
 sp(BX-4, BY-1, BUN); sp(BX+4, BY-1, BUN)
 
 
+# ── 云朵 + 飞鸟 ──
+CLOUD   = (252, 252, 252)
+CLOUD_D = (225, 228, 235)
+BIRD    = ( 52,  48,  42)
+# 左上大云（x=1~9, y=3~7）
+wrow(4, 2, 7, CLOUD); wrow(5, 2, 7, CLOUD); wrow(6, 1, 8, CLOUD); wrow(7, 2, 7, CLOUD)
+sp(1, 5, CLOUD); sp(1, 6, CLOUD); sp(9, 5, CLOUD); sp(9, 6, CLOUD)
+wrow(7, 2, 8, CLOUD_D)
+sp(2, 3, CLOUD); sp(3, 3, CLOUD); sp(5, 2, CLOUD); sp(6, 2, CLOUD)
+# 右上小云（x=54~62, y=6~9）
+wrow(7, 55, 61, CLOUD); wrow(8, 54, 62, CLOUD); wrow(9, 55, 61, CLOUD)
+sp(54, 8, CLOUD); sp(62, 8, CLOUD)
+wrow(9, 55, 61, CLOUD_D)
+sp(56, 6, CLOUD); sp(57, 6, CLOUD); sp(59, 6, CLOUD); sp(60, 6, CLOUD)
+# 飞鸟左（x=10~16, y=1~2）
+sp(10, 2, BIRD); sp(11, 1, BIRD); sp(12, 2, BIRD)
+sp(14, 2, BIRD); sp(15, 1, BIRD); sp(16, 2, BIRD)
+# 飞鸟右（x=45~51, y=4~5）
+sp(45, 5, BIRD); sp(46, 4, BIRD); sp(47, 5, BIRD)
+sp(49, 5, BIRD); sp(50, 4, BIRD); sp(51, 5, BIRD)
+
+
 img.save("/home/azureuser/.openclaw/workspace/pixel_trash.png")
 print("Saved")
