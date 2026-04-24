@@ -224,7 +224,7 @@ sp(15,22,WHISK_D); sp(16,22,WHISK); sp(17,22,WHISK_D); sp(18,22,WHISK)
 sp(14,23,WHISK); sp(15,23,WHISK_D); sp(16,23,WHISK); sp(17,23,WHISK_D); sp(18,23,WHISK); sp(19,23,WHISK_D)
 sp(14,24,WHISK_D); sp(15,24,WHISK); sp(16,24,WHISK_D); sp(17,24,WHISK); sp(18,24,WHISK_D); sp(19,24,WHISK)
 sp(14,25,WHISK_D); sp(15,25,WHISK); sp(16,25,WHISK_D); sp(17,25,WHISK); sp(18,25,WHISK_D); sp(19,25,WHISK)
-GCX, GCY = 18, 6
+GCX, GCY = 18, 3
 # 帽子
 fl(GCY, GCY+2, GCX-3, GCX+3, HAT_RED)
 sp(GCX, GCY-1, HAT_DARK)
@@ -239,20 +239,20 @@ sp(GCX-2, GCY+5, GB_EYE); sp(GCX+2, GCY+5, GB_EYE)
 sp(GCX-3, GCY+6, GB_CHEEK); sp(GCX+3, GCY+6, GB_CHEEK)
 sp(GCX-1, GCY+7, GBD); sp(GCX, GCY+7, GBD); sp(GCX+1, GCY+7, GBD)
 # 脖子
-# neck removed
+sp(GCX-2, GCY+9, GB); sp(GCX-1, GCY+9, GB); sp(GCX, GCY+9, GB); sp(GCX+1, GCY+9, GB); sp(GCX+2, GCY+9, GB)
 # 身体（藏桌后）
-fl(GCY+8, GCY+12, GCX-3, GCX+3, GB)
-sp(GCX, GCY+9, GB_CHEEK); sp(GCX, GCY+11, GB_CHEEK)
+fl(GCY+10, GCY+14, GCX-3, GCX+3, GB)
+sp(GCX, GCY+11, GB_CHEEK); sp(GCX, GCY+13, GB_CHEEK)
 # 手臂伸向茶器（2格宽，肩膀圆角）
-sp(GCX-4, GCY+9, GB)
-for _ay in range(GCY+10, GCY+19):
+sp(GCX-4, GCY+11, GB)
+for _ay in range(GCY+12, GCY+21):
     sp(GCX-4, _ay, GB); sp(GCX-5, _ay, GB)
-sp(GCX+4, GCY+9, GB)
-for _ay in range(GCY+10, GCY+19):
+sp(GCX+4, GCY+11, GB)
+for _ay in range(GCY+12, GCY+21):
     sp(GCX+4, _ay, GB); sp(GCX+5, _ay, GB)
 
 # ── 蓝兔子（右，x=38~48, y=2~18）──
-BCX, BCY = 43, 8
+BCX, BCY = 43, 5
 # 耳朵（左）顶部1格圆角在内侧
 sp(BCX-1, BCY-3, BUN_B)
 for _ey in range(BCY-2, BCY+1): sp(BCX-2, _ey, BUN_B); sp(BCX-1, _ey, BUN_B)
@@ -278,15 +278,15 @@ sp(BCX-3, BCY+4, BUN_IN); sp(BCX+3, BCY+4, BUN_IN)
 sp(BCX-1, BCY+5, (245,240,235)); sp(BCX, BCY+5, (245,240,235)); sp(BCX+1, BCY+5, (245,240,235))
 sp(BCX-1, BCY+6, BUN_B); sp(BCX, BCY+6, BUN_B); sp(BCX+1, BCY+6, BUN_B)
 # 脖子
-# neck removed
+sp(BCX-2, BCY+7, BUN_B); sp(BCX-1, BCY+7, BUN_B); sp(BCX, BCY+7, BUN_B); sp(BCX+1, BCY+7, BUN_B); sp(BCX+2, BCY+7, BUN_B)
 # 身体（藏桌后）
-fl(BCY+6, BCY+10, BCX-3, BCX+3, BUN_B)
+fl(BCY+8, BCY+12, BCX-3, BCX+3, BUN_B)
 # 手臂伸向茶器（2格宽，肩膀圆角=外列从+1行开始）
-sp(BCX-4, BCY+7, BUN_B)
-for _ay in range(BCY+8, BCY+17):
+sp(BCX-4, BCY+9, BUN_B)
+for _ay in range(BCY+10, BCY+19):
     sp(BCX-4, _ay, BUN_B); sp(BCX-5, _ay, BUN_B)
-sp(BCX+4, BCY+7, BUN_B)
-for _ay in range(BCY+8, BCY+17):
+sp(BCX+4, BCY+9, BUN_B)
+for _ay in range(BCY+10, BCY+19):
     sp(BCX+4, _ay, BUN_B); sp(BCX+5, _ay, BUN_B)
 
 img.save('pixel_matcha.png')
