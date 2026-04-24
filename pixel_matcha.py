@@ -381,7 +381,7 @@ sp(36, 31, PITCHER_D); sp(36, 32, PITCHER_D)
 # ── 吸管筒（x=51~55, y=22~31）──
 HOLDER   = ( 72,  58,  48)
 HOLDER_L = ( 95,  78,  62)
-STRAW_R  = (215,  88,  72)
+STRAW_R  = (232, 220, 195)
 
 fl(31, 34, 57, 61, HOLDER)
 wcol(57, 31, 34, HOLDER_L)
