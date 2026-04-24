@@ -214,7 +214,7 @@ sp(GCX+3, GCY+10, GB)
 for _ay in range(GCY+11, GCY+17):
     sp(GCX+3, _ay, GB); sp(GCX+4, _ay, GB)
 # 左臂延伸 x=13，右臂延伸 x=23（镜像）
-sp(GCX-5, GCY+15, GB); sp(GCX-5, GCY+16, GB)
+sp(GCX-5, GCY+14, GB); sp(GCX-5, GCY+15, GB)
 sp(GCX+5, GCY+15, GB); sp(GCX+5, GCY+16, GB)
 
 # ── 蓝兔子（右，x=38~48, y=2~18）──
@@ -255,7 +255,7 @@ sp(BCX+3, BCY+8, BUN_B)
 for _ay in range(BCY+9, BCY+15):
     sp(BCX+3, _ay, BUN_B); sp(BCX+4, _ay, BUN_B)
 # 两臂延伸（镜像）
-sp(BCX-5, BCY+13, BUN_B); sp(BCX-5, BCY+14, BUN_B)
+sp(BCX-5, BCY+12, BUN_B); sp(BCX-5, BCY+13, BUN_B)
 sp(BCX+5, BCY+13, BUN_B); sp(BCX+5, BCY+14, BUN_B)
 
 # ── 桌上物品（俯视桌面上，侧视物品）──
@@ -268,9 +268,9 @@ for i, sc in enumerate(syrup_colors):
     fl(33, 34, bx+1, bx+2, sc)
     sp(bx+1, 34, (245, 242, 235)); sp(bx+2, 34, (245, 242, 235))
     wcol(bx+3, 28, 32, (max(0,sc[0]-35), max(0,sc[1]-35), max(0,sc[2]-35)))
-    # 瓶盖
+    # 瓶盖（四角补齐）
     wrow(28, bx, bx+3, CAP_DARK)
-    sp(bx+1, 27, CAP_DARK); sp(bx+2, 27, CAP_DARK)
+    sp(bx, 27, CAP_DARK); sp(bx+1, 27, CAP_DARK); sp(bx+2, 27, CAP_DARK); sp(bx+3, 27, CAP_DARK)
 
 # 抹茶碗（x=41~48, y=19~24，下移2格）
 fl(20, 24, 43, 50, BOWL_W)
