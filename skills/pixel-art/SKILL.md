@@ -104,6 +104,16 @@ GCY-10~-6  : 身体（约5格高）
 - **帽子绘制顺序**：身体 → 头（肤色）→ 眼/腮红/嘴 → **帽子**（最后，否则被头覆盖）
 - **小啾啾**：必须在帽身上方一格（`HAT_TOP-1`），不可与帽身断开，不可在上方两格
 - **帽子右偏【角色固定设定】**：帽子比头中心偏右1格（x=GCX-1~GCX+3，而非居中GCX-2~GCX+2）；每次画姜饼人必带
+- **帽子定稿代码（pixel_matcha 版本，2026-04-24）**：
+  ```python
+  # 帽子（右移1格，顶行挖圆角）
+  wrow(GCY+1, GCX-1, GCX+3, HAT_RED)       # 顶行缩短，挖左右上角
+  fl(GCY+2, GCY+3, GCX-2, GCX+4, HAT_RED)  # 帽身两行
+  sp(GCX+1, GCY, HAT_DARK)                  # 小啾啾
+  wcol(GCX-2, GCY+2, GCY+3, HAT_DARK)      # 左暗边
+  wcol(GCX+4, GCY+2, GCY+3, HAT_DARK)      # 右暗边
+  sp(GCX-1, GCY+1, HAT_DARK); sp(GCX, GCY+1, HAT_LITE); sp(GCX+3, GCY+1, HAT_DARK)  # 顶行装饰
+  ```
 
 ### 蓝兔子 🐰（代表男友）
 
