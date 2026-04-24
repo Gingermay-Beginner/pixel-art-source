@@ -253,16 +253,16 @@ for _ay in range(GCY+12, GCY+21):
 
 # ── 蓝兔子（右，x=38~48, y=2~18）──
 BCX, BCY = 43, 5
-# 耳朵（左）顶部1格圆角在外侧
-sp(BCX-2, BCY-3, BUN_B)
+# 耳朵（左）顶部1格圆角在内侧
+sp(BCX-1, BCY-3, BUN_B)
 for _ey in range(BCY-2, BCY+1): sp(BCX-2, _ey, BUN_B); sp(BCX-1, _ey, BUN_B)
 # 左耳内芯
-for _ey in range(BCY-2, BCY): sp(BCX-2, _ey, BUN_IN)
-# 耳朵（右）顶部1格圆角在外侧
-sp(BCX+2, BCY-3, BUN_B)
+for _ey in range(BCY-2, BCY): sp(BCX-1, _ey, BUN_IN)
+# 耳朵（右）顶部1格圆角在内侧
+sp(BCX+1, BCY-3, BUN_B)
 for _ey in range(BCY-2, BCY+1): sp(BCX+1, _ey, BUN_B); sp(BCX+2, _ey, BUN_B)
 # 右耳内芯
-for _ey in range(BCY-2, BCY): sp(BCX+2, _ey, BUN_IN)
+for _ey in range(BCY-2, BCY): sp(BCX+1, _ey, BUN_IN)
 # 耳朵间底部
 sp(BCX, BCY, BUN_B)
 # 头（9宽）
