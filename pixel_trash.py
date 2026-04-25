@@ -102,13 +102,14 @@ WR_BOW  = (212,  48,  48)
 
 fl(11, 27, HX1, HX2, WALL_B)
 wcol(HX1, 11, 27, WALL_BD); wcol(HX2, 11, 27, WALL_BD)
-# 屋顶（无竖杠）
+# 屋顶（横向瓦片纹：奇偶行交替深浅，模拟瓦片）
 for y in range(3, 11):
     t = (y - 3) / 7
     x1 = round(HC - t * (HC - (HX1-2)))
     x2 = round(HC + t * ((HX2+2) - HC))
+    row_c = ROOF_BL if y % 2 == 0 else ROOF_B
     for x in range(x1, x2+1):
-        sp(x, y, ROOF_BL if x <= HC else ROOF_B)
+        sp(x, y, row_c)
 wrow(11, HX1-2, HX2+2, BEAM)
 # 烟囱（右移11格：x=46~48）
 fl(4, 10, 46, 48, BRICK); wrow(3, 46, 48, BRICK_D); wrow(10, 46, 48, WALL_BL)
