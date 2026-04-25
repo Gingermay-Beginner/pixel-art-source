@@ -230,21 +230,21 @@ draw_lemon_tree(59, 27, max_left=None, max_right=None)
 # ── 小私人飞机 ──
 PL_BODY = (245, 245, 242); PL_WING = (228, 228, 222); PL_WIN = (148, 195, 225)
 # 机身
-wrow(3, 16, 20, PL_BODY)
-wrow(4, 15, 20, PL_BODY)
+wrow(3, 15, 19, PL_BODY)
+wrow(4, 14, 19, PL_BODY)
 # 机头
-sp(21, 3, PL_BODY); sp(21, 4, PL_BODY); sp(22, 4, PL_BODY)
+sp(20, 3, PL_BODY); sp(20, 4, PL_BODY); sp(21, 4, PL_BODY)
 # 机尾竖尾翼
-sp(15, 2, PL_WING)
+sp(14, 2, PL_WING)
 # 上翼
-wrow(2, 15, 18, PL_WING)
+wrow(2, 14, 17, PL_WING)
 # 下翼
-wrow(1, 14, 16, PL_WING)
+wrow(1, 13, 15, PL_WING)
 # 窗
-sp(19, 3, PL_WIN); sp(20, 3, PL_WIN)
+sp(18, 3, PL_WIN); sp(19, 3, PL_WIN)
 # 尾气
-wrow(4, 13, 14, PL_BODY)
-wrow(3, 12, 13, PL_BODY)
+wrow(4, 12, 13, PL_BODY)
+wrow(3, 11, 12, PL_BODY)
 
 
 # ── 灌木（全宽，门前断开）──
