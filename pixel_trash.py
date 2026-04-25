@@ -291,7 +291,8 @@ for y in range(27, 31): wrow(y, GX-2, GX+2, GB)
 sp(GX, 27, GB_CHEEK); sp(GX, 29, GB_CHEEK)
 # 左臂（推桶，向左下伸）
 sp(GX-3, 24, GB); sp(GX-4, 25, GB); sp(GX-5, 26, GB)
-wrow(26, 10, GX-5, BIN_BKD)  # 手碰桶边线
+wrow(26, 10, GX-5, BIN_BKD)
+sp(GX-5, 25, GB)  # 手碰桶边线
 # 右臂（平衡）
 sp(GX+3, 27, GB); sp(GX+4, 28, GB)
 # 腿
@@ -341,6 +342,7 @@ wcol(BX, 27, 29, BUN_LT)
 # 左臂（推桶）
 sp(BX-3, 24, BUN); sp(BX-4, 25, BUN); sp(BX-5, 26, BUN)
 wrow(26, 48, BX-5, BIN_BLD)
+sp(BX-5, 25, BUN)
 # 右臂（平衡）
 sp(BX+3, 27, BUN); sp(BX+4, 28, BUN)
 # 腿
