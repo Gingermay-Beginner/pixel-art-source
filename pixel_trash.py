@@ -223,10 +223,10 @@ def draw_lemon_tree(cx, base_y, max_left=None, max_right=None):
             sp(lx, ly+1, LM_FRD)
 
 # 底层柠檬树（更靠外，先画）
-draw_lemon_tree(60, 27, max_left=None, max_right=62)
+draw_lemon_tree(60, 27, max_left=None, max_right=None)
 # 上层柠檬树（靠内，后画，遮住底层）
 draw_lemon_tree(7, 27, max_left=None, max_right=None)
-draw_lemon_tree(58, 27, max_left=None, max_right=62)
+draw_lemon_tree(58, 27, max_left=None, max_right=None)
 # ── 小私人飞机 ──
 PL_BODY = (245, 245, 242); PL_WING = (228, 228, 222); PL_WIN = (148, 195, 225)
 # 机身
@@ -255,7 +255,10 @@ for bx in list(range(0, 12)) + list(range(39, 63)):
         r2 = rng.random()
         sp(bx, by, BUSH_L if r2 > 0.72 else (BUSH_D if r2 < 0.22 else BUSH))
 for fx, fy in [(3,23),(7,22),(11,23),(41,23),(44,22),(48,23),(52,22),(56,23),(60,22)]:
-    sp(fx, fy, FLOWER); sp(fx, fy+1, (232,212,108))
+    sp(fx, fy, FLOWER); sp(fx, fy+1, (148,198,235))
+# x=12 y=23,24,26,27 灌木（被墙体覆盖修补）
+sp(12, 23, BUSH); sp(12, 24, BUSH); sp(12, 26, BUSH); sp(12, 27, BUSH)
+
 # x=63 y=22~27 填灌木色（柠檬树边缘修补）
 import random as _rng2
 _r63 = random.Random(63)
