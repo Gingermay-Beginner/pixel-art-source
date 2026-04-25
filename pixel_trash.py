@@ -94,9 +94,7 @@ BEAM    = (142, 105,  68)
 fl(11, 27, HX1, HX2, WALL_B)
 wcol(HX1, 11, 27, WALL_BD); wcol(HX2, 11, 27, WALL_BD)
 # 砖石腰线
-fl(20, 21, HX1, HX2, BRICK)
-wrow(20, HX1, HX2, BRICK_D); wrow(21, HX1, HX2, BRICK_D)
-for bx in range(HX1, HX2+1, 3): sp(bx, 20, BRICK_D); sp(bx+1, 21, BRICK_D)
+# 砖石腰线已移除
 # 屋顶（宽屋檐，伸出2格）
 for y in range(3, 11):
     t = (y - 3) / 7
@@ -122,18 +120,20 @@ for dy in range(22, 27, 2): wrow(dy, 29, 35, DOOR_BD)
 wcol(32, 21, 27, DOOR_BD)
 sp(35, 24, (215, 188, 95)); sp(35, 25, (215, 188, 95))
 wrow(28, 27, 37, BEAM)
-# 左窗
-fl(13, 19, 16, 22, WIN_B)
-wcol(16, 13, 19, WIN_BD); wcol(22, 13, 19, WIN_BD)
-wrow(13, 16, 22, WIN_BD); wrow(19, 16, 22, WIN_BD)
-wcol(19, 13, 19, WIN_BF); wrow(16, 16, 22, WIN_BF)
-wrow(20, 15, 23, BEAM)
-# 右窗
-fl(13, 19, 43, 49, WIN_B)
-wcol(43, 13, 19, WIN_BD); wcol(49, 13, 19, WIN_BD)
-wrow(13, 43, 49, WIN_BD); wrow(19, 43, 49, WIN_BD)
-wcol(46, 13, 19, WIN_BF); wrow(16, 43, 49, WIN_BF)
-wrow(20, 42, 50, BEAM)
+# 左窗（10格宽，x=14~23，三等份竖分隔）
+fl(13, 19, 14, 23, WIN_B)
+wcol(14, 13, 19, WIN_BD); wcol(23, 13, 19, WIN_BD)
+wrow(13, 14, 23, WIN_BD); wrow(19, 14, 23, WIN_BD)
+wcol(17, 13, 19, WIN_BD); wcol(20, 13, 19, WIN_BD)
+wrow(16, 14, 23, WIN_BF)
+wrow(20, 13, 24, BEAM)
+# 右窗（10格宽，x=41~50，三等份竖分隔）
+fl(13, 19, 41, 50, WIN_B)
+wcol(41, 13, 19, WIN_BD); wcol(50, 13, 19, WIN_BD)
+wrow(13, 41, 50, WIN_BD); wrow(19, 41, 50, WIN_BD)
+wcol(44, 13, 19, WIN_BD); wcol(47, 13, 19, WIN_BD)
+wrow(16, 41, 50, WIN_BF)
+wrow(20, 40, 51, BEAM)
 
 # ── 灌木（全宽，门前断开）──
 rng = random.Random(7)
@@ -145,17 +145,6 @@ for bx in list(range(0, 25)) + list(range(40, 64)):
 for fx, fy in [(3,23),(7,22),(11,23),(15,22),(19,23),(22,22),(41,23),(44,22),(48,23),(52,22),(56,23),(60,22)]:
     sp(fx, fy, FLOWER); sp(fx, fy+1, (232,212,108))
 
-# ── 蓝花楹（右侧，x≈50~58）──
-wcol(53, 19, 24, JAC_T); wcol(54, 19, 24, JAC_T)
-rng2 = random.Random(5)
-cx, cy_mid, half_h, max_r = 53, 11, 7, 5
-for jy in range(4, 19):
-    dy = abs(jy - cy_mid)
-    r = round(max_r * math.sqrt(max(0, 1-(dy/half_h)**2)))
-    if r < 1: r = 1
-    for jx in range(cx-r, cx+r+1):
-        if rng2.random() > 0.15:
-            sp(jx, jy, JAC_L if rng2.random() > 0.45 else JAC)
 
 # ── 左组：黑桶 + 姜饼人 ──
 # 黑桶（x=2~6，y=25~33）
@@ -235,28 +224,6 @@ sp(BX+3, 24, BUN); sp(BX+4, 25, BUN)
 wcol(BX-3, 27, BY-1, BUN); wcol(BX-2, 27, BY-1, BUN)
 wcol(BX+2, 27, BY-1, BUN); wcol(BX+3, 27, BY-1, BUN)
 sp(BX-4, BY-1, BUN); sp(BX+4, BY-1, BUN)
-
-
-# ── 云朵 + 飞鸟 ──
-CLOUD   = (252, 252, 252)
-CLOUD_D = (225, 228, 235)
-BIRD    = ( 52,  48,  42)
-# 左上大云（x=1~9, y=3~7）
-wrow(4, 2, 7, CLOUD); wrow(5, 2, 7, CLOUD); wrow(6, 1, 8, CLOUD); wrow(7, 2, 7, CLOUD)
-sp(1, 5, CLOUD); sp(1, 6, CLOUD); sp(9, 5, CLOUD); sp(9, 6, CLOUD)
-wrow(7, 2, 8, CLOUD_D)
-sp(2, 3, CLOUD); sp(3, 3, CLOUD); sp(5, 2, CLOUD); sp(6, 2, CLOUD)
-# 右上小云（x=54~62, y=6~9）
-wrow(7, 55, 61, CLOUD); wrow(8, 54, 62, CLOUD); wrow(9, 55, 61, CLOUD)
-sp(54, 8, CLOUD); sp(62, 8, CLOUD)
-wrow(9, 55, 61, CLOUD_D)
-sp(56, 6, CLOUD); sp(57, 6, CLOUD); sp(59, 6, CLOUD); sp(60, 6, CLOUD)
-# 飞鸟左（x=10~16, y=1~2）
-sp(10, 2, BIRD); sp(11, 1, BIRD); sp(12, 2, BIRD)
-sp(14, 2, BIRD); sp(15, 1, BIRD); sp(16, 2, BIRD)
-# 飞鸟右（x=45~51, y=4~5）
-sp(45, 5, BIRD); sp(46, 4, BIRD); sp(47, 5, BIRD)
-sp(49, 5, BIRD); sp(50, 4, BIRD); sp(51, 5, BIRD)
 
 
 img.save("/home/azureuser/.openclaw/workspace/pixel_trash.png")
