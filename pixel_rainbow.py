@@ -101,6 +101,8 @@ for wy in range(20, 36, 8):
     wrow(wy, 1, 15, WW_WIN_L)
     wrow(wy+1, 1, 15, (72, 128, 192))  # 玻璃内横高光
     fl(wy+4, min(wy+7, 35), 1, 15, WW_EDGE)
+    wrow(wy+4, 1, 15, (52, 75, 115))     # 黑条顶部稍亮
+    if wy+7 <= 35: wrow(wy+7, 1, 15, (28, 42, 68))  # 黑条底部略深
 # 竖向分隔线
 for vx in range(4, 16, 4):
     for wy in range(20, 36, 8):
