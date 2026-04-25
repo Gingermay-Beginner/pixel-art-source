@@ -77,14 +77,14 @@ for _bi, _color in enumerate(RB):
 
 # ── WeWork building (left x=0~17) ──
 fl(0, 33, 0, 17, WW_WALL)
-# 横向：蓝玻璃4格 + 黑2格
-for wy in range(0, 34, 6):
+# 横向：蓝玻璃4格 + 黑4格
+for wy in range(0, 36, 8):
     fl(wy,   wy+3, 1, 15, WW_WIN)
     wrow(wy, 1, 15, WW_WIN_L)
-    fl(wy+4, wy+5, 1, 15, WW_EDGE)
+    fl(wy+4, wy+7, 1, 15, WW_EDGE)
 # 竖向分隔线
 for vx in range(4, 16, 4):
-    for wy in range(0, 34, 6):
+    for wy in range(0, 36, 8):
         wcol(vx, wy, wy+3, WW_WALL)
 # Right edge shadow
 wcol(16, 0, 33, WW_EDGE)
