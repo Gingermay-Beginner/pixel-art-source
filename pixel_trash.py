@@ -78,8 +78,8 @@ HX1, HX2, HC = 12, 52, 32
 WALL_B  = (195, 172, 138)
 WALL_BD = (158, 135, 102)
 WALL_BL = (218, 198, 165)
-ROOF_B  = (115,  75,  48)
-ROOF_BL = (145,  98,  65)
+ROOF_B  = ( 88,  92, 108)
+ROOF_BL = (115, 118, 138)
 DOOR_B  = ( 88,  52,  35)
 DOOR_BD = ( 62,  35,  22)
 WIN_B   = (148, 172, 195)
@@ -87,7 +87,7 @@ WIN_BD  = (195, 200, 192)
 WIN_BF  = (172, 192, 212)
 BRICK   = (188, 105,  72)
 BRICK_D = (155,  78,  48)
-BEAM    = (142, 105,  68)
+BEAM    = ( 88,  92, 108)
 GAR     = (228, 222, 208)
 GAR_D   = (195, 200, 192)
 GAR_S   = (148, 138, 122)
@@ -223,28 +223,28 @@ def draw_lemon_tree(cx, base_y, max_left=None, max_right=None):
             sp(lx, ly+1, LM_FRD)
 
 # 底层柠檬树（更靠外，先画）
-draw_lemon_tree(60, 27, max_left=None, max_right=None)
+draw_lemon_tree(61, 27, max_left=None, max_right=None)
 # 上层柠檬树（靠内，后画，遮住底层）
-draw_lemon_tree(7, 27, max_left=None, max_right=None)
-draw_lemon_tree(58, 27, max_left=None, max_right=None)
+draw_lemon_tree(6, 27, max_left=None, max_right=None)
+draw_lemon_tree(59, 27, max_left=None, max_right=None)
 # ── 小私人飞机 ──
 PL_BODY = (245, 245, 242); PL_WING = (228, 228, 222); PL_WIN = (148, 195, 225)
 # 机身
-wrow(3, 17, 21, PL_BODY)
-wrow(4, 16, 21, PL_BODY)
+wrow(3, 16, 20, PL_BODY)
+wrow(4, 15, 20, PL_BODY)
 # 机头
-sp(22, 3, PL_BODY); sp(22, 4, PL_BODY); sp(23, 4, PL_BODY)
+sp(21, 3, PL_BODY); sp(21, 4, PL_BODY); sp(22, 4, PL_BODY)
 # 机尾竖尾翼
-sp(16, 2, PL_WING)
+sp(15, 2, PL_WING)
 # 上翼
-wrow(2, 16, 19, PL_WING)
+wrow(2, 15, 18, PL_WING)
 # 下翼
-wrow(1, 15, 17, PL_WING)
+wrow(1, 14, 16, PL_WING)
 # 窗
-sp(20, 3, PL_WIN); sp(21, 3, PL_WIN)
-# 尾气（右移后：y=4 x=12~15，y=3 x=11~14 白色）
-wrow(4, 14, 15, PL_BODY)
-wrow(3, 13, 14, PL_BODY)
+sp(19, 3, PL_WIN); sp(20, 3, PL_WIN)
+# 尾气
+wrow(4, 13, 14, PL_BODY)
+wrow(3, 12, 13, PL_BODY)
 
 
 # ── 灌木（全宽，门前断开）──
