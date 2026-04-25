@@ -70,7 +70,7 @@ _rnd.seed(7)
 RB_RAW = [(215,48,35),(235,138,45),(232,215,58),(95,185,78),(55,148,215),(82,75,192),(158,75,188)]
 # 与天空色混合，降低饱和度（0.55彩虹+0.45天空）
 _sky_mix = (185, 218, 242)
-RB = [tuple(round(c*0.55 + s*0.45) for c,s in zip(rc, _sky_mix)) for rc in RB_RAW]
+RB = [tuple(round(c*0.45 + s*0.55) for c,s in zip(rc, _sky_mix)) for rc in RB_RAW]
 _fade_start_x = 18
 _fade_end_x   = 50
 for _bi, _color in enumerate(RB):
@@ -78,7 +78,7 @@ for _bi, _color in enumerate(RB):
     _r2 = _r1 + 1.2
     for _x in range(18, 64):
         for _y in range(0, 28):
-            _dist = math.sqrt(((_x - 30)/1.5)**2 + (_y - 24)**2)
+            _dist = math.sqrt(((_x - 38)/1.5)**2 + (_y - 24)**2)
             if _r1 <= _dist < _r2:
                 # 左侧渐隐：越靠左越稀疏
                 if _x < _fade_end_x:
