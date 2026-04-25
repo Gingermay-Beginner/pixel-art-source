@@ -214,6 +214,42 @@ fl(22, 22, 35, 39, BUN)
 fl(16, 22, 30, 33, (68, 78, 95))
 wrow(16, 30, 33, (48, 58, 75))
 
+# ── SF hillside (right x=48~63, y=8~30) ──
+HILL    = (122, 162,  88)
+HILL_D  = ( 92, 128,  65)
+HILL_LT = (155, 195, 112)
+H_WALL  = (232, 222, 205)
+H_ROOF  = (188,  78,  62)
+H_ROOF2 = ( 88, 148, 192)
+H_ROOF3 = (215, 178,  88)
+H_WIN   = (148, 198, 228)
+
+# 山丘轮廓（从右侧延伸进来）
+hill_profile = {
+    48: 22, 49: 20, 50: 18, 51: 15, 52: 13, 53: 11,
+    54: 10, 55:  9, 56:  9, 57:  9, 58: 10, 59: 12,
+    60: 14, 61: 17, 62: 19, 63: 22
+}
+for hx, hy_top in hill_profile.items():
+    wcol(hx, hy_top, 35, HILL)
+    sp(hx, hy_top, HILL_LT)
+    sp(hx, hy_top+1, HILL_D)
+
+# 山腰小房子（散布在山丘上）
+houses = [
+    (48, 21, H_ROOF),  (50, 20, H_ROOF2), (52, 21, H_ROOF3),
+    (54, 20, H_ROOF),  (56, 19, H_ROOF2), (58, 20, H_ROOF3),
+    (60, 21, H_ROOF),  (62, 20, H_ROOF2),
+]
+for hx, hy, roof_c in houses:
+    # 屋身2x3
+    fl(hy+1, hy+3, hx, hx+2, H_WALL)
+    # 屋顶三角（1格）
+    wrow(hy, hx, hx+2, roof_c)
+    sp(hx+1, hy-1, roof_c)
+    # 小窗
+    sp(hx+1, hy+2, H_WIN)
+
 # ── Save ──
 img.save('pixel_rainbow.png')
 print('Saved')
