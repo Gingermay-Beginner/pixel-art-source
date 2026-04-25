@@ -52,9 +52,9 @@ HAT_DARK = (135,  32,  28)
 HAT_LITE = (215,  88,  72)
 
 BUN    = ( 88, 162, 228)
-BUN_D  = ( 62, 122, 195)
+BUN_D  = (  8,  18,  48)
 BUN_IN = (235, 148, 178)
-BUN_EYE= ( 22,  48, 108)
+BUN_EYE= (  2,   4,  12)
 BUN_LT = (158, 212, 252)
 BUN_BL = (235, 155, 172)
 
@@ -88,10 +88,10 @@ WIN_BF  = (172, 192, 212)
 BRICK   = (188, 105,  72)
 BRICK_D = (155,  78,  48)
 BEAM    = (142, 105,  68)
-GAR     = (185, 178, 162)
-GAR_D   = (228, 222, 208)
+GAR     = (228, 222, 208)
+GAR_D   = (195, 200, 192)
 GAR_S   = (148, 138, 122)
-GAR_WIN = ( 62,  88, 112)
+GAR_WIN = (148, 172, 195)
 AWN_W   = (252, 250, 242)
 AWN_S   = (225, 218, 205)
 AWN_E   = (225, 218, 205)
@@ -221,10 +221,9 @@ def draw_lemon_tree(cx, base_y, max_left=None, max_right=None):
             sp(lx, ly+1, LM_FRD)
 
 # 底层柠檬树（更靠外，先画）
-draw_lemon_tree(1, 27, max_left=None, max_right=None)
 draw_lemon_tree(60, 27, max_left=None, max_right=63)
 # 上层柠檬树（靠内，后画，遮住底层）
-draw_lemon_tree(4, 27, max_left=0, max_right=None)
+draw_lemon_tree(7, 27, max_left=None, max_right=None)
 draw_lemon_tree(58, 27, max_left=None, max_right=63)
 # ── 小私人飞机（屋顶左上方，x右移到树冠外）──
 PL_BODY  = (245, 245, 242)
@@ -278,15 +277,14 @@ wrow(21, GX-2, GX+2, GB)
 wrow(26, GX-2, GX+2, GB)
 sp(GX-1, 23, GB_EYE); sp(GX+1, 23, GB_EYE)
 sp(GX-2, 24, GB_CHEEK); sp(GX+2, 24, GB_CHEEK)
-sp(GX-2, 22, GB_EYE); sp(GX+2, 22, GB_EYE)
-sp(GX-1, 22, GB_EYE); sp(GX+1, 22, GB_EYE)
-sp(GX-1, 25, GB_CHEEK); sp(GX, 25, GB_CHEEK); sp(GX+1, 25, GB_CHEEK)
+
+sp(GX-1, 25, (165,100,38)); sp(GX, 25, (165,100,38)); sp(GX+1, 25, (165,100,38))
 # 身体
 for y in range(27, 31): wrow(y, GX-2, GX+2, GB)
 sp(GX, 27, GB_CHEEK); sp(GX, 29, GB_CHEEK)
 # 左臂（推桶，向左下伸）
-sp(GX-3, 27, GB); sp(GX-4, 28, GB); sp(GX-5, 29, GB)
-wrow(29, 10, GX-5, BIN_BKD)  # 手碰桶边线
+sp(GX-3, 24, GB); sp(GX-4, 25, GB); sp(GX-5, 26, GB)
+wrow(26, 10, GX-5, BIN_BKD)  # 手碰桶边线
 # 右臂（平衡）
 sp(GX+3, 27, GB); sp(GX+4, 28, GB)
 # 腿
@@ -303,37 +301,39 @@ sp(GX, 20, HAT_LITE)
 
 # ── 右组：蓝桶 + 蓝兔子 ──
 # 蓝桶（x=45~49，y=24~32）
-fl(24, 32, 45, 49, BIN_BLU)
-wrow(23, 45, 49, BIN_LB)
-wcol(45, 24, 32, BIN_BLD); wcol(49, 24, 32, BIN_BLD)
-wrow(32, 45, 49, BIN_BLD); wrow(28, 46, 48, BIN_BLD)
-sp(48, 31, BIN_WHL); sp(49, 31, BIN_WHL); sp(48, 32, BIN_WHL); sp(49, 32, BIN_WHL)
+fl(24, 32, 44, 48, BIN_BLU)
+wrow(23, 44, 48, BIN_LB)
+wcol(44, 24, 32, BIN_BLD); wcol(48, 24, 32, BIN_BLD)
+wrow(32, 44, 48, BIN_BLD); wrow(28, 45, 47, BIN_BLD)
+sp(47, 31, BIN_WHL); sp(48, 31, BIN_WHL); sp(47, 32, BIN_WHL); sp(48, 32, BIN_WHL)
 
 # 蓝兔子（BX=58，匹克球原版坐标搬来，y不变）
 BX, BY = 54, 33
 # 耳朵
-sp(BX-1, 15, BUN); 
-for y in range(16,21): wrow(y, BX-2, BX-1, BUN)
-sp(BX-2, 17, BUN_IN); sp(BX-2, 18, BUN_IN); sp(BX-2, 19, BUN_IN)
-sp(BX+1, 15, BUN)
-for y in range(16,21): wrow(y, BX+1, BX+2, BUN)
-sp(BX+2, 17, BUN_IN); sp(BX+1, 18, BUN_IN); sp(BX+2, 19, BUN_IN)
+# 左耳：y=17顶行只画内列（外列不画=圆角），y=18~20双列
+sp(BX-1, 17, BUN)
+for y in range(18,21): wrow(y, BX-2, BX-1, BUN)
+sp(BX-1, 18, BUN_IN); sp(BX-1, 19, BUN_IN); sp(BX-1, 20, BUN_IN)
+# 右耳：y=17顶行只画内列
+sp(BX+1, 17, BUN)
+for y in range(18,21): wrow(y, BX+1, BX+2, BUN)
+sp(BX+1, 18, BUN_IN); sp(BX+1, 19, BUN_IN); sp(BX+1, 20, BUN_IN)
 # 头
 for y in range(22, 26): wrow(y, BX-3, BX+3, BUN)
 wrow(21, BX-2, BX+2, BUN)
 wrow(26, BX-2, BX+2, BUN)
-for y in range(22, 26): wrow(y, BX-1, BX+1, BUN_LT)
+for y in range(22, 26): wrow(y, BX-1, BX+1, BUN)
 # 连心眉
-sp(BX-2,22,BUN_EYE);sp(BX-1,22,BUN_EYE);sp(BX,22,(118,158,215));sp(BX+1,22,BUN_EYE);sp(BX+2,22,BUN_EYE)
+sp(BX-2,22,BUN_EYE);sp(BX-1,22,BUN_EYE);sp(BX,22,(62,128,188));sp(BX+1,22,BUN_EYE);sp(BX+2,22,BUN_EYE)
 sp(BX-1, 23, BUN_D); sp(BX+1, 23, BUN_D)
 sp(BX-2, 24, BUN_BL); sp(BX+2, 24, BUN_BL)
-sp(BX-1, 25, BUN_IN); sp(BX, 25, BUN_IN); sp(BX+1, 25, BUN_IN)
+sp(BX-1, 25, (245,245,242)); sp(BX, 25, (245,245,242)); sp(BX+1, 25, (245,245,242))
 # 身体
 for y in range(27, 31): wrow(y, BX-2, BX+2, BUN)
 wcol(BX, 27, 29, BUN_LT)
 # 左臂（推桶）
-sp(BX-3, 27, BUN); sp(BX-4, 28, BUN); sp(BX-5, 29, BUN)
-wrow(29, 49, BX-5, BIN_BLD)
+sp(BX-3, 24, BUN); sp(BX-4, 25, BUN); sp(BX-5, 26, BUN)
+wrow(26, 48, BX-5, BIN_BLD)
 # 右臂（平衡）
 sp(BX+3, 27, BUN); sp(BX+4, 28, BUN)
 # 腿
