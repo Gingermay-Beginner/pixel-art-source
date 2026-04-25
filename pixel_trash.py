@@ -78,8 +78,8 @@ HX1, HX2, HC = 12, 52, 32
 WALL_B  = (195, 172, 138)
 WALL_BD = (158, 135, 102)
 WALL_BL = (218, 198, 165)
-ROOF_B  = ( 88,  92, 108)
-ROOF_BL = (115, 118, 138)
+ROOF_B  = (118, 122, 142)
+ROOF_BL = (148, 152, 172)
 DOOR_B  = ( 88,  52,  35)
 DOOR_BD = ( 62,  35,  22)
 WIN_B   = (148, 172, 195)
@@ -87,7 +87,7 @@ WIN_BD  = (195, 200, 192)
 WIN_BF  = (172, 192, 212)
 BRICK   = (188, 105,  72)
 BRICK_D = (155,  78,  48)
-BEAM    = ( 88,  92, 108)
+BEAM    = (118, 122, 142)
 GAR     = (228, 222, 208)
 GAR_D   = (195, 200, 192)
 GAR_S   = (148, 138, 122)
@@ -271,8 +271,8 @@ for _y63 in range(22, 28):
 # ── 左组：黑桶 + 姜饼人 ──
 # 黑桶（x=6~10，y=24~32）
 fl(24, 32, 6, 10, BIN_BLK)
-wrow(23, 6, 10, BIN_LID)
 wcol(6, 24, 32, BIN_BKD); wcol(10, 24, 32, BIN_BKD)
+wrow(24, 6, 10, BIN_LID)
 wrow(32, 6, 10, BIN_BKD); wrow(28, 7, 9, BIN_BKD)
 sp(9, 31, BIN_WHL); sp(10, 31, BIN_WHL); sp(9, 32, BIN_WHL); sp(10, 32, (115,105,95))
 
@@ -309,8 +309,8 @@ sp(GX, 20, HAT_LITE)
 # ── 右组：蓝桶 + 蓝兔子 ──
 # 蓝桶（x=45~49，y=24~32）
 fl(24, 32, 44, 48, BIN_BLU)
-wrow(23, 44, 48, BIN_LB)
 wcol(44, 24, 32, BIN_BLD); wcol(48, 24, 32, BIN_BLD)
+wrow(24, 44, 48, BIN_LB)
 wrow(32, 44, 48, BIN_BLD); wrow(28, 45, 47, BIN_BLD)
 sp(47, 31, BIN_WHL); sp(48, 31, BIN_WHL); sp(47, 32, BIN_WHL); sp(48, 32, (115,105,95))
 
