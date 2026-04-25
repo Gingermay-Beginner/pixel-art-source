@@ -236,25 +236,37 @@ sp(GCX-2, GCY-1, GB_CHK); sp(GCX+2, GCY-1, GB_CHK)
 # 嘴
 sp(GCX-1, GCY, GBD); sp(GCX, GCY, GBD); sp(GCX+1, GCY, GBD)
 # 帽子（火山版，右偏1格）
-sp(GCX+1, GCY-6, HAT_D)                           # 小啾啾
-for _dx in range(-1, 4): sp(GCX+_dx, GCY-5, HAT_R)  # 帽身第1行
-for _dx in range(-1, 4): sp(GCX+_dx, GCY-4, HAT_R)  # 帽身第2行
-sp(GCX-1, GCY-5, HAT_D); sp(GCX+3, GCY-5, HAT_D)
+sp(GCX+1, GCY-5, HAT_D)                           # 小啾啾
+for _dx in range(-1, 4): sp(GCX+_dx, GCY-4, HAT_R)
+for _dx in range(-1, 4): sp(GCX+_dx, GCY-3, HAT_R)
 sp(GCX-1, GCY-4, HAT_D); sp(GCX+3, GCY-4, HAT_D)
-sp(GCX,   GCY-5, HAT_LITE)
+sp(GCX-1, GCY-3, HAT_D); sp(GCX+3, GCY-3, HAT_D)
+sp(GCX,   GCY-4, HAT_LITE)
 
 # ── 蓝兔子 in windshield (right) BCX=37 ──
 BCX, BCY = 37, 21   # 头底部 y=21
 BUN_BLUSH = (235, 148, 178)
 BUN_BROW  = ( 35,  68, 135)
-# 耳朵
-for _ey in range(BCY-8, BCY-4):
-    sp(BCX-2, _ey, BUN); sp(BCX-1, _ey, BUN_IN)
-    sp(BCX+1, _ey, BUN_IN); sp(BCX+2, _ey, BUN)
-sp(BCX-1, BCY-8, BUN); sp(BCX+1, BCY-8, BUN)  # 耳顶圆角
+BUN_EAR_P = (235, 148, 178)   # 耳内粉色
+# 耳朵（去掉顶行，外侧圆角）
+for _ey in range(BCY-7, BCY-4):
+    sp(BCX-2, _ey, BUN); sp(BCX-1, _ey, BUN)
+    sp(BCX+1, _ey, BUN); sp(BCX+2, _ey, BUN)
+# 外侧圆角：顶行只留内列（挖掉外列顶格）
+sp(BCX-1, BCY-7, BUN)  # 左耳顶只留内列
+sp(BCX+1, BCY-7, BUN)  # 右耳顶只留内列
+sp(BCX-2, BCY-7, WIND)  # 左耳外列顶格挖掉
+sp(BCX+2, BCY-7, WIND)  # 右耳外列顶格挖掉
+# 底部2格粉色内侧
+sp(BCX-1, BCY-6, BUN_EAR_P); sp(BCX-1, BCY-5, BUN_EAR_P)
+sp(BCX+1, BCY-6, BUN_EAR_P); sp(BCX+1, BCY-5, BUN_EAR_P)
+# 修复 WIND_RF 横条覆盖耳朵底部（BCY-4）
+sp(BCX-2, BCY-4, BUN); sp(BCX-1, BCY-4, BUN_EAR_P)
+sp(BCX+1, BCY-4, BUN_EAR_P); sp(BCX+2, BCY-4, BUN)
+# x=36~38, y=17 补蓝色（兔子脸，盖在粉色之后）
+for _bx in range(36, 39): sp(_bx, 17, BUN)
 # 头（7格宽，四角圆角）
-wrow(BCY-3, BCX-2, BCX+2, BUN)
-fl(BCY-2, BCY,   BCX-3, BCX+3, BUN)
+fl(BCY-3, BCY,   BCX-3, BCX+3, BUN)
 sp(BCX-3, BCY-3, WIND); sp(BCX+3, BCY-3, WIND)
 sp(BCX-3, BCY,   WIND); sp(BCX+3, BCY,   WIND)
 # 连心眉
@@ -262,11 +274,11 @@ sp(BCX-2, BCY-3, BUN_BROW); sp(BCX-1, BCY-3, BUN_BROW)
 sp(BCX,   BCY-3, BUN_D)
 sp(BCX+1, BCY-3, BUN_BROW); sp(BCX+2, BCY-3, BUN_BROW)
 # 眼
-sp(BCX-2, BCY-2, BUN_EY); sp(BCX+2, BCY-2, BUN_EY)
+sp(BCX-1, BCY-2, BUN_EY); sp(BCX+1, BCY-2, BUN_EY)
 # 腮红
-sp(BCX-3, BCY-1, BUN_BLUSH); sp(BCX+3, BCY-1, BUN_BLUSH)
+sp(BCX-2, BCY-1, BUN_BLUSH); sp(BCX+2, BCY-1, BUN_BLUSH)
 # 嘴
-sp(BCX-1, BCY, BUN); sp(BCX, BCY, BUN); sp(BCX+1, BCY, BUN)
+sp(BCX-1, BCY, (255,255,255)); sp(BCX, BCY, (255,255,255)); sp(BCX+1, BCY, (255,255,255))
 
 # ── Rear-view mirror (移到车顶中间上方，不遮玻璃) ──
 fl(14, 15, 30, 33, (68, 78, 95))
