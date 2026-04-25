@@ -119,7 +119,7 @@ wrow(17, 29, 35, DOOR_BD); wrow(27, 29, 35, DOOR_BD)
 sp(29, 17, WALL_B); sp(30, 17, DOOR_BD)
 sp(35, 17, WALL_B); sp(34, 17, DOOR_BD)
 wrow(28, 28, 36, BEAM); wrow(27, 29, 35, BEAM)
-wrow(26, 28, 36, BEAM)
+wrow(27, 29, 35, (135, 92, 62))  # 门底深色
 sp(34, 23, (215, 188, 95))
 # 圣诞花环
 import math as _math
@@ -268,7 +268,7 @@ fl(24, 32, 6, 10, BIN_BLK)
 wrow(23, 6, 10, BIN_LID)
 wcol(6, 24, 32, BIN_BKD); wcol(10, 24, 32, BIN_BKD)
 wrow(32, 6, 10, BIN_BKD); wrow(28, 7, 9, BIN_BKD)
-sp(9, 31, BIN_WHL); sp(10, 31, BIN_WHL); sp(9, 32, BIN_WHL); sp(10, 32, BIN_WHL)
+sp(9, 31, BIN_WHL); sp(10, 31, BIN_WHL); sp(9, 32, BIN_WHL); sp(10, 32, (115,105,95))
 
 # 姜饼人（GX=12，匹克球原版坐标搬来，y不变）
 GX, GY = 16, 33
@@ -306,7 +306,7 @@ fl(24, 32, 44, 48, BIN_BLU)
 wrow(23, 44, 48, BIN_LB)
 wcol(44, 24, 32, BIN_BLD); wcol(48, 24, 32, BIN_BLD)
 wrow(32, 44, 48, BIN_BLD); wrow(28, 45, 47, BIN_BLD)
-sp(47, 31, BIN_WHL); sp(48, 31, BIN_WHL); sp(47, 32, BIN_WHL); sp(48, 32, BIN_WHL)
+sp(47, 31, BIN_WHL); sp(48, 31, BIN_WHL); sp(47, 32, BIN_WHL); sp(48, 32, (115,105,95))
 
 # 蓝兔子（BX=58，匹克球原版坐标搬来，y不变）
 BX, BY = 54, 33
