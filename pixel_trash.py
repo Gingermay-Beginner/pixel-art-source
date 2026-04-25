@@ -16,11 +16,11 @@ def wrow(y, x1, x2, c):
 def wcol(x, y1, y2, c):
     for y in range(y1, y2+1): sp(x, y, c)
 
-SKY    = (185, 215, 238)
-SKY_B  = (155, 192, 220)
-GROUND = (148, 170, 112)
-SIDE   = (198, 192, 178)
-ROAD   = (158, 152, 140)
+SKY    = (188, 222, 245)
+SKY_B  = (158, 198, 228)
+GROUND = (155, 185, 98)
+SIDE   = (205, 198, 178)
+ROAD   = (172, 162, 145)
 WALL   = (238, 232, 215)
 WALL_D = (208, 200, 182)
 WALL_S = (252, 248, 235)
@@ -35,36 +35,36 @@ WIN    = (152, 198, 228)
 WIN_D  = ( 75, 125, 165)
 WIN_F  = ( 98, 158, 198)
 WIN_G  = (188, 218, 238)
-BUSH   = ( 95, 148,  72)
-BUSH_D = ( 68, 112,  48)
-BUSH_L = (132, 182,  98)
-FLOWER = (248, 248, 242)
+BUSH   = (108, 162,  78)
+BUSH_D = ( 75, 122,  52)
+BUSH_L = (148, 198, 108)
+FLOWER = (252, 245, 215)
 JAC    = (148, 108, 188)
 JAC_L  = (185, 148, 222)
 JAC_T  = (112,  78,  52)
 
-GB       = (185, 108,  48)
-GBD      = (140,  82,  35)
+GB       = (198, 128,  58)
+GBD      = (155,  98,  42)
 GB_EYE   = ( 62,  35,  15)
-GB_CHEEK = (225, 148,  95)
+GB_CHEEK = (238, 165, 105)
 HAT_RED  = (188,  55,  48)
 HAT_DARK = (135,  32,  28)
 HAT_LITE = (215,  88,  72)
 
-BUN    = ( 95, 158, 215)
-BUN_D  = ( 68, 118, 178)
+BUN    = ( 88, 162, 228)
+BUN_D  = ( 62, 122, 195)
 BUN_IN = (235, 148, 178)
 BUN_EYE= ( 22,  48, 108)
-BUN_LT = (148, 198, 245)
+BUN_LT = (158, 212, 252)
 BUN_BL = (235, 155, 172)
 
-BIN_BLK= ( 52,  52,  55)
-BIN_BKD= ( 32,  32,  35)
-BIN_LID= ( 78,  78,  82)
-BIN_BLU= ( 55,  98, 175)
-BIN_BLD= ( 35,  68, 138)
-BIN_LB = ( 72, 115, 195)
-BIN_WHL= ( 88,  85,  80)
+BIN_BLK= ( 88,  88,  92)
+BIN_BKD= ( 62,  62,  68)
+BIN_LID= (118, 118, 125)
+BIN_BLU= ( 72, 128, 212)
+BIN_BLD= ( 48,  95, 175)
+BIN_LB = ( 95, 148, 228)
+BIN_WHL= ( 65,  58,  52)
 
 # ── 天空 ──
 fl(0, 21, 0, 63, SKY)
@@ -149,15 +149,95 @@ wrow(16, 39, 48, WIN_BF)
 for _wx1, _wx2 in [(16, 25), (39, 48)]:
     for _x in range(_wx1, _wx2+1):
         _c = AWN_W if (_x - _wx1) % 2 == 0 else AWN_S
-        for _y in range(14, 17): sp(_x, _y, _c)
-    wrow(16, _wx1, _wx2, AWN_E); wrow(13, _wx1, _wx2, AWN_E)
+        for _y in range(13, 17): sp(_x, _y, _c)
+    wrow(16, _wx1, _wx2, AWN_E)
 # 车库门（x=16~25，y=21~28）
-fl(21, 27, 16, 25, GAR)
-wcol(16, 21, 27, GAR_D); wcol(25, 21, 27, GAR_D)
-wrow(21, 16, 25, GAR_D); wrow(27, 16, 25, GAR_D)
-for _gy in [22, 23, 25]: wrow(_gy, 17, 24, GAR_D)
-wcol(19, 21, 27, GAR_D); wcol(22, 21, 27, GAR_D)
+fl(21, 28, 16, 25, GAR)
+wcol(16, 21, 28, GAR_D); wcol(25, 21, 28, GAR_D)
+wrow(21, 16, 25, GAR_D); wrow(28, 16, 25, GAR_D)
+for _gy in [22, 23, 25, 27]: wrow(_gy, 17, 24, GAR_D)
+wcol(19, 21, 28, GAR_D); wcol(22, 21, 28, GAR_D)
 for _wx in [17, 18, 20, 21, 23, 24]: sp(_wx, 22, GAR_WIN)
+
+# ── 柠檬树（左 cx=5，右 cx=58）──
+LM_TRUNK = (142, 105,  68)
+LM_LF    = ( 62, 122,  48)
+LM_LFD   = ( 42,  95,  32)
+LM_LFL   = ( 95, 158,  72)
+LM_FR    = (252, 225,  65)
+LM_FRD   = (218, 188,  52)
+
+def draw_lemon_tree(cx, base_y, max_left=None, max_right=None):
+    # 树干
+    for y in range(base_y - 4, base_y + 1):
+        sp(cx, y, LM_TRUNK)
+        sp(cx+1, y, LM_TRUNK)
+    import random as _rng
+    _r = _rng.Random(cx * 17 + 3)
+    crown_map = {}
+    # 宽树冠：半径9格，高18格，内侧（靠房子）做不规则锯齿而非硬截断
+    jagged_r = _rng.Random(cx * 31 + 7)
+    for dy in range(0, 18):
+        cy = base_y - 5 - dy
+        hw = max(2, round(9.0 - abs(dy - 9) * 0.45) if dy < 9 else round(9.0 - abs(dy - 9) * 0.65))
+        for dx in range(-hw, hw+1):
+            nx = cx + dx
+            if max_left is not None and nx < max_left: continue
+            if max_right is not None and nx > max_right: continue
+            # 内侧（靠房子方向）最外1~2格做锯齿：随机跳过
+            if max_right is not None and nx >= max_right - 2:
+                if jagged_r.random() < 0.45: continue
+            if max_left is not None and nx <= max_left + 2:
+                if jagged_r.random() < 0.45: continue
+            crown_map[(nx, cy)] = True
+    # 不规则边缘凸出（外侧）
+    extras = [(cx-7, base_y-8),(cx-7, base_y-11),(cx-6, base_y-6),(cx-6, base_y-14),
+              (cx+7, base_y-9),(cx+7, base_y-12),(cx+6, base_y-7),(cx+6, base_y-15),
+              (cx-3, base_y-22),(cx, base_y-22),(cx+3, base_y-21),(cx-1, base_y-23),(cx+1, base_y-23)]
+    for p in extras:
+        nx, cy = p
+        if max_left is not None and nx < max_left: continue
+        if max_right is not None and nx > max_right: continue
+        crown_map[p] = True
+    for (nx, cy) in crown_map:
+        r2 = _r.random()
+        c = LM_LFL if r2 > 0.65 else (LM_LFD if r2 < 0.25 else LM_LF)
+        sp(nx, cy, c)
+    # 柠檬果
+    lemons = [(cx-2, base_y-7),(cx+2, base_y-8),(cx-1, base_y-11),(cx+3, base_y-10),
+              (cx-3, base_y-14),(cx+1, base_y-5),(cx-5, base_y-10),(cx+5, base_y-13),
+              (cx, base_y-17),(cx-4, base_y-7),(cx+4, base_y-8)]
+    for (lx, ly) in lemons:
+        if (lx, ly) in crown_map:
+            sp(lx, ly, LM_FR)
+            sp(lx, ly+1, LM_FRD)
+
+draw_lemon_tree(6, 27, max_left=0, max_right=None)
+draw_lemon_tree(58, 27, max_left=None, max_right=63)
+# ── 小私人飞机（屋顶左上方，x右移到树冠外）──
+PL_BODY  = (245, 245, 242)
+PL_WING  = (228, 228, 222)
+PL_WIN   = (148, 195, 225)
+PL_ENG   = (195, 188, 172)
+
+# 机身 y=4, x=17~23（大版，白色）
+PL_BODY = (245, 245, 242); PL_WING = (228, 228, 222); PL_WIN = (148, 195, 225); PL_ENG = (195, 188, 172)
+wrow(3, 15, 21, PL_BODY)
+wrow(4, 16, 21, PL_BODY)
+sp(15, 4, PL_ENG)
+# 机头
+sp(22, 3, PL_BODY); sp(22, 4, PL_BODY); sp(23, 4, PL_BODY)
+# 机尾竖尾翼
+sp(15, 2, PL_WING); sp(16, 2, PL_WING)
+# 主翼
+wrow(2, 17, 20, PL_WING)
+wrow(5, 17, 20, PL_WING)
+# 窗
+sp(20, 3, PL_WIN); sp(21, 3, PL_WIN)
+# 尾气
+sp(13, 4, (228, 232, 238)); sp(12, 4, (212, 218, 228)); sp(11, 4, (198, 205, 218))
+sp(14, 4, (238, 240, 245))
+
 
 # ── 灌木（全宽，门前断开）──
 rng = random.Random(7)
@@ -171,82 +251,82 @@ for fx, fy in [(3,23),(7,22),(11,23),(41,23),(44,22),(48,23),(52,22),(56,23),(60
 
 
 # ── 左组：黑桶 + 姜饼人 ──
-# 黑桶（x=2~6，y=25~33）
-fl(25, 33, 2, 6, BIN_BLK)
-wrow(24, 2, 6, BIN_LID)
-wcol(2, 25, 33, BIN_BKD); wcol(6, 25, 33, BIN_BKD)
-wrow(33, 2, 6, BIN_BKD); wrow(29, 3, 5, BIN_BKD)
-sp(3, 34, BIN_WHL); sp(5, 34, BIN_WHL)
+# 黑桶（x=4~8，y=24~32，右移2格）
+fl(24, 32, 4, 8, BIN_BLK)
+wrow(23, 4, 8, BIN_LID)
+wcol(4, 24, 32, BIN_BKD); wcol(8, 24, 32, BIN_BKD)
+wrow(32, 4, 8, BIN_BKD); wrow(28, 5, 7, BIN_BKD)
+sp(7, 31, BIN_WHL); sp(8, 31, BIN_WHL); sp(7, 32, BIN_WHL); sp(8, 32, BIN_WHL)
 
 # 姜饼人（GX=12，匹克球原版坐标搬来，y不变）
-GX, GY = 12, 30
+GX, GY = 14, 33
 # 头（圆润版：上下收角）
-for y in range(19, 23): wrow(y, GX-3, GX+3, GB)
-wrow(18, GX-2, GX+2, GB)
-wrow(23, GX-2, GX+2, GB)
-sp(GX-1, 20, GB_EYE); sp(GX+1, 20, GB_EYE)
-sp(GX-2, 21, GB_CHEEK); sp(GX+2, 21, GB_CHEEK)
-sp(GX-2, 19, GB_EYE); sp(GX+2, 19, GB_EYE)
-sp(GX-1, 19, GB_EYE); sp(GX+1, 19, GB_EYE)
-sp(GX-1, 22, GB_CHEEK); sp(GX, 22, GB_CHEEK); sp(GX+1, 22, GB_CHEEK)
+for y in range(22, 26): wrow(y, GX-3, GX+3, GB)
+wrow(21, GX-2, GX+2, GB)
+wrow(26, GX-2, GX+2, GB)
+sp(GX-1, 23, GB_EYE); sp(GX+1, 23, GB_EYE)
+sp(GX-2, 24, GB_CHEEK); sp(GX+2, 24, GB_CHEEK)
+sp(GX-2, 22, GB_EYE); sp(GX+2, 22, GB_EYE)
+sp(GX-1, 22, GB_EYE); sp(GX+1, 22, GB_EYE)
+sp(GX-1, 25, GB_CHEEK); sp(GX, 25, GB_CHEEK); sp(GX+1, 25, GB_CHEEK)
 # 身体
-for y in range(24, 28): wrow(y, GX-2, GX+2, GB)
-sp(GX, 24, GB_CHEEK); sp(GX, 26, GB_CHEEK)
+for y in range(27, 31): wrow(y, GX-2, GX+2, GB)
+sp(GX, 27, GB_CHEEK); sp(GX, 29, GB_CHEEK)
 # 左臂（推桶，向左下伸）
-sp(GX-3, 24, GB); sp(GX-4, 25, GB); sp(GX-5, 26, GB)
-wrow(26, 6, GX-5, BIN_BKD)  # 手碰桶边线
+sp(GX-3, 27, GB); sp(GX-4, 28, GB); sp(GX-5, 29, GB)
+wrow(29, 8, GX-5, BIN_BKD)  # 手碰桶边线
 # 右臂（平衡）
-sp(GX+3, 24, GB); sp(GX+4, 25, GB)
+sp(GX+3, 27, GB); sp(GX+4, 28, GB)
 # 腿
-wcol(GX-3, 27, GY-1, GB); wcol(GX-2, 27, GY-1, GB)
-wcol(GX+2, 27, GY-1, GB); wcol(GX+3, 27, GY-1, GB)
+wcol(GX-3, 30, GY-1, GB); wcol(GX-2, 30, GY-1, GB)
+wcol(GX+2, 30, GY-1, GB); wcol(GX+3, 30, GY-1, GB)
 sp(GX-4, GY-1, GB); sp(GX+4, GY-1, GB)
 # 帽子
-for dx in range(-1, 4): sp(GX+dx, 17, HAT_RED)
-for dx in range(-1, 4): sp(GX+dx, 18, HAT_RED)
-sp(GX-1, 17, HAT_DARK); sp(GX+3, 17, HAT_DARK)
-sp(GX-1, 18, HAT_DARK); sp(GX+3, 18, HAT_DARK)
-sp(GX+1, 16, HAT_DARK)  # 啾啾
-sp(GX, 17, HAT_LITE)
+for dx in range(-1, 4): sp(GX+dx, 20, HAT_RED)
+for dx in range(-1, 4): sp(GX+dx, 21, HAT_RED)
+sp(GX-1, 20, HAT_DARK); sp(GX+3, 20, HAT_DARK)
+sp(GX-1, 21, HAT_DARK); sp(GX+3, 21, HAT_DARK)
+sp(GX+1, 19, HAT_DARK)  # 啾啾
+sp(GX, 20, HAT_LITE)
 
 # ── 右组：蓝桶 + 蓝兔子 ──
-# 蓝桶（x=49~53，y=25~33）
-fl(25, 33, 49, 53, BIN_BLU)
-wrow(24, 49, 53, BIN_LB)
-wcol(49, 25, 33, BIN_BLD); wcol(53, 25, 33, BIN_BLD)
-wrow(33, 49, 53, BIN_BLD); wrow(29, 50, 52, BIN_BLD)
-sp(50, 34, BIN_WHL); sp(52, 34, BIN_WHL)
+# 蓝桶（x=45~49，y=24~32）
+fl(24, 32, 45, 49, BIN_BLU)
+wrow(23, 45, 49, BIN_LB)
+wcol(45, 24, 32, BIN_BLD); wcol(49, 24, 32, BIN_BLD)
+wrow(32, 45, 49, BIN_BLD); wrow(28, 46, 48, BIN_BLD)
+sp(48, 31, BIN_WHL); sp(49, 31, BIN_WHL); sp(48, 32, BIN_WHL); sp(49, 32, BIN_WHL)
 
 # 蓝兔子（BX=58，匹克球原版坐标搬来，y不变）
-BX, BY = 58, 30
+BX, BY = 54, 33
 # 耳朵
-sp(BX-1, 12, BUN); 
-for y in range(13,18): wrow(y, BX-2, BX-1, BUN)
-sp(BX-2, 14, BUN_IN); sp(BX-2, 15, BUN_IN); sp(BX-2, 16, BUN_IN)
-sp(BX+1, 12, BUN)
-for y in range(13,18): wrow(y, BX+1, BX+2, BUN)
-sp(BX+2, 14, BUN_IN); sp(BX+1, 15, BUN_IN); sp(BX+2, 16, BUN_IN)
+sp(BX-1, 15, BUN); 
+for y in range(16,21): wrow(y, BX-2, BX-1, BUN)
+sp(BX-2, 17, BUN_IN); sp(BX-2, 18, BUN_IN); sp(BX-2, 19, BUN_IN)
+sp(BX+1, 15, BUN)
+for y in range(16,21): wrow(y, BX+1, BX+2, BUN)
+sp(BX+2, 17, BUN_IN); sp(BX+1, 18, BUN_IN); sp(BX+2, 19, BUN_IN)
 # 头
-for y in range(19, 23): wrow(y, BX-3, BX+3, BUN)
-wrow(18, BX-2, BX+2, BUN)
-wrow(23, BX-2, BX+2, BUN)
-for y in range(19, 23): wrow(y, BX-1, BX+1, BUN_LT)
+for y in range(22, 26): wrow(y, BX-3, BX+3, BUN)
+wrow(21, BX-2, BX+2, BUN)
+wrow(26, BX-2, BX+2, BUN)
+for y in range(22, 26): wrow(y, BX-1, BX+1, BUN_LT)
 # 连心眉
-sp(BX-2,19,BUN_EYE);sp(BX-1,19,BUN_EYE);sp(BX,19,(118,158,215));sp(BX+1,19,BUN_EYE);sp(BX+2,19,BUN_EYE)
-sp(BX-1, 20, BUN_D); sp(BX+1, 20, BUN_D)
-sp(BX-2, 21, BUN_BL); sp(BX+2, 21, BUN_BL)
-sp(BX-1, 22, BUN_IN); sp(BX, 22, BUN_IN); sp(BX+1, 22, BUN_IN)
+sp(BX-2,22,BUN_EYE);sp(BX-1,22,BUN_EYE);sp(BX,22,(118,158,215));sp(BX+1,22,BUN_EYE);sp(BX+2,22,BUN_EYE)
+sp(BX-1, 23, BUN_D); sp(BX+1, 23, BUN_D)
+sp(BX-2, 24, BUN_BL); sp(BX+2, 24, BUN_BL)
+sp(BX-1, 25, BUN_IN); sp(BX, 25, BUN_IN); sp(BX+1, 25, BUN_IN)
 # 身体
-for y in range(24, 28): wrow(y, BX-2, BX+2, BUN)
-wcol(BX, 24, 26, BUN_LT)
+for y in range(27, 31): wrow(y, BX-2, BX+2, BUN)
+wcol(BX, 27, 29, BUN_LT)
 # 左臂（推桶）
-sp(BX-3, 24, BUN); sp(BX-4, 25, BUN); sp(BX-5, 26, BUN)
-wrow(26, 53, BX-5, BIN_BLD)
+sp(BX-3, 27, BUN); sp(BX-4, 28, BUN); sp(BX-5, 29, BUN)
+wrow(29, 49, BX-5, BIN_BLD)
 # 右臂（平衡）
-sp(BX+3, 24, BUN); sp(BX+4, 25, BUN)
+sp(BX+3, 27, BUN); sp(BX+4, 28, BUN)
 # 腿
-wcol(BX-3, 27, BY-1, BUN); wcol(BX-2, 27, BY-1, BUN)
-wcol(BX+2, 27, BY-1, BUN); wcol(BX+3, 27, BY-1, BUN)
+wcol(BX-3, 30, BY-1, BUN); wcol(BX-2, 30, BY-1, BUN)
+wcol(BX+2, 30, BY-1, BUN); wcol(BX+3, 30, BY-1, BUN)
 sp(BX-4, BY-1, BUN); sp(BX+4, BY-1, BUN)
 
 
