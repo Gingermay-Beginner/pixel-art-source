@@ -51,8 +51,8 @@ GB      = (185, 108,  48)
 GBD     = (140,  82,  35)
 GB_EYE  = ( 62,  35,  15)
 GB_CHK  = (225, 148,  95)
-HAT_R   = (188,  55,  48)
-HAT_D   = (135,  32,  28)
+HAT_R   = (198,  42,  32)
+HAT_D   = (140,  26,  20)
 
 BUN     = (108, 182, 248)
 BUN_D   = ( 78, 145, 205)
@@ -220,41 +220,53 @@ sp(43, 30, TES_LT)
 fl(27, 29, 18, 45, TES_D)
 fl(29, 30, 19, 44, (38, 42, 58))
 
-# ── 姜饼人 in windshield (left) x=23~29 ──
-# Hat
-wrow(17, 24, 28, HAT_R)
-wrow(16, 25, 27, HAT_R)
-sp(26, 16, HAT_D)
-# Head
-fl(18, 21, 23, 29, GB)
-sp(23, 18, WIND); sp(29, 18, WIND)
-sp(23, 21, WIND); sp(29, 21, WIND)
-# Eyes
-sp(24, 19, GB_EYE); sp(27, 19, GB_EYE)
-# Cheeks
-sp(23, 20, GB_CHK); sp(29, 20, GB_CHK)
-# Smile
-sp(25, 21, GBD); sp(26, 21, GBD); sp(27, 21, GBD)
-# Body hint
-fl(22, 22, 24, 28, GB)
+# ── 姜饼人 in windshield (left) GCX=26 ──
+GCX, GCY = 26, 21   # 头底部 y=21
+HAT_LITE = (225,  72,  55)
+# 头（7格宽，四角圆角）
+wrow(GCY-3, GCX-2, GCX+2, GB)
+fl(GCY-2, GCY,   GCX-3, GCX+3, GB)
+# 圆角
+sp(GCX-3, GCY-3, WIND); sp(GCX+3, GCY-3, WIND)
+sp(GCX-3, GCY,   WIND); sp(GCX+3, GCY,   WIND)
+# 眼
+sp(GCX-1, GCY-2, GB_EYE); sp(GCX+1, GCY-2, GB_EYE)
+# 腮红
+sp(GCX-2, GCY-1, GB_CHK); sp(GCX+2, GCY-1, GB_CHK)
+# 嘴
+sp(GCX-1, GCY, GBD); sp(GCX, GCY, GBD); sp(GCX+1, GCY, GBD)
+# 帽子（火山版，右偏1格）
+sp(GCX+1, GCY-6, HAT_D)                           # 小啾啾
+for _dx in range(-1, 4): sp(GCX+_dx, GCY-5, HAT_R)  # 帽身第1行
+for _dx in range(-1, 4): sp(GCX+_dx, GCY-4, HAT_R)  # 帽身第2行
+sp(GCX-1, GCY-5, HAT_D); sp(GCX+3, GCY-5, HAT_D)
+sp(GCX-1, GCY-4, HAT_D); sp(GCX+3, GCY-4, HAT_D)
+sp(GCX,   GCY-5, HAT_LITE)
 
-# ── 蓝兔子 in windshield (right) x=34~41 ──
-# Ears
-fl(15, 21, 35, 36, BUN_IN)
-fl(15, 21, 38, 39, BUN_IN)
-sp(35, 14, BUN); sp(36, 14, BUN)
-sp(38, 14, BUN); sp(39, 14, BUN)
-# Head
-fl(18, 21, 34, 40, BUN)
-sp(34, 18, WIND); sp(40, 18, WIND)
-sp(34, 21, WIND); sp(40, 21, WIND)
-# Eyes (connected brow)
-for bx in range(35, 40): sp(bx, 18, BUN_EY)
-sp(35, 19, BUN_EY); sp(38, 19, BUN_EY)
-# Cheeks
-sp(34, 20, BUN_IN); sp(40, 20, BUN_IN)
-# Body hint
-fl(22, 22, 35, 39, BUN)
+# ── 蓝兔子 in windshield (right) BCX=37 ──
+BCX, BCY = 37, 21   # 头底部 y=21
+BUN_BLUSH = (235, 148, 178)
+BUN_BROW  = ( 35,  68, 135)
+# 耳朵
+for _ey in range(BCY-8, BCY-4):
+    sp(BCX-2, _ey, BUN); sp(BCX-1, _ey, BUN_IN)
+    sp(BCX+1, _ey, BUN_IN); sp(BCX+2, _ey, BUN)
+sp(BCX-1, BCY-8, BUN); sp(BCX+1, BCY-8, BUN)  # 耳顶圆角
+# 头（7格宽，四角圆角）
+wrow(BCY-3, BCX-2, BCX+2, BUN)
+fl(BCY-2, BCY,   BCX-3, BCX+3, BUN)
+sp(BCX-3, BCY-3, WIND); sp(BCX+3, BCY-3, WIND)
+sp(BCX-3, BCY,   WIND); sp(BCX+3, BCY,   WIND)
+# 连心眉
+sp(BCX-2, BCY-3, BUN_BROW); sp(BCX-1, BCY-3, BUN_BROW)
+sp(BCX,   BCY-3, BUN_D)
+sp(BCX+1, BCY-3, BUN_BROW); sp(BCX+2, BCY-3, BUN_BROW)
+# 眼
+sp(BCX-2, BCY-2, BUN_EY); sp(BCX+2, BCY-2, BUN_EY)
+# 腮红
+sp(BCX-3, BCY-1, BUN_BLUSH); sp(BCX+3, BCY-1, BUN_BLUSH)
+# 嘴
+sp(BCX-1, BCY, BUN); sp(BCX, BCY, BUN); sp(BCX+1, BCY, BUN)
 
 # ── Rear-view mirror (移到车顶中间上方，不遮玻璃) ──
 fl(14, 15, 30, 33, (68, 78, 95))
