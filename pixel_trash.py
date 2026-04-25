@@ -226,29 +226,24 @@ draw_lemon_tree(60, 27, max_left=None, max_right=63)
 # 上层柠檬树（靠内，后画，遮住底层）
 draw_lemon_tree(7, 27, max_left=None, max_right=None)
 draw_lemon_tree(58, 27, max_left=None, max_right=63)
-# ── 小私人飞机（屋顶左上方，x右移到树冠外）──
-PL_BODY  = (245, 245, 242)
-PL_WING  = (228, 228, 222)
-PL_WIN   = (148, 195, 225)
-PL_ENG   = (195, 188, 172)
-
-# 机身 y=4, x=17~23（大版，白色）
-PL_BODY = (245, 245, 242); PL_WING = (228, 228, 222); PL_WIN = (148, 195, 225); PL_ENG = (195, 188, 172)
-wrow(3, 15, 21, PL_BODY)
+# ── 小私人飞机 ──
+PL_BODY = (245, 245, 242); PL_WING = (228, 228, 222); PL_WIN = (148, 195, 225)
+# 机身
+wrow(3, 17, 21, PL_BODY)
 wrow(4, 16, 21, PL_BODY)
-sp(15, 4, PL_ENG)
 # 机头
 sp(22, 3, PL_BODY); sp(22, 4, PL_BODY); sp(23, 4, PL_BODY)
 # 机尾竖尾翼
-sp(15, 2, PL_WING); sp(16, 2, PL_WING)
-# 主翼
-wrow(2, 17, 20, PL_WING)
-wrow(5, 17, 20, PL_WING)
+sp(16, 2, PL_WING)
+# 上翼
+wrow(2, 16, 19, PL_WING)
+# 下翼
+wrow(1, 15, 17, PL_WING)
 # 窗
 sp(20, 3, PL_WIN); sp(21, 3, PL_WIN)
-# 尾气
-sp(13, 4, (228, 232, 238)); sp(12, 4, (212, 218, 228)); sp(11, 4, (198, 205, 218))
-sp(14, 4, (238, 240, 245))
+# 尾气（右移后：y=4 x=12~15，y=3 x=11~14 白色）
+wrow(4, 14, 15, PL_BODY)
+wrow(3, 13, 14, PL_BODY)
 
 
 # ── 灌木（全宽，门前断开）──
