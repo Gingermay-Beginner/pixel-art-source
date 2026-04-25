@@ -254,7 +254,7 @@ for bx in list(range(0, 12)) + list(range(39, 63)):
     for by in range(top, 28):
         r2 = rng.random()
         sp(bx, by, BUSH_L if r2 > 0.72 else (BUSH_D if r2 < 0.22 else BUSH))
-for fx, fy in [(3,23),(7,22),(11,23),(41,23),(44,22),(48,23),(52,22),(56,23),(60,22)]:
+for fx, fy in [(0,23),(3,23),(7,22),(11,23),(41,23),(44,22),(48,23),(52,22),(56,23),(60,22),(62,23)]:
     sp(fx, fy, FLOWER); sp(fx, fy+1, (148,198,235))
 # x=12 y=23,24,26,27 灌木（被墙体覆盖修补）
 sp(12, 23, BUSH); sp(12, 24, BUSH); sp(12, 26, BUSH); sp(12, 27, BUSH)
