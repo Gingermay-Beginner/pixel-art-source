@@ -88,8 +88,8 @@ WIN_BF  = (172, 192, 212)
 BRICK   = (188, 105,  72)
 BRICK_D = (155,  78,  48)
 BEAM    = (142, 105,  68)
-GAR     = (218, 212, 198)
-GAR_D   = (178, 170, 155)
+GAR     = (185, 178, 162)
+GAR_D   = (228, 222, 208)
 GAR_S   = (148, 138, 122)
 GAR_WIN = ( 62,  88, 112)
 AWN_W   = (252, 250, 242)
@@ -199,6 +199,14 @@ def draw_lemon_tree(cx, base_y, max_left=None, max_right=None):
         if max_left is not None and nx < max_left: continue
         if max_right is not None and nx > max_right: continue
         crown_map[p] = True
+    # 填满每行 min~max 之间的空隙
+    from collections import defaultdict
+    row_xs = defaultdict(list)
+    for (nx, cy) in crown_map: row_xs[cy].append(nx)
+    for cy, xs in row_xs.items():
+        for fx in range(min(xs), max(xs)+1):
+            crown_map[(fx, cy)] = True
+
     for (nx, cy) in crown_map:
         r2 = _r.random()
         c = LM_LFL if r2 > 0.65 else (LM_LFD if r2 < 0.25 else LM_LF)
@@ -212,7 +220,11 @@ def draw_lemon_tree(cx, base_y, max_left=None, max_right=None):
             sp(lx, ly, LM_FR)
             sp(lx, ly+1, LM_FRD)
 
-draw_lemon_tree(6, 27, max_left=0, max_right=None)
+# 底层柠檬树（更靠外，先画）
+draw_lemon_tree(0, 27, max_left=None, max_right=None)
+draw_lemon_tree(60, 27, max_left=None, max_right=63)
+# 上层柠檬树（靠内，后画，遮住底层）
+draw_lemon_tree(4, 27, max_left=0, max_right=None)
 draw_lemon_tree(58, 27, max_left=None, max_right=63)
 # ── 小私人飞机（屋顶左上方，x右移到树冠外）──
 PL_BODY  = (245, 245, 242)
