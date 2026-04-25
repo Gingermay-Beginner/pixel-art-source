@@ -152,11 +152,11 @@ for _wx1, _wx2 in [(16, 25), (39, 48)]:
         for _y in range(13, 17): sp(_x, _y, _c)
     wrow(16, _wx1, _wx2, AWN_E)
 # 车库门（x=16~25，y=21~28）
-fl(21, 28, 16, 25, GAR)
-wcol(16, 21, 28, GAR_D); wcol(25, 21, 28, GAR_D)
-wrow(21, 16, 25, GAR_D); wrow(28, 16, 25, GAR_D)
-for _gy in [22, 23, 25, 27]: wrow(_gy, 17, 24, GAR_D)
-wcol(19, 21, 28, GAR_D); wcol(22, 21, 28, GAR_D)
+fl(21, 27, 16, 25, GAR)
+wcol(16, 21, 27, GAR_D); wcol(25, 21, 27, GAR_D)
+wrow(21, 16, 25, GAR_D); wrow(27, 16, 25, GAR_D)
+for _gy in [22, 23, 25]: wrow(_gy, 17, 24, GAR_D)
+wcol(19, 21, 27, GAR_D); wcol(22, 21, 27, GAR_D)
 for _wx in [17, 18, 20, 21, 23, 24]: sp(_wx, 22, GAR_WIN)
 
 # ── 柠檬树（左 cx=5，右 cx=58）──
