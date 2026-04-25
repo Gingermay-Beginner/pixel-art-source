@@ -271,8 +271,8 @@ for _y63 in range(22, 28):
 # ── 左组：黑桶 + 姜饼人 ──
 # 黑桶（x=6~10，y=24~32）
 fl(24, 32, 6, 10, BIN_BLK)
+wrow(23, 6, 10, BIN_LID)
 wcol(6, 24, 32, BIN_BKD); wcol(10, 24, 32, BIN_BKD)
-wrow(24, 6, 10, BIN_LID)
 wrow(32, 6, 10, BIN_BKD); wrow(28, 7, 9, BIN_BKD)
 sp(9, 31, BIN_WHL); sp(10, 31, BIN_WHL); sp(9, 32, BIN_WHL); sp(10, 32, (115,105,95))
 
@@ -309,8 +309,8 @@ sp(GX, 20, HAT_LITE)
 # ── 右组：蓝桶 + 蓝兔子 ──
 # 蓝桶（x=45~49，y=24~32）
 fl(24, 32, 44, 48, BIN_BLU)
+wrow(23, 44, 48, BIN_LB)
 wcol(44, 24, 32, BIN_BLD); wcol(48, 24, 32, BIN_BLD)
-wrow(24, 44, 48, BIN_LB)
 wrow(32, 44, 48, BIN_BLD); wrow(28, 45, 47, BIN_BLD)
 sp(47, 31, BIN_WHL); sp(48, 31, BIN_WHL); sp(47, 32, BIN_WHL); sp(48, 32, (115,105,95))
 
