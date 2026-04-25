@@ -85,21 +85,21 @@ for _bi, _color in enumerate(RB):
                 sp(_x, _y, _color)
 
 # ── WeWork building (left x=0~17) ──
-fl(4, 35, 0, 17, WW_WALL)
+fl(20, 35, 0, 17, WW_WALL)
 # 楼顶黑色
-fl(0, 3, 0, 17, WW_EDGE)
+fl(16, 19, 0, 17, WW_EDGE)
 # 横向：蓝玻璃4格 + 黑4格
-for wy in range(4, 36, 8):
+for wy in range(20, 36, 8):
     fl(wy,   wy+3, 1, 15, WW_WIN)
     wrow(wy, 1, 15, WW_WIN_L)
     fl(wy+4, min(wy+7, 35), 1, 15, WW_EDGE)
 # 竖向分隔线
 for vx in range(4, 16, 4):
-    for wy in range(4, 36, 8):
+    for wy in range(20, 36, 8):
         wcol(vx, wy, min(wy+3, 35), WW_WALL)
 # Right edge shadow
-wcol(16, 4, 35, WW_EDGE)
-wcol(17, 4, 35, WW_EDGE)
+wcol(16, 16, 35, WW_EDGE)
+wcol(17, 16, 35, WW_EDGE)
 
 # ── SF hillside (right x=48~63, y=8~30) ──
 HILL    = (122, 162,  88)
@@ -113,9 +113,9 @@ H_WIN   = (148, 198, 228)
 
 # 山丘轮廓（从右侧延伸进来）
 hill_profile = {
-    48: 23, 49: 21, 50: 18, 51: 16, 52: 14, 53: 12,
-    54: 11, 55: 11, 56: 10, 57: 11, 58: 11, 59: 13,
-    60: 15, 61: 17, 62: 20, 63: 23
+    48: 24, 49: 22, 50: 19, 51: 17, 52: 14, 53: 13,
+    54: 12, 55: 12, 56: 12, 57: 12, 58: 12, 59: 12,
+    60: 12, 61: 13, 62: 15, 63: 18
 }
 for hx, hy_top in hill_profile.items():
     wcol(hx, hy_top, 35, HILL)
