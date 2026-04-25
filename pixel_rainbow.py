@@ -25,13 +25,14 @@ def wcol(x, y1, y2, c):
 
 # ── Colors ──
 SKY     = (185, 218, 242)
-SKY_TOP = (158, 198, 228)
+SKY_TOP = (178, 212, 238)
 SKY_HZ  = (205, 228, 245)   # horizon glow
 
 WW_WALL = (28,  38,  55)
 WW_WIN  = (58, 112, 175)
 WW_WIN_L= (88, 148, 205)
-WW_EDGE = (18,  25,  40)
+WW_EDGE = ( 35,  52,  82)   # 深蓝灰（不再纯黑）
+WW_TOP  = ( 48,  68, 105)   # 楼顶稍亮
 
 BRIDGE  = (175, 168, 152)
 BRIDGE_D= (145, 138, 120)
@@ -60,9 +61,7 @@ BUN_IN  = (178, 215, 248)
 
 # ── Sky (最底层) ──
 fl(0, 35, 0, 63, SKY)
-fl(0,  8, 0, 63, SKY_TOP)
-wrow(16, 0, 63, SKY_HZ)
-wrow(17, 0, 63, SKY_HZ)
+
 
 # ── Rainbow ──
 import random as _rnd
@@ -78,7 +77,7 @@ for _bi, _color in enumerate(RB):
     _r2 = _r1 + 1.2
     for _x in range(18, 64):
         for _y in range(0, 28):
-            _dist = math.sqrt(((_x - 38)/1.5)**2 + (_y - 24)**2)
+            _dist = math.sqrt(((_x - 34)/1.5)**2 + (_y - 24)**2)
             if _r1 <= _dist < _r2:
                 # 左侧渐隐：越靠左越稀疏
                 if _x < _fade_end_x:
@@ -89,12 +88,18 @@ for _bi, _color in enumerate(RB):
 
 # ── WeWork building (left x=0~17) ──
 fl(20, 35, 0, 17, WW_WALL)
-# 楼顶黑色
-fl(16, 19, 0, 17, WW_EDGE)
+# 楼顶：深蓝 + 顶部反光线
+fl(16, 19, 0, 17, WW_TOP)
+wrow(16, 0, 17, (88, 118, 168))   # 顶部亮反光
+wrow(19, 0, 17, (55, 78, 118))    # 楼顶底边暗线
+# 楼层腰线（每8格一条浅色水平线，增加层级感）
+for wy in range(20, 36, 8):
+    wrow(wy-1, 1, 15, (52, 78, 118))  # 楼层间暗腰线
 # 横向：蓝玻璃4格 + 黑4格
 for wy in range(20, 36, 8):
     fl(wy,   wy+3, 1, 15, WW_WIN)
     wrow(wy, 1, 15, WW_WIN_L)
+    wrow(wy+1, 1, 15, (72, 128, 192))  # 玻璃内横高光
     fl(wy+4, min(wy+7, 35), 1, 15, WW_EDGE)
 # 竖向分隔线
 for vx in range(4, 16, 4):
