@@ -75,7 +75,7 @@ for _bi, _color in enumerate(RB):
     _r2 = _r1 + 1.2
     for _x in range(18, 64):
         for _y in range(0, 28):
-            _dist = math.sqrt((_x - 32)**2 + (_y - 24)**2)
+            _dist = math.sqrt(((_x - 32)/1.5)**2 + (_y - 24)**2)
             if _r1 <= _dist < _r2:
                 # 左侧渐隐：越靠左越稀疏
                 if _x < _fade_end_x:
