@@ -119,7 +119,7 @@ wcol(29, 17, 27, DOOR_BD); wcol(35, 17, 27, DOOR_BD)
 wrow(17, 29, 35, DOOR_BD); wrow(27, 29, 35, DOOR_BD)
 sp(29, 17, WALL_B); sp(30, 17, DOOR_BD)
 sp(35, 17, WALL_B); sp(34, 17, DOOR_BD)
-wrow(28, 28, 36, BEAM); wrow(27, 29, 35, BEAM)
+wrow(28, 28, 36, (158, 118, 75)); wrow(27, 29, 35, (158, 118, 75))
 wrow(27, 29, 35, (135, 92, 62))  # 门底深色
 sp(34, 23, (215, 188, 95))
 # 圣诞花环
