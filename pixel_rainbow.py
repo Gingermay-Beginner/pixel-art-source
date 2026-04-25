@@ -65,30 +65,41 @@ wrow(16, 0, 63, SKY_HZ)
 wrow(17, 0, 63, SKY_HZ)
 
 # ── Rainbow ──
+import random as _rnd
+_rnd.seed(7)
 RB = [(215,48,35),(235,138,45),(232,215,58),(95,185,78),(55,148,215),(82,75,192),(158,75,188)]
+_fade_start_x = 18
+_fade_end_x   = 33
 for _bi, _color in enumerate(RB):
     _r1 = 13.0 + _bi * 1.2
     _r2 = _r1 + 1.2
-    for _x in range(36, 64):
+    for _x in range(18, 64):
         for _y in range(0, 28):
-            _dist = math.sqrt((_x - 42)**2 + (_y - 24)**2)
+            _dist = math.sqrt((_x - 38)**2 + (_y - 24)**2)
             if _r1 <= _dist < _r2:
+                # 左侧渐隐：越靠左越稀疏
+                if _x < _fade_end_x:
+                    _t = (_x - _fade_start_x) / (_fade_end_x - _fade_start_x)
+                    if _rnd.random() > _t:
+                        continue
                 sp(_x, _y, _color)
 
 # ── WeWork building (left x=0~17) ──
-fl(0, 33, 0, 17, WW_WALL)
+fl(4, 35, 0, 17, WW_WALL)
+# 楼顶黑色
+fl(0, 3, 0, 17, WW_EDGE)
 # 横向：蓝玻璃4格 + 黑4格
-for wy in range(0, 36, 8):
+for wy in range(4, 36, 8):
     fl(wy,   wy+3, 1, 15, WW_WIN)
     wrow(wy, 1, 15, WW_WIN_L)
-    fl(wy+4, wy+7, 1, 15, WW_EDGE)
+    fl(wy+4, min(wy+7, 35), 1, 15, WW_EDGE)
 # 竖向分隔线
 for vx in range(4, 16, 4):
-    for wy in range(0, 36, 8):
-        wcol(vx, wy, wy+3, WW_WALL)
+    for wy in range(4, 36, 8):
+        wcol(vx, wy, min(wy+3, 35), WW_WALL)
 # Right edge shadow
-wcol(16, 0, 33, WW_EDGE)
-wcol(17, 0, 33, WW_EDGE)
+wcol(16, 4, 35, WW_EDGE)
+wcol(17, 4, 35, WW_EDGE)
 
 # ── Bridge road perspective ──
 # Near (y=35): x=10~53; Far (y=18): x=22~41 then curves right
