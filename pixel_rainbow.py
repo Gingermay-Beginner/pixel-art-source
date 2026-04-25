@@ -69,7 +69,7 @@ import random as _rnd
 _rnd.seed(7)
 RB = [(215,48,35),(235,138,45),(232,215,58),(95,185,78),(55,148,215),(82,75,192),(158,75,188)]
 _fade_start_x = 18
-_fade_end_x   = 33
+_fade_end_x   = 50
 for _bi, _color in enumerate(RB):
     _r1 = 13.0 + _bi * 1.2
     _r2 = _r1 + 1.2
