@@ -221,7 +221,7 @@ def draw_lemon_tree(cx, base_y, max_left=None, max_right=None):
             sp(lx, ly+1, LM_FRD)
 
 # 底层柠檬树（更靠外，先画）
-draw_lemon_tree(0, 27, max_left=None, max_right=None)
+draw_lemon_tree(1, 27, max_left=None, max_right=None)
 draw_lemon_tree(60, 27, max_left=None, max_right=63)
 # 上层柠檬树（靠内，后画，遮住底层）
 draw_lemon_tree(4, 27, max_left=0, max_right=None)
@@ -263,15 +263,15 @@ for fx, fy in [(3,23),(7,22),(11,23),(41,23),(44,22),(48,23),(52,22),(56,23),(60
 
 
 # ── 左组：黑桶 + 姜饼人 ──
-# 黑桶（x=4~8，y=24~32，右移2格）
-fl(24, 32, 4, 8, BIN_BLK)
-wrow(23, 4, 8, BIN_LID)
-wcol(4, 24, 32, BIN_BKD); wcol(8, 24, 32, BIN_BKD)
-wrow(32, 4, 8, BIN_BKD); wrow(28, 5, 7, BIN_BKD)
-sp(7, 31, BIN_WHL); sp(8, 31, BIN_WHL); sp(7, 32, BIN_WHL); sp(8, 32, BIN_WHL)
+# 黑桶（x=6~10，y=24~32）
+fl(24, 32, 6, 10, BIN_BLK)
+wrow(23, 6, 10, BIN_LID)
+wcol(6, 24, 32, BIN_BKD); wcol(10, 24, 32, BIN_BKD)
+wrow(32, 6, 10, BIN_BKD); wrow(28, 7, 9, BIN_BKD)
+sp(9, 31, BIN_WHL); sp(10, 31, BIN_WHL); sp(9, 32, BIN_WHL); sp(10, 32, BIN_WHL)
 
 # 姜饼人（GX=12，匹克球原版坐标搬来，y不变）
-GX, GY = 14, 33
+GX, GY = 16, 33
 # 头（圆润版：上下收角）
 for y in range(22, 26): wrow(y, GX-3, GX+3, GB)
 wrow(21, GX-2, GX+2, GB)
@@ -286,7 +286,7 @@ for y in range(27, 31): wrow(y, GX-2, GX+2, GB)
 sp(GX, 27, GB_CHEEK); sp(GX, 29, GB_CHEEK)
 # 左臂（推桶，向左下伸）
 sp(GX-3, 27, GB); sp(GX-4, 28, GB); sp(GX-5, 29, GB)
-wrow(29, 8, GX-5, BIN_BKD)  # 手碰桶边线
+wrow(29, 10, GX-5, BIN_BKD)  # 手碰桶边线
 # 右臂（平衡）
 sp(GX+3, 27, GB); sp(GX+4, 28, GB)
 # 腿
