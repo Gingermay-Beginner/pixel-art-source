@@ -35,9 +35,9 @@ WIN    = (152, 198, 228)
 WIN_D  = ( 75, 125, 165)
 WIN_F  = ( 98, 158, 198)
 WIN_G  = (188, 218, 238)
-BUSH   = (108, 162,  78)
-BUSH_D = ( 75, 122,  52)
-BUSH_L = (148, 198, 108)
+BUSH   = ( 38,  88,  68)
+BUSH_D = ( 22,  58,  45)
+BUSH_L = ( 62, 118,  92)
 FLOWER = (252, 245, 215)
 JAC    = (148, 108, 188)
 JAC_L  = (185, 148, 222)
@@ -163,9 +163,9 @@ for _wx in [17, 18, 20, 21, 23, 24]: sp(_wx, 22, GAR_WIN)
 
 # ── 柠檬树（左 cx=5，右 cx=58）──
 LM_TRUNK = (142, 105,  68)
-LM_LF    = ( 62, 122,  48)
-LM_LFD   = ( 42,  95,  32)
-LM_LFL   = ( 95, 158,  72)
+LM_LF    = ( 95, 158,  72)
+LM_LFD   = ( 68, 122,  52)
+LM_LFL   = (128, 192, 102)
 LM_FR    = (252, 225,  65)
 LM_FRD   = (218, 188,  52)
 
@@ -223,10 +223,10 @@ def draw_lemon_tree(cx, base_y, max_left=None, max_right=None):
             sp(lx, ly+1, LM_FRD)
 
 # 底层柠檬树（更靠外，先画）
-draw_lemon_tree(60, 27, max_left=None, max_right=63)
+draw_lemon_tree(60, 27, max_left=None, max_right=62)
 # 上层柠檬树（靠内，后画，遮住底层）
 draw_lemon_tree(7, 27, max_left=None, max_right=None)
-draw_lemon_tree(58, 27, max_left=None, max_right=63)
+draw_lemon_tree(58, 27, max_left=None, max_right=62)
 # ── 小私人飞机 ──
 PL_BODY = (245, 245, 242); PL_WING = (228, 228, 222); PL_WIN = (148, 195, 225)
 # 机身
@@ -256,6 +256,13 @@ for bx in list(range(0, 12)) + list(range(39, 63)):
         sp(bx, by, BUSH_L if r2 > 0.72 else (BUSH_D if r2 < 0.22 else BUSH))
 for fx, fy in [(3,23),(7,22),(11,23),(41,23),(44,22),(48,23),(52,22),(56,23),(60,22)]:
     sp(fx, fy, FLOWER); sp(fx, fy+1, (232,212,108))
+# x=63 y=22~27 填灌木色（柠檬树边缘修补）
+import random as _rng2
+_r63 = random.Random(63)
+for _y63 in range(22, 28):
+    _c63 = BUSH_D if _r63.random() < 0.22 else (BUSH_L if _r63.random() > 0.72 else BUSH)
+    sp(63, _y63, _c63)
+
 
 
 # ── 左组：黑桶 + 姜饼人 ──
