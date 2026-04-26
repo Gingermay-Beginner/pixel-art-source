@@ -102,6 +102,7 @@ button.danger:hover { background: #c85a5a; color: #fff; }
     <button onclick="exportPNG()">💾 导出 PNG</button>
     <button onclick="exportPython()">🐍 导出 Python</button>
     <button onclick="sendToFangao()" style="background:#2a6ac8;border-color:#4a8ae8;color:#fff;">📨 发给梵高</button>
+    <button onclick="importPython()" style="background:#2a8a4a;border-color:#4aaa6a;color:#fff;">📋 导入代码</button>
     <button onclick="loadPNG()">📂 导入 PNG</button>
     <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFileLoad(event)">
     <button onclick="toggleGrid()"># 网格</button>
@@ -392,6 +393,24 @@ function renderHistory() {
 }
 
 // ── 导出 ──
+function importPython() {
+  const code = prompt('粘贴 Python 代码（sp(x, y, (r,g,b)) 格式）：');
+  if (!code) return;
+  saveHistory('导入代码前');
+  const re = /sp\(\s*(\d+)\s*,\s*(\d+)\s*,\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*\)/g;
+  let count = 0;
+  let m;
+  while ((m = re.exec(code)) !== null) {
+    const [,x,y,r,g,b] = m.map(Number);
+    if (x>=0&&x<CW&&y>=0&&y<CH) {
+      pixels[idx(x,y)] = `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+      count++;
+    }
+  }
+  render();
+  showStatus(`✅ 导入 ${count} 个像素`);
+}
+
 function sendToFangao() {
   let lines = ['# Pixel Editor export\n'];
   for (let y=0;y<CH;y++) for (let x=0;x<CW;x++) {
