@@ -437,15 +437,21 @@ function handleFileLoad(e) {
     const im = new Image();
     im.onload = () => {
       const off = document.createElement('canvas');
-      off.width = CW; off.height = CH;
+      off.width = im.width; off.height = im.height;
       const oc = off.getContext('2d');
-      oc.drawImage(im, 0, 0, CW, CH);
-      const d = oc.getImageData(0,0,CW,CH).data;
+      oc.drawImage(im, 0, 0);
+      const scaleX = im.width / CW;
+      const scaleY = im.height / CH;
+      const d = oc.getImageData(0,0,im.width,im.height).data;
       saveHistory('导入前');
-      for (let i=0;i<CW*CH;i++) {
-        const r=d[i*4],g=d[i*4+1],b=d[i*4+2],a=d[i*4+3];
-        if (a>10) pixels[i] = `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
-        else pixels[i] = '';
+      for (let y=0;y<CH;y++) for (let x=0;x<CW;x++) {
+        // 取每格中心像素
+        const px = Math.floor(x * scaleX + scaleX/2);
+        const py = Math.floor(y * scaleY + scaleY/2);
+        const i = (py * im.width + px) * 4;
+        const r=d[i],g=d[i+1],b=d[i+2],a=d[i+3];
+        if (a>10) pixels[idx(x,y)] = `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+        else pixels[idx(x,y)] = '';
       }
       render(); showStatus('导入完成');
     };
