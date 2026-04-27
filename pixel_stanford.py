@@ -226,11 +226,7 @@ wrow(19, 24, 39, FONT_S)
 wrow(24, 24, 39, FONT_D)
 wcol(22, 20, 23, FONT_D)
 wcol(41, 20, 23, FONT_D)
-# 圆角
-sp(23, 19, GROUND); sp(40, 19, GROUND)
-sp(22, 20, GROUND); sp(41, 20, GROUND)
-sp(22, 23, GROUND); sp(41, 23, GROUND)
-sp(23, 24, GROUND); sp(40, 24, GROUND)
+# 圆角（不画，让底层自然露出）
 
 # 水面（盆内 y=20~23, x=23~40）
 fl(20, 23, 23, 40, WATER)
@@ -256,7 +252,6 @@ sp(FX, 13, SPRAY)
 # 喷泉底座（y=24~25）
 fl(24, 25, 26, 37, FONT_D)
 wrow(24, 27, 36, FONT_S)
-sp(26, 25, GROUND); sp(37, 25, GROUND)
 
 # 连接柱（y=25~28，x=30~33）
 fl(25, 28, 30, 33, FONT_D)
@@ -269,9 +264,7 @@ wrow(28, 20, 43, FONT_S)
 wrow(31, 20, 43, FONT_D)
 wcol(18, 29, 30, FONT_D)
 wcol(45, 29, 30, FONT_D)
-# 圆角（四角不画）
-sp(18, 28, GROUND); sp(19, 28, GROUND); sp(44, 28, GROUND); sp(45, 28, GROUND)
-sp(18, 31, GROUND); sp(19, 31, GROUND); sp(44, 31, GROUND); sp(45, 31, GROUND)
+# 圆角（不画，让底层自然露出）
 # 第二层水面
 fl(29, 30, 19, 44, WATER)
 wrow(29, 20, 43, WATER_L)
@@ -280,7 +273,6 @@ for _wx in [22, 27, 32, 37, 42]:
 # 第二层底座
 fl(31, 32, 22, 41, FONT_D)
 wrow(31, 23, 40, FONT_S)
-sp(22, 32, GROUND); sp(41, 32, GROUND)
 
 # ── 椅子去掉 ──
 
