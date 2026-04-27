@@ -198,6 +198,10 @@ for _gx in range(8, 64, 8):
     for _gy in [29, 31, 33]:
         sp(_gx, _gy, GROUND_D)
 
+# 中间拱门内竖线柱（x=30, x=34，y=8~19，在喷泉前画被遮盖）
+wcol(30, 8, 19, WALL_D)
+wcol(34, 8, 19, WALL_D)
+
 # ── 喷泉（中央，CX=32）──
 FX = 32
 
