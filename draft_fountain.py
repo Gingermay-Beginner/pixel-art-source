@@ -62,9 +62,9 @@ fl(24, 25, 26, 38, FONT_D)
 wrow(24, 27, 37, FONT_S)
 
 # 连接柱 x=30~34
-fl(25, 28, 30, 34, FONT_D)
+fl(25, 28, 29, 35, FONT_D)
 wcol(29, 25, 28, FONT_S)
-wcol(34, 25, 28, FONT_S)
+wcol(35, 25, 28, FONT_S)
 
 # 第二层水盆 x=18~46
 fl(29, 30, 18, 46, FONT_S)
