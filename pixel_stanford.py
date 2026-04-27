@@ -147,6 +147,25 @@ fl(27, 28, 26, 37, FONT_D)
 wrow(27, 27, 36, FONT_S)
 sp(26, 28, GROUND); sp(37, 28, GROUND)
 
+# 第二层水盆（更大，y=28~31，x=18~45）
+fl(29, 30, 18, 45, FONT_S)
+wrow(28, 20, 43, FONT_S)
+wrow(31, 20, 43, FONT_D)
+wcol(18, 29, 30, FONT_D)
+wcol(45, 29, 30, FONT_D)
+# 圆角（四角不画）
+sp(18, 28, GROUND); sp(19, 28, GROUND); sp(44, 28, GROUND); sp(45, 28, GROUND)
+sp(18, 31, GROUND); sp(19, 31, GROUND); sp(44, 31, GROUND); sp(45, 31, GROUND)
+# 第二层水面
+fl(29, 30, 19, 44, WATER)
+wrow(29, 20, 43, WATER_L)
+for _wx in [22, 27, 32, 37, 42]:
+    sp(_wx, 30, WATER_L)
+# 第二层底座
+fl(31, 32, 22, 41, FONT_D)
+wrow(31, 23, 40, FONT_S)
+sp(22, 32, GROUND); sp(41, 32, GROUND)
+
 # ── 椅子圈（围绕喷泉，前景左右各一把）──
 # 左椅（x=14~18, y=26~31）-- 姜饼人坐
 def draw_chair(cx, cy):
