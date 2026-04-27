@@ -183,17 +183,17 @@ fl(5, 5, 0, 15, SKY_T)
 fl(5, 5, 49, 63, SKY_T)
 
 # ── 地面 ──
-fl(27, 35, 0, 63, GROUND)
-wrow(27, 0, 63, GROUND_D)
-# 石板纹理（横线）
-for _gy in [29, 31, 33]:
+fl(31, 35, 0, 63, GROUND)
+wrow(31, 0, 63, GROUND_D)
+# 石板纹理（横线）下移4格
+for _gy in [33, 35]:
     wrow(_gy, 0, 63, GROUND_D)
-# 石板竖缝（错位）
+# 石板竖缝（错位）下移4格
 for _gx in range(4, 64, 8):
-    for _gy in [28, 30, 32, 34]:
+    for _gy in [32, 34]:
         sp(_gx, _gy, GROUND_D)
 for _gx in range(8, 64, 8):
-    for _gy in [29, 31, 33]:
+    for _gy in [33, 35]:
         sp(_gx, _gy, GROUND_D)
 
 # 中间拱门顶部阴影（x=31~33, y=6，柱子色）
@@ -277,7 +277,7 @@ wrow(31, 23, 40, FONT_S)
 # ── 椅子去掉 ──
 
 # ── 姜饼人（左椅，GCX=16, GCY=21）──
-GCX, GCY = 16, 21
+GCX, GCY = 11, 21
 
 # 头（宽7格，四角挖）
 fl(GCY, GCY+4, GCX-3, GCX+3, GB)
@@ -302,7 +302,7 @@ sp(GCX-3, GCY+5, GB); sp(GCX-3, GCY+6, GB); sp(GCX-4, GCY+6, GB); sp(GCX-4, GCY+
 sp(GCX+3, GCY+5, GB); sp(GCX+3, GCY+6, GB); sp(GCX+4, GCY+6, GB); sp(GCX+4, GCY+7, GB)
 
 # ── 蓝兔子（右椅，BCX=47, BCY=21）──
-BCX, BCY = 47, 21
+BCX, BCY = 52, 21
 
 # 耳朵
 sp(BCX-1, BCY-4, BUN_B)
@@ -328,6 +328,19 @@ fl(BCY+5, BCY+8, BCX-2, BCX+2, BUN_B)
 # 手臂
 sp(BCX-3, BCY+5, BUN_B); sp(BCX-3, BCY+6, BUN_B); sp(BCX-4, BCY+6, BUN_B); sp(BCX-4, BCY+7, BUN_B)
 sp(BCX+3, BCY+5, BUN_B); sp(BCX+3, BCY+6, BUN_B); sp(BCX+4, BCY+6, BUN_B); sp(BCX+4, BCY+7, BUN_B)
+
+# 四根大柱合并台阶（整体，y=27~30，逐行向外扩，越低越深越冷）
+STEPS = [
+    (168, 155, 128),  # y=27 最浅最暖
+    (148, 138, 118),  # y=28
+    (128, 122, 112),  # y=29
+    (108, 105, 102),  # y=30 最深最冷
+]
+for _sw, _sc in enumerate(STEPS):
+    _y = 27 + _sw
+    _x1 = 18 - _sw - 2
+    _x2 = 48 + _sw
+    wrow(_y, _x1, _x2, _sc)
 
 img.save('pixel_stanford.png')
 
