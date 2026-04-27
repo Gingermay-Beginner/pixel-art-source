@@ -71,10 +71,23 @@ fl(5, 5, 16, 48, WALL_D)
 wrow(4, 16, 48, WALL)
 
 # 墙体
-# 墙体（中间 x=16~48 从y=4，两侧从y=9）
+# 墙体（中间 x=16~48 从y=3，两侧从y=9）
 fl(3, 26, 16, 48, WALL)
 fl(9, 26, 0, 15, WALL)
 fl(9, 26, 49, 63, WALL)
+
+# 中间高墙梯形红屋顶（y=0~2，底x=16~48→顶x=22~42）
+RTOP_R  = (188,  68,  52)
+RTOP_RD = (148,  48,  35)
+RTOP_RL = (215,  98,  72)
+_roof_rows = [(2,16,48),(1,19,45),(0,22,42)]
+for _ry_actual, _rx1, _rx2 in _roof_rows:
+    wrow(_ry_actual, _rx1, _rx2, RTOP_R)
+    for _cx in range(_rx1+1, _rx2+1, 3):
+        sp(_cx, _ry_actual, RTOP_RD)
+    for _cx in range(_rx1+2, _rx2+1, 3):
+        sp(_cx, _ry_actual, RTOP_RL)
+wrow(2, 16, 48, RTOP_RD)  # 底暗边
 
 # 拱廊（7个拱，中间3个宽9格，两侧各宽7格）
 # (起点x, 拱总宽)
