@@ -114,16 +114,15 @@ for ax, aw in ARCHES:
         if not (ax == 50 and aw == 7):
             wcol(ax+aw-1, col_top, 26, WALL_D)
     # 拱内矩形部分
-    fl(11+dy, 26, ax+1, ax+aw-2, WIN)
-    # 大拱门底角圆角（挖代码）
+    _wfill = WIN_L if aw == 9 else WIN
+    fl(11+dy, 26, ax+1, ax+aw-2, _wfill)
     if aw == 9:
         sp(ax+1, 26, WALL); sp(ax+aw-2, 26, WALL)
-    # 拱顶弧形
-    wrow(10+dy, ax+1, ax+aw-2, WIN)
-    wrow(9+dy, ax+2, ax+aw-3, WIN)
+    wrow(10+dy, ax+1, ax+aw-2, _wfill)
+    wrow(9+dy, ax+2, ax+aw-3, _wfill)
     sp(ax+1, 9+dy, WALL_D); sp(ax+aw-2, 9+dy, WALL_D)
     if iw >= 5:
-        wrow(8+dy, ax+3, ax+aw-4, WIN)
+        wrow(8+dy, ax+3, ax+aw-4, _wfill)
         sp(ax+2, 8+dy, WALL_D); sp(ax+aw-3, 8+dy, WALL_D)
     # 补墙（拱顶以上）
     wrow(7+dy, ax+1, ax+aw-2, WALL)
@@ -197,6 +196,9 @@ for _gx in range(4, 64, 8):
 for _gx in range(8, 64, 8):
     for _gy in [29, 31, 33]:
         sp(_gx, _gy, GROUND_D)
+
+# 中间拱门顶部阴影（x=31~33, y=6，柱子色）
+sp(31, 7, WALL_D); sp(32, 7, WALL_D); sp(33, 7, WALL_D)
 
 # 中间拱门内竖线柱（x=30, x=34，y=8~19，在喷泉前画被遮盖）
 wcol(30, 8, 19, WALL_D)
