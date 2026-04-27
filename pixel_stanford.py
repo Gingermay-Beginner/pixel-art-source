@@ -71,39 +71,50 @@ fl(4, 5, 0, 63, WALL_D)
 wrow(4, 0, 63, WALL)
 
 # 墙体
-fl(5, 18, 0, 63, WALL)
+fl(5, 26, 0, 63, WALL)
 
-# 拱廊（7个拱，均匀分布 x=2~61）
-ARCH_XS = [2, 11, 20, 29, 38, 47, 56]  # 每拱左起点，宽7格
-for ax in ARCH_XS:
-    # 拱内（窗户感）
-    fl(8, 17, ax+1, ax+5, WIN)
-    wrow(8, ax+1, ax+5, WIN_L)   # 顶亮
-    # 拱柱（暗色）
-    wcol(ax,   5, 17, WALL_D)
-    wcol(ax+6, 5, 17, WALL_D)
-    # 拱顶圆弧（手动2格）
-    sp(ax+1, 7, WALL); sp(ax+5, 7, WALL)
-    sp(ax+1, 6, WALL); sp(ax+5, 6, WALL)
-    sp(ax+2, 5, WALL); sp(ax+4, 5, WALL)
+# 拱廊（7个拱，中间3个宽9格，两侧各宽7格）
+# (起点x, 拱总宽)
+ARCHES = [(2,7),(10,7),(18,9),(28,9),(38,9),(48,7),(56,7)]
+for ax, aw in ARCHES:
+    iw = aw - 2  # 内宽
+    # 拱柱（暗色，延伸到地面）
+    wcol(ax,      6, 26, WALL_D)
+    wcol(ax+aw-1, 6, 26, WALL_D)
+    # 拱内矩形部分（y=11~26）
+    fl(11, 26, ax+1, ax+aw-2, WIN)
+    # 拱顶弧形（圆心 ax+aw//2）
+    cx = ax + aw//2
+    # y=10: 全内宽窗
+    wrow(10, ax+1, ax+aw-2, WIN)
+    # y=9: 两侧各缩1
+    wrow(9, ax+2, ax+aw-3, WIN)
+    sp(ax+1, 9, WALL_D); sp(ax+aw-2, 9, WALL_D)
+    # y=8: 中间iw-4格窗
+    if iw >= 5:
+        wrow(8, ax+3, ax+aw-4, WIN)
+        sp(ax+2, 8, WALL_D); sp(ax+aw-3, 8, WALL_D)
+    # y=7: 补墙
+    wrow(7, ax+1, ax+aw-2, WALL)
     # 拱内亮点
-    sp(ax+2, 9, WIN_L); sp(ax+4, 9, WIN_L)
+    sp(ax+2, 12, WIN_L); sp(ax+aw-3, 12, WIN_L)
+    wrow(11, ax+1, ax+aw-2, WIN_L)
 
 # 墙体水平腰线
 wrow(7, 0, 63, WALL_L)
 
 # ── 地面 ──
-fl(18, 35, 0, 63, GROUND)
-wrow(18, 0, 63, GROUND_D)
+fl(27, 35, 0, 63, GROUND)
+wrow(27, 0, 63, GROUND_D)
 # 石板纹理（横线）
-for _gy in [21, 24, 27, 30, 33]:
+for _gy in [29, 31, 33]:
     wrow(_gy, 0, 63, GROUND_D)
 # 石板竖缝（错位）
 for _gx in range(4, 64, 8):
-    for _gy in [19, 20, 22, 23, 25, 26, 28, 29, 31, 32, 34]:
+    for _gy in [28, 30, 32, 34]:
         sp(_gx, _gy, GROUND_D)
 for _gx in range(8, 64, 8):
-    for _gy in [21, 24, 27, 30, 33]:
+    for _gy in [29, 31, 33]:
         sp(_gx, _gy, GROUND_D)
 
 # ── 喷泉（中央，CX=32）──
