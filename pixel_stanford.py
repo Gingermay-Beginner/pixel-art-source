@@ -109,43 +109,43 @@ for _gx in range(8, 64, 8):
 # ── 喷泉（中央，CX=32）──
 FX = 32
 
-# 水盆外缘（椭圆感，y=22~27，x=22~41）
-fl(23, 26, 22, 41, FONT_S)
-wrow(22, 24, 39, FONT_S)
-wrow(27, 24, 39, FONT_D)
-wcol(22, 23, 26, FONT_D)
-wcol(41, 23, 26, FONT_D)
+# 水盆外缘（y=19~24，x=22~41）
+fl(20, 23, 22, 41, FONT_S)
+wrow(19, 24, 39, FONT_S)
+wrow(24, 24, 39, FONT_D)
+wcol(22, 20, 23, FONT_D)
+wcol(41, 20, 23, FONT_D)
 # 圆角
-sp(23, 22, GROUND); sp(40, 22, GROUND)
+sp(23, 19, GROUND); sp(40, 19, GROUND)
+sp(22, 20, GROUND); sp(41, 20, GROUND)
 sp(22, 23, GROUND); sp(41, 23, GROUND)
-sp(22, 26, GROUND); sp(41, 26, GROUND)
-sp(23, 27, GROUND); sp(40, 27, GROUND)
+sp(23, 24, GROUND); sp(40, 24, GROUND)
 
-# 水面（盆内 y=23~26, x=23~40）
-fl(23, 26, 23, 40, WATER)
+# 水面（盆内 y=20~23, x=23~40）
+fl(20, 23, 23, 40, WATER)
 # 水面亮点
-wrow(23, 25, 38, WATER_L)
+wrow(20, 25, 38, WATER_L)
 for _wx in [26, 29, 33, 37]:
-    sp(_wx, 25, WATER_L)
+    sp(_wx, 22, WATER_L)
 
-# 喷水柱（中央 x=31~32, y=18~23）
-for _wy in range(18, 23):
+# 喷水柱（中央 x=31~32, y=15~20）
+for _wy in range(15, 20):
     sp(31, _wy, WATER)
     sp(32, _wy, WATER_L)
-# 水花发散（y=18~20）
-for _wy in [18, 19]:
-    _w = 19 - _wy
+# 水花发散（y=15~16）
+for _wy in [15, 16]:
+    _w = 16 - _wy
     for _wx in range(FX-_w, FX+_w+1):
         if abs(_wx - FX) >= _w-1:
             sp(_wx, _wy, SPRAY)
-sp(FX-2, 18, SPRAY); sp(FX+2, 18, SPRAY)
-sp(FX-1, 17, SPRAY); sp(FX, 17, SPRAY); sp(FX+1, 17, SPRAY)
-sp(FX, 16, SPRAY)
+sp(FX-2, 15, SPRAY); sp(FX+2, 15, SPRAY)
+sp(FX-1, 14, SPRAY); sp(FX, 14, SPRAY); sp(FX+1, 14, SPRAY)
+sp(FX, 13, SPRAY)
 
-# 喷泉底座（y=27~28）
-fl(27, 28, 26, 37, FONT_D)
-wrow(27, 27, 36, FONT_S)
-sp(26, 28, GROUND); sp(37, 28, GROUND)
+# 喷泉底座（y=24~25）
+fl(24, 25, 26, 37, FONT_D)
+wrow(24, 27, 36, FONT_S)
+sp(26, 25, GROUND); sp(37, 25, GROUND)
 
 # 第二层水盆（更大，y=28~31，x=18~45）
 fl(29, 30, 18, 45, FONT_S)
