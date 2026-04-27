@@ -134,8 +134,11 @@ for _seg in [(0, 15), (48, 63)]:
     fl(21, 23, _seg[0], _seg[1], ROOF_R)
     wrow(21, _seg[0], _seg[1], ROOF_RL)
     wrow(23, _seg[0], _seg[1], ROOF_RD)
-    for _rx in range(_seg[0]+3, _seg[1]+1, 4):
-        sp(_rx, 22, ROOF_RD)
+    # 纵向瓦片：每3格一道暗线+亮线（瓦楞感）
+    for _rx in range(_seg[0]+1, _seg[1]+1, 3):
+        wcol(_rx, 21, 23, ROOF_RD)
+    for _rx in range(_seg[0]+2, _seg[1]+1, 3):
+        wcol(_rx, 21, 23, ROOF_RL)
 
 # 连廊（y=24~26，四根大柱子外侧）：窗色背景+墙色分隔柱
 _CWIN = (108, 158, 198)
