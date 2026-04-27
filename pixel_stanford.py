@@ -117,13 +117,37 @@ wcol(50, 6, 26, WALL)   # 覆盖旧x=50深色线
 wcol(16, 6, 26, WALL_D) # 新x=16深色线
 wcol(48, 6, 26, WALL_D) # 新x=48深色线
 
-# 小拱门 y=21以下变墙色（变成窗户）
+# 小拱门 y=20以下变墙色（变成窗户）
 for ax, aw in [(2,7),(8,7),(50,7),(56,7)]:
-    fl(21, 26, ax+1, ax+aw-2, WALL)
+    fl(20, 26, ax+1, ax+aw-2, WALL)
 
 # 大拱门 y=20~22 变墙色（截断，上移1格）
 for ax, aw in [(18,9),(28,9),(38,9)]:
     fl(20, 22, ax+1, ax+aw-2, WALL)
+
+# 红瓦屋顶（y=21~23，四根大柱子外侧）
+ROOF_R  = (188,  68,  52)
+ROOF_RD = (148,  48,  35)
+ROOF_RL = (215,  98,  72)
+# 左段 x=0~15，右段 x=48~63
+for _seg in [(0, 15), (48, 63)]:
+    fl(21, 23, _seg[0], _seg[1], ROOF_R)
+    wrow(21, _seg[0], _seg[1], ROOF_RL)
+    wrow(23, _seg[0], _seg[1], ROOF_RD)
+    for _rx in range(_seg[0]+3, _seg[1]+1, 4):
+        sp(_rx, 22, ROOF_RD)
+
+# 连廊细柱（y=24~26，四根大柱子外侧）
+COL_C  = (195, 175, 140)
+COL_D  = (162, 142, 108)
+for _cx in range(1, 16, 2):
+    wcol(_cx, 24, 26, COL_D)
+    if _cx % 4 == 1:
+        wcol(_cx, 24, 26, COL_C)
+for _cx in range(49, 64, 2):
+    wcol(_cx, 24, 26, COL_D)
+    if _cx % 4 == 1:
+        wcol(_cx, 24, 26, COL_C)
 
 # 墙体水平腰线
 wrow(7, 0, 63, WALL_L)
