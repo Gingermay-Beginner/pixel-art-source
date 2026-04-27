@@ -179,9 +179,9 @@ for ax, aw in [(18,9),(28,9),(38,9)]:
     for _cx in range(x1+1, x2, 2):
         wcol(_cx, 4, 5, WALL)
 
-# 两侧 y=5~8 用天空色清除多余线条
-fl(5, 8, 0, 15, SKY_T)
-fl(5, 8, 49, 63, SKY_T)
+# 两侧 y=5 用天空色清除多余线条（y=6~8留给红瓦）
+fl(5, 5, 0, 15, SKY_T)
+fl(5, 5, 49, 63, SKY_T)
 
 # ── 地面 ──
 fl(27, 35, 0, 63, GROUND)
@@ -318,4 +318,23 @@ sp(BCX-3, BCY+5, BUN_B); sp(BCX-3, BCY+6, BUN_B); sp(BCX-4, BCY+6, BUN_B); sp(BC
 sp(BCX+3, BCY+5, BUN_B); sp(BCX+3, BCY+6, BUN_B); sp(BCX+4, BCY+6, BUN_B); sp(BCX+4, BCY+7, BUN_B)
 
 img.save('pixel_stanford.png')
+
+# 两侧斜红瓦屋顶（最后画，y=6~8，靠柱x=15顶y=6，靠边x=0顶y=8）
+_SRL = (215,98,72); _SRD = (148,48,35); _SR = (188,68,52)
+S2 = 12
+def sp2(x, y, c):
+    px = Image.new('RGB',(S2,S2),c)
+    img2.paste(px,(x*S2,y*S2))
+img2 = img.copy()
+for _wx in range(0, 16):
+    _rtop = 6 + round(2 * (15 - _wx) / 15)
+    for _wr in range(_rtop, 9):
+        _c = _SRL if _wr == _rtop else (_SR if _wr == _rtop+1 else _SRD)
+        sp2(_wx, _wr, _c)
+for _wx in range(49, 64):
+    _rtop = 8 - round(2 * (63 - _wx) / 14)
+    for _wr in range(_rtop, 9):
+        _c = _SRL if _wr == _rtop else (_SR if _wr == _rtop+1 else _SRD)
+        sp2(_wx, _wr, _c)
+img2.save('pixel_stanford.png')
 print('Saved')
