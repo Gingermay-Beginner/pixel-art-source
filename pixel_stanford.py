@@ -280,9 +280,11 @@ wrow(31, 23, 40, FONT_S)
 GCX, GCY = 11, 21
 
 # 头（宽7格，四角挖）
-fl(GCY, GCY+4, GCX-3, GCX+3, GB)
-sp(GCX-3, GCY, GROUND); sp(GCX+3, GCY, GROUND)
-sp(GCX-3, GCY+4, GROUND); sp(GCX+3, GCY+4, GROUND)
+for _hy in range(GCY, GCY+5):
+    for _hx in range(GCX-3, GCX+4):
+        if (_hx, _hy) in [(GCX-3,GCY),(GCX+3,GCY),(GCX-3,GCY+4),(GCX+3,GCY+4)]:
+            continue
+        sp(_hx, _hy, GB)
 # 五官
 sp(GCX-1, GCY+1, GB_EYE); sp(GCX+1, GCY+1, GB_EYE)
 sp(GCX-2, GCY+2, GB_CHEEK); sp(GCX+2, GCY+2, GB_CHEEK)
@@ -313,9 +315,11 @@ for _ey in range(BCY-3, BCY): sp(BCX+1, _ey, BUN_B); sp(BCX+2, _ey, BUN_B)
 for _ey in range(BCY-3, BCY): sp(BCX+1, _ey, BUN_IN)
 
 # 头（宽7格，四角挖）
-fl(BCY, BCY+4, BCX-3, BCX+3, BUN_B)
-sp(BCX-3, BCY, GROUND); sp(BCX+3, BCY, GROUND)
-sp(BCX-3, BCY+4, GROUND); sp(BCX+3, BCY+4, GROUND)
+for _hy in range(BCY, BCY+5):
+    for _hx in range(BCX-3, BCX+4):
+        if (_hx, _hy) in [(BCX-3,BCY),(BCX+3,BCY),(BCX-3,BCY+4),(BCX+3,BCY+4)]:
+            continue
+        sp(_hx, _hy, BUN_B)
 # 五官
 for bx in [BCX-2, BCX-1]: sp(bx, BCY+1, BUN_EYE)
 sp(BCX, BCY+1, BUN_D)
