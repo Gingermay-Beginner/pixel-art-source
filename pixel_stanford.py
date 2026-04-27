@@ -80,11 +80,19 @@ for ax, aw in ARCHES:
     iw = aw - 2  # 内宽
     dy = 3 if aw == 7 else 0  # 小拱门下移3格
     # 拱柱（暗色，延伸到地面）
-    # 去掉最外侧两根柱子（x=2左柱, x=62右柱）
-    if not (ax == 2 and aw == 7):
-        wcol(ax, 6, 26, WALL_D)
-    if not (ax == 56 and aw == 7):
-        wcol(ax+aw-1, 6, 26, WALL_D)
+    # 去掉两侧小拱所有柱子
+    skip_left  = (ax in (2, 10) and aw == 7) or (ax == 2 and aw == 7)
+    skip_right = (ax in (48, 56) and aw == 7) or (ax == 56 and aw == 7)
+    # ax=2右柱(x=8) 和 ax=56左柱(x=56) 也去掉
+    if ax == 2 and aw == 7:
+        pass  # 整拱跳过
+    elif ax == 56 and aw == 7:
+        pass  # 整拱跳过
+    else:
+        if not (ax == 10 and aw == 7):
+            wcol(ax, 6, 26, WALL_D)
+        if not (ax == 48 and aw == 7):
+            wcol(ax+aw-1, 6, 26, WALL_D)
     # 拱内矩形部分
     fl(11+dy, 26, ax+1, ax+aw-2, WIN)
     # 大拱门底角圆角（挖代码）
