@@ -199,6 +199,17 @@ for _gx in range(8, 64, 8):
 
 # 中间拱门顶部阴影（x=31~33, y=6，柱子色）
 sp(31, 7, WALL_D); sp(32, 7, WALL_D); sp(33, 7, WALL_D)
+# 中间拱门底部中柱（x=32, y=23~26）
+wcol(32, 23, 26, WALL_D)
+# 左右拱门底部中柱
+wcol(22, 23, 26, WALL_D)
+wcol(42, 23, 26, WALL_D)
+
+# 左右大拱门竖线+拱顶阴影（ax=18, ax=38）
+for _ax in [18, 38]:
+    wcol(_ax+2, 8, 19, WALL_D)
+    wcol(_ax+6, 8, 19, WALL_D)
+    sp(_ax+3, 7, WALL_D); sp(_ax+4, 7, WALL_D); sp(_ax+5, 7, WALL_D)
 
 # 中间拱门内竖线柱（x=30, x=34，y=8~19，在喷泉前画被遮盖）
 wcol(30, 8, 19, WALL_D)
