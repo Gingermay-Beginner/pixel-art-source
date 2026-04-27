@@ -160,7 +160,7 @@ for _seg in [(0, 15), (48, 63)]:
         wcol(_rx, 21, 23, ROOF_RL)
 
 # 连廊（y=24~26，四根大柱子外侧）：窗色背景+墙色分隔柱
-_CWIN = (108, 158, 198)
+_CWIN = WIN
 fl(24, 26, 0, 15, _CWIN)
 fl(24, 26, 49, 63, _CWIN)
 for _cx in range(1, 16, 2):
@@ -198,6 +198,9 @@ for _gx in range(8, 64, 8):
         sp(_gx, _gy, GROUND_D)
 
 # 中间拱门顶部阴影（x=31~33, y=6，柱子色）
+# 大拱门 y=23~26 改为深蓝色
+for _ax in [18, 28, 38]:
+    fl(23, 26, _ax+1, _ax+7, WIN)
 sp(31, 7, WALL_D); sp(32, 7, WALL_D); sp(33, 7, WALL_D)
 # 中间拱门底部中柱（x=32, y=23~26）
 wcol(32, 23, 26, WALL)
