@@ -78,30 +78,27 @@ fl(5, 26, 0, 63, WALL)
 ARCHES = [(2,7),(10,7),(18,9),(28,9),(38,9),(48,7),(56,7)]
 for ax, aw in ARCHES:
     iw = aw - 2  # 内宽
+    dy = 3 if aw == 7 else 0  # 小拱门下移3格
     # 拱柱（暗色，延伸到地面）
-    wcol(ax,      6, 26, WALL_D)
-    wcol(ax+aw-1, 6, 26, WALL_D)
-    # 拱内矩形部分（y=11~26）
-    fl(11, 26, ax+1, ax+aw-2, WIN)
+    wcol(ax,      6+dy, 26, WALL_D)
+    wcol(ax+aw-1, 6+dy, 26, WALL_D)
+    # 拱内矩形部分
+    fl(11+dy, 26, ax+1, ax+aw-2, WIN)
     # 大拱门底角圆角（挖代码）
     if aw == 9:
         sp(ax+1, 26, WALL); sp(ax+aw-2, 26, WALL)
-    # 拱顶弧形（圆心 ax+aw//2）
-    cx = ax + aw//2
-    # y=10: 全内宽窗
-    wrow(10, ax+1, ax+aw-2, WIN)
-    # y=9: 两侧各缩1
-    wrow(9, ax+2, ax+aw-3, WIN)
-    sp(ax+1, 9, WALL_D); sp(ax+aw-2, 9, WALL_D)
-    # y=8: 中间iw-4格窗
+    # 拱顶弧形
+    wrow(10+dy, ax+1, ax+aw-2, WIN)
+    wrow(9+dy, ax+2, ax+aw-3, WIN)
+    sp(ax+1, 9+dy, WALL_D); sp(ax+aw-2, 9+dy, WALL_D)
     if iw >= 5:
-        wrow(8, ax+3, ax+aw-4, WIN)
-        sp(ax+2, 8, WALL_D); sp(ax+aw-3, 8, WALL_D)
-    # y=7: 补墙
-    wrow(7, ax+1, ax+aw-2, WALL)
+        wrow(8+dy, ax+3, ax+aw-4, WIN)
+        sp(ax+2, 8+dy, WALL_D); sp(ax+aw-3, 8+dy, WALL_D)
+    # 补墙（拱顶以上）
+    wrow(7+dy, ax+1, ax+aw-2, WALL)
     # 拱内亮点
-    sp(ax+2, 12, WIN_L); sp(ax+aw-3, 12, WIN_L)
-    wrow(11, ax+1, ax+aw-2, WIN_L)
+    sp(ax+2, 12+dy, WIN_L); sp(ax+aw-3, 12+dy, WIN_L)
+    wrow(11+dy, ax+1, ax+aw-2, WIN_L)
 
 # 墙体水平腰线
 wrow(7, 0, 63, WALL_L)
