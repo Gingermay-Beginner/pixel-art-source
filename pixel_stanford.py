@@ -289,13 +289,13 @@ for _hy in range(GCY, GCY+5):
 sp(GCX-1, GCY+1, GB_EYE); sp(GCX+1, GCY+1, GB_EYE)
 sp(GCX-2, GCY+2, GB_CHEEK); sp(GCX+2, GCY+2, GB_CHEEK)
 sp(GCX-1, GCY+3, GBD); sp(GCX, GCY+3, GBD); sp(GCX+1, GCY+3, GBD)
-# 帽子（右偏1格）
-wrow(GCY-2, GCX-1, GCX+3, HAT_RED)
-fl(GCY-1, GCY-1, GCX-2, GCX+4, HAT_RED)
-sp(GCX+1, GCY-3, HAT_DARK)   # 小啾啾
-wcol(GCX-2, GCY-1, GCY-1, HAT_DARK)
-wcol(GCX+4, GCY-1, GCY-1, HAT_DARK)
-sp(GCX-1, GCY-2, HAT_DARK); sp(GCX, GCY-2, HAT_LITE); sp(GCX+3, GCY-2, HAT_DARK)
+# 帽子（右偏1格，整体下移1行）
+wrow(GCY-1, GCX-1, GCX+3, HAT_RED)
+wrow(GCY, GCX-1, GCX+3, HAT_RED)
+sp(GCX+1, GCY-2, HAT_DARK)   # 小啾啾
+wcol(GCX-1, GCY, GCY, HAT_DARK)
+wcol(GCX+3, GCY, GCY, HAT_DARK)
+sp(GCX-1, GCY-1, HAT_DARK); sp(GCX, GCY-1, HAT_LITE); sp(GCX+3, GCY-1, HAT_DARK)
 # 身体
 fl(GCY+5, GCY+8, GCX-2, GCX+2, GB)
 sp(GCX, GCY+6, GB_CHEEK); sp(GCX, GCY+8, GB_CHEEK)
