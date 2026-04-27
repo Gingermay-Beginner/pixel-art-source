@@ -75,7 +75,7 @@ fl(5, 26, 0, 63, WALL)
 
 # 拱廊（7个拱，中间3个宽9格，两侧各宽7格）
 # (起点x, 拱总宽)
-ARCHES = [(2,7),(10,7),(18,9),(28,9),(38,9),(48,7),(56,7)]
+ARCHES = [(2,7),(8,7),(18,9),(28,9),(38,9),(50,7),(56,7)]
 for ax, aw in ARCHES:
     iw = aw - 2  # 内宽
     dy = 3 if aw == 7 else 0  # 小拱门下移3格
@@ -85,13 +85,13 @@ for ax, aw in ARCHES:
     skip_right = (ax in (48, 56) and aw == 7) or (ax == 56 and aw == 7)
     # ax=2右柱(x=8) 和 ax=56左柱(x=56) 也去掉
     if ax == 2 and aw == 7:
-        pass  # 整拱跳过
+        pass
     elif ax == 56 and aw == 7:
-        pass  # 整拱跳过
+        pass
     else:
-        if not (ax == 10 and aw == 7):
+        if not (ax == 8 and aw == 7):
             wcol(ax, 6, 26, WALL_D)
-        if not (ax == 48 and aw == 7):
+        if not (ax == 50 and aw == 7):
             wcol(ax+aw-1, 6, 26, WALL_D)
     # 拱内矩形部分
     fl(11+dy, 26, ax+1, ax+aw-2, WIN)
@@ -110,6 +110,12 @@ for ax, aw in ARCHES:
     # 拱内亮点
     sp(ax+2, 12+dy, WIN_L); sp(ax+aw-3, 12+dy, WIN_L)
     wrow(11+dy, ax+1, ax+aw-2, WIN_L)
+
+# 内侧柱子线各向内移2格（x=14→x=16, x=50→x=48）
+wcol(14, 6, 26, WALL)   # 覆盖旧x=14深色线
+wcol(50, 6, 26, WALL)   # 覆盖旧x=50深色线
+wcol(16, 6, 26, WALL_D) # 新x=16深色线
+wcol(48, 6, 26, WALL_D) # 新x=48深色线
 
 # 墙体水平腰线
 wrow(7, 0, 63, WALL_L)
