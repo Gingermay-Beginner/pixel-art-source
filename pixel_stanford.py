@@ -33,7 +33,8 @@ WALL   = (212, 188, 148)
 WALL_D = (182, 158, 118)
 WALL_L = (232, 212, 175)
 ARCH   = (155, 128,  88)   # 拱廊暗色
-WIN    = ( 88, 118, 158)   # 窗户
+WIN    = ( 88, 118, 158)   # 窗户（深蓝）
+WIN_L  = (128, 168, 205)   # 窗户浅蓝
 
 # 喷泉
 FONT_S = (178, 195, 212)   # 水盆石头色
@@ -93,24 +94,23 @@ wrow(2, 49, 49, RTOP_RD)
 
 # 拱廊（7个拱，中间3个宽9格，两侧各宽7格）
 # (起点x, 拱总宽)
-ARCHES = [(2,7),(8,7),(18,9),(28,9),(38,9),(50,7),(56,7)]
+ARCHES = [(5,5),(9,5),(18,9),(28,9),(38,9),(50,5),(57,5)]
 for ax, aw in ARCHES:
     iw = aw - 2  # 内宽
-    dy = 3 if aw == 7 else 0  # 小拱门下移3格
+    dy = 3 if aw == 5 else 0  # 小拱门下移3格
     # 拱柱（暗色，延伸到地面）
     # 去掉两侧小拱所有柱子
-    skip_left  = (ax in (2, 10) and aw == 7) or (ax == 2 and aw == 7)
-    skip_right = (ax in (48, 56) and aw == 7) or (ax == 56 and aw == 7)
+    skip_left  = (ax in (2, 10) and aw == 5) or (ax == 2 and aw == 5)
+    skip_right = (ax in (48, 57) and aw == 7) or (ax == 57 and aw == 5)
     # ax=2右柱(x=8) 和 ax=56左柱(x=56) 也去掉
     if ax == 2 and aw == 7:
         pass
     elif ax == 56 and aw == 7:
         pass
     else:
-        col_top = 7 if aw == 9 else 10
-        if not (ax == 8 and aw == 7):
+        if aw == 9:
+            col_top = 7
             wcol(ax, col_top, 26, WALL_D)
-        if not (ax == 50 and aw == 7):
             wcol(ax+aw-1, col_top, 26, WALL_D)
     # 拱内矩形部分
     _wfill = WIN if aw == 9 else WIN
@@ -136,7 +136,7 @@ wcol(16, 7, 26, WALL_D) # 新x=16深色线
 wcol(48, 7, 26, WALL_D) # 新x=48深色线
 
 # 小拱门 y=20以下变墙色（变成窗户）
-for ax, aw in [(2,7),(8,7),(50,7),(56,7)]:
+for ax, aw in [(5,5),(9,5),(50,5),(57,5)]:
     fl(20, 26, ax+1, ax+aw-2, WALL)
 
 # 大拱门 y=20~22 变墙色（截断，上移1格）
@@ -171,7 +171,7 @@ for _cx in range(49, 64, 2):
 wrow(6, 16, 48, WALL_L)
 
 # 腰线上方廊柱窗（三组大拱门正上方，y=2~5）
-WIN_T  = (108, 158, 198)   # 窗色（同大拱门）
+WIN_T  = WIN   # 窗色（同大拱门）
 for ax, aw in [(18,9),(28,9),(38,9)]:
     x1, x2 = ax+1, ax+aw-2
     fl(4, 5, x1, x2, WIN_T)
@@ -209,13 +209,13 @@ wcol(42, 23, 26, WALL)
 
 # 左右大拱门竖线+拱顶阴影（ax=18, ax=38）
 for _ax in [18, 38]:
-    wcol(_ax+2, 8, 19, WALL_D)
-    wcol(_ax+6, 8, 19, WALL_D)
+    wcol(_ax+2, 8, 8, WALL_D); wcol(_ax+2, 9, 19, WIN_L)
+    wcol(_ax+6, 8, 8, WALL_D); wcol(_ax+6, 9, 19, WIN_L)
     sp(_ax+3, 7, WALL_D); sp(_ax+4, 7, WALL_D); sp(_ax+5, 7, WALL_D)
 
 # 中间拱门内竖线柱（x=30, x=34，y=8~19，在喷泉前画被遮盖）
-wcol(30, 8, 19, WALL_D)
-wcol(34, 8, 19, WALL_D)
+wcol(30, 8, 8, WALL_D); wcol(30, 9, 19, WIN_L)
+wcol(34, 8, 8, WALL_D); wcol(34, 9, 19, WIN_L)
 
 # ── 喷泉（中央，CX=32）──
 FX = 32
