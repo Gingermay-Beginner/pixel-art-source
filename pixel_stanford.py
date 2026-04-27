@@ -34,7 +34,6 @@ WALL_D = (182, 158, 118)
 WALL_L = (232, 212, 175)
 ARCH   = (155, 128,  88)   # 拱廊暗色
 WIN    = ( 88, 118, 158)   # 窗户
-WIN_L  = (128, 168, 205)
 
 # 喷泉
 FONT_S = (178, 195, 212)   # 水盆石头色
@@ -114,7 +113,7 @@ for ax, aw in ARCHES:
         if not (ax == 50 and aw == 7):
             wcol(ax+aw-1, col_top, 26, WALL_D)
     # 拱内矩形部分
-    _wfill = WIN_L if aw == 9 else WIN_L
+    _wfill = WIN if aw == 9 else WIN
     fl(11+dy, 26, ax+1, ax+aw-2, _wfill)
     if aw == 9:
         sp(ax+1, 26, WALL); sp(ax+aw-2, 26, WALL)
@@ -127,8 +126,8 @@ for ax, aw in ARCHES:
     # 补墙（拱顶以上）
     wrow(7+dy, ax+1, ax+aw-2, WALL)
     # 拱内亮点
-    sp(ax+2, 12+dy, WIN_L); sp(ax+aw-3, 12+dy, WIN_L)
-    wrow(11+dy, ax+1, ax+aw-2, WIN_L)
+    sp(ax+2, 12+dy, WIN); sp(ax+aw-3, 12+dy, WIN)
+    wrow(11+dy, ax+1, ax+aw-2, WIN)
 
 # 内侧柱子线各向内移2格（x=14→x=16, x=50→x=48）
 wcol(14, 10, 26, WALL)   # 覆盖旧x=14深色线
