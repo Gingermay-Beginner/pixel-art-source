@@ -147,6 +147,11 @@ fl(24, 25, 26, 37, FONT_D)
 wrow(24, 27, 36, FONT_S)
 sp(26, 25, GROUND); sp(37, 25, GROUND)
 
+# 连接柱（y=25~28，x=30~33）
+fl(25, 28, 30, 33, FONT_D)
+wcol(30, 25, 28, FONT_S)
+wcol(33, 25, 28, FONT_S)
+
 # 第二层水盆（更大，y=28~31，x=18~45）
 fl(29, 30, 18, 45, FONT_S)
 wrow(28, 20, 43, FONT_S)
