@@ -38,16 +38,15 @@ wrow(24, 24, 40, FONT_D)
 wcol(22, 20, 23, FONT_D)
 wcol(42, 20, 23, FONT_D)
 # 水面 x=23~41
-fl(20, 23, 23, 41, WATER)
-wrow(20, 25, 39, WATER_L)
-for _wx in [26, 29, 33, 38]:
-    sp(_wx, 22, WATER_L)
+fl(20, 23, 23, 41, FONT_S)
 
 # 喷水柱（不变）
-for _wy in range(15, 20):
+for _wy in range(15, 19):
     sp(31, _wy, WATER)
     sp(32, _wy, WATER_L)
     sp(33, _wy, WATER)
+sp(31, 19, FONT_S); sp(32, 19, FONT_S); sp(33, 19, FONT_S)
+sp(31, 20, FONT_S); sp(32, 20, FONT_S); sp(33, 20, FONT_S)
 # 水花（不变）
 for _wy in [15, 16]:
     _w = 16 - _wy
@@ -83,5 +82,7 @@ for _wx in [22, 27, 32, 38, 43]:
 fl(31, 32, 22, 42, FONT_D)
 wrow(31, 23, 41, FONT_S)
 
+for _wx in [23, 27, 32, 37, 41]:
+    sp(_wx, 19, WATER)
 img.save('/tmp/fountain_draft.png')
 print('Saved')
