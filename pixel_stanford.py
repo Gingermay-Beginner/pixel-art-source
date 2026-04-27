@@ -108,10 +108,11 @@ for ax, aw in ARCHES:
     elif ax == 56 and aw == 7:
         pass
     else:
+        col_top = 7 if aw == 9 else 10
         if not (ax == 8 and aw == 7):
-            wcol(ax, 10, 26, WALL_D)
+            wcol(ax, col_top, 26, WALL_D)
         if not (ax == 50 and aw == 7):
-            wcol(ax+aw-1, 10, 26, WALL_D)
+            wcol(ax+aw-1, col_top, 26, WALL_D)
     # 拱内矩形部分
     fl(11+dy, 26, ax+1, ax+aw-2, WIN)
     # 大拱门底角圆角（挖代码）
@@ -133,8 +134,8 @@ for ax, aw in ARCHES:
 # 内侧柱子线各向内移2格（x=14→x=16, x=50→x=48）
 wcol(14, 10, 26, WALL)   # 覆盖旧x=14深色线
 wcol(50, 10, 26, WALL)   # 覆盖旧x=50深色线
-wcol(16, 10, 26, WALL_D) # 新x=16深色线
-wcol(48, 10, 26, WALL_D) # 新x=48深色线
+wcol(16, 7, 26, WALL_D) # 新x=16深色线
+wcol(48, 7, 26, WALL_D) # 新x=48深色线
 
 # 小拱门 y=20以下变墙色（变成窗户）
 for ax, aw in [(2,7),(8,7),(50,7),(56,7)]:
