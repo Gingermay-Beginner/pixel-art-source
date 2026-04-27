@@ -117,6 +117,14 @@ wcol(50, 6, 26, WALL)   # 覆盖旧x=50深色线
 wcol(16, 6, 26, WALL_D) # 新x=16深色线
 wcol(48, 6, 26, WALL_D) # 新x=48深色线
 
+# 小拱门 y=21以下变墙色（变成窗户）
+for ax, aw in [(2,7),(8,7),(50,7),(56,7)]:
+    fl(21, 26, ax+1, ax+aw-2, WALL)
+
+# 大拱门 y=20~22 变墙色（截断，上移1格）
+for ax, aw in [(18,9),(28,9),(38,9)]:
+    fl(20, 22, ax+1, ax+aw-2, WALL)
+
 # 墙体水平腰线
 wrow(7, 0, 63, WALL_L)
 
@@ -199,30 +207,7 @@ fl(31, 32, 22, 41, FONT_D)
 wrow(31, 23, 40, FONT_S)
 sp(22, 32, GROUND); sp(41, 32, GROUND)
 
-# ── 椅子圈（围绕喷泉，前景左右各一把）──
-# 左椅（x=14~18, y=26~31）-- 姜饼人坐
-def draw_chair(cx, cy):
-    # 椅座
-    fl(cy+3, cy+4, cx-2, cx+2, CHAIR)
-    wrow(cy+3, cx-2, cx+2, CHAIR_L)
-    # 椅背（4格高）
-    fl(cy, cy+2, cx-2, cx+2, CHAIR)
-    wrow(cy, cx-1, cx+1, CHAIR_L)
-    # 腿（4根）
-    wcol(cx-2, cy+5, cy+6, CHAIR)
-    wcol(cx+2, cy+5, cy+6, CHAIR)
-    wcol(cx-1, cy+5, cy+6, CHAIR_L)
-    wcol(cx+1, cy+5, cy+6, CHAIR_L)
-
-draw_chair(16, 24)   # 左椅
-draw_chair(47, 24)   # 右椅
-
-# 后排椅子（较小/远处感）
-for _cx in [8, 56]:
-    fl(23, 24, _cx-1, _cx+1, CHAIR)
-    wrow(23, _cx-1, _cx+1, CHAIR_L)
-    wcol(_cx-1, 25, 26, CHAIR)
-    wcol(_cx+1, 25, 26, CHAIR)
+# ── 椅子去掉 ──
 
 # ── 姜饼人（左椅，GCX=16, GCY=21）──
 GCX, GCY = 16, 21
