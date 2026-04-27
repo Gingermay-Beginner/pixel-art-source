@@ -137,17 +137,14 @@ for _seg in [(0, 15), (48, 63)]:
     for _rx in range(_seg[0]+3, _seg[1]+1, 4):
         sp(_rx, 22, ROOF_RD)
 
-# 连廊细柱（y=24~26，四根大柱子外侧）
-COL_C  = (195, 175, 140)
-COL_D  = (162, 142, 108)
+# 连廊（y=24~26，四根大柱子外侧）：窗色背景+墙色分隔柱
+_CWIN = (108, 158, 198)
+fl(24, 26, 0, 15, _CWIN)
+fl(24, 26, 49, 63, _CWIN)
 for _cx in range(1, 16, 2):
-    wcol(_cx, 24, 26, COL_D)
-    if _cx % 4 == 1:
-        wcol(_cx, 24, 26, COL_C)
+    wcol(_cx, 24, 26, WALL)
 for _cx in range(49, 64, 2):
-    wcol(_cx, 24, 26, COL_D)
-    if _cx % 4 == 1:
-        wcol(_cx, 24, 26, COL_C)
+    wcol(_cx, 24, 26, WALL)
 
 # 墙体水平腰线（只保留四根大柱子之间 x=16~48）
 wrow(6, 16, 48, WALL_L)
