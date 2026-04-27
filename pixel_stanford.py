@@ -77,20 +77,18 @@ fl(9, 26, 0, 15, WALL)
 fl(9, 26, 49, 63, WALL)
 
 # 中间高墙梯形红屋顶（y=0~2，底x=16~48→顶x=22~42）
+# y轴3层：y=0亮，y=1中，y=2暗
 RTOP_R  = (188,  68,  52)
 RTOP_RD = (148,  48,  35)
 RTOP_RL = (215,  98,  72)
-_roof_rows = [(2,16,48),(1,19,45),(0,22,42)]
-for _ry_actual, _rx1, _rx2 in _roof_rows:
-    wrow(_ry_actual, _rx1, _rx2, RTOP_R)
+_roof_rows = [(2,16,48,RTOP_RD),(1,19,45,RTOP_R),(0,22,42,RTOP_RL)]
+for _ry_actual, _rx1, _rx2, _base_c in _roof_rows:
+    wrow(_ry_actual, _rx1, _rx2, _base_c)
     for _cx in range(_rx1+1, _rx2+1, 3):
         sp(_cx, _ry_actual, RTOP_RD)
     for _cx in range(_rx1+2, _rx2+1, 3):
         sp(_cx, _ry_actual, RTOP_RL)
-wrow(2, 16, 48, RTOP_RD)  # 底暗边
 # 左右屋檐探出1格
-wrow(2, 15, 15, RTOP_R)
-wrow(2, 49, 49, RTOP_R)
 wrow(2, 15, 15, RTOP_RD)
 wrow(2, 49, 49, RTOP_RD)
 
