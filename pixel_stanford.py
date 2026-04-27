@@ -83,6 +83,9 @@ for ax, aw in ARCHES:
     wcol(ax+aw-1, 6, 26, WALL_D)
     # 拱内矩形部分（y=11~26）
     fl(11, 26, ax+1, ax+aw-2, WIN)
+    # 大拱门底角圆角（挖代码）
+    if aw == 9:
+        sp(ax+1, 26, WALL); sp(ax+aw-2, 26, WALL)
     # 拱顶弧形（圆心 ax+aw//2）
     cx = ax + aw//2
     # y=10: 全内宽窗
