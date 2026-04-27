@@ -88,6 +88,11 @@ for _ry_actual, _rx1, _rx2 in _roof_rows:
     for _cx in range(_rx1+2, _rx2+1, 3):
         sp(_cx, _ry_actual, RTOP_RL)
 wrow(2, 16, 48, RTOP_RD)  # 底暗边
+# 左右屋檐探出1格
+wrow(2, 15, 15, RTOP_R)
+wrow(2, 49, 49, RTOP_R)
+wrow(2, 15, 15, RTOP_RD)
+wrow(2, 49, 49, RTOP_RD)
 
 # 拱廊（7个拱，中间3个宽9格，两侧各宽7格）
 # (起点x, 拱总宽)
