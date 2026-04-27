@@ -66,12 +66,14 @@ fl(0, 14, 0, 63, SKY_T)
 fl(15, 18, 0, 63, SKY_B)
 
 # ── 图书馆主体（背景，宽64，y=4~18）──
-# 屋顶线
-fl(4, 5, 0, 63, WALL_D)
-wrow(4, 0, 63, WALL)
+# 屋顶线（只在四根大柱子之间 x=16~48）
+fl(4, 5, 16, 48, WALL_D)
+wrow(4, 16, 48, WALL)
 
-# 墙体
-fl(5, 26, 0, 63, WALL)
+# 墙体（中间 x=16~48 从y=5，两侧从y=9）
+fl(5, 26, 16, 48, WALL)
+fl(9, 26, 0, 15, WALL)
+fl(9, 26, 49, 63, WALL)
 
 # 拱廊（7个拱，中间3个宽9格，两侧各宽7格）
 # (起点x, 拱总宽)
@@ -81,6 +83,7 @@ for ax, aw in ARCHES:
     dy = 3 if aw == 7 else 0  # 小拱门下移3格
     # 拱柱（暗色，延伸到地面）
     # 去掉两侧小拱所有柱子
+    col_top = 9 if aw == 7 else 8   # 小拱门柱子从y=9，大拱门从y=8（腰线以下）
     skip_left  = (ax in (2, 10) and aw == 7) or (ax == 2 and aw == 7)
     skip_right = (ax in (48, 56) and aw == 7) or (ax == 56 and aw == 7)
     # ax=2右柱(x=8) 和 ax=56左柱(x=56) 也去掉
@@ -90,9 +93,9 @@ for ax, aw in ARCHES:
         pass
     else:
         if not (ax == 8 and aw == 7):
-            wcol(ax, 6, 26, WALL_D)
+            wcol(ax, col_top, 26, WALL_D)
         if not (ax == 50 and aw == 7):
-            wcol(ax+aw-1, 6, 26, WALL_D)
+            wcol(ax+aw-1, col_top, 26, WALL_D)
     # 拱内矩形部分
     fl(11+dy, 26, ax+1, ax+aw-2, WIN)
     # 大拱门底角圆角（挖代码）
@@ -114,8 +117,8 @@ for ax, aw in ARCHES:
 # 内侧柱子线各向内移2格（x=14→x=16, x=50→x=48）
 wcol(14, 6, 26, WALL)   # 覆盖旧x=14深色线
 wcol(50, 6, 26, WALL)   # 覆盖旧x=50深色线
-wcol(16, 6, 26, WALL_D) # 新x=16深色线
-wcol(48, 6, 26, WALL_D) # 新x=48深色线
+wcol(16, 8, 26, WALL_D) # 新x=16深色线
+wcol(48, 8, 26, WALL_D) # 新x=48深色线
 
 # 小拱门 y=20以下变墙色（变成窗户）
 for ax, aw in [(2,7),(8,7),(50,7),(56,7)]:
@@ -149,8 +152,12 @@ for _cx in range(49, 64, 2):
     if _cx % 4 == 1:
         wcol(_cx, 24, 26, COL_C)
 
-# 墙体水平腰线
-wrow(7, 0, 63, WALL_L)
+# 墙体水平腰线（只保留四根大柱子之间 x=16~48）
+wrow(7, 16, 48, WALL_L)
+
+# 两侧 y=5~8 用天空色清除多余线条
+fl(5, 8, 0, 15, SKY_T)
+fl(5, 8, 49, 63, SKY_T)
 
 # ── 地面 ──
 fl(27, 35, 0, 63, GROUND)
