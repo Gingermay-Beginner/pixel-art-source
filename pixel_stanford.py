@@ -158,7 +158,7 @@ for ax, aw in [(18,9),(28,9),(38,9)]:
     x1, x2 = ax+1, ax+aw-2
     fl(4, 5, x1, x2, WIN_T)
     for _cx in range(x1+1, x2, 2):
-        wcol(_cx, 4, 5, WALL_D)
+        wcol(_cx, 4, 5, WALL)
 
 # 两侧 y=5~8 用天空色清除多余线条
 fl(5, 8, 0, 15, SKY_T)
