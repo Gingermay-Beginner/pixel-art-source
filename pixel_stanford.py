@@ -328,12 +328,12 @@ def sp2(x, y, c):
 img2 = img.copy()
 for _wx in range(0, 16):
     _rtop = 6 + round(2 * (15 - _wx) / 15)
-    for _wr in range(_rtop, 9):
+    for _wr in range(_rtop, 10):
         _c = _SRL if _wr == _rtop else (_SR if _wr == _rtop+1 else _SRD)
         sp2(_wx, _wr, _c)
 for _wx in range(49, 64):
     _rtop = 8 - round(2 * (63 - _wx) / 14)
-    for _wr in range(_rtop, 9):
+    for _wr in range(_rtop, 10):
         _c = _SRL if _wr == _rtop else (_SR if _wr == _rtop+1 else _SRD)
         sp2(_wx, _wr, _c)
 img2.save('pixel_stanford.png')
