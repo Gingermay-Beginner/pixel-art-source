@@ -114,7 +114,7 @@ for ax, aw in ARCHES:
         if not (ax == 50 and aw == 7):
             wcol(ax+aw-1, col_top, 26, WALL_D)
     # 拱内矩形部分
-    _wfill = WIN_L if aw == 9 else WIN
+    _wfill = WIN_L if aw == 9 else WIN_L
     fl(11+dy, 26, ax+1, ax+aw-2, _wfill)
     if aw == 9:
         sp(ax+1, 26, WALL); sp(ax+aw-2, 26, WALL)
