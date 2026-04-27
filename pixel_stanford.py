@@ -73,8 +73,8 @@ wrow(4, 16, 48, WALL)
 # 墙体
 # 墙体（中间 x=16~48 从y=3，两侧从y=9）
 fl(3, 26, 16, 48, WALL)
-fl(9, 26, 0, 15, WALL)
-fl(9, 26, 49, 63, WALL)
+fl(10, 26, 0, 15, WALL)
+fl(10, 26, 49, 63, WALL)
 
 # 中间高墙梯形红屋顶（y=0~2，底x=16~48→顶x=22~42）
 # y轴3层：y=0亮，y=1中，y=2暗
@@ -109,9 +109,9 @@ for ax, aw in ARCHES:
         pass
     else:
         if not (ax == 8 and aw == 7):
-            wcol(ax, 6, 26, WALL_D)
+            wcol(ax, 10, 26, WALL_D)
         if not (ax == 50 and aw == 7):
-            wcol(ax+aw-1, 6, 26, WALL_D)
+            wcol(ax+aw-1, 10, 26, WALL_D)
     # 拱内矩形部分
     fl(11+dy, 26, ax+1, ax+aw-2, WIN)
     # 大拱门底角圆角（挖代码）
@@ -131,10 +131,10 @@ for ax, aw in ARCHES:
     wrow(11+dy, ax+1, ax+aw-2, WIN_L)
 
 # 内侧柱子线各向内移2格（x=14→x=16, x=50→x=48）
-wcol(14, 6, 26, WALL)   # 覆盖旧x=14深色线
-wcol(50, 6, 26, WALL)   # 覆盖旧x=50深色线
-wcol(16, 6, 26, WALL_D) # 新x=16深色线
-wcol(48, 6, 26, WALL_D) # 新x=48深色线
+wcol(14, 10, 26, WALL)   # 覆盖旧x=14深色线
+wcol(50, 10, 26, WALL)   # 覆盖旧x=50深色线
+wcol(16, 10, 26, WALL_D) # 新x=16深色线
+wcol(48, 10, 26, WALL_D) # 新x=48深色线
 
 # 小拱门 y=20以下变墙色（变成窗户）
 for ax, aw in [(2,7),(8,7),(50,7),(56,7)]:
