@@ -185,16 +185,17 @@ fl(5, 5, 49, 63, SKY_T)
 # ── 地面 ──
 fl(31, 35, 0, 63, GROUND)
 wrow(31, 0, 63, GROUND_D)
-# 石板纹理（横线）下移4格
-for _gy in [33, 35]:
-    wrow(_gy, 0, 63, GROUND_D)
-# 石板竖缝（错位）下移4格
-for _gx in range(4, 64, 8):
-    for _gy in [32, 34]:
-        sp(_gx, _gy, GROUND_D)
-for _gx in range(8, 64, 8):
-    for _gy in [33, 35]:
-        sp(_gx, _gy, GROUND_D)
+# 正方形小砖（4x4，错列）
+for _gy in range(31, 36):
+    for _gx in range(0, 64):
+        # 偶数行：缝在 x%4==3；奇数行：缝在 x%4==1（错位半砖）
+        offset = 2 if ((_gy - 31) % 2 == 1) else 0
+        if (_gx + offset) % 4 == 3:
+            sp(_gx, _gy, GROUND_D)
+        if _gy % 2 == 0:
+            sp(_gx, _gy, GROUND_D) if False else None  # 横缝
+# 横缝：只留1条在中间
+wrow(33, 0, 63, GROUND_D)
 
 # 中间拱门顶部阴影（x=31~33, y=6，柱子色）
 # 大拱门 y=23~26 改为深蓝色
