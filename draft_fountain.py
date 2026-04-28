@@ -40,24 +40,22 @@ fl(20, 21, 22, 42, FONT_S)
 fl(22, 23, 23, 41, FONT_S)
 wrow(19, 24, 40, FONT_S)
 fl(20, 23, 23, 41, FONT_S)
-sp(23, 20, FONT_D); sp(27, 20, FONT_D); sp(37, 20, FONT_D); sp(41, 20, FONT_D)
+sp(23, 20, FONT_D); sp(27, 20, FONT_D); sp(32, 20, FONT_D); sp(37, 20, FONT_D); sp(41, 20, FONT_D)
 
 # 喷水柱
-for _wy in range(15, 19):
+for _wy in range(17, 19):
     sp(31, _wy, WATER)
     sp(32, _wy, WATER_L)
     sp(33, _wy, WATER)
-sp(31, 19, FONT_S); sp(32, 19, FONT_S); sp(33, 19, FONT_S)
-sp(31, 20, FONT_S); sp(32, 20, FONT_D); sp(33, 20, FONT_S)
 # 水花
-for _wy in [15, 16]:
-    _w = 16 - _wy
+for _wy in [17, 18]:
+    _w = 18 - _wy
     for _wx in range(FX-_w, FX+_w+1):
         if abs(_wx - FX) >= _w-1:
             sp(_wx, _wy, SPRAY)
-sp(FX-2, 15, SPRAY); sp(FX+2, 15, SPRAY)
-sp(FX-1, 14, SPRAY); sp(FX, 14, SPRAY); sp(FX+1, 14, SPRAY)
-sp(FX, 13, SPRAY)
+sp(FX-2, 17, SPRAY); sp(FX+2, 17, SPRAY)
+sp(FX-1, 16, SPRAY); sp(FX, 16, SPRAY); sp(FX+1, 16, SPRAY)
+sp(FX, 15, SPRAY)
 
 # 底座 x=26~38
 fl(24, 25, 29, 35, FONT_D)
