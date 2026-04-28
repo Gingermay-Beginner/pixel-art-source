@@ -26,6 +26,12 @@ def wcol(x, y1, y2, c):
 SKY_T  = (138, 195, 232)   # 天空上
 SKY_B  = (175, 215, 240)   # 天空下
 GROUND = (212, 192, 182)   # 地面（石板）
+BENCH   = (228, 215, 190)   # 石椅中色
+BENCH_L = (245, 232, 208)   # 石椅亮色（椅面）
+BENCH_D = (218, 202, 178)   # 石椅暗色（椅下）
+SHRUB   = (102, 148,  82)   # 灌木深绿
+SHRUB_L = (128, 178, 105)   # 灌木亮绿
+SHRUB_D = ( 72, 112,  58)   # 灌木暗绿
 GROUND_D = (205, 185, 176)
 
 # 图书馆墙体（斯坦福暖砂岩色）
@@ -221,63 +227,6 @@ wcol(34, 8, 8, WALL_D); wcol(34, 9, 19, WIN_L)
 
 # ── 椅子去掉 ──
 
-# ── 姜饼人（左椅，GCX=16, GCY=21）──
-GCX, GCY = 11, 21
-
-# 头（宽7格，四角挖）
-for _hy in range(GCY, GCY+5):
-    for _hx in range(GCX-3, GCX+4):
-        if (_hx, _hy) in [(GCX-3,GCY),(GCX+3,GCY),(GCX-3,GCY+4),(GCX+3,GCY+4)]:
-            continue
-        sp(_hx, _hy, GB)
-# 五官
-sp(GCX-1, GCY+1, GB_EYE); sp(GCX+1, GCY+1, GB_EYE)
-sp(GCX-2, GCY+2, GB_CHEEK); sp(GCX+2, GCY+2, GB_CHEEK)
-sp(GCX-1, GCY+3, GBD); sp(GCX, GCY+3, GBD); sp(GCX+1, GCY+3, GBD)
-# 帽子（右偏1格，整体下移1行）
-wrow(GCY-1, GCX-1, GCX+3, HAT_RED)
-wrow(GCY, GCX-1, GCX+3, HAT_RED)
-sp(GCX+1, GCY-2, HAT_DARK)   # 小啾啾
-wcol(GCX-1, GCY, GCY, HAT_DARK)
-wcol(GCX+3, GCY, GCY, HAT_DARK)
-sp(GCX-1, GCY-1, HAT_DARK); sp(GCX, GCY-1, HAT_LITE); sp(GCX+3, GCY-1, HAT_DARK)
-# 身体
-fl(GCY+5, GCY+8, GCX-2, GCX+2, GB)
-sp(GCX, GCY+6, GB_CHEEK); sp(GCX, GCY+8, GB_CHEEK)
-# 手臂
-sp(GCX-3, GCY+5, GB); sp(GCX-3, GCY+6, GB); sp(GCX-4, GCY+6, GB); sp(GCX-4, GCY+7, GB)
-sp(GCX+3, GCY+5, GB); sp(GCX+3, GCY+6, GB); sp(GCX+4, GCY+6, GB); sp(GCX+4, GCY+7, GB)
-
-# ── 蓝兔子（右椅，BCX=47, BCY=21）──
-BCX, BCY = 52, 21
-
-# 耳朵
-sp(BCX-1, BCY-4, BUN_B)
-for _ey in range(BCY-3, BCY): sp(BCX-2, _ey, BUN_B); sp(BCX-1, _ey, BUN_B)
-for _ey in range(BCY-3, BCY): sp(BCX-1, _ey, BUN_IN)
-sp(BCX+1, BCY-4, BUN_B)
-for _ey in range(BCY-3, BCY): sp(BCX+1, _ey, BUN_B); sp(BCX+2, _ey, BUN_B)
-for _ey in range(BCY-3, BCY): sp(BCX+1, _ey, BUN_IN)
-
-# 头（宽7格，四角挖）
-for _hy in range(BCY, BCY+5):
-    for _hx in range(BCX-3, BCX+4):
-        if (_hx, _hy) in [(BCX-3,BCY),(BCX+3,BCY),(BCX-3,BCY+4),(BCX+3,BCY+4)]:
-            continue
-        sp(_hx, _hy, BUN_B)
-# 五官
-for bx in [BCX-2, BCX-1]: sp(bx, BCY+1, BUN_EYE)
-sp(BCX, BCY+1, BUN_D)
-for bx in [BCX+1, BCX+2]: sp(bx, BCY+1, BUN_EYE)
-sp(BCX-1, BCY+2, BUN_EYE); sp(BCX+1, BCY+2, BUN_EYE)
-sp(BCX-2, BCY+3, BUN_IN); sp(BCX+2, BCY+3, BUN_IN)
-sp(BCX-1, BCY+4, (255,255,255)); sp(BCX, BCY+4, (255,255,255))
-# 身体
-fl(BCY+5, BCY+8, BCX-2, BCX+2, BUN_B)
-# 手臂
-sp(BCX-3, BCY+5, BUN_B); sp(BCX-3, BCY+6, BUN_B); sp(BCX-4, BCY+6, BUN_B); sp(BCX-4, BCY+7, BUN_B)
-sp(BCX+3, BCY+5, BUN_B); sp(BCX+3, BCY+6, BUN_B); sp(BCX+4, BCY+6, BUN_B); sp(BCX+4, BCY+7, BUN_B)
-
 # 四根大柱合并台阶（整体，y=27~30，逐行向外扩，越低越深越冷）
 STEPS = [
     (195, 192, 188),  # y=27 最浅灰
@@ -382,6 +331,92 @@ wrow(32, 17, 47, FONT_S)
 
 
 
+
+
+# 灌木（台阶两侧，y=27~30）
+for _bx, _by, _bc in [
+    # 左侧灌木
+    (14,27,SHRUB_L),(15,27,SHRUB),(16,27,SHRUB),(17,27,SHRUB_L),
+    (13,28,SHRUB),(14,28,SHRUB),(15,28,SHRUB_L),(16,28,SHRUB),(17,28,SHRUB_D),
+    (13,29,SHRUB_D),(14,29,SHRUB),(15,29,SHRUB),(16,29,SHRUB_D),
+    (14,30,SHRUB_D),(15,30,SHRUB_D),
+    # 右侧灌木（对称）
+    (46,27,SHRUB_L),(47,27,SHRUB),(48,27,SHRUB),(49,27,SHRUB_L),
+    (46,28,SHRUB_D),(47,28,SHRUB),(48,28,SHRUB_L),(49,28,SHRUB),(50,28,SHRUB),
+    (47,29,SHRUB_D),(48,29,SHRUB),(49,29,SHRUB),(50,29,SHRUB_D),
+    (48,30,SHRUB_D),(49,30,SHRUB_D),
+]:
+    sp(_bx, _by, _bc)
+
+# 姜饼人石椅
+fl(26, 28, 0, 12, BENCH)     # 左椅背
+wrow(29, 0, 12, BENCH_L)     # 左椅面亮
+fl(30, 32, 0, 12, BENCH_D)   # 左椅底暗
+fl(26, 28, 51, 63, BENCH)    # 右椅背
+wrow(29, 51, 63, BENCH_L)    # 右椅面亮
+fl(30, 32, 51, 63, BENCH_D)  # 右椅底暗
+# ── 姜饼人（左椅，GCX=16, GCY=21）──
+GCX, GCY = 9, 21
+
+# 头（宽7格，四角挖）
+for _hy in range(GCY, GCY+5):
+    for _hx in range(GCX-3, GCX+4):
+        if (_hx, _hy) in [(GCX-3,GCY),(GCX+3,GCY),(GCX-3,GCY+4),(GCX+3,GCY+4)]:
+            continue
+        sp(_hx, _hy, GB)
+# 五官
+sp(GCX-1, GCY+1, GB_EYE); sp(GCX+1, GCY+1, GB_EYE)
+sp(GCX-2, GCY+2, GB_CHEEK); sp(GCX+2, GCY+2, GB_CHEEK)
+sp(GCX-1, GCY+3, GBD); sp(GCX, GCY+3, GBD); sp(GCX+1, GCY+3, GBD)
+# 帽子（右偏1格，整体下移1行）
+wrow(GCY-1, GCX-1, GCX+3, HAT_RED)
+wrow(GCY, GCX-1, GCX+3, HAT_RED)
+sp(GCX+1, GCY-2, HAT_DARK)   # 小啾啾
+wcol(GCX-1, GCY, GCY, HAT_DARK)
+wcol(GCX+3, GCY, GCY, HAT_DARK)
+sp(GCX-1, GCY-1, HAT_DARK); sp(GCX, GCY-1, HAT_LITE); sp(GCX+3, GCY-1, HAT_DARK)
+# 身体
+fl(GCY+5, GCY+8, GCX-2, GCX+2, GB)
+sp(GCX, GCY+6, GB_CHEEK); sp(GCX, GCY+8, GB_CHEEK)
+# 手臂
+sp(GCX-3, GCY+5, GB); sp(GCX-3, GCY+6, GB); sp(GCX-4, GCY+6, GB); sp(GCX-4, GCY+7, GB)
+sp(GCX+3, GCY+5, GB); sp(GCX+3, GCY+6, GB); sp(GCX+4, GCY+6, GB); sp(GCX+4, GCY+7, GB)
+# 腿
+fl(GCY+9, GCY+10, GCX-2, GCX-1, GB)
+fl(GCY+9, GCY+10, GCX+1, GCX+2, GB)
+
+# ── 蓝兔子（右椅，BCX=47, BCY=21）──
+BCX, BCY = 54, 21
+
+# 耳朵
+sp(BCX-1, BCY-4, BUN_B)
+for _ey in range(BCY-3, BCY): sp(BCX-2, _ey, BUN_B); sp(BCX-1, _ey, BUN_B)
+for _ey in range(BCY-3, BCY): sp(BCX-1, _ey, BUN_IN)
+sp(BCX+1, BCY-4, BUN_B)
+for _ey in range(BCY-3, BCY): sp(BCX+1, _ey, BUN_B); sp(BCX+2, _ey, BUN_B)
+for _ey in range(BCY-3, BCY): sp(BCX+1, _ey, BUN_IN)
+
+# 头（宽7格，四角挖）
+for _hy in range(BCY, BCY+5):
+    for _hx in range(BCX-3, BCX+4):
+        if (_hx, _hy) in [(BCX-3,BCY),(BCX+3,BCY),(BCX-3,BCY+4),(BCX+3,BCY+4)]:
+            continue
+        sp(_hx, _hy, BUN_B)
+# 五官
+for bx in [BCX-2, BCX-1]: sp(bx, BCY+1, BUN_EYE)
+sp(BCX, BCY+1, BUN_D)
+for bx in [BCX+1, BCX+2]: sp(bx, BCY+1, BUN_EYE)
+sp(BCX-1, BCY+2, BUN_EYE); sp(BCX+1, BCY+2, BUN_EYE)
+sp(BCX-2, BCY+3, BUN_IN); sp(BCX+2, BCY+3, BUN_IN)
+sp(BCX-1, BCY+4, (255,255,255)); sp(BCX, BCY+4, (255,255,255))
+# 身体
+fl(BCY+5, BCY+8, BCX-2, BCX+2, BUN_B)
+# 手臂
+sp(BCX-3, BCY+5, BUN_B); sp(BCX-3, BCY+6, BUN_B); sp(BCX-4, BCY+6, BUN_B); sp(BCX-4, BCY+7, BUN_B)
+sp(BCX+3, BCY+5, BUN_B); sp(BCX+3, BCY+6, BUN_B); sp(BCX+4, BCY+6, BUN_B); sp(BCX+4, BCY+7, BUN_B)
+# 腿
+fl(BCY+9, BCY+10, BCX-2, BCX-1, BUN_B)
+fl(BCY+9, BCY+10, BCX+1, BCX+2, BUN_B)
 
 
 img.save('pixel_stanford.png')
