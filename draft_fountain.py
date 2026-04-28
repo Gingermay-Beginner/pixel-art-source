@@ -70,13 +70,14 @@ wcol(35, 25, 27, FONT_D)
 # 第二层水盆 x=18~46
 fl(29, 30, 18, 46, FONT_S)
 wrow(31, 20, 44, FONT_D)
-wcol(18, 29, 30, FONT_D)
-wcol(46, 29, 30, FONT_D)
+wcol(17, 29, 30, FONT_D)
+wcol(47, 29, 30, FONT_D)
 # 水面 x=19~45
 fl(29, 30, 19, 45, WATER)
-wrow(29, 20, 44, WATER_L)
-for _wx in [22, 27, 32, 38, 43]:
-    sp(_wx, 30, WATER_L)
+wrow(30, 20, 44, WATER_L)
+for _wx in [22, 18, 32, 46, 42]:
+    sp(_wx, 29, WATER_L)
+    sp(_wx, 30, WATER)
 
 # 第二层底座 x=22~42
 fl(31, 32, 22, 42, FONT_D)
