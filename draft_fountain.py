@@ -26,6 +26,7 @@ def wcol(x, y1, y2, c):
 
 FONT_S = (242, 210, 138)   # 喷泉暖橙亮
 FONT_D = (215, 178, 105)   # 喷泉暖橙暗
+FONT_M = (228, 194, 122)   # 喷泉中间色
 WATER   = ( 65, 228, 198)  # 水色
 WATER_L = (185, 245, 228)  # 水浅色
 SPRAY   = (185, 245, 228)
@@ -63,15 +64,19 @@ fl(24, 25, 29, 35, FONT_D)
 wrow(24, 27, 37, FONT_S)
 
 # 连接柱 x=29~35
-fl(25, 28, 29, 35, FONT_D)
-wcol(29, 25, 27, FONT_D)
-wcol(35, 25, 27, FONT_D)
+fl(25, 28, 28, 36, FONT_M)
+wcol(28, 25, 27, FONT_M)
+wcol(36, 25, 27, FONT_M)
 
 # 第二层水盆 x=18~46
 fl(29, 30, 18, 46, FONT_S)
-wrow(31, 20, 44, FONT_D)
-wcol(17, 29, 30, FONT_D)
-wcol(47, 29, 30, FONT_D)
+wrow(31, 20, 44, FONT_S)
+wcol(16, 29, 30, FONT_S)
+wcol(16, 31, 31, FONT_S)
+wcol(17, 29, 31, FONT_S)
+wcol(47, 29, 31, FONT_S)
+wcol(48, 31, 31, FONT_S)
+wcol(48, 29, 30, FONT_S)
 fl(29, 30, 19, 45, WATER)
 wrow(30, 18, 46, WATER_L)
 wrow(30, 20, 44, WATER_L)
@@ -80,7 +85,7 @@ for _wx in [22, 18, 32, 46, 42]:
     sp(_wx, 30, WATER)
 
 # 第二层底座 x=22~42
-fl(31, 32, 22, 42, FONT_D)
+fl(31, 32, 22, 42, FONT_S)
 wrow(31, 23, 41, FONT_S)
 
 for _wx in [23, 27, 32, 37, 41]:
@@ -114,8 +119,8 @@ sp(32, 23, WATER); sp(32, 24, WATER); sp(32, 25, WATER); sp(32, 26, WATER); sp(3
 
 # 喷泉底层（台阶之后画，不被覆盖）
 wrow(31, 18, 46, FONT_S)
-sp(18, 31, FONT_D); sp(46, 31, FONT_D)
-wrow(32, 19, 45, FONT_D)
+sp(18, 31, FONT_S); sp(46, 31, FONT_S)
+wrow(32, 17, 47, FONT_S)
 
 img.save('/home/azureuser/.openclaw/workspace/fountain_teal.png')
 print('Saved')
