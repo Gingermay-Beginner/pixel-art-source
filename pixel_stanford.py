@@ -351,7 +351,8 @@ for ax, aw in ARCHES:
             wcol(ax+aw-1, col_top, 26, WALL_D)
     # 拱内矩形部分
     _wfill = WIN_L if aw == 9 else WIN_L
-    fl(11+dy, 26, ax+1, ax+aw-2, _wfill)
+    _bot = 26 if aw == 9 else 17
+    fl(11+dy, _bot, ax+1, ax+aw-2, _wfill)
     if aw == 9:
         sp(ax+1, 26, WALL); sp(ax+aw-2, 26, WALL)
     wrow(10+dy, ax+1, ax+aw-2, _wfill)
@@ -372,6 +373,9 @@ wcol(50, 10, 26, WALL)   # 覆盖旧x=50深色线
 wcol(16, 7, 26, WALL_D) # 新x=16深色线
 wcol(48, 7, 26, WALL_D) # 新x=48深色线
 
+# 小拱门 y=18~26 改回墙色（底边缩至y=17）
+for ax, aw in [(5,5),(10,5),(50,5),(55,5)]:
+    fl(18, 26, ax+1, ax+aw-2, WALL)
 # 小拱门 y=20以下变墙色（变成窗户）
 for ax, aw in [(5,5),(10,5),(50,5),(55,5)]:
     fl(20, 26, ax+1, ax+aw-2, WALL)
