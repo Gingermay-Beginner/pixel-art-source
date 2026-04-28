@@ -70,6 +70,7 @@ HAT_DARK = (135,  32,  28)
 HAT_LITE = (242, 115,  95)
 
 BUN_B    = (125, 198, 255)
+BUN_LIGHT = (168, 218, 255)
 BUN_IN   = (255, 225, 235)
 BUN_EYE  = ( 35,  55, 105)
 BUN_D    = ( 95, 158, 228)
@@ -512,13 +513,13 @@ wcol(GCX+3, GCY, GCY, HAT_DARK)
 sp(GCX-1, GCY-1, HAT_DARK); sp(GCX, GCY-1, HAT_LITE); sp(GCX+3, GCY-1, HAT_DARK)
 # 身体
 fl(GCY+5, GCY+8, GCX-2, GCX+2, GB)
-sp(GCX, GCY+6, GB_CHEEK); sp(GCX, GCY+8, GB_CHEEK)
+sp(GCX, GCY+4, GB_CHEEK); sp(GCX, GCY+6, GB_CHEEK)
 # 手臂
 sp(GCX-3, GCY+5, GB); sp(GCX-3, GCY+6, GB); sp(GCX-4, GCY+6, GB); sp(GCX-4, GCY+7, GB)
 sp(GCX+3, GCY+5, GB); sp(GCX+3, GCY+6, GB); sp(GCX+4, GCY+6, GB); sp(GCX+4, GCY+7, GB)
 # 腿
-fl(GCY+9, GCY+10, GCX-2, GCX-1, GB)
-fl(GCY+9, GCY+10, GCX+1, GCX+2, GB)
+fl(GCY+8, GCY+10, GCX-2, GCX-1, GB_CHEEK)
+fl(GCY+8, GCY+10, GCX+1, GCX+2, GB_CHEEK)
 
 # ── 蓝兔子（右椅，BCX=47, BCY=21）──
 BCX, BCY = 54, 21
@@ -550,8 +551,8 @@ fl(BCY+5, BCY+8, BCX-2, BCX+2, BUN_B)
 sp(BCX-3, BCY+5, BUN_B); sp(BCX-3, BCY+6, BUN_B); sp(BCX-4, BCY+6, BUN_B); sp(BCX-4, BCY+7, BUN_B)
 sp(BCX+3, BCY+5, BUN_B); sp(BCX+3, BCY+6, BUN_B); sp(BCX+4, BCY+6, BUN_B); sp(BCX+4, BCY+7, BUN_B)
 # 腿
-fl(BCY+9, BCY+10, BCX-2, BCX-1, BUN_B)
-fl(BCY+9, BCY+10, BCX+1, BCX+2, BUN_B)
+fl(BCY+8, BCY+10, BCX-2, BCX-1, BUN_LIGHT)
+fl(BCY+8, BCY+10, BCX+1, BCX+2, BUN_LIGHT)
 
 
 
