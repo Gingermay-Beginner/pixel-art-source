@@ -117,6 +117,9 @@ sp(39, 24, (215, 178, 105)); sp(40, 24, (215, 178, 105))
 sp(32, 21, WATER_L); sp(32, 22, WATER_L)
 sp(32, 23, WATER); sp(32, 24, WATER); sp(32, 25, WATER); sp(32, 26, WATER); sp(32, 27, WATER); sp(32, 28, WATER)
 
+wrow(31, 18, 46, FONT_S)
+sp(18, 31, FONT_D); sp(46, 31, FONT_D)
+wrow(32, 19, 45, FONT_D)
 # 强制修正水色
 for _fy in range(36):
     for _fx in range(64):
