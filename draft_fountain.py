@@ -74,6 +74,7 @@ wcol(17, 29, 30, FONT_D)
 wcol(47, 29, 30, FONT_D)
 # 水面 x=19~45
 fl(29, 30, 19, 45, WATER)
+wrow(30, 18, 46, WATER_L)
 wrow(30, 20, 44, WATER_L)
 for _wx in [22, 18, 32, 46, 42]:
     sp(_wx, 29, WATER_L)
