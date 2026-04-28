@@ -656,6 +656,17 @@ sp2(37, 20, (65, 228, 198))
 sp2(32, 22, WATER_L); sp2(32, 23, WATER_L)
 sp2(32, 24, WATER); sp2(32, 25, WATER); sp2(32, 26, WATER); sp2(32, 27, WATER); sp2(32, 28, WATER); sp2(32, 29, WATER)
 
+# 五条水流亮点
+sp2(32, 26, WATER_L)
+sp2(32, 28, WATER_L)
+sp2(22, 26, WATER_L)
+sp2(22, 28, WATER_L)
+sp2(42, 26, WATER_L)
+sp2(42, 28, WATER_L)
+sp2(18, 25, WATER_L)
+sp2(18, 27, WATER_L)
+sp2(46, 25, WATER_L)
+sp2(46, 27, WATER_L)
 # 喷泉底层
 wrow2(32, 18, 46, FONT_S)
 sp2(18, 32, FONT_S); sp2(46, 32, FONT_S)
