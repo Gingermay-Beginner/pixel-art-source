@@ -194,8 +194,9 @@ for _gy in range(31, 36):
             sp(_gx, _gy, GROUND_D)
         if _gy % 2 == 0:
             sp(_gx, _gy, GROUND_D) if False else None  # 横缝
-# 横缝：只留1条在中间
+# 横缝：中间1条+最底行连续砖线
 wrow(33, 0, 63, GROUND_D)
+wrow(35, 0, 63, GROUND_D)
 
 # 中间拱门顶部阴影（x=31~33, y=6，柱子色）
 # 大拱门 y=23~26 改为深蓝色
