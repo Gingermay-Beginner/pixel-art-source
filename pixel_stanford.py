@@ -513,7 +513,7 @@ wcol(GCX+3, GCY, GCY, HAT_DARK)
 sp(GCX-1, GCY-1, HAT_DARK); sp(GCX, GCY-1, HAT_LITE); sp(GCX+3, GCY-1, HAT_DARK)
 # 身体
 fl(GCY+5, GCY+8, GCX-2, GCX+2, GB)
-sp(GCX, GCY+4, GB_CHEEK); sp(GCX, GCY+6, GB_CHEEK)
+sp(GCX, GCY+5, GB_CHEEK); sp(GCX, GCY+7, GB_CHEEK)
 # 手臂
 sp(GCX-3, GCY+5, GB); sp(GCX-3, GCY+6, GB); sp(GCX-4, GCY+6, GB); sp(GCX-4, GCY+7, GB)
 sp(GCX+3, GCY+5, GB); sp(GCX+3, GCY+6, GB); sp(GCX+4, GCY+6, GB); sp(GCX+4, GCY+7, GB)
@@ -544,7 +544,7 @@ sp(BCX, BCY+1, BUN_D)
 for bx in [BCX+1, BCX+2]: sp(bx, BCY+1, BUN_EYE)
 sp(BCX-1, BCY+2, BUN_EYE); sp(BCX+1, BCY+2, BUN_EYE)
 sp(BCX-2, BCY+3, BUN_IN); sp(BCX+2, BCY+3, BUN_IN)
-sp(BCX-1, BCY+4, (255,255,255)); sp(BCX, BCY+4, (255,255,255))
+sp(BCX-1, BCY+4, (255,255,255)); sp(BCX, BCY+4, (255,255,255)); sp(BCX+1, BCY+4, (255,255,255))
 # 身体
 fl(BCY+5, BCY+8, BCX-2, BCX+2, BUN_B)
 # 手臂
