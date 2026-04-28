@@ -39,6 +39,7 @@ fl(20, 21, 22, 42, FONT_S)
 fl(22, 23, 23, 41, FONT_S)
 wrow(19, 24, 40, FONT_S)
 fl(20, 23, 23, 41, FONT_S)
+sp(23, 20, FONT_D); sp(27, 20, FONT_D); sp(37, 20, FONT_D); sp(41, 20, FONT_D)
 
 # 喷水柱
 for _wy in range(15, 19):
