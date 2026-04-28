@@ -47,6 +47,7 @@ WALL_L = (248, 230, 195)
 ARCH   = (198, 178, 148)   # 拱廊暗色
 WIN    = (152, 185, 178)   # 窗户（动森蓝绿）
 WIN_L  = (168, 198, 192)   # 窗户浅蓝绿
+WIN_LL = (195, 220, 215)   # 窗户最浅蓝绿
 
 # 喷泉
 FONT_S = (152, 182, 205)   # 喷泉冷蓝亮
@@ -349,7 +350,7 @@ for ax, aw in ARCHES:
             wcol(ax, col_top, 26, WALL_D)
             wcol(ax+aw-1, col_top, 26, WALL_D)
     # 拱内矩形部分
-    _wfill = WIN if aw == 9 else WIN
+    _wfill = WIN_L if aw == 9 else WIN_L
     fl(11+dy, 26, ax+1, ax+aw-2, _wfill)
     if aw == 9:
         sp(ax+1, 26, WALL); sp(ax+aw-2, 26, WALL)
@@ -362,8 +363,8 @@ for ax, aw in ARCHES:
     # 补墙（拱顶以上）
     wrow(7+dy, ax+1, ax+aw-2, WALL)
     # 拱内亮点
-    sp(ax+2, 12+dy, WIN); sp(ax+aw-3, 12+dy, WIN)
-    wrow(11+dy, ax+1, ax+aw-2, WIN)
+    sp(ax+2, 12+dy, WIN_L); sp(ax+aw-3, 12+dy, WIN_L)
+    wrow(11+dy, ax+1, ax+aw-2, WIN_L)
 
 # 内侧柱子线各向内移2格（x=14→x=16, x=50→x=48）
 wcol(14, 10, 26, WALL)   # 覆盖旧x=14深色线
@@ -395,7 +396,7 @@ for _seg in [(0, 15), (48, 63)]:
         wcol(_rx, 21, 23, ROOF_RL)
 
 # 连廊（y=24~26，四根大柱子外侧）：窗色背景+墙色分隔柱
-_CWIN = WIN
+_CWIN = WIN_L
 fl(24, 26, 0, 15, _CWIN)
 fl(24, 26, 49, 63, _CWIN)
 for _cx in range(1, 16, 2):
@@ -406,8 +407,11 @@ for _cx in range(49, 64, 2):
 # 墙体水平腰线（只保留四根大柱子之间 x=16~48）
 wrow(6, 16, 48, WALL_L)
 
+# 大拱门 y=23~26 玻璃提亮（覆盖连廊色）
+for _ax in [18, 28, 38]:
+    fl(23, 26, _ax+1, _ax+7, WIN_L)
 # 腰线上方廊柱窗（三组大拱门正上方，y=2~5）
-WIN_T  = WIN   # 窗色（同大拱门）
+WIN_T  = WIN_L   # 窗色（同大拱门）
 for ax, aw in [(18,9),(28,9),(38,9)]:
     x1, x2 = ax+1, ax+aw-2
     fl(4, 5, x1, x2, WIN_T)
@@ -445,13 +449,13 @@ wcol(42, 23, 26, WALL)
 
 # 左右大拱门竖线+拱顶阴影（ax=18, ax=38）
 for _ax in [18, 38]:
-    wcol(_ax+2, 8, 8, WALL_D); wcol(_ax+2, 9, 19, WIN_L)
-    wcol(_ax+6, 8, 8, WALL_D); wcol(_ax+6, 9, 19, WIN_L)
+    wcol(_ax+2, 8, 8, WALL_D); wcol(_ax+2, 9, 19, WIN_LL)
+    wcol(_ax+6, 8, 8, WALL_D); wcol(_ax+6, 9, 19, WIN_LL)
     sp(_ax+3, 7, WALL_D); sp(_ax+4, 7, WALL_D); sp(_ax+5, 7, WALL_D)
 
 # 中间拱门内竖线柱（x=30, x=34，y=8~19，在喷泉前画被遮盖）
-wcol(30, 8, 8, WALL_D); wcol(30, 9, 19, WIN_L)
-wcol(34, 8, 8, WALL_D); wcol(34, 9, 19, WIN_L)
+wcol(30, 8, 8, WALL_D); wcol(30, 9, 19, WIN_LL)
+wcol(34, 8, 8, WALL_D); wcol(34, 9, 19, WIN_LL)
 
 
 # ── 椅子去掉 ──
@@ -580,7 +584,7 @@ def wcol2(x, y1, y2, c):
 
 # ── 喷泉（中央，CX=32）新版 ──
 FX = 32
-SPRAY = (185, 245, 228)
+SPRAY = (225, 248, 242)
 
 # 第一层水盆外缘 x=22~42
 fl2(21, 22, 22, 42, FONT_S)
