@@ -185,16 +185,14 @@ fl(5, 5, 49, 63, SKY_T)
 # ── 地面 ──
 fl(31, 35, 0, 63, GROUND)
 wrow(31, 0, 63, GROUND_D)
-# 正方形小砖（4x4，错列）
-for _gy in range(31, 36):
-    for _gx in range(0, 64):
-        # 偶数行：缝在 x%4==3；奇数行：缝在 x%4==1（错位半砖）
-        offset = 2 if ((_gy - 31) % 2 == 1) else 0
-        if (_gx + offset) % 4 == 3:
-            sp(_gx, _gy, GROUND_D)
-        if _gy % 2 == 0:
-            sp(_gx, _gy, GROUND_D) if False else None  # 横缝
-# 横缝：中间1条+最底行连续砖线
+# 正方形小砖（两排错列）
+# 上排 y=31~32：竖缝 x%4==3
+for _gx in range(3, 64, 4):
+    sp(_gx, 31, GROUND_D); sp(_gx, 32, GROUND_D)
+# 下排 y=34：竖缝错位2格 (x+2)%4==3
+for _gx in range(1, 64, 4):
+    sp(_gx, 34, GROUND_D)
+# 横缝
 wrow(33, 0, 63, GROUND_D)
 wrow(35, 0, 63, GROUND_D)
 
