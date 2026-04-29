@@ -149,34 +149,47 @@ def draw_heater(cx, y_top, y_bot):
 draw_heater(17, 5, 22)
 draw_heater(47, 5, 22)
 
-# ── 桌子（俯视矩形）──
-fl(14, 22, 22, 42, TABLE_L)
+# ── 桌子（俯视矩形，扩大）──
+fl(12, 28, 18, 46, TABLE_L)
 
-# ── 左盘：三明治（侧视）──
-fl(21, 21, 22, 31, PLATE)
+# 白纸（x=20, y=12~16）
+for _py in range(12,17): sp(20, _py, (248, 246, 240))
+for _py in range(12,17): sp(30, _py, (248, 246, 240))
+# ── 左盘：三明治（桌子左上角）──
+fl(17, 17, 19, 31, PLATE)
+sp(19, 17, TABLE_L); sp(31, 17, TABLE_L)
 # 面包底层
-fl(20, 21, 23, 30, BREAD_D)
-fl(19, 20, 24, 29, BREAD)
+fl(15, 17, 21, 29, BREAD_D)
+fl(14, 16, 21, 29, BREAD)
+sp(21, 14, BREAD_D); sp(29, 14, BREAD_D)
+for _sy in range(14,18): sp(21, _sy, BREAD_D); sp(29, _sy, BREAD_D)
 # 夹层
-wrow(20, 24, 25, BEEF)
-wrow(20, 26, 27, SHRIMP)
-wrow(20, 28, 29, CHEESE)
-sp(24, 19, LETTUCE); sp(27, 19, LETTUCE); sp(29, 19, LETTUCE)
+wrow(14, 21, 24, BEEF)
+wrow(14, 25, 26, SHRIMP)
+wrow(14, 27, 29, CHEESE)
+sp(21, 13, LETTUCE); sp(24, 13, LETTUCE); sp(27, 13, LETTUCE); sp(29, 13, LETTUCE)
 # 面包顶层
-fl(18, 19, 24, 29, BREAD)
-wrow(18, 24, 29, BREAD_D)
+fl(11, 13, 21, 29, BREAD)
+wrow(11, 21, 29, BREAD_D)
+sp(21, 11, BREAD_D); sp(29, 11, BREAD_D)
+for _sy in range(12,14): sp(21, _sy, BREAD_D); sp(29, _sy, BREAD_D)
+# 圆角用背景色挖掉
+sp(21, 11, GROUND); sp(29, 11, GROUND)
+sp(21, 17, GROUND); sp(29, 17, GROUND)
 # 牙签
-sp(27, 17, (188, 155, 88))
-sp(27, 18, (188, 155, 88))
-sp(27, 16, (228, 55, 55))
+sp(25, 9, (228, 55, 55))
+sp(25, 10, (188, 155, 88))
 
-# ── 右盘：蛋糕（俯视）──
-fl(15, 21, 33, 41, PLATE)
-fl(16, 20, 34, 38, CAKE_B)
-sp(35, 16, SOUFFLE); sp(36, 16, SOUFFLE)
-sp(35, 17, SOUFFLE); sp(36, 17, SOUFFLE)
-sp(35, 19, BERRY_B); sp(36, 19, BERRY_R)
-sp(37, 18, BERRY_B); sp(38, 20, BERRY_R)
+# ── 右盘：蛋糕（桌子右下角）──
+fl(22, 28, 32, 45, PLATE)
+fl(23, 27, 33, 44, CAKE_B)
+sp(35, 23, SOUFFLE); sp(36, 23, SOUFFLE); sp(37, 23, SOUFFLE)
+sp(35, 24, SOUFFLE); sp(36, 24, SOUFFLE); sp(37, 24, SOUFFLE)
+sp(35, 26, BERRY_B); sp(37, 26, BERRY_R)
+sp(38, 25, BERRY_B); sp(39, 27, BERRY_R)
+# 圆角
+sp(32, 22, TABLE_L); sp(45, 22, TABLE_L)
+sp(32, 28, TABLE_L); sp(45, 28, TABLE_L)
 
 # ── 两杯抹茶（俯视圆形）──
 # 左杯（芒果底）x=24~25, y=13~14
@@ -188,32 +201,6 @@ fl(12, 13, 38, 39, CUP)
 sp(38, 13, STRAW_C); sp(39, 13, STRAW_C)
 sp(38, 12, MATCHA); sp(39, 12, MATCHA)
 
-# ── 姜饼人（俯视，上方，GCX=30, GCY=11）──
-GCX, GCY = 30, 10
-# 帽子（俯视看顶部小红方块）
-fl(GCY-2, GCY-1, GCX-1, GCX+1, HAT_RED)
-# 头（圆形俯视）
-fl(GCY, GCY+2, GCX-2, GCX+2, GB)
-sp(GCX-2, GCY, GROUND); sp(GCX+2, GCY, GROUND)
-sp(GCX-2, GCY+2, GROUND); sp(GCX+2, GCY+2, GROUND)
-# 眼（俯视看头顶，两小点）
-sp(GCX-1, GCY+1, GB_EYE); sp(GCX+1, GCY+1, GB_EYE)
-# 身体
-fl(GCY+3, GCY+5, GCX-1, GCX+1, GB)
-
-# ── 蓝兔子（俯视，下方，BCX=33, BCY=25）──
-BCX, BCY = 33, 25
-# 耳朵（俯视两条长条）
-sp(BCX-1, BCY+2, BUN_B); sp(BCX-1, BCY+3, BUN_B)
-sp(BCX+1, BCY+2, BUN_B); sp(BCX+1, BCY+3, BUN_B)
-sp(BCX-1, BCY+2, BUN_IN); sp(BCX+1, BCY+2, BUN_IN)
-# 头
-fl(BCY, BCY+1, BCX-2, BCX+2, BUN_B)
-sp(BCX-2, BCY, GROUND); sp(BCX+2, BCY, GROUND)
-# 眼
-sp(BCX-1, BCY, BUN_EYE); sp(BCX+1, BCY, BUN_EYE)
-# 身体
-fl(BCY-2, BCY-1, BCX-1, BCX+1, BUN_B)
 
 img.save('pixel_fabrini2.png')
 print('Saved')
