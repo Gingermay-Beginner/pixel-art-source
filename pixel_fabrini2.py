@@ -180,16 +180,89 @@ sp(21, 17, GROUND); sp(29, 17, GROUND)
 sp(25, 9, (228, 55, 55))
 sp(25, 10, (188, 155, 88))
 
-# ── 右盘：蛋糕（桌子右下角）──
-fl(22, 28, 32, 45, PLATE)
-fl(23, 27, 33, 44, CAKE_B)
-sp(35, 23, SOUFFLE); sp(36, 23, SOUFFLE); sp(37, 23, SOUFFLE)
-sp(35, 24, SOUFFLE); sp(36, 24, SOUFFLE); sp(37, 24, SOUFFLE)
-sp(35, 26, BERRY_B); sp(37, 26, BERRY_R)
-sp(38, 25, BERRY_B); sp(39, 27, BERRY_R)
-# 圆角
-sp(32, 22, TABLE_L); sp(45, 22, TABLE_L)
-sp(32, 28, TABLE_L); sp(45, 28, TABLE_L)
+# ── 右盘：蛋糕（俯视，桌子右下角）──
+PLATE_C  = (245, 242, 238)   # 白瓷盘
+CARAMEL  = (185, 128, 62)    # 焦糖蛋糕体
+CARAMEL_D= (148, 95,  42)    # 深焦糖酱
+COOKIE   = (215, 178, 118)   # 曲奇色酱
+SOU      = (242, 238, 228)   # 乳白舒芙蕾
+BERRY_S  = (215, 62,  62)    # 草莓碎
+BLUE_B   = (72,  88,  175)   # 蓝莓
+ALMOND   = (218, 188, 145)   # 杏仁片
+SUGAR    = (248, 245, 252)   # 糖霜
+
+# 盘子（正方形 13×13格）
+fl(21, 33, 33, 45, PLATE_C)
+# 盘圆角
+sp(33, 21, TABLE_L); sp(45, 21, TABLE_L)
+sp(33, 33, TABLE_L); sp(45, 33, TABLE_L)
+
+# 云朵形蛋糕体（中心 x=39, y=26，适配13×13盘）
+_cx, _cy = 39, 25
+SOU_L = (252, 250, 245)   # 舒芙蕾高光
+SOU_D = (222, 215, 200)   # 舒芙蕾阴影
+# 中央椭圆（宽5高3）
+for _dy in range(-1,2):
+    for _dx in range(-2,3):
+        sp(_cx+_dx, _cy+_dy, CARAMEL)
+# 左鼓包（r=2）
+for _dy in range(-1,2):
+    for _dx in range(-2,3):
+        if _dx*_dx + _dy*_dy <= 4:
+            sp(_cx-4+_dx, _cy+_dy, CARAMEL)
+# 右鼓包（r=2）
+for _dy in range(-1,2):
+    for _dx in range(-2,3):
+        if _dx*_dx + _dy*_dy <= 4:
+            sp(_cx+4+_dx, _cy+_dy, CARAMEL)
+# 上鼓包（偏上）
+for _dy in range(-2,1):
+    for _dx in range(-1,2):
+        if _dx*_dx + _dy*_dy <= 2:
+            sp(_cx+_dx, _cy-2+_dy, CARAMEL)
+# 蛋糕暗边（底部）
+wrow(_cy+2, _cx-3, _cx+3, CARAMEL_D)
+sp(_cx-4, _cy+1, CARAMEL_D); sp(_cx+4, _cy+1, CARAMEL_D)
+
+# 舒芙蕾（r=2圆形，盖在蛋糕上方）
+_sx, _sy = _cx, _cy
+for _dy in range(-2,3):
+    for _dx in range(-2,3):
+        if _dx*_dx + _dy*_dy <= 4:
+            sp(_sx+_dx, _sy+_dy, SOU)
+# 高光（左上1格）
+sp(_sx-1, _sy-1, SOU_L)
+# 阴影（右下边缘）
+sp(_sx+1, _sy+1, SOU_D); sp(_sx, _sy+2, SOU_D)
+# 圆形边缘用蛋糕色描边（让圆形轮廓更清晰）
+sp(_sx-2, _sy-1, CARAMEL); sp(_sx+2, _sy-1, CARAMEL)
+sp(_sx-2, _sy+1, CARAMEL); sp(_sx+2, _sy+1, CARAMEL)
+sp(_sx-1, _sy-2, CARAMEL); sp(_sx+1, _sy-2, CARAMEL)
+sp(_sx-1, _sy+2, CARAMEL_D); sp(_sx+1, _sy+2, CARAMEL_D)
+sp(_sx, _sy+2, CARAMEL_D)
+
+# 深焦糖酱小圆碗（4×4，灰边去四角）
+_BE = (168, 165, 160)
+_bx1, _by1 = _cx, _cy+4
+# 顶行（去角，中间2格）
+sp(_bx1,   _by1-1, _BE); sp(_bx1+1, _by1-1, _BE)
+# 中两行（全4格，边灰内酱）
+sp(_bx1-1, _by1,   _BE); sp(_bx1, _by1, (210,158,88)); sp(_bx1+1, _by1, CARAMEL_D); sp(_bx1+2, _by1, _BE)
+sp(_bx1-1, _by1+1, _BE); sp(_bx1, _by1+1, (118,72,28)); sp(_bx1+1, _by1+1, CARAMEL_D); sp(_bx1+2, _by1+1, _BE)
+# 底行（去角，中间2格）
+sp(_bx1,   _by1+2, _BE); sp(_bx1+1, _by1+2, _BE)
+# 曲奇酱小圆碗
+_bx2, _by2 = _cx+3, _cy+4
+sp(_bx2,   _by2-1, _BE); sp(_bx2+1, _by2-1, _BE)
+sp(_bx2-1, _by2,   _BE); sp(_bx2, _by2, (238,205,148)); sp(_bx2+1, _by2, COOKIE); sp(_bx2+2, _by2, _BE)
+sp(_bx2-1, _by2+1, _BE); sp(_bx2, _by2+1, (168,132,72)); sp(_bx2+1, _by2+1, COOKIE); sp(_bx2+2, _by2+1, _BE)
+sp(_bx2,   _by2+2, _BE); sp(_bx2+1, _by2+2, _BE)
+
+# 装饰
+sp(_cx-4, _cy-3, BERRY_S); sp(_cx+1, _cy-3, BERRY_S); sp(_cx+3, _cy+3, BERRY_S)
+sp(_cx-2, _cy+3, BLUE_B); sp(_cx+3, _cy-3, BLUE_B); sp(_cx+5, _cy, BLUE_B)
+sp(_cx-5, _cy-1, ALMOND); sp(_cx+2, _cy-4, ALMOND); sp(_cx+5, _cy+3, ALMOND)
+sp(_cx-3, _cy+4, SUGAR); sp(_cx+4, _cy-4, SUGAR); sp(_cx-5, _cy+3, SUGAR)
 
 # ── 两杯抹茶（俯视圆形）──
 # 左杯（芒果底）x=24~25, y=13~14
