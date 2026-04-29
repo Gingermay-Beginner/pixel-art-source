@@ -93,17 +93,16 @@ TOOTH  = (248, 245, 238)
 fl(0, 11, 0, 63, SKY)
 fl(0, 5, 0, 63, SKY_L)
 
-# ── 远景砖墙 y=6~14 ──
-fl(6, 14, 0, 63, WALL)
+# ── 远景砖墙 y=20~27 ──
+fl(20, 27, 0, 63, WALL)
 # 砖缝
-for _wy in range(6, 15, 2):
+for _wy in range(20, 28, 2):
     for _wx in range(0, 64, 4):
         sp(_wx, _wy, WALL_D)
-for _wy in range(7, 15, 2):
+for _wy in range(21, 28, 2):
     for _wx in range(2, 64, 4):
         sp(_wx, _wy, WALL_D)
-# 顶部亮线
-wrow(6, 0, 63, WALL_L)
+wrow(20, 0, 63, WALL_L)
 
 # ── 远景树木（墙后探出树冠）──
 # 左侧高树 x=2~5, y=0~8
@@ -116,18 +115,18 @@ def draw_tree(cx, top, h, c, cl, cd):
             col = cl if dx == -w else (cd if dx == w else c)
             sp(cx+dx, y, col)
 
-draw_tree(3, 0, 9, TREE1, TREE1L, TREE3)
-draw_tree(8, 1, 7, TREE2, TREE1L, TREE3)
-draw_tree(13, 0, 10, TREE1, TREE1L, TREE3)
-draw_tree(20, 2, 6, TREE2, TREE1L, TREE3)
-draw_tree(28, 0, 8, TREE3, TREE2, TREE3)
-draw_tree(38, 1, 7, TREE1, TREE1L, TREE3)
-draw_tree(48, 0, 9, TREE2, TREE1L, TREE3)
-draw_tree(55, 2, 6, TREE1, TREE1L, TREE3)
-draw_tree(61, 0, 8, TREE3, TREE2, TREE3)
+draw_tree(3, 12, 10, TREE1, TREE1L, TREE3)
+draw_tree(8, 13, 8, TREE2, TREE1L, TREE3)
+draw_tree(13, 11, 11, TREE1, TREE1L, TREE3)
+draw_tree(20, 14, 7, TREE2, TREE1L, TREE3)
+draw_tree(28, 12, 9, TREE3, TREE2, TREE3)
+draw_tree(38, 13, 8, TREE1, TREE1L, TREE3)
+draw_tree(48, 11, 10, TREE2, TREE1L, TREE3)
+draw_tree(55, 14, 7, TREE1, TREE1L, TREE3)
+draw_tree(61, 12, 9, TREE3, TREE2, TREE3)
 
 # 树干（墙前露出部分）
-for _tx, _ty in [(3,9),(8,8),(13,10),(28,9),(48,10),(55,8),(61,9)]:
+for _tx, _ty in [(3,21),(8,21),(13,22),(28,21),(48,22),(55,21),(61,21)]:
     for _dy in range(2):
         sp(_tx, _ty+_dy, TRUNK)
 
@@ -173,12 +172,12 @@ def draw_umbrella(cx, pole_top, pole_bot, canopy_y, canopy_w, style):
     sp(cx - canopy_w, _y, UMB_WD)
     sp(cx + canopy_w, _y, UMB_WD)
 
-# 左伞（白色）x=12, 伞冠y=10, 宽11
-draw_umbrella(12, 14, 27, 10, 11, 'white')
-# 中伞（黑白宽条）x=32, 伞冠y=9, 宽13
-draw_umbrella(32, 14, 27, 9, 13, 'wide_stripe')
-# 右伞（黑白细条）x=52, 伞冠y=10, 宽11
-draw_umbrella(52, 14, 27, 10, 11, 'thin_stripe')
+# 左伞（白色）x=12, 伞冠y=12, 宽13
+draw_umbrella(12, 10, 27, 7, 13, 'white')
+# 中伞（黑白宽条）x=32, 伞冠y=8, 宽13（最高）
+draw_umbrella(32, 8, 27, 3, 13, 'wide_stripe')
+# 右伞（黑白细条）x=52, 伞冠y=11, 宽13
+draw_umbrella(52, 10, 27, 6, 13, 'thin_stripe')
 
 # ── 取暖炉（两侧，高细柱形）──
 def draw_heater(cx, y_top, y_bot):
