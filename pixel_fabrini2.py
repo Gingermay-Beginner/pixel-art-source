@@ -62,7 +62,10 @@ BUN_EYE = (35, 55, 105)
 
 # 取暖炉
 HEAT_D  = (62, 58, 55)
+HEAT_M  = (125, 138, 155)
+HEAT_L  = (148, 158, 172)
 HEAT_F  = (228, 145, 45)
+HEAT_FL = (248, 195, 85)
 
 # ── 地面（石板砖）──
 fl(0, 35, 0, 63, GROUND)
@@ -107,36 +110,65 @@ draw_umbrella_top(-2, 27, 13, 'thin_stripe')
 draw_umbrella_top(65, 18, 14, 'wide_stripe')
 
 # ── 取暖炉（俯视圆柱截面）──
-def draw_heater_top(cx, cy):
-    fl(cy-1, cy+1, cx-1, cx+1, HEAT_D)
-    sp(cx, cy, HEAT_F)
+def draw_heater(cx, y_top, y_bot):
+    # 底座
+    fl(y_bot-1, y_bot, cx-2, cx+2, HEAT_D)
+    sp(cx-2, y_bot, HEAT_M); sp(cx+2, y_bot, HEAT_M)
+    # 细柱
+    for _y in range(y_top+10, y_bot-1):
+        sp(cx, _y, HEAT_M)
+        sp(cx-1, _y, HEAT_M)
+        sp(cx+1, _y, HEAT_M)
+        sp(cx-2, _y, (195, 192, 188))
+        sp(cx+2, _y, (195, 192, 188))
+    # 火焰区（高8格）
+    BARREL = (148, 95, 52)
+    GLASS_Y = (225, 205, 88)
+    fl(y_top+2, y_top+9, cx-1, cx+1, BARREL)
+    # 罩子壁（亮黄描边）
+    for _fy in range(y_top+2, y_top+10):
+        sp(cx-2, _fy, GLASS_Y)
+        sp(cx+2, _fy, GLASS_Y)
+    sp(cx, y_top+9, HEAT_F)
+    sp(cx-1, y_top+8, HEAT_F); sp(cx, y_top+8, HEAT_FL); sp(cx+1, y_top+8, HEAT_F)
+    sp(cx-1, y_top+7, HEAT_FL); sp(cx, y_top+7, HEAT_FL); sp(cx+1, y_top+7, HEAT_FL)
+    sp(cx-1, y_top+6, HEAT_F); sp(cx, y_top+6, HEAT_FL); sp(cx+1, y_top+6, HEAT_F)
+    sp(cx, y_top+5, HEAT_FL); sp(cx-1, y_top+5, HEAT_F); sp(cx+1, y_top+5, HEAT_F)
+    sp(cx, y_top+4, HEAT_FL)
+    sp(cx, y_top+3, HEAT_F)
+    sp(cx, y_top+2, HEAT_FL)
+    # 蘑菇盖（宽5格，两行）
+    BARREL = (148, 95, 52)
+    fl(y_top, y_top+1, cx-3, cx+3, HEAT_M)
+    sp(cx-3, y_top, BARREL); sp(cx+3, y_top, BARREL)
+    sp(cx-3, y_top+1, BARREL); sp(cx+3, y_top+1, BARREL)
+    wrow(y_top, cx-3, cx+3, HEAT_M)
+    wrow(y_top+1, cx-2, cx+2, HEAT_L)
 
-draw_heater_top(5, 5)
-draw_heater_top(5, 31)
-draw_heater_top(58, 5)
-draw_heater_top(58, 31)
+# 桌子两侧暖炉
+draw_heater(17, 5, 27)
+draw_heater(47, 5, 27)
 
 # ── 桌子（俯视矩形）──
-fl(14, 22, 22, 42, TABLE)
-fl(14, 22, 23, 41, TABLE_L)
-wrow(14, 22, 42, TABLE)
-wrow(22, 22, 42, TABLE)
-wcol(22, 14, 22, TABLE)
-wcol(42, 14, 22, TABLE)
+fl(14, 22, 22, 42, TABLE_L)
 
-# ── 左盘：三明治（俯视）──
-# 白盘 x=23~31, y=15~21
-fl(15, 21, 23, 31, PLATE)
-# 三明治（对半切，俯视）
-fl(16, 20, 24, 27, BREAD)
-fl(16, 20, 28, 31, BREAD)
-# 夹层露出
-wrow(17, 24, 27, CHEESE)
-wrow(18, 24, 27, BEEF)
-wrow(19, 24, 27, LETTUCE)
+# ── 左盘：三明治（侧视）──
+fl(21, 21, 22, 31, PLATE)
+# 面包底层
+fl(20, 21, 23, 30, BREAD_D)
+fl(19, 20, 24, 29, BREAD)
+# 夹层
+wrow(20, 24, 25, BEEF)
+wrow(20, 26, 27, SHRIMP)
+wrow(20, 28, 29, CHEESE)
+sp(24, 19, LETTUCE); sp(27, 19, LETTUCE); sp(29, 19, LETTUCE)
+# 面包顶层
+fl(18, 19, 24, 29, BREAD)
+wrow(18, 24, 29, BREAD_D)
 # 牙签
-sp(26, 15, (228, 55, 55))
-sp(26, 16, (188, 155, 88))
+sp(27, 17, (188, 155, 88))
+sp(27, 18, (188, 155, 88))
+sp(27, 16, (228, 55, 55))
 
 # ── 右盘：蛋糕（俯视）──
 fl(15, 21, 33, 41, PLATE)
