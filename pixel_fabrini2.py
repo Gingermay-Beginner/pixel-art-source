@@ -111,16 +111,16 @@ draw_umbrella_top(65, 18, 14, 'wide_stripe')
 
 # ── 取暖炉（俯视圆柱截面）──
 def draw_heater(cx, y_top, y_bot):
-    # 底座
+    # 底座（互换：下行全宽，上行两端挖掉）
     fl(y_bot-1, y_bot, cx-2, cx+2, HEAT_D)
-    sp(cx-2, y_bot, HEAT_M); sp(cx+2, y_bot, HEAT_M)
+    sp(cx-2, y_bot-1, GROUND); sp(cx+2, y_bot-1, GROUND)
     # 细柱
     for _y in range(y_top+10, y_bot-1):
         sp(cx, _y, HEAT_M)
         sp(cx-1, _y, HEAT_M)
         sp(cx+1, _y, HEAT_M)
-        sp(cx-2, _y, (195, 192, 188))
-        sp(cx+2, _y, (195, 192, 188))
+        sp(cx-2, _y, HEAT_L)
+        sp(cx+2, _y, HEAT_L)
     # 火焰区（高8格）
     BARREL = (148, 95, 52)
     GLASS_Y = (225, 205, 88)
@@ -137,17 +137,17 @@ def draw_heater(cx, y_top, y_bot):
     sp(cx, y_top+4, HEAT_FL)
     sp(cx, y_top+3, HEAT_F)
     sp(cx, y_top+2, HEAT_FL)
-    # 蘑菇盖（宽5格，两行）
+    # 蘑菇盖（上窄下宽，盖子独立上移2格）
     BARREL = (148, 95, 52)
-    fl(y_top, y_top+1, cx-3, cx+3, HEAT_M)
-    sp(cx-3, y_top, BARREL); sp(cx+3, y_top, BARREL)
-    sp(cx-3, y_top+1, BARREL); sp(cx+3, y_top+1, BARREL)
-    wrow(y_top, cx-3, cx+3, HEAT_M)
-    wrow(y_top+1, cx-2, cx+2, HEAT_L)
+    _ct = y_top
+    fl(_ct, _ct+1, cx-3, cx+3, HEAT_M)
+    wrow(_ct+1, cx-3, cx+3, HEAT_M)   # 下行全宽（炉身蓝灰色）
+    wrow(_ct,   cx-2, cx+2, HEAT_L)   # 上行窄
+    sp(cx-3, _ct, GROUND); sp(cx+3, _ct, GROUND)
 
 # 桌子两侧暖炉
-draw_heater(17, 5, 27)
-draw_heater(47, 5, 27)
+draw_heater(17, 5, 22)
+draw_heater(47, 5, 22)
 
 # ── 桌子（俯视矩形）──
 fl(14, 22, 22, 42, TABLE_L)
