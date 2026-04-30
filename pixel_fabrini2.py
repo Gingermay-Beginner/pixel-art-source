@@ -80,6 +80,9 @@ def draw_umbrella_top(cx, cy, r, style):
     for dy in range(-r, r+1):
         for dx in range(-r, r+1):
             if dx*dx + dy*dy <= r*r:
+                # 去掉四边正方向突出的单格
+                if style == 'ring' and (dx == 0 or dy == 0) and dx*dx + dy*dy > (r-1)*(r-1):
+                    continue
                 x, y = cx+dx, cy+dy
                 if 0 <= x < 64 and 0 <= y < 36:
                     # 决定颜色
@@ -101,6 +104,8 @@ def draw_umbrella_top(cx, cy, r, style):
                     if dist >= r - 0.5:
                         if style in ('white', 'wide_stripe'):
                             col = UMB_WD
+                        elif style == 'ring':
+                            col = UMB_BK
                         else:
                             col = UMB_WD if col == UMB_W else UMB_BKL
                     sp(x, y, col)
@@ -438,10 +443,10 @@ img = _rgba2.convert('RGB')
 img.paste(_table_snap, (22*S, _TY1))
 
 # ── 伞（最上层）──
-draw_umbrella_top(-2, 16, 13, 'white')       # 左上伞
-draw_umbrella_top(15, 33, 13, 'thin_stripe') # 左下伞
-draw_umbrella_top(46, 37, 16, 'ring')        # 右伞（同心环）
-draw_umbrella_top(65, 8, 14, 'wide_stripe')   # 右上伞
+draw_umbrella_top(-2, 24, 16, 'white')       # 左上伞
+draw_umbrella_top(21, 41, 16, 'thin_stripe') # 左下伞（被同心圆盖住）
+draw_umbrella_top(62, 5, 16, 'ring')         # 右上伞
+draw_umbrella_top(46, 37, 16, 'ring')        # 右伞（同心环，最顶层）
 
 img.save('pixel_fabrini2.png')
 print('Saved')
