@@ -344,5 +344,117 @@ sp(19, 25, _FK2); sp(20, 24, _FK2)
 for _i in range(4): sp(22+_i, 25+_i, _FK2)
 sp(22, 25, _FKD2)
 
+
+# ── 两个小人（从 pixel_kiwi.py 移植）──
+from PIL import Image as PILImage
+
+# 颜色
+_GB       = (185, 108,  48)
+_GBE      = ( 62,  35,  15)
+_GB_CHEEK = (225, 148,  95)
+_HAT_RED  = (198,  42,  32)
+_HAT_DARK = (140,  26,  20)
+_HAT_LITE = (225,  72,  55)
+_BUN      = (118, 188, 248)
+_BUNK     = (235, 138, 165)
+_BUNE     = ( 42,  25,  65)
+_BUN_BLUSH= (242, 148, 172)
+
+def _ksp(buf, x, y, col):
+    if 0<=y<len(buf) and 0<=x<len(buf[0]):
+        buf[y][x] = col if len(col)==4 else col+(255,)
+def _kfl(buf, y1, y2, x1, x2, col):
+    for yy in range(y1,y2+1):
+        for xx in range(x1,x2+1): _ksp(buf,xx,yy,col)
+
+def _pompom(buf, x, y):
+    _ksp(buf, x-1, y, _HAT_DARK); _ksp(buf, x, y-1, _HAT_DARK)
+    _ksp(buf, x, y, _HAT_DARK); _ksp(buf, x+1, y, _HAT_DARK)
+    _ksp(buf, x, y+1, _HAT_DARK)
+
+def _make_char(draw_fn, w, h):
+    buf = [[(0,0,0,0) for _ in range(w)] for _ in range(h)]
+    draw_fn(buf, w, h)
+    ci = PILImage.new('RGBA', (w, h))
+    for y in range(h):
+        for x in range(w):
+            ci.putpixel((x,y), buf[y][x])
+    return ci
+
+def _draw_bun(buf, w, h):
+    # 耳朵（y=2~4，外侧顶部圆角）
+    _kfl(buf,2,4,3,4,_BUN); _kfl(buf,2,4,6,7,_BUN)
+    _ksp(buf,3,2,(0,0,0,0)); _ksp(buf,7,2,(0,0,0,0))  # 外侧顶圆角
+    # 粉色内侧下移1格（y=3~4）
+    _kfl(buf,3,4,4,4,_BUNK); _kfl(buf,3,4,6,6,_BUNK)
+    _kfl(buf,5,10,2,8,_BUN)
+    for corner in [(2,5),(8,5),(2,10),(8,10)]: _ksp(buf,corner[0],corner[1],(0,0,0,0))
+    _ksp(buf,3,6,_BUNE); _ksp(buf,4,6,_BUNE); _ksp(buf,5,6,(120,168,210))
+    _ksp(buf,6,6,_BUNE); _ksp(buf,7,6,_BUNE)
+    _ksp(buf,4,7,_BUNE); _ksp(buf,6,7,_BUNE)
+    _ksp(buf,3,8,_BUN_BLUSH); _ksp(buf,7,8,_BUN_BLUSH)
+    _ksp(buf,4,9,(255,255,255)); _ksp(buf,5,9,(255,255,255))
+    _kfl(buf,11,15,2,8,_BUN)
+    for x in range(2,9): _ksp(buf,x,15,(0,0,0,0))
+    _ksp(buf,1,12,_BUN); _ksp(buf,9,12,_BUN)
+    _ksp(buf,1,13,_BUN); _ksp(buf,9,13,_BUN)
+    _kfl(buf,12,14,0,1,_BUN); _kfl(buf,12,14,9,10,_BUN)
+    _ksp(buf,0,12,(0,0,0,0)); _ksp(buf,10,12,(0,0,0,0))
+
+def _draw_gb(buf, w, h):
+    _kfl(buf,5,10,2,8,_GB)
+    for corner in [(2,5),(8,5),(2,10),(8,10)]: _ksp(buf,corner[0],corner[1],(0,0,0,0))
+    _ksp(buf,4,7,_GBE); _ksp(buf,6,7,_GBE)
+    _ksp(buf,3,8,_GB_CHEEK); _ksp(buf,7,8,_GB_CHEEK)
+    _ksp(buf,4,9,_GBE); _ksp(buf,5,9,_GBE)
+    HAT_TOP = 4
+    _pompom(buf, 6, HAT_TOP-1)
+    _kfl(buf,HAT_TOP,HAT_TOP+1,4,8,_HAT_RED)
+    _ksp(buf,4,HAT_TOP,_HAT_DARK); _ksp(buf,8,HAT_TOP,_HAT_DARK)
+    _ksp(buf,4,HAT_TOP+1,_HAT_DARK); _ksp(buf,8,HAT_TOP+1,_HAT_DARK)
+    _ksp(buf,5,HAT_TOP,_HAT_LITE)
+    _kfl(buf,11,15,2,8,_GB)
+    for x in range(2,9): _ksp(buf,x,15,(0,0,0,0))
+    _ksp(buf,1,12,_GB); _ksp(buf,9,12,_GB)
+    _ksp(buf,1,13,_GB); _ksp(buf,9,13,_GB)
+    _kfl(buf,12,14,0,1,_GB); _kfl(buf,12,14,9,10,_GB)
+    _ksp(buf,0,12,(0,0,0,0)); _ksp(buf,10,12,(0,0,0,0))
+    _ksp(buf,5,12,_GB_CHEEK); _ksp(buf,5,14,_GB_CHEEK)
+
+_CW, _CH = 11, 19
+_bun_img = _make_char(_draw_bun, _CW, _CH)
+_gb_img  = _make_char(_draw_gb,  _CW, _CH)
+# 旋转后放大 S 倍
+def _scale_up(im, s):
+    w, h = im.size
+    big = PILImage.new('RGBA', (w*s, h*s))
+    px = im.load(); bp = big.load()
+    for y in range(h):
+        for x in range(w):
+            for dy in range(s):
+                for dx in range(s):
+                    bp[x*s+dx, y*s+dy] = px[x,y]
+    return big
+
+_bun_rot = _bun_img.rotate(90, expand=True, resample=PILImage.NEAREST)
+_gb_rot  = _gb_img.rotate(90, expand=True, resample=PILImage.NEAREST)
+_bun_big = _scale_up(_bun_rot, S)
+_gb_big  = _scale_up(_gb_rot,  S)
+
+# 合成到 img（先转 RGBA）
+_rgba2 = img.convert('RGBA')
+
+# 兔子（上方）：桌左边，y=13
+_BUN_X = 1 * S
+_BUN_Y = 13 * S
+_rgba2.paste(_bun_big, (_BUN_X, _BUN_Y), _bun_big)
+
+# 姜饼人（下方）：y=22
+_GB_X = 1 * S
+_GB_Y = 22 * S
+_rgba2.paste(_gb_big, (_GB_X, _GB_Y), _gb_big)
+
+img = _rgba2.convert('RGB')
+
 img.save('pixel_fabrini2.png')
 print('Saved')
