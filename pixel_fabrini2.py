@@ -33,6 +33,7 @@ BEEF    = (148, 75, 55)
 SHRIMP  = (218, 128, 108)
 CHEESE  = (228, 195, 88)
 LETTUCE = (118, 168, 88)
+TOMATO  = (215,  62,  55)   # 西红柿红
 CAKE_B  = (148, 98, 65)
 SOUFFLE = (238, 218, 178)
 BERRY_B = (78, 52, 128)
@@ -81,7 +82,7 @@ def draw_umbrella_top(cx, cy, r, style):
         for dx in range(-r, r+1):
             if dx*dx + dy*dy <= r*r:
                 # 去掉四边正方向突出的单格
-                if style in ('ring', 'thin_stripe') and (dx == 0 or dy == 0) and dx*dx + dy*dy > (r-1)*(r-1):
+                if style in ('ring', 'thin_stripe', 'white') and (dx == 0 or dy == 0) and dx*dx + dy*dy > (r-1)*(r-1):
                     continue
                 x, y = cx+dx, cy+dy
                 if 0 <= x < 64 and 0 <= y < 36:
@@ -186,6 +187,7 @@ ftwrow(16, 21, 24, BEEF)
 ftwrow(16, 25, 26, SHRIMP)
 ftwrow(16, 27, 29, CHEESE)
 ftsp(21, 15, LETTUCE); ftsp(24, 15, LETTUCE); ftsp(27, 15, LETTUCE); ftsp(29, 15, LETTUCE)
+ftsp(22, 15, TOMATO); ftsp(23, 15, TOMATO); ftsp(25, 15, TOMATO); ftsp(26, 15, TOMATO); ftsp(28, 15, TOMATO)
 # 面包顶层
 ftfl(13, 14, 21, 29, BREAD)
 ftwrow(13, 21, 29, BREAD_D)
@@ -430,13 +432,13 @@ _rgba2 = img.convert('RGBA')
 
 # 姜饼人
 _GB_X = 9 * S
-_GB_Y = 13 * S
+_GB_Y = 14 * S
 _rgba2.paste(_gb_big, (_GB_X, _GB_Y), _gb_big)
 
 # 兔子右侧（镜像）
 _bun_mirror = _bun_big.transpose(PILImage.FLIP_LEFT_RIGHT)
 _BUN_R_X = 39 * S
-_BUN_R_Y = 13 * S
+_BUN_R_Y = 14 * S
 _rgba2.paste(_bun_mirror, (_BUN_R_X, _BUN_R_Y), _bun_mirror)
 
 img = _rgba2.convert('RGB')
