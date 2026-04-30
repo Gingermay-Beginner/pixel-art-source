@@ -90,16 +90,19 @@ def draw_umbrella_top(cx, cy, r, style):
                     elif style == 'white':
                         col = UMB_W if int(dist) % 3 != 0 else UMB_WD
                     elif style == 'wide_stripe':
-                        # 宽条：按角度分8段，黑白交替
+                        # 宽条：按角度分8段，浅灰白交替
                         seg = int(angle / 45)
-                        col = UMB_BK if seg % 2 == 0 else UMB_W
+                        col = UMB_WD if seg % 2 == 0 else UMB_W
                     elif style == 'thin_stripe':
                         # 细条：按角度分16段
                         seg = int(angle / 22.5)
                         col = UMB_BK if seg % 2 == 0 else UMB_W
                     # 边缘暗色
                     if dist >= r - 0.5:
-                        col = UMB_WD if col == UMB_W else UMB_BKL
+                        if style in ('white', 'wide_stripe'):
+                            col = UMB_WD
+                        else:
+                            col = UMB_WD if col == UMB_W else UMB_BKL
                     sp(x, y, col)
     # 中心伞柱
     sp(cx, cy, UMB_POLE)
@@ -437,8 +440,9 @@ img.paste(_table_snap, (22*S, _TY1))
 
 # ── 伞（最上层）──
 draw_umbrella_top(-2, 13, 13, 'white')       # 左上伞
-draw_umbrella_top(2, 31, 13, 'thin_stripe') # 左下伞
-draw_umbrella_top(56, 34, 13, 'ring')        # 右伞（同心环）
+draw_umbrella_top(15, 33, 13, 'thin_stripe') # 左下伞
+draw_umbrella_top(46, 35, 13, 'ring')        # 右伞（同心环）
+draw_umbrella_top(65, 8, 14, 'wide_stripe')   # 右上伞
 
 img.save('pixel_fabrini2.png')
 print('Saved')
