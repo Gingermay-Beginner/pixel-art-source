@@ -24,8 +24,8 @@ def wcol(x, y1, y2, c):
 # ── 颜色 ──
 GROUND  = (205, 195, 182)
 GROUND_D= (185, 175, 162)
-TABLE   = (38, 35, 32)
-TABLE_L = (62, 58, 55)
+TABLE   = (12, 10, 8)
+TABLE_L = (22, 20, 18)
 PLATE   = (242, 240, 235)
 BREAD   = (198, 155, 88)
 BREAD_D = (165, 122, 62)
@@ -149,13 +149,13 @@ def tfl(y1, y2, x1, x2, c): fl(y1+_TDY, y2+_TDY, x1, x2, c)
 def twrow(y, x1, x2, c): wrow(y+_TDY, x1, x2, c)
 def twcol(x, y1, y2, c): wcol(x, y1+_TDY, y2+_TDY, c)
 # 暖炉固定位置（不随桌面移动）
-draw_heater(17, 5, 22)
-draw_heater(47, 5, 22)
+draw_heater(17, 3, 20)
+draw_heater(47, 3, 20)
 # 桌面竖条颜色计算函数
 def _TBC(x): return (72,76,82) if ((x-18)%4)==0 else (95,100,108)
 # 桌面金属竖条（每4格一组，两色交替）
-_MA = (72, 76, 82)   # 深色
-_MB = (95, 100, 108) # 稍亮色
+_MA = (32, 28, 24)   # 深色
+_MB = (52, 46, 40) # 稍亮色
 for _bx in range(22, 43):
     _col = _MA if ((_bx - 18) % 4) == 0 else _MB
     for _by in range(12, 33):
@@ -436,9 +436,9 @@ img = _rgba2.convert('RGB')
 img.paste(_table_snap, (22*S, _TY1))
 
 # ── 伞（最上层）──
-draw_umbrella_top(-2, 9, 13, 'white')       # 左上伞
-draw_umbrella_top(-4, 27, 13, 'thin_stripe') # 左下伞（左移2格）
-draw_umbrella_top(62, 13, 13, 'ring')        # 右伞（同心环）
+draw_umbrella_top(-2, 13, 13, 'white')       # 左上伞
+draw_umbrella_top(2, 31, 13, 'thin_stripe') # 左下伞
+draw_umbrella_top(56, 34, 13, 'ring')        # 右伞（同心环）
 
 img.save('pixel_fabrini2.png')
 print('Saved')
