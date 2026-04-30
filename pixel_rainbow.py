@@ -175,16 +175,14 @@ for y in range(18, 22):
 TIRE  = ( 22,  22,  26)
 TIRE_D= ( 12,  12,  15)
 RIM   = (188, 195, 205)
-fl(28, 33, 21, 24, TIRE)
-sp(21, 28, TIRE_D); sp(24, 28, TIRE_D)
-sp(21, 33, TIRE_D); sp(24, 33, TIRE_D)
-fl(29, 32, 22, 23, RIM)
-sp(22, 30, TIRE); sp(23, 30, TIRE)
-fl(28, 33, 39, 42, TIRE)
-sp(39, 28, TIRE_D); sp(42, 28, TIRE_D)
-sp(39, 33, TIRE_D); sp(42, 33, TIRE_D)
-fl(29, 32, 40, 41, RIM)
-sp(40, 30, TIRE); sp(41, 30, TIRE)
+fl(27, 32, 21, 24, TIRE)
+sp(21, 32, TIRE_D); sp(24, 32, TIRE_D)
+fl(28, 31, 22, 23, RIM)
+sp(22, 29, TIRE); sp(23, 29, TIRE)
+fl(27, 32, 39, 42, TIRE)
+sp(39, 32, TIRE_D); sp(42, 32, TIRE_D)
+fl(28, 31, 40, 41, RIM)
+sp(40, 29, TIRE); sp(41, 29, TIRE)
 
 # ── Tesla car front (x=17~46, y=20~34) ──
 # Roof
@@ -228,8 +226,8 @@ fl(29, 30, 22, 41, (38, 42, 58))
 
 # 轮子圆角（精确路面色挖角）
 _WBG = (175, 168, 152)
-sp(21, 33, _WBG); sp(24, 33, _WBG)
-sp(39, 33, _WBG); sp(42, 33, _WBG)
+sp(21, 32, _WBG); sp(24, 32, _WBG)
+sp(39, 32, _WBG); sp(42, 32, _WBG)
 # 车头圆角（四角用天空/地面色挖）
 ROAD = (88, 85, 82)   # 路面色（近似）
 # 车身底角圆角
