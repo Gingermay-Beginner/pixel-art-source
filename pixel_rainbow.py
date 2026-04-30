@@ -172,19 +172,19 @@ for y in range(18, 22):
     sp(xl - 1, y, BRIDGE_L)
 
 # ── Wheels (车体之前画) ──
-TIRE  = ( 38,  38,  42)
-TIRE_D= ( 22,  22,  25)
+TIRE  = ( 22,  22,  26)
+TIRE_D= ( 12,  12,  15)
 RIM   = (188, 195, 205)
-fl(28, 33, 17, 22, TIRE)
-sp(17, 28, TIRE_D); sp(22, 28, TIRE_D)
-sp(17, 33, TIRE_D); sp(22, 33, TIRE_D)
-fl(29, 32, 18, 21, RIM)
-sp(19, 30, TIRE); sp(20, 30, TIRE)
-fl(28, 33, 41, 46, TIRE)
-sp(41, 28, TIRE_D); sp(46, 28, TIRE_D)
-sp(41, 33, TIRE_D); sp(46, 33, TIRE_D)
-fl(29, 32, 42, 45, RIM)
-sp(43, 30, TIRE); sp(44, 30, TIRE)
+fl(28, 33, 21, 24, TIRE)
+sp(21, 28, TIRE_D); sp(24, 28, TIRE_D)
+sp(21, 33, TIRE_D); sp(24, 33, TIRE_D)
+fl(29, 32, 22, 23, RIM)
+sp(22, 30, TIRE); sp(23, 30, TIRE)
+fl(28, 33, 39, 42, TIRE)
+sp(39, 28, TIRE_D); sp(42, 28, TIRE_D)
+sp(39, 33, TIRE_D); sp(42, 33, TIRE_D)
+fl(29, 32, 40, 41, RIM)
+sp(40, 30, TIRE); sp(41, 30, TIRE)
 
 # ── Tesla car front (x=17~46, y=20~34) ──
 # Roof
@@ -209,23 +209,32 @@ sp(39, 16, SKY); sp(38, 16, TES)
 sp(24, 17, TES_D); sp(39, 17, TES_D)
 
 # Hood
-fl(23, 29, 17, 46, TES)
-wrow(23, 17, 46, TES_D)
-wcol(17, 23, 29, TES_D)
-wcol(46, 23, 29, TES_D)
+fl(23, 29, 20, 43, TES)
+wrow(23, 20, 43, TES_D)
+wcol(20, 23, 29, TES_D)
+wcol(43, 23, 29, TES_D)
 
 # Headlights
-fl(24, 26, 18, 22, TES_CHR)
-fl(24, 26, 41, 45, TES_CHR)
-fl(24, 25, 19, 21, (238, 242, 252))
-fl(24, 25, 42, 44, (238, 242, 252))
-sp(20, 30, TES_LT)
-sp(43, 30, TES_LT)
+fl(24, 26, 21, 24, TES_CHR)
+fl(24, 26, 39, 42, TES_CHR)
+fl(24, 25, 22, 23, (238, 242, 252))
+fl(24, 25, 40, 41, (238, 242, 252))
+sp(23, 30, TES_LT)
+sp(40, 30, TES_LT)
 
 # Lower bumper / no grille (Tesla)
-fl(27, 29, 18, 45, TES_D)
-fl(29, 30, 19, 44, (38, 42, 58))
+fl(27, 29, 21, 42, TES_D)
+fl(29, 30, 22, 41, (38, 42, 58))
 
+# 轮子圆角（精确路面色挖角）
+_WBG = (175, 168, 152)
+sp(21, 33, _WBG); sp(24, 33, _WBG)
+sp(39, 33, _WBG); sp(42, 33, _WBG)
+# 车头圆角（四角用天空/地面色挖）
+ROAD = (88, 85, 82)   # 路面色（近似）
+# 车身底角圆角
+sp(20, 29, BRIDGE); sp(43, 29, BRIDGE)
+sp(20, 28, BRIDGE); sp(43, 28, BRIDGE)
 # ── 姜饼人 in windshield (left) GCX=26 ──
 GCX, GCY = 28, 21   # 头底部 y=21
 HAT_LITE = (225,  72,  55)
