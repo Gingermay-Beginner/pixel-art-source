@@ -161,33 +161,33 @@ for _bx in range(18, 47):
     for _by in range(12, 33):
         tsp(_bx, _by, _col)
 
-# 白纸（x=20, y=12~16）
-for _py in range(14,19): tsp(20, _py, (248, 246, 240))
-for _py in range(14,19): tsp(30, _py, (248, 246, 240))
+# 食物 x 偏移（右移8格）
+_FOOD_DX = 11
+def ftsp(x, y, c): tsp(x+_FOOD_DX, y, c)
+def ftfl(y1, y2, x1, x2, c): tfl(y1, y2, x1+_FOOD_DX, x2+_FOOD_DX, c)
+def ftwrow(y, x1, x2, c): twrow(y, x1+_FOOD_DX, x2+_FOOD_DX, c)
+
 # ── 左盘：三明治（桌子左上角）──
-tfl(19, 19, 19, 31, PLATE)
-tsp(19, 19, _TBC(19)); tsp(31, 19, _TBC(31))
-# 面包底层
-tfl(17, 19, 21, 29, BREAD_D)
-tfl(16, 18, 21, 29, BREAD)
-tsp(21, 14, BREAD_D); tsp(29, 14, BREAD_D)
-for _sy in range(16,20): tsp(21, _sy, BREAD_D); tsp(29, _sy, BREAD_D)
+# 面包底层（1行，上移1格）
+ftfl(17, 17, 21, 29, BREAD)
+ftwrow(18, 21, 29, BREAD_D)
+ftsp(21, 17, BREAD_D); ftsp(29, 17, BREAD_D)
+ftsp(21, 18, BREAD_D); ftsp(29, 18, BREAD_D)
 # 夹层
-twrow(16, 21, 24, BEEF)
-twrow(16, 25, 26, SHRIMP)
-twrow(16, 27, 29, CHEESE)
-tsp(21, 15, LETTUCE); tsp(24, 15, LETTUCE); tsp(27, 15, LETTUCE); tsp(29, 15, LETTUCE)
+ftwrow(16, 21, 24, BEEF)
+ftwrow(16, 25, 26, SHRIMP)
+ftwrow(16, 27, 29, CHEESE)
+ftsp(21, 15, LETTUCE); ftsp(24, 15, LETTUCE); ftsp(27, 15, LETTUCE); ftsp(29, 15, LETTUCE)
 # 面包顶层
-tfl(13, 15, 21, 29, BREAD)
-twrow(13, 21, 29, BREAD_D)
-tsp(21, 13, BREAD_D); tsp(29, 13, BREAD_D)
-for _sy in range(14,16): tsp(21, _sy, BREAD_D); tsp(29, _sy, BREAD_D)
+ftfl(13, 14, 21, 29, BREAD)
+ftwrow(13, 21, 29, BREAD_D)
+ftsp(21, 13, BREAD_D); ftsp(29, 13, BREAD_D)
+for _sy in range(14,15): ftsp(21, _sy, BREAD_D); ftsp(29, _sy, BREAD_D)
 # 圆角用背景色挖掉
-tsp(21, 13, _TBC(21)); tsp(29, 13, _TBC(29))
-tsp(21, 19, (248, 246, 240)); tsp(29, 19, (248, 246, 240))
+ftsp(21, 13, _TBC(21)); ftsp(29, 13, _TBC(29))
 # 牙签
-tsp(25, 11, (228, 55, 55))
-tsp(25, 12, (188, 155, 88))
+ftsp(25, 11, (228, 55, 55))
+ftsp(25, 12, (188, 155, 88))
 
 # ── 右盘：蛋糕（俯视，桌子右下角）──
 PLATE_C  = (245, 242, 238)   # 白瓷盘
@@ -201,13 +201,13 @@ ALMOND   = (218, 188, 145)   # 杏仁片
 SUGAR    = (248, 245, 252)   # 糖霜
 
 # 盘子（正方形 13×13格）
-tfl(20, 32, 32, 44, PLATE_C)
+tfl(20, 32, 30, 42, PLATE_C)
 # 盘圆角
-tsp(32, 20, _TBC(32)); tsp(44, 20, _TBC(44))
-tsp(32, 32, _TBC(32)); tsp(44, 32, _TBC(44))
+tsp(30, 20, _TBC(30)); tsp(42, 20, _TBC(42))
+tsp(30, 32, _TBC(30)); tsp(42, 32, _TBC(42))
 
 # 云朵形蛋糕体（中心 x=39, y=26，适配13×13盘）
-_cx, _cy = 38, 24
+_cx, _cy = 36, 24
 SOU_L = (252, 250, 245)   # 舒芙蕾高光
 SOU_D = (222, 215, 200)   # 舒芙蕾阴影
 # 中央椭圆（宽5高3）
@@ -286,64 +286,35 @@ MT_L   = (118, 178, 95)   # 抹茶浅
 
 # 左杯（x=18~21, y=20~26）芒果底
 # 杯身（无描边，3格宽）
-for _y in range(24, 30):
-    tsp(27, _y, CUP_W); tsp(28, _y, CUP_W); tsp(29, _y, CUP_W)
-tsp(27, 24, ICE); tsp(28, 24, ICE); tsp(29, 24, ICE)
-tsp(27, 25, ICE); tsp(28, 25, ICE); tsp(29, 25, ICE)
-tsp(27, 26, MANGO); tsp(28, 26, MANGO); tsp(29, 26, MANGO)
-tsp(27, 27, MANGO); tsp(28, 27, MANGO); tsp(29, 27, MANGO)
-tsp(27, 28, MATCHA); tsp(28, 28, MT_L); tsp(29, 28, MATCHA)
-tsp(27, 29, MATCHA); tsp(28, 29, MT_L); tsp(29, 29, MATCHA)
-# 吸管（红色）
-tsp(28, 21, (228, 80, 80)); tsp(28, 22, (228, 80, 80)); tsp(28, 23, (228, 80, 80))
-
-# 右杯（x=42~45, y=13~19）草莓底
 for _y in range(13, 19):
-    tsp(34, _y, CUP_W); tsp(35, _y, CUP_W); tsp(36, _y, CUP_W)
-tsp(34, 13, ICE); tsp(35, 13, ICE); tsp(36, 13, ICE)
-tsp(34, 14, ICE); tsp(35, 14, ICE); tsp(36, 14, ICE)
-tsp(34, 15, STRAW_C); tsp(35, 15, STRAW_C); tsp(36, 15, STRAW_C)
-tsp(34, 16, STRAW_C); tsp(35, 16, STRAW_C); tsp(36, 16, STRAW_C)
-tsp(34, 17, MATCHA); tsp(35, 17, MT_L); tsp(36, 17, MATCHA)
-tsp(34, 18, MATCHA); tsp(35, 18, MT_L); tsp(36, 18, MATCHA)
+    tsp(28, _y, CUP_W); tsp(29, _y, CUP_W); tsp(30, _y, CUP_W)
+tsp(28, 13, ICE); tsp(29, 13, ICE); tsp(30, 13, ICE)
+tsp(28, 14, ICE); tsp(29, 14, ICE); tsp(30, 14, ICE)
+tsp(28, 15, MANGO); tsp(29, 15, MANGO); tsp(30, 15, MANGO)
+tsp(28, 16, MANGO); tsp(29, 16, MANGO); tsp(30, 16, MANGO)
+tsp(28, 17, MATCHA); tsp(29, 17, MT_L); tsp(30, 17, MATCHA)
+tsp(28, 18, MATCHA); tsp(29, 18, MT_L); tsp(30, 18, MATCHA)
+# 吸管（红色）
+tsp(29, 10, (228, 80, 80)); tsp(29, 11, (228, 80, 80)); tsp(29, 12, (228, 80, 80))
+
+# 右杯（草莓底，左移2格）
+for _y in range(13, 19):
+    tsp(42, _y, CUP_W); tsp(43, _y, CUP_W); tsp(44, _y, CUP_W)
+tsp(42, 13, ICE); tsp(43, 13, ICE); tsp(44, 13, ICE)
+tsp(42, 14, ICE); tsp(43, 14, ICE); tsp(44, 14, ICE)
+tsp(42, 15, STRAW_C); tsp(43, 15, STRAW_C); tsp(44, 15, STRAW_C)
+tsp(42, 16, STRAW_C); tsp(43, 16, STRAW_C); tsp(44, 16, STRAW_C)
+tsp(42, 17, MATCHA); tsp(43, 17, MT_L); tsp(44, 17, MATCHA)
+tsp(42, 18, MATCHA); tsp(43, 18, MT_L); tsp(44, 18, MATCHA)
 # 吸管（绿色）
-tsp(35, 10, (88, 178, 95)); tsp(35, 11, (88, 178, 95)); tsp(35, 12, (88, 178, 95))
+tsp(43, 10, (88, 178, 95)); tsp(43, 11, (88, 178, 95)); tsp(43, 12, (88, 178, 95))
 
 
 
-# ── 餐巾纸（草莓奶昔旁，正方形 5×5）──
-_NP = (250, 248, 244)   # 纸白
-_NPD = (228, 225, 218)  # 折痕
-for _y in range(14, 19):
-    for _x in range(40, 45):
-        tsp(_x, _y, _NP)
-# 折痕对角线
-tsp(40, 14, _NPD); tsp(41, 15, _NPD); tsp(42, 16, _NPD)
-
-# ── 刀叉（45度斜摆，放餐巾纸上）──
-_FK = (178, 175, 172)
-_FKD = (138, 135, 132)
-# 叉子（x=47+i, y=12+i, 长4格）
-for _i in range(4): tsp(40+_i, 14+_i, _FK)
-tsp(39, 14, _FK); tsp(40, 13, _FK)  # 叉齿
-# 刀（右移2格平行）
-for _i in range(4): tsp(42+_i, 14+_i, _FK)
-tsp(42, 14, _FKD)
 
 
-# ── 左侧餐巾纸+刀叉（芒果奶昔左）──
-_NP2 = (250, 248, 244)
-_NPD2 = (228, 225, 218)
-for _y in range(25, 30):
-    for _x in range(20, 25):
-        tsp(_x, _y, _NP2)
-tsp(20, 25, _NPD2); tsp(21, 26, _NPD2); tsp(22, 27, _NPD2)
-_FK2 = (178, 175, 172)
-_FKD2 = (138, 135, 132)
-for _i in range(4): tsp(20+_i, 25+_i, _FK2)
-tsp(19, 25, _FK2); tsp(20, 24, _FK2)
-for _i in range(4): tsp(22+_i, 25+_i, _FK2)
-tsp(22, 25, _FKD2)
+
+
 
 
 # ── 两个小人（从 pixel_kiwi.py 移植）──
