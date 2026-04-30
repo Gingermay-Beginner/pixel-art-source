@@ -86,9 +86,13 @@ def draw_umbrella_top(cx, cy, r, style):
     for dy in range(-r, r+1):
         for dx in range(-r, r+1):
             if dx*dx + dy*dy <= r*r:
-                # 去掉四边正方向突出的单格
-                if style in ('ring', 'thin_stripe', 'white') and (dx == 0 or dy == 0) and dx*dx + dy*dy > (r-1)*(r-1):
-                    continue
+                # 去边缘锯齿（上下左右+斜向凸出格）
+                _d2 = dx*dx + dy*dy
+                if style in ('ring', 'thin_stripe', 'white'):
+                    if (dx == 0 or dy == 0) and _d2 > (r-1)*(r-1):
+                        continue
+                    if abs(dx) == 1 and abs(dy) == 1 and _d2 > (r-0.5)*(r-0.5):
+                        continue
                 x, y = cx+dx, cy+dy
                 if 0 <= x < 64 and 0 <= y < 36:
                     # 决定颜色
@@ -218,10 +222,11 @@ SUGAR    = (248, 245, 252)   # 糖霜
 
 # 盘子（正方形 13×13格）
 tfl(20, 32, 26, 38, PLATE_C)
-# 盘圆角（桌子色）
+# 盘圆角（桌子色，2格）
 _tbc2 = lambda x: _MA if ((x-18)%4)==0 else _MB
-tsp(26, 20, _tbc2(26)); tsp(38, 20, _tbc2(38))
-tsp(26, 32, _tbc2(26)); tsp(38, 32, _tbc2(38))
+for _cx2, _cy2 in [(26,20),(27,20),(26,21),(38,20),(37,20),(38,21),
+                   (26,32),(27,32),(26,31),(38,32),(37,32),(38,31)]:
+    tsp(_cx2, _cy2, _tbc2(_cx2))
 
 # 云朵形蛋糕体（中心 x=39, y=26，适配13×13盘）
 _cx, _cy = 32, 24
@@ -285,13 +290,13 @@ tsp(_bx2-1, _by2+1, _BE); tsp(_bx2, _by2+1, (168,132,72)); tsp(_bx2+1, _by2+1, C
 tsp(_bx2,   _by2+2, _BE); tsp(_bx2+1, _by2+2, _BE)
 
 # 装饰
-tsp(_cx-4, _cy-3, BERRY_S); tsp(_cx+1, _cy-3, BERRY_S); tsp(_cx+3, _cy+3, BERRY_S)
+tsp(_cx-4, _cy-3, BERRY_S); tsp(_cx+1, _cy-3, BERRY_S); tsp(_cx-5, _cy+3, BERRY_S)
 tsp(_cx-2, _cy+3, BLUE_B); tsp(_cx+3, _cy-3, BLUE_B); tsp(_cx+5, _cy, BLUE_B)
 tsp(_cx-5, _cy-1, ALMOND); tsp(_cx+2, _cy-4, ALMOND); tsp(_cx+5, _cy+3, ALMOND)
 tsp(_cx-3, _cy+4, SUGAR); tsp(_cx+4, _cy-4, SUGAR); tsp(_cx-5, _cy+3, SUGAR)
 # 左下角装饰
 tsp(_cx-5, _cy+5, BERRY_S); tsp(_cx-4, _cy+6, BERRY_S)
-tsp(_cx-3, _cy+6, BLUE_B); tsp(_cx-5, _cy+7, BLUE_B)
+tsp(_cx-3, _cy+6, BLUE_B); tsp(_cx-4, _cy+7, BLUE_B)
 tsp(_cx-4, _cy+5, ALMOND); tsp(_cx-2, _cy+7, ALMOND)
 tsp(_cx-3, _cy+7, SUGAR); tsp(_cx-5, _cy+6, SUGAR)
 
