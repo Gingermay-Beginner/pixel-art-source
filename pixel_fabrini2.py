@@ -292,7 +292,7 @@ tsp(_bx2,   _by2+2, _BE); tsp(_bx2+1, _by2+2, _BE)
 # 装饰
 tsp(_cx-4, _cy-3, BERRY_S); tsp(_cx+1, _cy-3, BERRY_S); tsp(_cx-5, _cy+3, BERRY_S)
 tsp(_cx-2, _cy+3, BLUE_B); tsp(_cx+3, _cy-3, BLUE_B); tsp(_cx+5, _cy, BLUE_B)
-tsp(_cx-5, _cy-1, ALMOND); tsp(_cx+2, _cy-4, ALMOND); tsp(_cx+5, _cy+3, ALMOND)
+tsp(_cx-5, _cy-1, ALMOND); tsp(_cx+2, _cy-4, ALMOND)
 tsp(_cx-3, _cy+4, SUGAR); tsp(_cx+4, _cy-4, SUGAR); tsp(_cx-5, _cy+3, SUGAR)
 # 左下角装饰
 tsp(_cx-5, _cy+5, BERRY_S); tsp(_cx-4, _cy+6, BERRY_S)
