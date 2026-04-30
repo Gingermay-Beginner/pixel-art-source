@@ -102,12 +102,7 @@ def draw_umbrella_top(cx, cy, r, style):
     # 中心伞柱
     sp(cx, cy, UMB_POLE)
 
-# 左上伞（白色）：圆心在左边界外，cx=-2, cy=9, r=13 → 露右侧约1/4
-draw_umbrella_top(-2, 9, 13, 'white')
-# 左下伞（细条）：cx=-2, cy=27, r=13 → 露右侧约1/4
-draw_umbrella_top(-2, 27, 13, 'thin_stripe')
-# 右伞（宽条）：圆心在右边界，cx=63, cy=18, r=14 → 露左侧约半圆
-draw_umbrella_top(65, 18, 14, 'wide_stripe')
+# 伞移到最上层（见文件末尾）
 
 # ── 取暖炉（俯视圆柱截面）──
 def draw_heater(cx, y_top, y_bot):
@@ -393,7 +388,7 @@ def _draw_bun(buf, w, h):
     _ksp(buf,6,6,_BUNE); _ksp(buf,7,6,_BUNE)
     _ksp(buf,4,7,_BUNE); _ksp(buf,6,7,_BUNE)
     _ksp(buf,3,8,_BUN_BLUSH); _ksp(buf,7,8,_BUN_BLUSH)
-    _ksp(buf,4,9,(255,255,255)); _ksp(buf,5,9,(255,255,255))
+    _ksp(buf,4,9,(255,255,255)); _ksp(buf,5,9,(255,255,255)); _ksp(buf,6,9,(255,255,255))
     _kfl(buf,11,15,2,8,_BUN)
     for x in range(2,9): _ksp(buf,x,15,(0,0,0,0))
     _ksp(buf,1,12,_BUN); _ksp(buf,9,12,_BUN)
@@ -406,7 +401,7 @@ def _draw_gb(buf, w, h):
     for corner in [(2,5),(8,5),(2,10),(8,10)]: _ksp(buf,corner[0],corner[1],(0,0,0,0))
     _ksp(buf,4,7,_GBE); _ksp(buf,6,7,_GBE)
     _ksp(buf,3,8,_GB_CHEEK); _ksp(buf,7,8,_GB_CHEEK)
-    _ksp(buf,4,9,_GBE); _ksp(buf,5,9,_GBE)
+    _ksp(buf,4,9,_GBE); _ksp(buf,5,9,_GBE); _ksp(buf,6,9,_GBE)
     HAT_TOP = 4
     _pompom(buf, 6, HAT_TOP-1)
     _kfl(buf,HAT_TOP,HAT_TOP+1,4,8,_HAT_RED)
@@ -436,25 +431,61 @@ def _scale_up(im, s):
                     bp[x*s+dx, y*s+dy] = px[x,y]
     return big
 
-_bun_rot = _bun_img.rotate(90, expand=True, resample=PILImage.NEAREST)
-_gb_rot  = _gb_img.rotate(90, expand=True, resample=PILImage.NEAREST)
+_bun_crop = _bun_img.crop((0, 0, _CW, _CH - 2))
+_gb_crop  = _gb_img.crop((0, 0, _CW, _CH - 2))
+_bun_rot = _bun_crop.rotate(90, expand=True, resample=PILImage.NEAREST)
+_gb_rot  = _gb_crop.rotate(90, expand=True, resample=PILImage.NEAREST)
 _bun_big = _scale_up(_bun_rot, S)
 _gb_big  = _scale_up(_gb_rot,  S)
+
+# 桌面快照（含食物），用于最后覆盖
+_table_snap = img.crop((18*S, 10*S, 47*S, 33*S))
+_TABLE_SHIFT = 3
+_TABLE_Y_ORIG = 10
 
 # 合成到 img（先转 RGBA）
 _rgba2 = img.convert('RGBA')
 
 # 兔子（上方）：桌左边，y=13
-_BUN_X = 1 * S
-_BUN_Y = 13 * S
-_rgba2.paste(_bun_big, (_BUN_X, _BUN_Y), _bun_big)
-
 # 姜饼人（下方）：y=22
-_GB_X = 1 * S
+_GB_X = 5 * S
 _GB_Y = 22 * S
 _rgba2.paste(_gb_big, (_GB_X, _GB_Y), _gb_big)
 
+# 兔子右侧（镜像）：贴着桌右边 TX2=45
+_bun_mirror = _bun_big.transpose(PILImage.FLIP_LEFT_RIGHT)
+_BUN_R_W = _bun_mirror.width
+_BUN_R_X = 43 * S
+_BUN_R_Y = 22 * S
+_rgba2.paste(_bun_mirror, (_BUN_R_X, _BUN_R_Y), _bun_mirror)
+
 img = _rgba2.convert('RGB')
+
+# 桌面（含食物）压回角色上方
+# 清掉旧快照区顶部（只清桌面竖条格子）
+_MA2 = (72, 76, 82); _MB2 = (95, 100, 108)
+for _cx2 in range(18, 47):
+    _cc2 = _MA2 if ((_cx2-18)%4)==0 else _MB2
+    # 顶部被下移后露出的行：y=10~12（3格 = TABLE_SHIFT 行）
+    for _cy2 in range(_TABLE_Y_ORIG, _TABLE_Y_ORIG + _TABLE_SHIFT):
+        sp(_cx2, _cy2, (205, 195, 182))
+# 重绘被清除覆盖的地砖（x=18~46, y=10~12）
+for _rx in range(18, 47):
+    for _ry in range(_TABLE_Y_ORIG, _TABLE_Y_ORIG + _TABLE_SHIFT):
+        if _ry % 4 == 0 or _rx % 8 == 0:
+            sp(_rx, _ry, GROUND_D)
+        else:
+            sp(_rx, _ry, GROUND)
+# 重绘暖炉（在桌面下层）
+draw_heater(17, 5, 22)
+draw_heater(47, 5, 22)
+# 桌面（含食物）下移3格贴回（压在暖炉上层）
+img.paste(_table_snap, (18*S, (_TABLE_Y_ORIG + _TABLE_SHIFT)*S))
+
+# ── 伞（最上层）──
+draw_umbrella_top(-2, 9, 13, 'white')       # 左上伞
+draw_umbrella_top(-4, 27, 13, 'thin_stripe') # 左下伞（左移2格）
+draw_umbrella_top(65, 18, 14, 'wide_stripe') # 右伞
 
 img.save('pixel_fabrini2.png')
 print('Saved')
