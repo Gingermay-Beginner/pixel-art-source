@@ -156,13 +156,13 @@ def _TBC(x): return (72,76,82) if ((x-18)%4)==0 else (95,100,108)
 # 桌面金属竖条（每4格一组，两色交替）
 _MA = (72, 76, 82)   # 深色
 _MB = (95, 100, 108) # 稍亮色
-for _bx in range(26, 47):
+for _bx in range(22, 43):
     _col = _MA if ((_bx - 18) % 4) == 0 else _MB
     for _by in range(12, 33):
         tsp(_bx, _by, _col)
 
 # 食物 x 偏移（右移8格）
-_FOOD_DX = 11
+_FOOD_DX = 7
 def ftsp(x, y, c): tsp(x+_FOOD_DX, y, c)
 def ftfl(y1, y2, x1, x2, c): tfl(y1, y2, x1+_FOOD_DX, x2+_FOOD_DX, c)
 def ftwrow(y, x1, x2, c): twrow(y, x1+_FOOD_DX, x2+_FOOD_DX, c)
@@ -201,13 +201,13 @@ ALMOND   = (218, 188, 145)   # 杏仁片
 SUGAR    = (248, 245, 252)   # 糖霜
 
 # 盘子（正方形 13×13格）
-tfl(20, 32, 30, 42, PLATE_C)
+tfl(20, 32, 26, 38, PLATE_C)
 # 盘圆角
-tsp(30, 20, _TBC(30)); tsp(42, 20, _TBC(42))
-tsp(30, 32, _TBC(30)); tsp(42, 32, _TBC(42))
+tsp(26, 20, _TBC(26)); tsp(38, 20, _TBC(38))
+tsp(26, 32, _TBC(26)); tsp(38, 32, _TBC(38))
 
 # 云朵形蛋糕体（中心 x=39, y=26，适配13×13盘）
-_cx, _cy = 36, 24
+_cx, _cy = 32, 24
 SOU_L = (252, 250, 245)   # 舒芙蕾高光
 SOU_D = (222, 215, 200)   # 舒芙蕾阴影
 # 中央椭圆（宽5高3）
@@ -284,30 +284,26 @@ CUP_RIM= (75, 70, 65)     # 杯口/底描边
 ICE    = (215, 235, 248)  # 冰块
 MT_L   = (118, 178, 95)   # 抹茶浅
 
-# 左杯（x=18~21, y=20~26）芒果底
-# 杯身（无描边，3格宽）
-for _y in range(13, 19):
-    tsp(28, _y, CUP_W); tsp(29, _y, CUP_W); tsp(30, _y, CUP_W)
-tsp(28, 13, ICE); tsp(29, 13, ICE); tsp(30, 13, ICE)
-tsp(28, 14, ICE); tsp(29, 14, ICE); tsp(30, 14, ICE)
-tsp(28, 15, MANGO); tsp(29, 15, MANGO); tsp(30, 15, MANGO)
-tsp(28, 16, MANGO); tsp(29, 16, MANGO); tsp(30, 16, MANGO)
-tsp(28, 17, MATCHA); tsp(29, 17, MT_L); tsp(30, 17, MATCHA)
-tsp(28, 18, MATCHA); tsp(29, 18, MT_L); tsp(30, 18, MATCHA)
-# 吸管（红色）
-tsp(29, 10, (228, 80, 80)); tsp(29, 11, (228, 80, 80)); tsp(29, 12, (228, 80, 80))
+# 左杯（芒果底）
 
-# 右杯（草莓底，左移2格）
-for _y in range(13, 19):
-    tsp(42, _y, CUP_W); tsp(43, _y, CUP_W); tsp(44, _y, CUP_W)
-tsp(42, 13, ICE); tsp(43, 13, ICE); tsp(44, 13, ICE)
-tsp(42, 14, ICE); tsp(43, 14, ICE); tsp(44, 14, ICE)
-tsp(42, 15, STRAW_C); tsp(43, 15, STRAW_C); tsp(44, 15, STRAW_C)
-tsp(42, 16, STRAW_C); tsp(43, 16, STRAW_C); tsp(44, 16, STRAW_C)
-tsp(42, 17, MATCHA); tsp(43, 17, MT_L); tsp(44, 17, MATCHA)
-tsp(42, 18, MATCHA); tsp(43, 18, MT_L); tsp(44, 18, MATCHA)
+tsp(24, 13, ICE); tsp(25, 13, ICE); tsp(26, 13, ICE)
+tsp(24, 14, ICE); tsp(25, 14, ICE); tsp(26, 14, ICE)
+tsp(24, 15, MANGO); tsp(25, 15, MANGO); tsp(26, 15, MANGO)
+tsp(24, 16, MANGO); tsp(25, 16, MANGO); tsp(26, 16, MANGO)
+tsp(24, 17, MATCHA); tsp(25, 17, MT_L); tsp(26, 17, MATCHA)
+tsp(24, 18, MATCHA); tsp(25, 18, MT_L); tsp(26, 18, MATCHA)
+# 吸管（红色）
+tsp(25, 10, (228, 80, 80)); tsp(25, 11, (228, 80, 80)); tsp(25, 12, (228, 80, 80))
+
+# 右杯（草莓底）
+tsp(38, 13, ICE); tsp(39, 13, ICE); tsp(40, 13, ICE)
+tsp(38, 14, ICE); tsp(39, 14, ICE); tsp(40, 14, ICE)
+tsp(38, 15, STRAW_C); tsp(39, 15, STRAW_C); tsp(40, 15, STRAW_C)
+tsp(38, 16, STRAW_C); tsp(39, 16, STRAW_C); tsp(40, 16, STRAW_C)
+tsp(38, 17, MATCHA); tsp(39, 17, MT_L); tsp(40, 17, MATCHA)
+tsp(38, 18, MATCHA); tsp(39, 18, MT_L); tsp(40, 18, MATCHA)
 # 吸管（绿色）
-tsp(43, 10, (88, 178, 95)); tsp(43, 11, (88, 178, 95)); tsp(43, 12, (88, 178, 95))
+tsp(39, 10, (88, 178, 95)); tsp(39, 11, (88, 178, 95)); tsp(39, 12, (88, 178, 95))
 
 
 
@@ -418,26 +414,26 @@ _gb_big  = _scale_up(_gb_rot,  S)
 # 桌面快照（偏移后位置，用于压回角色上层）
 _TY1 = (12 + _TDY) * S  # 桌面顶部
 _TY2 = (33 + _TDY) * S  # 桌面底部
-_table_snap = img.crop((26*S, _TY1, 47*S, _TY2))
+_table_snap = img.crop((22*S, _TY1, 43*S, _TY2))
 
 # 合成到 img（先转 RGBA）
 _rgba2 = img.convert('RGBA')
 
 # 姜饼人
-_GB_X = 5 * S
-_GB_Y = 22 * S
+_GB_X = 9 * S
+_GB_Y = 18 * S
 _rgba2.paste(_gb_big, (_GB_X, _GB_Y), _gb_big)
 
 # 兔子右侧（镜像）
 _bun_mirror = _bun_big.transpose(PILImage.FLIP_LEFT_RIGHT)
-_BUN_R_X = 43 * S
-_BUN_R_Y = 22 * S
+_BUN_R_X = 39 * S
+_BUN_R_Y = 18 * S
 _rgba2.paste(_bun_mirror, (_BUN_R_X, _BUN_R_Y), _bun_mirror)
 
 img = _rgba2.convert('RGB')
 
 # 桌面（含食物）压回角色上层
-img.paste(_table_snap, (26*S, _TY1))
+img.paste(_table_snap, (22*S, _TY1))
 
 # ── 伞（最上层）──
 draw_umbrella_top(-2, 9, 13, 'white')       # 左上伞
