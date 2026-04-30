@@ -217,6 +217,11 @@ fl(24, 26, 21, 24, TES_CHR)
 fl(24, 26, 39, 42, TES_CHR)
 fl(24, 25, 22, 23, (238, 242, 252))
 fl(24, 25, 40, 41, (238, 242, 252))
+# 车灯四角圆角
+sp(21, 24, TES); sp(24, 24, TES)
+sp(21, 26, TES); sp(24, 26, TES)
+sp(39, 24, TES); sp(42, 24, TES)
+sp(39, 26, TES); sp(42, 26, TES)
 sp(23, 30, TES_LT)
 sp(40, 30, TES_LT)
 
@@ -233,6 +238,12 @@ ROAD = (88, 85, 82)   # 路面色（近似）
 # 车身底角圆角
 sp(20, 29, BRIDGE); sp(43, 29, BRIDGE)
 sp(20, 28, BRIDGE); sp(43, 28, BRIDGE)
+# 车头四角圆角
+_WIN_BG = (35, 75, 148)   # 车窗背景色
+sp(20, 23, BRIDGE); sp(43, 23, BRIDGE)  # 顶角
+sp(21, 23, BRIDGE); sp(42, 23, BRIDGE)  # 顶角内侧
+sp(20, 29, BRIDGE); sp(43, 29, BRIDGE)  # 底角
+sp(21, 29, BRIDGE); sp(42, 29, BRIDGE)  # 底角内侧
 # ── 姜饼人 in windshield (left) GCX=26 ──
 GCX, GCY = 28, 21   # 头底部 y=21
 HAT_LITE = (225,  72,  55)
