@@ -338,10 +338,9 @@ def _kfl(buf, y1, y2, x1, x2, col):
     for yy in range(y1,y2+1):
         for xx in range(x1,x2+1): _ksp(buf,xx,yy,col)
 
+_POM = (245, 235, 215, 255)  # 奶白小啾啾
 def _pompom(buf, x, y):
-    _ksp(buf, x-1, y, _HAT_DARK); _ksp(buf, x, y-1, _HAT_DARK)
-    _ksp(buf, x, y, _HAT_DARK); _ksp(buf, x+1, y, _HAT_DARK)
-    _ksp(buf, x, y+1, _HAT_DARK)
+    _ksp(buf, x, y, _HAT_DARK)
 
 def _make_char(draw_fn, w, h):
     buf = [[(0,0,0,0) for _ in range(w)] for _ in range(h)]
@@ -378,12 +377,12 @@ def _draw_gb(buf, w, h):
     _ksp(buf,4,7,_GBE); _ksp(buf,6,7,_GBE)
     _ksp(buf,3,8,_GB_CHEEK); _ksp(buf,7,8,_GB_CHEEK)
     _ksp(buf,4,9,_GBE); _ksp(buf,5,9,_GBE); _ksp(buf,6,9,_GBE)
-    HAT_TOP = 4
-    _pompom(buf, 6, HAT_TOP-1)
-    _kfl(buf,HAT_TOP,HAT_TOP+1,4,8,_HAT_RED)
-    _ksp(buf,4,HAT_TOP,_HAT_DARK); _ksp(buf,8,HAT_TOP,_HAT_DARK)
+    HAT_TOP = 3
+    _pompom(buf, 6, HAT_TOP)
+    _kfl(buf,HAT_TOP+1,HAT_TOP+2,4,8,_HAT_RED)
     _ksp(buf,4,HAT_TOP+1,_HAT_DARK); _ksp(buf,8,HAT_TOP+1,_HAT_DARK)
-    _ksp(buf,5,HAT_TOP,_HAT_LITE)
+    _ksp(buf,4,HAT_TOP+2,_HAT_DARK); _ksp(buf,8,HAT_TOP+2,_HAT_DARK)
+    _ksp(buf,5,HAT_TOP+1,_HAT_LITE)
     _kfl(buf,11,15,2,8,_GB)
     for x in range(2,9): _ksp(buf,x,15,(0,0,0,0))
     _ksp(buf,1,12,_GB); _ksp(buf,9,12,_GB)
@@ -439,9 +438,9 @@ img = _rgba2.convert('RGB')
 img.paste(_table_snap, (22*S, _TY1))
 
 # ── 伞（最上层）──
-draw_umbrella_top(-2, 13, 13, 'white')       # 左上伞
+draw_umbrella_top(-2, 16, 13, 'white')       # 左上伞
 draw_umbrella_top(15, 33, 13, 'thin_stripe') # 左下伞
-draw_umbrella_top(46, 35, 13, 'ring')        # 右伞（同心环）
+draw_umbrella_top(46, 37, 13, 'ring')        # 右伞（同心环）
 draw_umbrella_top(65, 8, 14, 'wide_stripe')   # 右上伞
 
 img.save('pixel_fabrini2.png')
