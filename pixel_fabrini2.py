@@ -447,9 +447,10 @@ img = _rgba2.convert('RGB')
 img.paste(_table_snap, (22*S, _TY1))
 
 # ── 伞（最上层）──
+draw_umbrella_top(2, -10, 16, 'thin_stripe') # 左上角条纹伞
 draw_umbrella_top(0, 26, 16, 'white')       # 左上伞
 draw_umbrella_top(19, 42, 16, 'thin_stripe') # 左下伞（被同心圆盖住）
-draw_umbrella_top(62, 4, 16, 'ring')         # 右上伞
+draw_umbrella_top(63, 3, 16, 'ring')         # 右上伞
 draw_umbrella_top(46, 37, 16, 'ring')        # 右伞（同心环，最顶层）
 
 img.save('pixel_fabrini2.png')
