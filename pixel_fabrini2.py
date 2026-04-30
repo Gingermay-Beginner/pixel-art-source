@@ -34,6 +34,7 @@ SHRIMP  = (218, 128, 108)
 CHEESE  = (242, 210, 95)
 LETTUCE = (128, 182, 95)
 TOMATO  = (225, 75, 62)   # 西红柿红
+ONION   = (148, 82, 148)  # 紫洋葱
 CAKE_B  = (148, 98, 65)
 SOUFFLE = (238, 218, 178)
 BERRY_B = (78, 52, 128)
@@ -196,7 +197,7 @@ ftwrow(16, 21, 24, BEEF)
 ftwrow(16, 25, 26, SHRIMP)
 ftwrow(16, 27, 29, CHEESE)
 ftsp(21, 15, LETTUCE); ftsp(24, 15, LETTUCE); ftsp(27, 15, LETTUCE); ftsp(29, 15, LETTUCE)
-ftsp(22, 15, TOMATO); ftsp(23, 15, TOMATO); ftsp(25, 15, TOMATO); ftsp(26, 15, TOMATO); ftsp(28, 15, TOMATO)
+ftsp(22, 15, ONION); ftsp(23, 15, ONION); ftsp(25, 15, TOMATO); ftsp(26, 15, TOMATO); ftsp(28, 15, TOMATO)
 # 面包顶层
 ftfl(13, 14, 21, 29, BREAD)
 ftwrow(13, 21, 29, BREAD_D)
