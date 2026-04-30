@@ -68,12 +68,17 @@ HEAT_L  = (148, 158, 172)
 HEAT_F  = (238, 158, 52)
 HEAT_FL = (255, 212, 95)
 
-# ── 地面（石板砖）──
+# ── 地面（错缝石板砖）──
 fl(0, 35, 0, 63, GROUND)
+# 横缝每4格
 for _gy in range(0, 36, 4):
     wrow(_gy, 0, 63, GROUND_D)
-for _gx in range(0, 64, 8):
-    wcol(_gx, 0, 35, GROUND_D)
+# 竖缝：偶数行从0开始，奇数行错位4格
+for _row in range(9):
+    _ry = _row * 4
+    _off = 4 if _row % 2 == 1 else 0
+    for _gx in range(_off, 64, 8):
+        wcol(_gx, _ry, min(_ry+3, 35), GROUND_D)
 
 # ── 遮阳伞（俯视圆盘）──
 def draw_umbrella_top(cx, cy, r, style):
@@ -167,7 +172,7 @@ _MA = (32, 28, 24)   # 深色
 _MB = (52, 46, 40) # 稍亮色
 for _bx in range(22, 43):
     _col = _MA if ((_bx - 18) % 4) == 0 else _MB
-    for _by in range(12, 33):
+    for _by in range(12, 34):
         tsp(_bx, _by, _col)
 
 # 食物 x 偏移（右移8格）
