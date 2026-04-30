@@ -440,7 +440,7 @@ img.paste(_table_snap, (22*S, _TY1))
 # ── 伞（最上层）──
 draw_umbrella_top(-2, 16, 13, 'white')       # 左上伞
 draw_umbrella_top(15, 33, 13, 'thin_stripe') # 左下伞
-draw_umbrella_top(46, 37, 13, 'ring')        # 右伞（同心环）
+draw_umbrella_top(46, 37, 16, 'ring')        # 右伞（同心环）
 draw_umbrella_top(65, 8, 14, 'wide_stripe')   # 右上伞
 
 img.save('pixel_fabrini2.png')
