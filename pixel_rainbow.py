@@ -64,27 +64,26 @@ fl(0, 35, 0, 63, SKY)
 
 
 # ── Rainbow ──
-import random as _rnd
-_rnd.seed(7)
 RB_RAW = [(215,48,35),(235,138,45),(232,215,58),(95,185,78),(55,148,215),(82,75,192),(158,75,188)]
-# 与天空色混合，降低饱和度（0.55彩虹+0.45天空）
-_sky_mix = (185, 218, 242)
-RB = [tuple(round(c*0.45 + s*0.55) for c,s in zip(rc, _sky_mix)) for rc in RB_RAW]
+SKY_C = (185, 218, 242)
 _fade_start_x = 18
-_fade_end_x   = 50
-for _bi, _color in enumerate(RB):
+_fade_full_x  = 44   # 此处以右完全显示
+for _bi, _rc in enumerate(RB_RAW):
     _r1 = 13.0 + _bi * 1.2
     _r2 = _r1 + 1.2
     for _x in range(18, 64):
         for _y in range(0, 28):
             _dist = math.sqrt(((_x - 34)/1.5)**2 + (_y - 24)**2)
             if _r1 <= _dist < _r2:
-                # 左侧渐隐：越靠左越稀疏
-                if _x < _fade_end_x:
-                    _t = (_x - _fade_start_x) / (_fade_end_x - _fade_start_x)
-                    if _rnd.random() > _t:
-                        continue
-                sp(_x, _y, _color)
+                # 左侧平滑融入天空（线性混合）
+                if _x < _fade_full_x:
+                    _t = max(0.0, (_x - _fade_start_x) / (_fade_full_x - _fade_start_x))
+                else:
+                    _t = 1.0
+                # 彩虹先与天空混合降低饱和度
+                _mix = 0.5 + _t * 0.3   # 0.5~0.8 彩虹占比
+                _rb = tuple(round(_rc[i]*_mix + SKY_C[i]*(1-_mix)) for i in range(3))
+                sp(_x, _y, _rb)
 
 # ── WeWork building (left x=0~17) ──
 fl(20, 35, 0, 17, WW_WALL)
@@ -189,18 +188,25 @@ sp(43, 30, TIRE); sp(44, 30, TIRE)
 
 # ── Tesla car front (x=17~46, y=20~34) ──
 # Roof
-fl(15, 17, 22, 41, TES)
-wrow(15, 22, 41, TES_D)
+fl(15, 17, 24, 39, TES)
+wrow(15, 24, 39, TES_D)
 
 # A-pillars
-wcol(21, 16, 22, TES_D)
-wcol(42, 16, 22, TES_D)
+wcol(23, 18, 22, TES_D)
+wcol(40, 18, 22, TES_D)
 
+# 车顶圆角（天空色挖角）
+sp(24, 15, SKY); sp(39, 15, SKY)
+sp(25, 15, SKY); sp(38, 15, SKY)
 # Windshield
-fl(16, 22, 22, 41, WIND)
+fl(16, 22, 24, 39, WIND)
 # Windshield reflection stripe
-wrow(17, 23, 40, WIND_RF)
-wrow(22, 22, 41, WIND_D)
+wrow(17, 25, 38, WIND_RF)
+wrow(22, 24, 39, WIND_D)
+# 玻璃上角圆角（天空色挖角）
+sp(24, 16, SKY); sp(25, 16, TES)
+sp(39, 16, SKY); sp(38, 16, TES)
+sp(24, 17, TES_D); sp(39, 17, TES_D)
 
 # Hood
 fl(23, 29, 17, 46, TES)
@@ -221,7 +227,7 @@ fl(27, 29, 18, 45, TES_D)
 fl(29, 30, 19, 44, (38, 42, 58))
 
 # ── 姜饼人 in windshield (left) GCX=26 ──
-GCX, GCY = 26, 21   # 头底部 y=21
+GCX, GCY = 28, 21   # 头底部 y=21
 HAT_LITE = (225,  72,  55)
 # 头（7格宽，四角圆角）
 wrow(GCY-3, GCX-2, GCX+2, GB)
@@ -244,7 +250,7 @@ sp(GCX-1, GCY-3, HAT_D); sp(GCX+3, GCY-3, HAT_D)
 sp(GCX,   GCY-4, HAT_LITE)
 
 # ── 蓝兔子 in windshield (right) BCX=37 ──
-BCX, BCY = 37, 21   # 头底部 y=21
+BCX, BCY = 36, 21   # 头底部 y=21
 BUN_BLUSH = (235, 148, 178)
 BUN_BROW  = ( 35,  68, 135)
 BUN_EAR_P = (235, 148, 178)   # 耳内粉色
