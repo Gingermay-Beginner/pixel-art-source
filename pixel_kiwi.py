@@ -600,8 +600,8 @@ def draw_bag_fpx_rot(bx, by, color, dark):
     for _y in range(by+1, by+5):
         fpx_set(bx+3, _y, dark)
 
-draw_bag_fpx_rot(-1, 14, BAG_MG, BAG_MG_D)   # 军绿（兔子和姜饼人之间）
-draw_bag_fpx_rot(-1, 26, BAG_MT, BAG_MT_D)   # 薄荷绿（姜饼人侧，靠下）
+draw_bag_fpx_rot(-1, 8, BAG_MG, BAG_MG_D)   # 军绿（兔子和姜饼人之间）
+draw_bag_fpx_rot(-1, 22, BAG_MT, BAG_MT_D)   # 薄荷绿（姜饼人侧，靠下）
 
 _final.save("pixel_kiwi.png")
 print(f"Saved: {W*S}×{H*S}px")
