@@ -421,13 +421,13 @@ _rgba2 = img.convert('RGBA')
 
 # 姜饼人
 _GB_X = 9 * S
-_GB_Y = 18 * S
+_GB_Y = 13 * S
 _rgba2.paste(_gb_big, (_GB_X, _GB_Y), _gb_big)
 
 # 兔子右侧（镜像）
 _bun_mirror = _bun_big.transpose(PILImage.FLIP_LEFT_RIGHT)
 _BUN_R_X = 39 * S
-_BUN_R_Y = 18 * S
+_BUN_R_Y = 13 * S
 _rgba2.paste(_bun_mirror, (_BUN_R_X, _BUN_R_Y), _bun_mirror)
 
 img = _rgba2.convert('RGB')
