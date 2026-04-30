@@ -239,12 +239,12 @@ for _dy in range(-1,2):
 # 左鼓包（r=2）
 for _dy in range(-1,2):
     for _dx in range(-2,3):
-        if _dx*_dx + _dy*_dy <= 4:
+        if _dx*_dx + _dy*_dy < 4:
             tsp(_cx-4+_dx, _cy+_dy, CARAMEL)
 # 右鼓包（r=2）
 for _dy in range(-1,2):
     for _dx in range(-2,3):
-        if _dx*_dx + _dy*_dy <= 4:
+        if _dx*_dx + _dy*_dy < 4:
             tsp(_cx+4+_dx, _cy+_dy, CARAMEL)
 # 上鼓包（偏上）
 for _dy in range(-2,1):
@@ -270,7 +270,7 @@ tsp(_sx-2, _sy-1, CARAMEL); tsp(_sx+2, _sy-1, CARAMEL)
 tsp(_sx-2, _sy+1, CARAMEL); tsp(_sx+2, _sy+1, CARAMEL)
 tsp(_sx-1, _sy-2, CARAMEL); tsp(_sx+1, _sy-2, CARAMEL)
 tsp(_sx-1, _sy+2, CARAMEL_D); tsp(_sx+1, _sy+2, CARAMEL_D)
-tsp(_sx, _sy+2, CARAMEL_D)
+tsp(_sx, _sy+3, CARAMEL_D)
 
 # 深焦糖酱小圆碗（4×4，灰边去四角）
 _BE = (168, 165, 160)
@@ -458,10 +458,10 @@ img.paste(_table_snap, (22*S, _TY1))
 
 # ── 伞（最上层）──
 draw_umbrella_top(2, -10, 16, 'thin_stripe') # 左上角条纹伞
-draw_umbrella_top(0, 26, 16, 'white')       # 左上伞
+draw_umbrella_top(0, 27, 16, 'white')       # 左上伞
 draw_umbrella_top(19, 42, 16, 'thin_stripe') # 左下伞（被同心圆盖住）
 draw_umbrella_top(63, 3, 16, 'ring')         # 右上伞
-draw_umbrella_top(46, 37, 16, 'ring')        # 右伞（同心环，最顶层）
+draw_umbrella_top(46, 38, 16, 'ring')        # 右伞（同心环，最顶层）
 
 img.save('pixel_fabrini2.png')
 print('Saved')
