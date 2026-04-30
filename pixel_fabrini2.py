@@ -81,7 +81,7 @@ def draw_umbrella_top(cx, cy, r, style):
         for dx in range(-r, r+1):
             if dx*dx + dy*dy <= r*r:
                 # 去掉四边正方向突出的单格
-                if style == 'ring' and (dx == 0 or dy == 0) and dx*dx + dy*dy > (r-1)*(r-1):
+                if style in ('ring', 'thin_stripe') and (dx == 0 or dy == 0) and dx*dx + dy*dy > (r-1)*(r-1):
                     continue
                 x, y = cx+dx, cy+dy
                 if 0 <= x < 64 and 0 <= y < 36:
@@ -191,8 +191,9 @@ ftfl(13, 14, 21, 29, BREAD)
 ftwrow(13, 21, 29, BREAD_D)
 ftsp(21, 13, BREAD_D); ftsp(29, 13, BREAD_D)
 for _sy in range(14,15): ftsp(21, _sy, BREAD_D); ftsp(29, _sy, BREAD_D)
-# 圆角用背景色挖掉
-ftsp(21, 13, _TBC(21)); ftsp(29, 13, _TBC(29))
+# 圆角用桌子色挖掉
+_tbc_table = lambda x: _MA if ((x-18)%4)==0 else _MB
+ftsp(21, 13, _tbc_table(21)); ftsp(29, 13, _tbc_table(29))
 # 牙签
 ftsp(25, 11, (228, 55, 55))
 ftsp(25, 12, (188, 155, 88))
@@ -210,9 +211,10 @@ SUGAR    = (248, 245, 252)   # 糖霜
 
 # 盘子（正方形 13×13格）
 tfl(20, 32, 26, 38, PLATE_C)
-# 盘圆角
-tsp(26, 20, _TBC(26)); tsp(38, 20, _TBC(38))
-tsp(26, 32, _TBC(26)); tsp(38, 32, _TBC(38))
+# 盘圆角（桌子色）
+_tbc2 = lambda x: _MA if ((x-18)%4)==0 else _MB
+tsp(26, 20, _tbc2(26)); tsp(38, 20, _tbc2(38))
+tsp(26, 32, _tbc2(26)); tsp(38, 32, _tbc2(38))
 
 # 云朵形蛋糕体（中心 x=39, y=26，适配13×13盘）
 _cx, _cy = 32, 24
