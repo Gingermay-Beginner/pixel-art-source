@@ -156,7 +156,7 @@ def _TBC(x): return (72,76,82) if ((x-18)%4)==0 else (95,100,108)
 # 桌面金属竖条（每4格一组，两色交替）
 _MA = (72, 76, 82)   # 深色
 _MB = (95, 100, 108) # 稍亮色
-for _bx in range(18, 47):
+for _bx in range(26, 47):
     _col = _MA if ((_bx - 18) % 4) == 0 else _MB
     for _by in range(12, 33):
         tsp(_bx, _by, _col)
@@ -418,7 +418,7 @@ _gb_big  = _scale_up(_gb_rot,  S)
 # 桌面快照（偏移后位置，用于压回角色上层）
 _TY1 = (12 + _TDY) * S  # 桌面顶部
 _TY2 = (33 + _TDY) * S  # 桌面底部
-_table_snap = img.crop((18*S, _TY1, 47*S, _TY2))
+_table_snap = img.crop((26*S, _TY1, 47*S, _TY2))
 
 # 合成到 img（先转 RGBA）
 _rgba2 = img.convert('RGBA')
@@ -437,7 +437,7 @@ _rgba2.paste(_bun_mirror, (_BUN_R_X, _BUN_R_Y), _bun_mirror)
 img = _rgba2.convert('RGB')
 
 # 桌面（含食物）压回角色上层
-img.paste(_table_snap, (18*S, _TY1))
+img.paste(_table_snap, (26*S, _TY1))
 
 # ── 伞（最上层）──
 draw_umbrella_top(-2, 9, 13, 'white')       # 左上伞
