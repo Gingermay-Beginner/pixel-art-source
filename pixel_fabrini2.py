@@ -85,7 +85,9 @@ def draw_umbrella_top(cx, cy, r, style):
                     # 决定颜色
                     angle = math.degrees(math.atan2(dy, dx)) % 360
                     dist = math.sqrt(dx*dx + dy*dy)
-                    if style == 'white':
+                    if style == 'ring':
+                        col = UMB_W if int(dist) % 4 < 2 else UMB_BK
+                    elif style == 'white':
                         col = UMB_W if int(dist) % 3 != 0 else UMB_WD
                     elif style == 'wide_stripe':
                         # 宽条：按角度分8段，黑白交替
@@ -485,7 +487,7 @@ img.paste(_table_snap, (18*S, (_TABLE_Y_ORIG + _TABLE_SHIFT)*S))
 # ── 伞（最上层）──
 draw_umbrella_top(-2, 9, 13, 'white')       # 左上伞
 draw_umbrella_top(-4, 27, 13, 'thin_stripe') # 左下伞（左移2格）
-draw_umbrella_top(65, 18, 14, 'wide_stripe') # 右伞
+draw_umbrella_top(62, 13, 13, 'ring')         # 右上伞（同心环白黑）
 
 img.save('pixel_fabrini2.png')
 print('Saved')
