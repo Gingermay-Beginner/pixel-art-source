@@ -199,7 +199,7 @@ draw_palm(13, 30, height=17)# 棕榈探出
 # 中段：橡树+棕榈
 draw_palm(19, 27, height=13)# 棕榈
 # 远处：小橡树+棕榈
-draw_palm(26, 23, height=8) # 远处棕榈
+draw_palm(26, 25, height=8) # 远处棕榈
 
 # 右侧波峰云（x=48~63，最顶层，盖在山坡上方）
 _cld_r2 = {
