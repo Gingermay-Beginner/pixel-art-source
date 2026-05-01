@@ -87,6 +87,31 @@ for _bi, _rc in enumerate(RB_RAW):
                 _rb = tuple(round(_rc[i]*_mix + SKY_C[i]*(1-_mix)) for i in range(3))
                 sp(_x, _y, _rb)
 
+
+# ── 远景波浪云团（横穿画面，y≈16~19）──
+CLD    = (238, 242, 248)   # 云主体：偏冷白
+CLD_D  = (210, 218, 232)   # 云底阴影
+CLD_T  = (248, 250, 255)   # 云顶高光
+
+# 波浪轮廓：每列云顶 y（波峰波谷交替）
+_cld_top = {
+     0:17,  1:17,  2:17,  3:16,  4:16,  5:16,  6:17,  7:17,
+     8:17,  9:16, 10:15, 11:15, 12:15, 13:15, 14:16, 15:16,
+    16:17, 17:17, 18:17, 19:17, 20:18, 21:19, 22:19, 23:19,
+    24:19, 25:18, 26:17, 27:16, 28:15, 29:15, 30:15, 31:15,
+    32:16, 33:17, 34:17, 35:17, 36:16, 37:15, 38:15, 39:15,
+    40:15, 41:16, 42:16, 43:17, 44:17, 45:17, 46:17, 47:16,
+    48:16, 49:15, 50:15, 51:15, 52:15, 53:16, 54:16, 55:17,
+    56:17, 57:17, 58:17, 59:18, 60:18, 61:17, 62:17, 63:17,
+}
+_cld_bot = 20  # 云底统一到 y=20
+
+for _cx, _cy_top in _cld_top.items():
+    sp(_cx, _cy_top, CLD_T)         # 云顶高光
+    for _cy in range(_cy_top+1, _cld_bot):
+        sp(_cx, _cy, CLD)           # 云主体
+    sp(_cx, _cld_bot, CLD_D)        # 云底阴影
+
 # ── WeWork building (left x=0~16) ──
 fl(22, 35, 0, 16, WW_WALL)  # 墙体保持 x=0~16
 # 楼顶：深蓝 + 顶部反光线
@@ -240,13 +265,14 @@ wrow(17, 51, 57, BRIDGE)
 sp(51, 17, BRIDGE_D)
 sp(57, 17, BRIDGE_D)
 sp(50, 17, BRIDGE_L)
-# ── SF hillside upper (y<=23，路面上层) ──
+# ── SF hillside upper (y<=23，路面上层，下移2格) ──
 for hx, hy_top in hill_profile.items():
+    _hy = hy_top + 2
     y_end = min(23, 35)
-    if hy_top <= y_end:
-        wcol(hx, hy_top, y_end, HILL)
-        sp(hx, hy_top, HILL_LT)
-        sp(hx, hy_top+1, HILL_D)
+    if _hy <= y_end:
+        wcol(hx, _hy, y_end, HILL)
+        sp(hx, _hy, HILL_LT)
+        sp(hx, _hy+1, HILL_D)
 
 # 山腰小房子（散布在山丘上）
 houses = [
