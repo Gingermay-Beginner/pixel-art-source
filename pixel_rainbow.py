@@ -335,14 +335,10 @@ sp(24, 15, TES_D); sp(39, 15, TES_D)
 # Hood
 wrow(20, 22, 41, TES)  # 车头顶行，x=21/42圆角挖掉
 fl(21, 24, 21, 42, TES)
-wrow(20, 22, 41, TES_D)  # 圆角挖空x=21/42
-wcol(21, 21, 24, TES_D)
-wcol(42, 21, 24, TES_D)
 
 
 # Lower bumper / no grille (Tesla)
 fl(25, 24, 22, 41, TES_D)
-wrow(25, 22, 41, TES_D)  # 车头底部描边
 
 # 轮子圆角（用当前路面色）
 _WBG = BRIDGE
@@ -430,7 +426,7 @@ for _fx in range(35, 38):
     sp(_fx, 15, BUN)
 # ── Great Egret 大白鹭（镜像，朝左）──
 EGRET    = (248, 248, 248)
-EGRET_BK = ( 95,  72,  48)
+EGRET_BK = ( 58,  42,  25)
 EGRET_YL = (218, 178,  38)
 # 嘴（朝左，4格）
 sp(26, 22, EGRET_YL); sp(27, 22, EGRET_YL); sp(28, 22, EGRET_YL); sp(29, 22, EGRET_YL)
@@ -472,9 +468,6 @@ sp(36, 33, EGRET_BK)
 # 脚趾
 sp(35, 34, EGRET_BK); sp(36, 34, EGRET_BK); sp(37, 34, EGRET_BK)
 
-# 车头两侧描边
-sp(22, 22, TES_D)
-sp(41, 22, TES_D)
 # Headlights
 fl(22, 23, 23, 24, TES_CHR)
 fl(22, 23, 39, 40, TES_CHR)
