@@ -152,8 +152,8 @@ for y in range(18, 36):
     t = (y - 18) / 17.0  # 0=远端, 1=近端
     # 透视宽度
     w = round(10 + t * 36)
-    # 弧形：中段拉近中心，远端弯右
-    cx = round(31 + (1 - t) ** 3 * 26)
+    # 弧形：四次曲线，中段紧贴中心，远端大幅右弯延伸
+    cx = round(31 + (1 - t) ** 4 * 34)
     xl = cx - w // 2
     xr = cx + w // 2
     xl = max(0, xl); xr = min(63, xr)
@@ -163,16 +163,16 @@ for y in range(18, 36):
     if xl - 1 >= 0: sp(xl - 1, y, BRIDGE_L)
 
 # 路顶弧形（实心填充）
-for _ax in range(44, 54):
-    _dist = abs(_ax - 49)
-    _ay = round(18 - max(0, 2 - _dist * 0.5))
-    for _ry in range(_ay, 19):
+for _ax in range(46, 58):
+    _dist = abs(_ax - 52)
+    _ay = round(17 - max(0, 3 - _dist * 0.5))
+    for _ry in range(_ay, 18):
         sp(_ax, _ry, BRIDGE)
 # 中心虚线（跟着弯，每4格画3格）
 for y in range(19, 36):
     if y % 4 != 0:
         t = (y - 18) / 17.0
-        cx = round(31 + (1 - t) ** 3 * 26)
+        cx = round(31 + (1 - t) ** 4 * 34)
         sp(cx, y, ROAD_L)
 
 # ── Wheels (车体之前画) ──
