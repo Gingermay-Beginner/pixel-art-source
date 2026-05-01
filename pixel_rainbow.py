@@ -42,7 +42,7 @@ ROAD_L  = (232, 225, 192)
 TES     = ( 55, 105, 188)
 TES_D   = ( 35,  75, 148)
 TES_LT  = ( 88, 138, 218)
-TES_CHR = (192, 202, 215)
+TES_CHR = (248, 248, 220)
 WIND    = (172, 212, 238)
 WIND_D  = (142, 185, 215)
 WIND_RF = (215, 235, 248)  # windshield reflection
@@ -151,7 +151,7 @@ import math as _math
 for y in range(18, 36):
     t = (y - 18) / 17.0  # 0=远端, 1=近端
     # 透视宽度
-    w = round(4 + t * 18)
+    w = round(10 + t * 36)
     # 弧形：近处居中(cx=31)，远处右弯(cx右移)
     cx = round(31 + (1 - t) ** 2 * 18)
     xl = cx - w // 2
@@ -162,25 +162,32 @@ for y in range(18, 36):
     sp(xr, y, BRIDGE_D)
     if xl - 1 >= 0: sp(xl - 1, y, BRIDGE_L)
 
-# 中心虚线（跟着弯）
+# 路顶弧形（实心填充）
+for _ax in range(44, 54):
+    _dist = abs(_ax - 49)
+    _ay = round(18 - max(0, 2 - _dist * 0.5))
+    for _ry in range(_ay, 19):
+        sp(_ax, _ry, BRIDGE)
+# 中心虚线（跟着弯，每4格画3格）
 for y in range(19, 36):
-    if y % 3 != 1:
+    if y % 4 != 0:
         t = (y - 18) / 17.0
         cx = round(31 + (1 - t) ** 2 * 18)
+        # 相邻格也画，让虚线更顺滑
         sp(cx, y, ROAD_L)
 
 # ── Wheels (车体之前画) ──
 TIRE  = ( 22,  22,  26)
 TIRE_D= ( 12,  12,  15)
 RIM   = ( 22,  22,  26)
-fl(27, 32, 21, 24, TIRE)
-sp(21, 32, TIRE_D); sp(24, 32, TIRE_D)
-fl(28, 31, 22, 23, RIM)
-sp(22, 29, TIRE); sp(23, 29, TIRE)
-fl(27, 32, 39, 42, TIRE)
-sp(39, 32, TIRE_D); sp(42, 32, TIRE_D)
-fl(28, 31, 40, 41, RIM)
-sp(40, 29, TIRE); sp(41, 29, TIRE)
+fl(26, 29, 23, 26, TIRE)
+sp(23, 29, TIRE_D); sp(26, 29, TIRE_D)
+fl(26, 28, 24, 25, RIM)
+
+fl(26, 29, 37, 40, TIRE)
+sp(37, 29, TIRE_D); sp(40, 29, TIRE_D)
+fl(26, 28, 38, 39, RIM)
+
 
 # ── Tesla car front (x=17~46, y=20~34) ──
 # Roof
@@ -205,21 +212,20 @@ sp(39, 16, SKY); sp(38, 16, TES)
 sp(24, 17, TES_D); sp(39, 17, TES_D)
 
 # Hood
-fl(23, 29, 20, 43, TES)
-wrow(23, 20, 43, TES_D)
-wcol(20, 23, 29, TES_D)
-wcol(43, 23, 29, TES_D)
+fl(22, 25, 21, 42, TES)
+wrow(22, 21, 42, TES_D)
+wcol(21, 22, 25, TES_D)
+wcol(42, 22, 25, TES_D)
 
-sp(23, 30, TES_LT)
-sp(40, 30, TES_LT)
 
 # Lower bumper / no grille (Tesla)
-fl(27, 29, 21, 42, TES_D)
+fl(26, 25, 22, 41, TES_D)
+wrow(26, 22, 41, TES_D)  # 车头底部描边
 
 # 轮子圆角（精确路面色挖角）
 _WBG = (175, 168, 152)
-sp(21, 32, _WBG); sp(24, 32, _WBG)
-sp(39, 32, _WBG); sp(42, 32, _WBG)
+sp(23, 29, _WBG); sp(26, 29, _WBG)
+sp(37, 29, _WBG); sp(40, 29, _WBG)
 # 车头圆角（四角用天空/地面色挖）
 ROAD = (88, 85, 82)   # 路面色（近似）
 # 车身底角圆角
@@ -227,8 +233,8 @@ sp(20, 29, BRIDGE); sp(43, 29, BRIDGE)
 sp(20, 28, BRIDGE); sp(43, 28, BRIDGE)
 # 车头四角圆角
 _WIN_BG = (35, 75, 148)   # 车窗背景色
-sp(20, 23, BRIDGE); sp(43, 23, BRIDGE)  # 顶角
-sp(21, 23, BRIDGE); sp(42, 23, BRIDGE)  # 顶角内侧
+sp(21, 22, BRIDGE); sp(42, 22, BRIDGE)  # 顶角
+sp(22, 22, BRIDGE); sp(41, 22, BRIDGE)  # 顶角内侧
 sp(20, 29, BRIDGE); sp(43, 29, BRIDGE)  # 底角
 sp(21, 29, BRIDGE); sp(42, 29, BRIDGE)  # 底角内侧
 # ── 姜饼人 in windshield (left) GCX=26 ──
@@ -297,7 +303,46 @@ wrow(14, 30, 33, (48, 58, 75))
 
 # ── Save ──
 # Headlights
-fl(25, 26, 21, 22, TES_CHR)
-fl(25, 26, 41, 42, TES_CHR)
+fl(23, 24, 22, 23, TES_CHR)
+fl(23, 24, 40, 41, TES_CHR)
+
+
+
+# ── Great Egret 大白鹭（镜像，朝左）──
+EGRET    = (248, 248, 248)
+EGRET_BK = ( 28,  28,  32)
+EGRET_YL = (218, 178,  38)
+# 嘴（朝左，4格）
+sp(26, 21, EGRET_YL); sp(27, 21, EGRET_YL); sp(28, 21, EGRET_YL); sp(29, 21, EGRET_YL)
+# 头
+sp(30, 21, EGRET); sp(31, 21, EGRET)
+sp(30, 21, EGRET_BK)  # 眼
+# S形脖子（填密，镜像）
+sp(30, 22, EGRET); sp(31, 22, EGRET)
+sp(31, 23, EGRET); sp(32, 23, EGRET)
+sp(31, 24, EGRET); sp(32, 24, EGRET)
+sp(30, 25, EGRET); sp(31, 25, EGRET)
+sp(30, 26, EGRET); sp(31, 26, EGRET)  # 脖身连接
+# 身体
+fl(26, 27, 28, 34, EGRET)
+sp(27, 26, EGRET); sp(28, 26, EGRET); sp(29, 26, EGRET); sp(30, 26, EGRET); sp(31, 26, EGRET); sp(32, 26, EGRET); sp(33, 26, EGRET)
+sp(27, 27, EGRET); sp(34, 27, EGRET)
+# 长腿（6格）
+sp(29, 28, EGRET_BK); sp(31, 28, EGRET_BK)
+# 腿连线 (31,28)→(34,31)
+sp(31, 28, EGRET_BK)
+sp(32, 29, EGRET_BK)
+sp(33, 30, EGRET_BK)
+sp(34, 31, EGRET_BK)
+
+sp(34, 31, EGRET_BK)
+sp(34, 32, EGRET_BK)
+sp(34, 33, EGRET_BK)
+# 脚趾
+sp(33, 34, EGRET_BK); sp(34, 34, EGRET_BK); sp(35, 34, EGRET_BK)
+
+# 车头两侧描边
+sp(22, 22, TES_D)
+sp(41, 22, TES_D)
 img.save('pixel_rainbow.png')
 print('Saved')
