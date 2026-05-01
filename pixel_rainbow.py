@@ -66,22 +66,24 @@ fl(0, 35, 0, 63, SKY)
 # ── Rainbow ──
 RB_RAW = [(215,48,35),(235,138,45),(232,215,58),(95,185,78),(55,148,215),(82,75,192),(158,75,188)]
 SKY_C = (185, 218, 242)
-_fade_start_x = 18
-_fade_full_x  = 44   # 此处以右完全显示
+_fade_start_x = 21
+_fade_full_x  = 43   # 此处以右完全显示（画面2/3处）
 for _bi, _rc in enumerate(RB_RAW):
     _r1 = 13.0 + _bi * 1.2
     _r2 = _r1 + 1.2
-    for _x in range(18, 64):
+    for _x in range(0, 64):
         for _y in range(0, 27):
             _dist = math.sqrt(((_x - 34)/1.5)**2 + (_y - 23)**2)
             if _r1 <= _dist < _r2:
-                # 左侧平滑融入天空（线性混合）
+                # x < fade_start: 完全天空色（不画）
+                if _x < _fade_start_x:
+                    continue
+                # 渐变区
                 if _x < _fade_full_x:
-                    _t = max(0.0, (_x - _fade_start_x) / (_fade_full_x - _fade_start_x))
+                    _t = (_x - _fade_start_x) / (_fade_full_x - _fade_start_x)
                 else:
                     _t = 1.0
-                # 彩虹先与天空混合降低饱和度
-                _mix = 0.5 + _t * 0.3   # 0.5~0.8 彩虹占比
+                _mix = _t * 0.85
                 _rb = tuple(round(_rc[i]*_mix + SKY_C[i]*(1-_mix)) for i in range(3))
                 sp(_x, _y, _rb)
 
