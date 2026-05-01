@@ -146,35 +146,33 @@ for hx, hy, roof_c in houses:
     # 小窗
     sp(hx+1, hy+2, H_WIN)
 
-# ── Bridge road perspective ──
-# Near (y=35): x=10~53; Far (y=18): x=22~41 then curves right
+# ── Road: 弧形弯道（向右弯出画面）──
+import math as _math
 for y in range(18, 36):
-    t = (y - 18) / 17.0  # 0=far, 1=near
-    xl = round(22 - t * 10)
-    xr = round(41 + t * 12)
+    t = (y - 18) / 17.0  # 0=远端, 1=近端
+    # 透视宽度
+    w = round(4 + t * 18)
+    # 弧形：近处居中(cx=31)，远处右弯(cx右移)
+    cx = round(31 + (1 - t) ** 2 * 18)
+    xl = cx - w // 2
+    xr = cx + w // 2
+    xl = max(0, xl); xr = min(63, xr)
     wrow(y, xl, xr, BRIDGE)
     sp(xl, y, BRIDGE_D)
     sp(xr, y, BRIDGE_D)
     if xl - 1 >= 0: sp(xl - 1, y, BRIDGE_L)
 
-# Road center dashes
+# 中心虚线（跟着弯）
 for y in range(19, 36):
     if y % 3 != 1:
-        sp(31, y, ROAD_L)
-
-# Bridge far end curves right (y=18~21)
-for y in range(18, 22):
-    t = (21 - y) / 3.0
-    offset = round(t * 5)
-    xl = round(22 + offset)
-    xr = round(41 + offset + 2)
-    wrow(y, xl, xr, BRIDGE)
-    sp(xl - 1, y, BRIDGE_L)
+        t = (y - 18) / 17.0
+        cx = round(31 + (1 - t) ** 2 * 18)
+        sp(cx, y, ROAD_L)
 
 # ── Wheels (车体之前画) ──
 TIRE  = ( 22,  22,  26)
 TIRE_D= ( 12,  12,  15)
-RIM   = (188, 195, 205)
+RIM   = ( 22,  22,  26)
 fl(27, 32, 21, 24, TIRE)
 sp(21, 32, TIRE_D); sp(24, 32, TIRE_D)
 fl(28, 31, 22, 23, RIM)
@@ -212,22 +210,11 @@ wrow(23, 20, 43, TES_D)
 wcol(20, 23, 29, TES_D)
 wcol(43, 23, 29, TES_D)
 
-# Headlights
-fl(24, 26, 21, 24, TES_CHR)
-fl(24, 26, 39, 42, TES_CHR)
-fl(24, 25, 22, 23, (238, 242, 252))
-fl(24, 25, 40, 41, (238, 242, 252))
-# 车灯四角圆角
-sp(21, 24, TES); sp(24, 24, TES)
-sp(21, 26, TES); sp(24, 26, TES)
-sp(39, 24, TES); sp(42, 24, TES)
-sp(39, 26, TES); sp(42, 26, TES)
 sp(23, 30, TES_LT)
 sp(40, 30, TES_LT)
 
 # Lower bumper / no grille (Tesla)
 fl(27, 29, 21, 42, TES_D)
-fl(29, 30, 22, 41, (38, 42, 58))
 
 # 轮子圆角（精确路面色挖角）
 _WBG = (175, 168, 152)
@@ -309,5 +296,8 @@ fl(14, 15, 30, 33, (68, 78, 95))
 wrow(14, 30, 33, (48, 58, 75))
 
 # ── Save ──
+# Headlights
+fl(25, 26, 21, 22, TES_CHR)
+fl(25, 26, 41, 42, TES_CHR)
 img.save('pixel_rainbow.png')
 print('Saved')
