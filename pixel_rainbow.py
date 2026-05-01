@@ -88,13 +88,13 @@ for _bi, _rc in enumerate(RB_RAW):
                 sp(_x, _y, _rb)
 
 # ── WeWork building (left x=0~16) ──
-fl(20, 35, 0, 16, WW_WALL)  # 墙体保持 x=0~16
+fl(22, 35, 0, 16, WW_WALL)  # 墙体保持 x=0~16
 # 楼顶：深蓝 + 顶部反光线
-fl(16, 19, 0, 16, WW_TOP)
-wrow(16, 0, 16, (88, 118, 168))   # 顶部亮反光
-wrow(19, 0, 16, (55, 78, 118))    # 楼顶底边暗线
+fl(18, 21, 0, 16, WW_TOP)
+wrow(18, 0, 16, (88, 118, 168))   # 顶部亮反光
+wrow(21, 0, 16, (55, 78, 118))    # 楼顶底边暗线
 # 楼层（x=0~16，全宽）
-for wy in range(20, 36, 8):
+for wy in range(22, 36, 8):
     wrow(wy-1, 0, 15, (52, 78, 118))   # 楼层间暗腰线
     fl(wy,   wy+3, 0, 15, WW_WIN)
     wrow(wy, 0, 15, WW_WIN_L)
@@ -104,11 +104,11 @@ for wy in range(20, 36, 8):
     if wy+7 <= 35: wrow(wy+7, 0, 15, (28, 42, 68))
 # 竖向分隔线（x=4,8,12）
 for vx in range(3, 16, 4):
-    for wy in range(20, 36, 8):
+    for wy in range(22, 36, 8):
         wcol(vx, wy, min(wy+3, 35), WW_WALL)
 # Right edge shadow
-wcol(15, 16, 35, WW_EDGE)
-wcol(16, 16, 35, WW_EDGE)
+wcol(15, 18, 35, WW_EDGE)
+wcol(16, 18, 35, WW_EDGE)
 
 # ── SF hillside (right x=48~63, y=8~30) ──
 HILL    = (122, 162,  88)
