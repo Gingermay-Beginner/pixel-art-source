@@ -187,9 +187,17 @@ def draw_palm(cx, base_y, height=10):
     ]
     for ddx, ddy, length, lc in leaf_dirs:
         for step in range(1, length+1):
-            sp(cx + ddx*step, ty + ddy*step, lc)
-    sp(cx, ty, PALM_LFY)
-    sp(cx+1, ty, PALM_LFY)
+            bx = cx + ddx*step
+            by = ty + ddy*step
+            sp(bx, by, lc)
+            # 叶片加粗：垂直于叶片方向补1格
+            if ddy == 0:   # 水平叶 → 上下各补1
+                sp(bx, by-1, lc)
+            elif ddx == 0: # 垂直叶 → 左右各补1
+                sp(bx+1, by, lc)
+            else:           # 斜叶 → 顺着走向旁边补1
+                sp(bx, by+1, lc) if abs(ddx)>=abs(ddy) else sp(bx+1, by, lc)
+    sp(cx, ty, PALM_LFY); sp(cx+1, ty, PALM_LFY)
 
 def draw_oak(cx, base_y, r=4):
     """宽冠橡树/圆叶树"""
