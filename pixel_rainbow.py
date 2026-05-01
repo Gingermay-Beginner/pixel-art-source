@@ -73,7 +73,7 @@ for _bi, _rc in enumerate(RB_RAW):
     _r2 = _r1 + 1.3
     for _x in range(0, 64):
         for _y in range(0, 27):
-            _dist = math.sqrt(((_x - 32))**2 + (_y - 19)**2)
+            _dist = math.sqrt(((_x - 32))**2 + (_y - 21)**2)
             if _r1 <= _dist < _r2:
                 # x < fade_start: 完全天空色（不画）
                 if _x < _fade_start_x:
