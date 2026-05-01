@@ -110,42 +110,6 @@ for vx in range(3, 16, 4):
 wcol(15, 18, 35, WW_EDGE)
 wcol(16, 18, 35, WW_EDGE)
 
-# ── SF hillside (right x=48~63, y=8~30) ──
-HILL    = (122, 162,  88)
-HILL_D  = ( 92, 128,  65)
-HILL_LT = (155, 195, 112)
-H_WALL  = (232, 222, 205)
-H_ROOF  = (188,  78,  62)
-H_ROOF2 = ( 88, 148, 192)
-H_ROOF3 = (215, 178,  88)
-H_WIN   = (148, 198, 228)
-
-# 山丘轮廓（从右侧延伸进来）
-hill_profile = {
-    48: 24, 49: 22, 50: 19, 51: 17, 52: 14, 53: 13,
-    54: 12, 55: 12, 56: 12, 57: 12, 58: 12, 59: 12,
-    60: 12, 61: 12, 62: 13, 63: 15
-}
-for hx, hy_top in hill_profile.items():
-    wcol(hx, hy_top, 35, HILL)
-    sp(hx, hy_top, HILL_LT)
-    sp(hx, hy_top+1, HILL_D)
-
-# 山腰小房子（散布在山丘上）
-houses = [
-    (48, 21, H_ROOF),  (50, 20, H_ROOF2), (52, 21, H_ROOF3),
-    (54, 20, H_ROOF),  (56, 19, H_ROOF2), (58, 20, H_ROOF3),
-    (60, 21, H_ROOF),  (62, 20, H_ROOF2),
-]
-for hx, hy, roof_c in houses:
-    # 屋身2x3
-    fl(hy+1, hy+3, hx, hx+2, H_WALL)
-    # 屋顶三角（1格）
-    wrow(hy, hx, hx+2, roof_c)
-    sp(hx+1, hy-1, roof_c)
-    # 小窗
-    sp(hx+1, hy+2, H_WIN)
-
 # ── Trees along left road edge ──
 PALM_TR  = ( 82,  58,  28)   # 棕榈干棕
 PALM_TRD = ( 52,  38,  18)   # 干暗色
@@ -220,10 +184,11 @@ for y in range(18, 36):
     # 透视宽度
     w = round(10 + t * 36)
     # 弧形：四次曲线，中段紧贴中心，远端大幅右弯延伸
-    cx = round(31 + (1 - t) ** 4 * 34)
+    cx = round(29 + (1 - t) ** 4 * 34)
     xl = cx - w // 2
     xr = cx + w // 2
     xl = max(0, xl); xr = min(63, xr)
+    if y <= 19: xl -= 5; xr -= 5  # y=18~19 路远端左移5格
     wrow(y, xl, xr, BRIDGE)
     sp(xl, y, BRIDGE_D)
     sp(xr, y, BRIDGE_D)
@@ -235,7 +200,7 @@ for y in range(18, 36):
 for y in range(19, 36):
     if y % 4 != 0:
         t = (y - 18) / 17.0
-        cx = round(31 + (1 - t) ** 4 * 34)
+        cx = round(29 + (1 - t) ** 4 * 34)
         sp(cx, y, ROAD_L)
 
 # ── Wheels (车体之前画) ──
@@ -274,10 +239,11 @@ sp(39, 14, SKY); sp(38, 14, TES)
 sp(24, 15, TES_D); sp(39, 15, TES_D)
 
 # Hood
-fl(20, 23, 21, 42, TES)
-wrow(20, 21, 42, TES_D)
-wcol(21, 20, 23, TES_D)
-wcol(42, 20, 23, TES_D)
+wrow(20, 22, 41, TES)  # 车头顶行，x=21/42圆角挖掉
+fl(21, 23, 21, 42, TES)
+wrow(20, 22, 41, TES_D)  # 圆角挖空x=21/42
+wcol(21, 21, 23, TES_D)
+wcol(42, 21, 23, TES_D)
 
 
 # Lower bumper / no grille (Tesla)
@@ -295,8 +261,6 @@ sp(20, 27, BRIDGE); sp(43, 27, BRIDGE)
 sp(20, 26, BRIDGE); sp(43, 26, BRIDGE)
 # 车头四角圆角
 _WIN_BG = (35, 75, 148)   # 车窗背景色
-sp(21, 20, BRIDGE); sp(42, 20, BRIDGE)  # 顶角
-sp(22, 20, BRIDGE); sp(41, 20, BRIDGE)  # 顶角内侧
 sp(20, 27, BRIDGE); sp(43, 27, BRIDGE)  # 底角
 sp(21, 27, BRIDGE); sp(42, 27, BRIDGE)  # 底角内侧
 # ── 姜饼人 in windshield (left) GCX=26 ──
@@ -363,6 +327,42 @@ sp(BCX-1, BCY, (255,255,255)); sp(BCX, BCY, (255,255,255)); sp(BCX+1, BCY, (255,
 fl(12, 13, 30, 33, (68, 78, 95))
 wrow(12, 30, 33, (48, 58, 75))
 
+
+# ── SF hillside (right x=48~63, y=8~30) ──
+HILL    = (122, 162,  88)
+HILL_D  = ( 92, 128,  65)
+HILL_LT = (155, 195, 112)
+H_WALL  = (232, 222, 205)
+H_ROOF  = (188,  78,  62)
+H_ROOF2 = ( 88, 148, 192)
+H_ROOF3 = (215, 178,  88)
+H_WIN   = (148, 198, 228)
+
+# 山丘轮廓（从右侧延伸进来）
+hill_profile = {
+    48: 24, 49: 22, 50: 19, 51: 17, 52: 14, 53: 13,
+    54: 12, 55: 12, 56: 12, 57: 12, 58: 12, 59: 12,
+    60: 12, 61: 12, 62: 13, 63: 15
+}
+for hx, hy_top in hill_profile.items():
+    wcol(hx, hy_top, 35, HILL)
+    sp(hx, hy_top, HILL_LT)
+    sp(hx, hy_top+1, HILL_D)
+
+# 山腰小房子（散布在山丘上）
+houses = [
+    (48, 21, H_ROOF),  (50, 20, H_ROOF2), (52, 21, H_ROOF3),
+    (54, 20, H_ROOF),  (56, 19, H_ROOF2), (58, 20, H_ROOF3),
+    (60, 21, H_ROOF),  (62, 20, H_ROOF2),
+]
+for hx, hy, roof_c in houses:
+    # 屋身2x3
+    fl(hy+1, hy+3, hx, hx+2, H_WALL)
+    # 屋顶三角（1格）
+    wrow(hy, hx, hx+2, roof_c)
+    sp(hx+1, hy-1, roof_c)
+    # 小窗
+    sp(hx+1, hy+2, H_WIN)
 
 # ── Save ──
 # Headlights
