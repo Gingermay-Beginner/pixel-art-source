@@ -87,30 +87,28 @@ for _bi, _rc in enumerate(RB_RAW):
                 _rb = tuple(round(_rc[i]*_mix + SKY_C[i]*(1-_mix)) for i in range(3))
                 sp(_x, _y, _rb)
 
-# ── WeWork building (left x=0~17) ──
-fl(20, 35, 0, 17, WW_WALL)
+# ── WeWork building (left x=0~16) ──
+fl(20, 35, 0, 16, WW_WALL)  # 墙体保持 x=0~16
 # 楼顶：深蓝 + 顶部反光线
-fl(16, 19, 0, 17, WW_TOP)
-wrow(16, 0, 17, (88, 118, 168))   # 顶部亮反光
-wrow(19, 0, 17, (55, 78, 118))    # 楼顶底边暗线
-# 楼层腰线（每8格一条浅色水平线，增加层级感）
+fl(16, 19, 0, 16, WW_TOP)
+wrow(16, 0, 16, (88, 118, 168))   # 顶部亮反光
+wrow(19, 0, 16, (55, 78, 118))    # 楼顶底边暗线
+# 楼层（x=0~16，全宽）
 for wy in range(20, 36, 8):
-    wrow(wy-1, 1, 15, (52, 78, 118))  # 楼层间暗腰线
-# 横向：蓝玻璃4格 + 黑4格
-for wy in range(20, 36, 8):
-    fl(wy,   wy+3, 1, 15, WW_WIN)
-    wrow(wy, 1, 15, WW_WIN_L)
-    wrow(wy+1, 1, 15, (72, 128, 192))  # 玻璃内横高光
-    fl(wy+4, min(wy+7, 35), 1, 15, WW_EDGE)
-    wrow(wy+4, 1, 15, (52, 75, 115))     # 黑条顶部稍亮
-    if wy+7 <= 35: wrow(wy+7, 1, 15, (28, 42, 68))  # 黑条底部略深
-# 竖向分隔线
-for vx in range(4, 16, 4):
+    wrow(wy-1, 0, 15, (52, 78, 118))   # 楼层间暗腰线
+    fl(wy,   wy+3, 0, 15, WW_WIN)
+    wrow(wy, 0, 15, WW_WIN_L)
+    wrow(wy+1, 0, 15, (72, 128, 192))
+    fl(wy+4, min(wy+7, 35), 0, 15, WW_EDGE)
+    wrow(wy+4, 0, 15, (52, 75, 115))
+    if wy+7 <= 35: wrow(wy+7, 0, 15, (28, 42, 68))
+# 竖向分隔线（x=4,8,12）
+for vx in range(3, 16, 4):
     for wy in range(20, 36, 8):
         wcol(vx, wy, min(wy+3, 35), WW_WALL)
 # Right edge shadow
+wcol(15, 16, 35, WW_EDGE)
 wcol(16, 16, 35, WW_EDGE)
-wcol(17, 16, 35, WW_EDGE)
 
 # ── SF hillside (right x=48~63, y=8~30) ──
 HILL    = (122, 162,  88)
@@ -154,9 +152,6 @@ PALM_TRD = ( 52,  38,  18)   # 干暗色
 PALM_LF  = ( 48, 128,  38)   # 棕榈叶亮绿
 PALM_LFD = ( 28,  88,  22)   # 叶深绿
 PALM_LFY = (148, 178,  38)   # 叶黄绿
-OAK_MD   = ( 68, 128,  58)
-OAK_LT   = (108, 168,  78)
-OAK_DK   = ( 38,  88,  38)
 TREE_TR2 = ( 72,  52,  28)
 
 def draw_palm(cx, base_y, height=10):
@@ -207,36 +202,16 @@ def draw_palm(cx, base_y, height=10):
     leaf_dirs = []  # 已用扇形替代
     sp(cx, ty, PALM_LFY); sp(cx+1, ty, PALM_LFY)
 
-def draw_oak(cx, base_y, r=4):
-    """宽冠橡树/圆叶树"""
-    # 树干
-    sp(cx,   base_y,   TREE_TR2); sp(cx+1, base_y,   TREE_TR2)
-    sp(cx,   base_y-1, TREE_TR2); sp(cx+1, base_y-1, TREE_TR2)
-    sp(cx,   base_y-2, TREE_TR2)
-    # 树冠（大椭圆）
-    for dy in range(-r-3, 1):
-        for dx in range(-r, r+2):
-            dist = (dx/(r+1))**2 + (dy/(r*0.7))**2
-            if dist < 1.0:
-                if dy < -r//2:
-                    c = OAK_LT if (dx+dy)%3!=0 else OAK_MD
-                else:
-                    c = OAK_MD if (dx+dy)%3!=0 else OAK_DK
-                sp(cx+dx, base_y-2+dy, c)
 
 # 沿路左侧摆树（base_y=路面行，树干贴路边xl左1格）
 # 近处：橡树打底，棕榈探出树顶
-draw_oak(5,  34, r=6)       # 近处大橡树
-draw_palm(9, 34, height=25) # 橡树旁棕榈探高
+draw_palm(5, 34, height=25) # 橡树旁棕榈探高
 # 中近：橡树+棕榈
-draw_oak(13, 31, r=5)       # 中近橡树
-draw_palm(17, 30, height=17)# 棕榈探出
+draw_palm(13, 30, height=17)# 棕榈探出
 # 中段：橡树+棕榈
-draw_oak(20, 27, r=4)       # 中段橡树
-draw_palm(23, 27, height=13)# 棕榈
+draw_palm(19, 27, height=13)# 棕榈
 # 远处：小橡树+棕榈
-draw_oak(27, 24, r=3)       # 远处小橡树
-draw_palm(30, 23, height=8) # 远处棕榈
+draw_palm(26, 23, height=8) # 远处棕榈
 
 # ── Road: 弧形弯道（向右弯出画面）──
 import math as _math
