@@ -193,7 +193,7 @@ def draw_palm(cx, base_y, height=10):
 
 # 沿路左侧摆树（base_y=路面行，树干贴路边xl左1格）
 # 近处：橡树打底，棕榈探出树顶
-draw_palm(5, 40, height=25) # 橡树旁棕榈探高
+draw_palm(5, 38, height=25) # 橡树旁棕榈探高
 # 中近：橡树+棕榈
 draw_palm(13, 36, height=17)# 棕榈探出
 # 中段：橡树+棕榈
