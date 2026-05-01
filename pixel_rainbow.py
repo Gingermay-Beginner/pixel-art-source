@@ -338,7 +338,8 @@ fl(21, 24, 21, 42, TES)
 
 
 # Lower bumper / no grille (Tesla)
-fl(25, 24, 22, 41, TES_D)
+fl(25, 24, 22, 41, TES)
+wrow(25, 22, 41, TES)  # 车头底部补行
 
 # 轮子圆角（用当前路面色）
 _WBG = BRIDGE
@@ -424,49 +425,52 @@ for _fx in range(30, 34):
 # 兔子头顶补色 y=15 x=35~37
 for _fx in range(35, 38):
     sp(_fx, 15, BUN)
+
+# y=19 两侧脸颊补色
+sp(GCX-3, GCY, GB); sp(GCX+2, GCY, GB)  # 姜饼人
+sp(BCX-2, BCY, BUN); sp(BCX+3, BCY, BUN)  # 兔子
 # ── Great Egret 大白鹭（镜像，朝左）──
 EGRET    = (248, 248, 248)
 EGRET_BK = ( 58,  42,  25)
 EGRET_YL = (218, 178,  38)
 # 嘴（朝左，4格）
-sp(26, 22, EGRET_YL); sp(27, 22, EGRET_YL); sp(28, 22, EGRET_YL); sp(29, 22, EGRET_YL)
+sp(28, 22, EGRET_YL); sp(29, 22, EGRET_YL); sp(30, 22, EGRET_YL); sp(31, 22, EGRET_YL)
 # 头
-sp(30, 22, EGRET); sp(31, 22, EGRET)
-sp(30, 22, EGRET_BK)  # 眼
+sp(32, 22, EGRET); sp(33, 22, EGRET)
+sp(32, 22, EGRET_BK)  # 眼
 # S形脖子（填密，镜像）
-sp(30, 23, EGRET); sp(31, 23, EGRET)
-sp(31, 23, EGRET); sp(32, 23, EGRET)
-sp(31, 24, EGRET); sp(32, 24, EGRET)
-sp(30, 26, EGRET); sp(31, 26, EGRET)
-sp(30, 27, EGRET); sp(31, 27, EGRET)  # 脖身连接
-sp(30, 25, EGRET); sp(31, 25, EGRET)  # 脖身衔接段
+sp(32, 23, EGRET); sp(33, 23, EGRET)
+sp(33, 23, EGRET); sp(34, 23, EGRET)
+sp(33, 24, EGRET); sp(34, 24, EGRET)
+sp(32, 26, EGRET); sp(33, 26, EGRET)
+sp(32, 27, EGRET); sp(33, 27, EGRET)  # 脖身连接
+sp(32, 25, EGRET); sp(33, 25, EGRET)  # 脖身衔接段
 # 身体
-fl(26, 27, 30, 36, EGRET)
-sp(29, 26, EGRET); sp(30, 26, EGRET); sp(31, 26, EGRET); sp(32, 26, EGRET); sp(33, 26, EGRET); sp(34, 26, EGRET); sp(35, 26, EGRET)
-sp(29, 27, EGRET); sp(36, 27, EGRET)
+fl(26, 26, 32, 38, EGRET)  # 身体上行
+fl(27, 27, 32, 37, EGRET)  # 身体下行（右下角圆角挖掉）
+sp(31, 26, EGRET); sp(32, 26, EGRET); sp(33, 26, EGRET); sp(34, 26, EGRET); sp(35, 26, EGRET); sp(36, 26, EGRET); sp(37, 26, EGRET)
+sp(31, 27, EGRET)
 
-# 白鹭身体右下角圆角
-sp(36, 27, (175, 168, 152))  # 圆角用路面色
 # 长腿（6格）
-sp(31, 28, EGRET_BK); sp(33, 28, EGRET_BK)
+sp(33, 28, EGRET_BK); sp(35, 28, EGRET_BK)
 # 腿连线 (31,28)→(34,31)
-sp(32, 29, EGRET_BK)
-sp(33, 30, EGRET_BK)
-sp(32, 31, EGRET_BK)
-sp(30, 33, EGRET_BK)
-sp(31, 32, EGRET_BK)
-sp(29, 33, EGRET_BK)
-sp(31, 34, EGRET_BK)
-sp(33, 28, EGRET_BK)
 sp(34, 29, EGRET_BK)
 sp(35, 30, EGRET_BK)
-sp(36, 31, EGRET_BK)
+sp(34, 31, EGRET_BK)
+sp(32, 33, EGRET_BK)
+sp(33, 32, EGRET_BK)
+sp(31, 33, EGRET_BK)
+sp(33, 34, EGRET_BK)
+sp(35, 28, EGRET_BK)
+sp(36, 29, EGRET_BK)
+sp(37, 30, EGRET_BK)
+sp(38, 31, EGRET_BK)
 
-sp(36, 31, EGRET_BK)
-sp(36, 32, EGRET_BK)
-sp(36, 33, EGRET_BK)
+sp(38, 31, EGRET_BK)
+sp(38, 32, EGRET_BK)
+sp(38, 33, EGRET_BK)
 # 脚趾
-sp(35, 34, EGRET_BK); sp(36, 34, EGRET_BK); sp(37, 34, EGRET_BK)
+sp(37, 34, EGRET_BK); sp(38, 34, EGRET_BK); sp(39, 34, EGRET_BK)
 
 # Headlights
 fl(22, 23, 23, 24, TES_CHR)
