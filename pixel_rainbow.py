@@ -188,7 +188,8 @@ for y in range(18, 36):
     xl = cx - w // 2
     xr = cx + w // 2
     xl = max(0, xl); xr = min(63, xr)
-    if y <= 19: xl -= 5; xr -= 5  # y=18~19 路远端左移5格
+    if y == 18: xl -= 10; xr -= 10  # y=18 路面左移10格
+    if y == 19: xl -= 5; xr -= 5  # y=19 路面左移5格
     wrow(y, xl, xr, BRIDGE)
     sp(xl, y, BRIDGE_D)
     sp(xr, y, BRIDGE_D)
@@ -202,6 +203,47 @@ for y in range(19, 36):
         t = (y - 18) / 17.0
         cx = round(29 + (1 - t) ** 4 * 34)
         sp(cx, y, ROAD_L)
+
+# y=17 路延伸（y=18复制上移1格，右移4格）
+wrow(17, 51, 57, BRIDGE)
+sp(51, 17, BRIDGE_D)
+sp(57, 17, BRIDGE_D)
+sp(50, 17, BRIDGE_L)
+# ── SF hillside (right x=48~63, y=8~30) ──
+HILL    = (122, 162,  88)
+HILL_D  = ( 92, 128,  65)
+HILL_LT = (155, 195, 112)
+H_WALL  = (232, 222, 205)
+H_ROOF  = (188,  78,  62)
+H_ROOF2 = ( 88, 148, 192)
+H_ROOF3 = (215, 178,  88)
+H_WIN   = (148, 198, 228)
+
+# 山丘轮廓（从右侧延伸进来）
+hill_profile = {
+    48: 24, 49: 22, 50: 19, 51: 17, 52: 14, 53: 13,
+    54: 12, 55: 12, 56: 12, 57: 12, 58: 12, 59: 12,
+    60: 12, 61: 12, 62: 13, 63: 15
+}
+for hx, hy_top in hill_profile.items():
+    wcol(hx, hy_top, 35, HILL)
+    sp(hx, hy_top, HILL_LT)
+    sp(hx, hy_top+1, HILL_D)
+
+# 山腰小房子（散布在山丘上）
+houses = [
+    (48, 21, H_ROOF),  (50, 20, H_ROOF2), (52, 21, H_ROOF3),
+    (54, 20, H_ROOF),  (56, 19, H_ROOF2), (58, 20, H_ROOF3),
+    (60, 21, H_ROOF),  (62, 20, H_ROOF2),
+]
+for hx, hy, roof_c in houses:
+    # 屋身2x3
+    fl(hy+1, hy+3, hx, hx+2, H_WALL)
+    # 屋顶三角（1格）
+    wrow(hy, hx, hx+2, roof_c)
+    sp(hx+1, hy-1, roof_c)
+    # 小窗
+    sp(hx+1, hy+2, H_WIN)
 
 # ── Wheels (车体之前画) ──
 TIRE  = ( 22,  22,  26)
@@ -328,49 +370,6 @@ fl(12, 13, 30, 33, (68, 78, 95))
 wrow(12, 30, 33, (48, 58, 75))
 
 
-# ── SF hillside (right x=48~63, y=8~30) ──
-HILL    = (122, 162,  88)
-HILL_D  = ( 92, 128,  65)
-HILL_LT = (155, 195, 112)
-H_WALL  = (232, 222, 205)
-H_ROOF  = (188,  78,  62)
-H_ROOF2 = ( 88, 148, 192)
-H_ROOF3 = (215, 178,  88)
-H_WIN   = (148, 198, 228)
-
-# 山丘轮廓（从右侧延伸进来）
-hill_profile = {
-    48: 24, 49: 22, 50: 19, 51: 17, 52: 14, 53: 13,
-    54: 12, 55: 12, 56: 12, 57: 12, 58: 12, 59: 12,
-    60: 12, 61: 12, 62: 13, 63: 15
-}
-for hx, hy_top in hill_profile.items():
-    wcol(hx, hy_top, 35, HILL)
-    sp(hx, hy_top, HILL_LT)
-    sp(hx, hy_top+1, HILL_D)
-
-# 山腰小房子（散布在山丘上）
-houses = [
-    (48, 21, H_ROOF),  (50, 20, H_ROOF2), (52, 21, H_ROOF3),
-    (54, 20, H_ROOF),  (56, 19, H_ROOF2), (58, 20, H_ROOF3),
-    (60, 21, H_ROOF),  (62, 20, H_ROOF2),
-]
-for hx, hy, roof_c in houses:
-    # 屋身2x3
-    fl(hy+1, hy+3, hx, hx+2, H_WALL)
-    # 屋顶三角（1格）
-    wrow(hy, hx, hx+2, roof_c)
-    sp(hx+1, hy-1, roof_c)
-    # 小窗
-    sp(hx+1, hy+2, H_WIN)
-
-# ── Save ──
-# Headlights
-fl(21, 22, 22, 23, TES_CHR)
-fl(21, 22, 40, 41, TES_CHR)
-
-
-
 # ── Great Egret 大白鹭（镜像，朝左）──
 EGRET    = (248, 248, 248)
 EGRET_BK = ( 28,  28,  32)
@@ -414,5 +413,11 @@ sp(35, 34, EGRET_BK); sp(36, 34, EGRET_BK); sp(37, 34, EGRET_BK)
 # 车头两侧描边
 sp(22, 22, TES_D)
 sp(41, 22, TES_D)
+# Headlights
+fl(21, 22, 22, 23, TES_CHR)
+fl(21, 22, 40, 41, TES_CHR)
 img.save('pixel_rainbow.png')
 print('Saved')
+
+
+
