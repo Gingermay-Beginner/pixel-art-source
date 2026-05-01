@@ -135,11 +135,11 @@ wcol(15, 18, 35, WW_EDGE)
 wcol(16, 18, 35, WW_EDGE)
 
 # ── Trees along left road edge ──
-PALM_TR  = ( 82,  58,  28)   # 棕榈干棕
-PALM_TRD = ( 52,  38,  18)   # 干暗色
-PALM_LF  = ( 48, 128,  38)   # 棕榈叶亮绿
-PALM_LFD = ( 28,  88,  22)   # 叶深绿
-PALM_LFY = (148, 178,  38)   # 叶黄绿
+PALM_TR  = (135, 112,  82)   # 棕榈干棕
+PALM_TRD = (105,  85,  58)   # 干暗色
+PALM_LF  = ( 88, 148,  88)   # 棕榈叶亮绿
+PALM_LFD = ( 62, 108,  65)   # 叶深绿
+PALM_LFY = (158, 178, 108)   # 叶黄绿
 TREE_TR2 = ( 72,  52,  28)
 
 def draw_palm(cx, base_y, height=10):
@@ -441,6 +441,9 @@ sp(30, 26, EGRET); sp(31, 26, EGRET)  # 脖身连接
 fl(26, 27, 30, 36, EGRET)
 sp(29, 26, EGRET); sp(30, 26, EGRET); sp(31, 26, EGRET); sp(32, 26, EGRET); sp(33, 26, EGRET); sp(34, 26, EGRET); sp(35, 26, EGRET)
 sp(29, 27, EGRET); sp(36, 27, EGRET)
+
+# 白鹭身体右下角圆角
+sp(36, 27, (175, 168, 152))  # 圆角用路面色
 # 长腿（6格）
 sp(31, 28, EGRET_BK); sp(33, 28, EGRET_BK)
 # 腿连线 (31,28)→(34,31)
