@@ -197,7 +197,7 @@ draw_palm(5, 38, height=25) # 橡树旁棕榈探高
 # 中近：橡树+棕榈
 draw_palm(13, 36, height=17)# 棕榈探出
 # 中段：橡树+棕榈
-draw_palm(19, 35, height=13)# 棕榈
+draw_palm(19, 36, height=13)# 棕榈
 # 远处：小橡树+棕榈
 draw_palm(26, 31, height=8) # 远处棕榈
 
