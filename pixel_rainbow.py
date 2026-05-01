@@ -334,15 +334,15 @@ sp(24, 15, TES_D); sp(39, 15, TES_D)
 
 # Hood
 wrow(20, 22, 41, TES)  # 车头顶行，x=21/42圆角挖掉
-fl(21, 23, 21, 42, TES)
+fl(21, 24, 21, 42, TES)
 wrow(20, 22, 41, TES_D)  # 圆角挖空x=21/42
-wcol(21, 21, 23, TES_D)
-wcol(42, 21, 23, TES_D)
+wcol(21, 21, 24, TES_D)
+wcol(42, 21, 24, TES_D)
 
 
 # Lower bumper / no grille (Tesla)
-fl(24, 23, 22, 41, TES_D)
-wrow(24, 22, 41, TES_D)  # 车头底部描边
+fl(25, 24, 22, 41, TES_D)
+wrow(25, 22, 41, TES_D)  # 车头底部描边
 
 # 轮子圆角（用当前路面色）
 _WBG = BRIDGE
@@ -418,8 +418,6 @@ sp(BCX-2, BCY-1, BUN_BLUSH); sp(BCX+2, BCY-1, BUN_BLUSH)
 sp(BCX-1, BCY, (255,255,255)); sp(BCX, BCY, (255,255,255)); sp(BCX+1, BCY, (255,255,255))
 
 # ── Rear-view mirror (移到车顶中间上方，不遮玻璃) ──
-fl(12, 13, 30, 33, (68, 78, 95))
-wrow(12, 30, 33, (48, 58, 75))
 
 
 
@@ -435,16 +433,17 @@ EGRET    = (248, 248, 248)
 EGRET_BK = ( 28,  28,  32)
 EGRET_YL = (218, 178,  38)
 # 嘴（朝左，4格）
-sp(26, 21, EGRET_YL); sp(27, 21, EGRET_YL); sp(28, 21, EGRET_YL); sp(29, 21, EGRET_YL)
+sp(26, 22, EGRET_YL); sp(27, 22, EGRET_YL); sp(28, 22, EGRET_YL); sp(29, 22, EGRET_YL)
 # 头
-sp(30, 21, EGRET); sp(31, 21, EGRET)
-sp(30, 21, EGRET_BK)  # 眼
-# S形脖子（填密，镜像）
 sp(30, 22, EGRET); sp(31, 22, EGRET)
+sp(30, 22, EGRET_BK)  # 眼
+# S形脖子（填密，镜像）
+sp(30, 23, EGRET); sp(31, 23, EGRET)
 sp(31, 23, EGRET); sp(32, 23, EGRET)
 sp(31, 24, EGRET); sp(32, 24, EGRET)
-sp(30, 25, EGRET); sp(31, 25, EGRET)
-sp(30, 26, EGRET); sp(31, 26, EGRET)  # 脖身连接
+sp(30, 26, EGRET); sp(31, 26, EGRET)
+sp(30, 27, EGRET); sp(31, 27, EGRET)  # 脖身连接
+sp(30, 25, EGRET); sp(31, 25, EGRET)  # 脖身衔接段
 # 身体
 fl(26, 27, 30, 36, EGRET)
 sp(29, 26, EGRET); sp(30, 26, EGRET); sp(31, 26, EGRET); sp(32, 26, EGRET); sp(33, 26, EGRET); sp(34, 26, EGRET); sp(35, 26, EGRET)
@@ -477,8 +476,8 @@ sp(35, 34, EGRET_BK); sp(36, 34, EGRET_BK); sp(37, 34, EGRET_BK)
 sp(22, 22, TES_D)
 sp(41, 22, TES_D)
 # Headlights
-fl(21, 22, 22, 23, TES_CHR)
-fl(21, 22, 40, 41, TES_CHR)
+fl(22, 23, 23, 24, TES_CHR)
+fl(22, 23, 39, 40, TES_CHR)
 img.save('pixel_rainbow.png')
 print('Saved')
 
