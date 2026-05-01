@@ -167,23 +167,29 @@ def draw_palm(cx, base_y, height=10):
         dx = 1 if i < height//3 else 0
         sp(cx+dx, base_y - i, c)
     ty = base_y - height
-    # 大型发散叶片（8方向，更长）
-    leafs = [
-        [(-5,0),(-4,0),(-3,0),(-2,0),(-1,0)],       # 左平
-        [(1,0),(2,0),(3,0),(4,0),(5,0)],              # 右平
-        [(-4,-1),(-3,-1),(-2,-1),(-1,-1)],           # 左上斜
-        [(1,-1),(2,-1),(3,-1),(4,-1)],                # 右上斜
-        [(-3,-2),(-2,-2),(-1,-2),(0,-2),(1,-2)],      # 上弧
-        [(-2,-3),(-1,-3),(0,-3),(1,-3)],              # 上顶
-        [(-3,1),(-2,1),(-1,1)],                       # 左下弧
-        [(1,1),(2,1),(3,1)],                          # 右下弧
-        [(-1,-4),(0,-4),(1,-4)],                      # 顶端
+    # 大型发散叶片（辐射状，每片5~7格长）
+    # 每片叶子是一条斜线，从中心往外
+    leaf_dirs = [
+        # (dx_step, dy_step, length, color)
+        (-1,  0, 6, PALM_LF),    # 正左
+        ( 1,  0, 6, PALM_LF),    # 正右
+        (-1, -1, 5, PALM_LFD),   # 左上45°
+        ( 1, -1, 5, PALM_LFD),   # 右上45°
+        ( 0, -1, 5, PALM_LFY),   # 正上
+        (-2, -1, 5, PALM_LF),    # 左偏上
+        ( 2, -1, 5, PALM_LF),    # 右偏上
+        (-1,  1, 4, PALM_LFD),   # 左下
+        ( 1,  1, 4, PALM_LFD),   # 右下
+        (-2,  1, 3, PALM_LF),    # 左偏下
+        ( 2,  1, 3, PALM_LF),    # 右偏下
+        (-1, -2, 4, PALM_LFY),   # 左上陡
+        ( 1, -2, 4, PALM_LFY),   # 右上陡
     ]
-    cols = [PALM_LF,PALM_LF,PALM_LFD,PALM_LFD,PALM_LFY,PALM_LFY,PALM_LF,PALM_LF,PALM_LFY]
-    for lset, lc in zip(leafs, cols):
-        for dx,dy in lset:
-            sp(cx+dx, ty+dy, lc)
+    for ddx, ddy, length, lc in leaf_dirs:
+        for step in range(1, length+1):
+            sp(cx + ddx*step, ty + ddy*step, lc)
     sp(cx, ty, PALM_LFY)
+    sp(cx+1, ty, PALM_LFY)
 
 def draw_oak(cx, base_y, r=4):
     """宽冠橡树/圆叶树"""
