@@ -148,6 +148,74 @@ for hx, hy, roof_c in houses:
     # 小窗
     sp(hx+1, hy+2, H_WIN)
 
+# ── Trees along left road edge ──
+PALM_TR  = ( 82,  58,  28)   # 棕榈干棕
+PALM_TRD = ( 52,  38,  18)   # 干暗色
+PALM_LF  = ( 48, 128,  38)   # 棕榈叶亮绿
+PALM_LFD = ( 28,  88,  22)   # 叶深绿
+PALM_LFY = (148, 178,  38)   # 叶黄绿
+OAK_MD   = ( 68, 128,  58)
+OAK_LT   = (108, 168,  78)
+OAK_DK   = ( 38,  88,  38)
+TREE_TR2 = ( 72,  52,  28)
+
+def draw_palm(cx, base_y, height=10):
+    """棕榈树：细直树干+顶部大型放射状叶冠"""
+    # 树干（略微弯曲）
+    for i in range(height):
+        c = PALM_TR if i % 2 == 0 else PALM_TRD
+        dx = 1 if i < height//3 else 0
+        sp(cx+dx, base_y - i, c)
+    ty = base_y - height
+    # 大型发散叶片（8方向，更长）
+    leafs = [
+        [(-5,0),(-4,0),(-3,0),(-2,0),(-1,0)],       # 左平
+        [(1,0),(2,0),(3,0),(4,0),(5,0)],              # 右平
+        [(-4,-1),(-3,-1),(-2,-1),(-1,-1)],           # 左上斜
+        [(1,-1),(2,-1),(3,-1),(4,-1)],                # 右上斜
+        [(-3,-2),(-2,-2),(-1,-2),(0,-2),(1,-2)],      # 上弧
+        [(-2,-3),(-1,-3),(0,-3),(1,-3)],              # 上顶
+        [(-3,1),(-2,1),(-1,1)],                       # 左下弧
+        [(1,1),(2,1),(3,1)],                          # 右下弧
+        [(-1,-4),(0,-4),(1,-4)],                      # 顶端
+    ]
+    cols = [PALM_LF,PALM_LF,PALM_LFD,PALM_LFD,PALM_LFY,PALM_LFY,PALM_LF,PALM_LF,PALM_LFY]
+    for lset, lc in zip(leafs, cols):
+        for dx,dy in lset:
+            sp(cx+dx, ty+dy, lc)
+    sp(cx, ty, PALM_LFY)
+
+def draw_oak(cx, base_y, r=4):
+    """宽冠橡树/圆叶树"""
+    # 树干
+    sp(cx,   base_y,   TREE_TR2); sp(cx+1, base_y,   TREE_TR2)
+    sp(cx,   base_y-1, TREE_TR2); sp(cx+1, base_y-1, TREE_TR2)
+    sp(cx,   base_y-2, TREE_TR2)
+    # 树冠（大椭圆）
+    for dy in range(-r-3, 1):
+        for dx in range(-r, r+2):
+            dist = (dx/(r+1))**2 + (dy/(r*0.7))**2
+            if dist < 1.0:
+                if dy < -r//2:
+                    c = OAK_LT if (dx+dy)%3!=0 else OAK_MD
+                else:
+                    c = OAK_MD if (dx+dy)%3!=0 else OAK_DK
+                sp(cx+dx, base_y-2+dy, c)
+
+# 沿路左侧摆树（base_y=路面行，树干贴路边xl左1格）
+# 近处：橡树打底，棕榈探出树顶
+draw_oak(5,  34, r=6)       # 近处大橡树
+draw_palm(9, 34, height=25) # 橡树旁棕榈探高
+# 中近：橡树+棕榈
+draw_oak(13, 31, r=5)       # 中近橡树
+draw_palm(17, 30, height=17)# 棕榈探出
+# 中段：橡树+棕榈
+draw_oak(20, 27, r=4)       # 中段橡树
+draw_palm(23, 27, height=13)# 棕榈
+# 远处：小橡树+棕榈
+draw_oak(27, 24, r=3)       # 远处小橡树
+draw_palm(30, 23, height=8) # 远处棕榈
+
 # ── Road: 弧形弯道（向右弯出画面）──
 import math as _math
 for y in range(18, 36):
@@ -297,6 +365,7 @@ sp(BCX-1, BCY, (255,255,255)); sp(BCX, BCY, (255,255,255)); sp(BCX+1, BCY, (255,
 # ── Rear-view mirror (移到车顶中间上方，不遮玻璃) ──
 fl(12, 13, 30, 33, (68, 78, 95))
 wrow(12, 30, 33, (48, 58, 75))
+
 
 # ── Save ──
 # Headlights
