@@ -298,8 +298,8 @@ for hx, hy, roof_c in houses:
     sp(hx+1, hy+2, H_WIN)
 
 # ── Wheels (车体之前画) ──
-TIRE  = ( 22,  22,  26)
-TIRE_D= ( 12,  12,  15)
+TIRE  = ( 55,  52,  62)
+TIRE_D= ( 38,  35,  45)
 RIM   = ( 22,  22,  26)
 fl(24, 27, 23, 26, TIRE)
 sp(23, 27, TIRE_D); sp(26, 27, TIRE_D)
@@ -430,7 +430,7 @@ for _fx in range(35, 38):
     sp(_fx, 15, BUN)
 # ── Great Egret 大白鹭（镜像，朝左）──
 EGRET    = (248, 248, 248)
-EGRET_BK = ( 28,  28,  32)
+EGRET_BK = ( 95,  72,  48)
 EGRET_YL = (218, 178,  38)
 # 嘴（朝左，4格）
 sp(26, 22, EGRET_YL); sp(27, 22, EGRET_YL); sp(28, 22, EGRET_YL); sp(29, 22, EGRET_YL)
