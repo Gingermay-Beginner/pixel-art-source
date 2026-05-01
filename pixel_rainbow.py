@@ -69,11 +69,11 @@ SKY_C = (185, 218, 242)
 _fade_start_x = 0
 _fade_full_x  = 43   # 此处以右完全显示（画面2/3处）
 for _bi, _rc in enumerate(RB_RAW):
-    _r1 = 13.0 + _bi * 1.2
-    _r2 = _r1 + 1.2
+    _r1 = 13.0 + _bi * 1.3
+    _r2 = _r1 + 1.3
     for _x in range(0, 64):
         for _y in range(0, 27):
-            _dist = math.sqrt(((_x - 34)/1.5)**2 + (_y - 21)**2)
+            _dist = math.sqrt(((_x - 32))**2 + (_y - 19)**2)
             if _r1 <= _dist < _r2:
                 # x < fade_start: 完全天空色（不画）
                 if _x < _fade_start_x:
