@@ -305,46 +305,46 @@ fl(24, 27, 23, 26, TIRE)
 sp(23, 27, TIRE_D); sp(26, 27, TIRE_D)
 fl(24, 26, 24, 25, RIM)
 
-fl(24, 27, 37, 40, TIRE)
-sp(37, 27, TIRE_D); sp(40, 27, TIRE_D)
-fl(24, 26, 38, 39, RIM)
+fl(24, 27, 38, 41, TIRE)
+sp(38, 27, TIRE_D); sp(41, 27, TIRE_D)
+fl(24, 26, 39, 40, RIM)
 
 
 # ── Tesla car front (x=17~46, y=20~34) ──
 # Roof
-fl(13, 15, 24, 39, TES)
-wrow(13, 24, 39, TES_D)
+fl(13, 15, 24, 40, TES)
+wrow(13, 24, 40, TES_D)
 
 # A-pillars
 wcol(23, 16, 20, TES_D)
-wcol(40, 16, 20, TES_D)
+wcol(41, 16, 20, TES_D)
 
 # 车顶圆角（天空色挖角）
-sp(24, 13, SKY); sp(39, 13, SKY)
-sp(25, 13, SKY); sp(38, 13, SKY)
+sp(24, 13, SKY); sp(40, 13, SKY)
+sp(25, 13, SKY); sp(39, 13, SKY)
 # Windshield
-fl(14, 20, 24, 39, WIND)
+fl(14, 20, 24, 40, WIND)
 # Windshield reflection stripe
-wrow(15, 25, 38, WIND_RF)
-wrow(20, 24, 39, WIND_D)
+wrow(15, 25, 39, WIND_RF)
+wrow(20, 24, 40, WIND_D)
 # 玻璃上角圆角（天空色挖角）
 sp(24, 14, SKY); sp(25, 14, TES)
-sp(39, 14, SKY); sp(38, 14, TES)
-sp(24, 15, TES_D); sp(39, 15, TES_D)
+sp(40, 14, SKY); sp(39, 14, TES)
+sp(24, 15, TES_D); sp(40, 15, TES_D)
 
 # Hood
-wrow(20, 22, 41, TES)  # 车头顶行，x=21/42圆角挖掉
-fl(21, 24, 21, 42, TES)
+wrow(20, 22, 42, TES)  # 车头顶行
+fl(21, 24, 21, 43, TES)
 
 
 # Lower bumper / no grille (Tesla)
-fl(25, 24, 22, 41, TES)
-wrow(25, 22, 41, TES)  # 车头底部补行
+fl(25, 24, 22, 42, TES)
+wrow(25, 22, 42, TES)  # 车头底部补行
 
 # 轮子圆角（用当前路面色）
 _WBG = BRIDGE
 sp(23, 27, _WBG); sp(26, 27, _WBG)
-sp(37, 27, _WBG); sp(40, 27, _WBG)
+sp(38, 27, _WBG); sp(41, 27, _WBG)
 # 车头圆角（四角用天空/地面色挖）
 ROAD = (88, 85, 82)   # 路面色（近似）
 # 车身底角圆角
