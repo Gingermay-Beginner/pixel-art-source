@@ -330,6 +330,8 @@ sp(27, 27, EGRET); sp(34, 27, EGRET)
 # 长腿（6格）
 sp(29, 28, EGRET_BK); sp(31, 28, EGRET_BK)
 # 腿连线 (31,28)→(34,31)
+sp(30, 29, EGRET_BK)
+sp(31, 30, EGRET_BK)
 sp(31, 28, EGRET_BK)
 sp(32, 29, EGRET_BK)
 sp(33, 30, EGRET_BK)
