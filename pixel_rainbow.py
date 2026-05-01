@@ -427,8 +427,8 @@ for _fx in range(35, 38):
     sp(_fx, 15, BUN)
 
 # y=19 两侧脸颊补色
-sp(GCX-3, GCY, GB); sp(GCX+2, GCY, GB)  # 姜饼人
-sp(BCX-2, BCY, BUN); sp(BCX+3, BCY, BUN)  # 兔子
+sp(GCX-3, GCY, GB); sp(GCX+2, GCY, GB); sp(GCX+3, GCY, GB)  # 姜饼人
+sp(BCX-3, BCY, BUN); sp(BCX-2, BCY, BUN); sp(BCX+3, BCY, BUN)  # 兔子
 # ── Great Egret 大白鹭（镜像，朝左）──
 EGRET    = (248, 248, 248)
 EGRET_BK = ( 58,  42,  25)
