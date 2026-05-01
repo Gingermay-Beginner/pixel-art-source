@@ -72,8 +72,8 @@ for _bi, _rc in enumerate(RB_RAW):
     _r1 = 13.0 + _bi * 1.2
     _r2 = _r1 + 1.2
     for _x in range(18, 64):
-        for _y in range(0, 28):
-            _dist = math.sqrt(((_x - 34)/1.5)**2 + (_y - 24)**2)
+        for _y in range(0, 27):
+            _dist = math.sqrt(((_x - 34)/1.5)**2 + (_y - 23)**2)
             if _r1 <= _dist < _r2:
                 # 左侧平滑融入天空（线性混合）
                 if _x < _fade_full_x:
@@ -152,8 +152,8 @@ for y in range(18, 36):
     t = (y - 18) / 17.0  # 0=远端, 1=近端
     # 透视宽度
     w = round(10 + t * 36)
-    # 弧形：近处居中(cx=31)，远处右弯(cx右移)
-    cx = round(31 + (1 - t) ** 2 * 18)
+    # 弧形：中段拉近中心，远端弯右
+    cx = round(31 + (1 - t) ** 3 * 26)
     xl = cx - w // 2
     xr = cx + w // 2
     xl = max(0, xl); xr = min(63, xr)
@@ -172,73 +172,72 @@ for _ax in range(44, 54):
 for y in range(19, 36):
     if y % 4 != 0:
         t = (y - 18) / 17.0
-        cx = round(31 + (1 - t) ** 2 * 18)
-        # 相邻格也画，让虚线更顺滑
+        cx = round(31 + (1 - t) ** 3 * 26)
         sp(cx, y, ROAD_L)
 
 # ── Wheels (车体之前画) ──
 TIRE  = ( 22,  22,  26)
 TIRE_D= ( 12,  12,  15)
 RIM   = ( 22,  22,  26)
-fl(26, 29, 23, 26, TIRE)
-sp(23, 29, TIRE_D); sp(26, 29, TIRE_D)
-fl(26, 28, 24, 25, RIM)
+fl(24, 27, 23, 26, TIRE)
+sp(23, 27, TIRE_D); sp(26, 27, TIRE_D)
+fl(24, 26, 24, 25, RIM)
 
-fl(26, 29, 37, 40, TIRE)
-sp(37, 29, TIRE_D); sp(40, 29, TIRE_D)
-fl(26, 28, 38, 39, RIM)
+fl(24, 27, 37, 40, TIRE)
+sp(37, 27, TIRE_D); sp(40, 27, TIRE_D)
+fl(24, 26, 38, 39, RIM)
 
 
 # ── Tesla car front (x=17~46, y=20~34) ──
 # Roof
-fl(15, 17, 24, 39, TES)
-wrow(15, 24, 39, TES_D)
+fl(13, 15, 24, 39, TES)
+wrow(13, 24, 39, TES_D)
 
 # A-pillars
-wcol(23, 18, 22, TES_D)
-wcol(40, 18, 22, TES_D)
+wcol(23, 16, 20, TES_D)
+wcol(40, 16, 20, TES_D)
 
 # 车顶圆角（天空色挖角）
-sp(24, 15, SKY); sp(39, 15, SKY)
-sp(25, 15, SKY); sp(38, 15, SKY)
+sp(24, 13, SKY); sp(39, 13, SKY)
+sp(25, 13, SKY); sp(38, 13, SKY)
 # Windshield
-fl(16, 22, 24, 39, WIND)
+fl(14, 20, 24, 39, WIND)
 # Windshield reflection stripe
-wrow(17, 25, 38, WIND_RF)
-wrow(22, 24, 39, WIND_D)
+wrow(15, 25, 38, WIND_RF)
+wrow(20, 24, 39, WIND_D)
 # 玻璃上角圆角（天空色挖角）
-sp(24, 16, SKY); sp(25, 16, TES)
-sp(39, 16, SKY); sp(38, 16, TES)
-sp(24, 17, TES_D); sp(39, 17, TES_D)
+sp(24, 14, SKY); sp(25, 14, TES)
+sp(39, 14, SKY); sp(38, 14, TES)
+sp(24, 15, TES_D); sp(39, 15, TES_D)
 
 # Hood
-fl(22, 25, 21, 42, TES)
-wrow(22, 21, 42, TES_D)
-wcol(21, 22, 25, TES_D)
-wcol(42, 22, 25, TES_D)
+fl(20, 23, 21, 42, TES)
+wrow(20, 21, 42, TES_D)
+wcol(21, 20, 23, TES_D)
+wcol(42, 20, 23, TES_D)
 
 
 # Lower bumper / no grille (Tesla)
-fl(26, 25, 22, 41, TES_D)
-wrow(26, 22, 41, TES_D)  # 车头底部描边
+fl(24, 23, 22, 41, TES_D)
+wrow(24, 22, 41, TES_D)  # 车头底部描边
 
 # 轮子圆角（精确路面色挖角）
 _WBG = (175, 168, 152)
-sp(23, 29, _WBG); sp(26, 29, _WBG)
-sp(37, 29, _WBG); sp(40, 29, _WBG)
+sp(23, 27, _WBG); sp(26, 27, _WBG)
+sp(37, 27, _WBG); sp(40, 27, _WBG)
 # 车头圆角（四角用天空/地面色挖）
 ROAD = (88, 85, 82)   # 路面色（近似）
 # 车身底角圆角
-sp(20, 29, BRIDGE); sp(43, 29, BRIDGE)
-sp(20, 28, BRIDGE); sp(43, 28, BRIDGE)
+sp(20, 27, BRIDGE); sp(43, 27, BRIDGE)
+sp(20, 26, BRIDGE); sp(43, 26, BRIDGE)
 # 车头四角圆角
 _WIN_BG = (35, 75, 148)   # 车窗背景色
-sp(21, 22, BRIDGE); sp(42, 22, BRIDGE)  # 顶角
-sp(22, 22, BRIDGE); sp(41, 22, BRIDGE)  # 顶角内侧
-sp(20, 29, BRIDGE); sp(43, 29, BRIDGE)  # 底角
-sp(21, 29, BRIDGE); sp(42, 29, BRIDGE)  # 底角内侧
+sp(21, 20, BRIDGE); sp(42, 20, BRIDGE)  # 顶角
+sp(22, 20, BRIDGE); sp(41, 20, BRIDGE)  # 顶角内侧
+sp(20, 27, BRIDGE); sp(43, 27, BRIDGE)  # 底角
+sp(21, 27, BRIDGE); sp(42, 27, BRIDGE)  # 底角内侧
 # ── 姜饼人 in windshield (left) GCX=26 ──
-GCX, GCY = 28, 21   # 头底部 y=21
+GCX, GCY = 28, 19   # 头底部 y=19
 HAT_LITE = (225,  72,  55)
 # 头（7格宽，四角圆角）
 wrow(GCY-3, GCX-2, GCX+2, GB)
@@ -261,7 +260,7 @@ sp(GCX-1, GCY-3, HAT_D); sp(GCX+3, GCY-3, HAT_D)
 sp(GCX,   GCY-4, HAT_LITE)
 
 # ── 蓝兔子 in windshield (right) BCX=37 ──
-BCX, BCY = 36, 21   # 头底部 y=21
+BCX, BCY = 36, 19   # 头底部 y=19
 BUN_BLUSH = (235, 148, 178)
 BUN_BROW  = ( 35,  68, 135)
 BUN_EAR_P = (235, 148, 178)   # 耳内粉色
@@ -298,13 +297,13 @@ sp(BCX-2, BCY-1, BUN_BLUSH); sp(BCX+2, BCY-1, BUN_BLUSH)
 sp(BCX-1, BCY, (255,255,255)); sp(BCX, BCY, (255,255,255)); sp(BCX+1, BCY, (255,255,255))
 
 # ── Rear-view mirror (移到车顶中间上方，不遮玻璃) ──
-fl(14, 15, 30, 33, (68, 78, 95))
-wrow(14, 30, 33, (48, 58, 75))
+fl(12, 13, 30, 33, (68, 78, 95))
+wrow(12, 30, 33, (48, 58, 75))
 
 # ── Save ──
 # Headlights
-fl(23, 24, 22, 23, TES_CHR)
-fl(23, 24, 40, 41, TES_CHR)
+fl(21, 22, 22, 23, TES_CHR)
+fl(21, 22, 40, 41, TES_CHR)
 
 
 
