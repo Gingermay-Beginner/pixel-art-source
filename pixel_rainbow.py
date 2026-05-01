@@ -169,34 +169,42 @@ def draw_palm(cx, base_y, height=10):
     ty = base_y - height
     # 大型发散叶片（辐射状，每片5~7格长）
     # 每片叶子是一条斜线，从中心往外
-    leaf_dirs = [
-        # (dx_step, dy_step, length, color)
-        (-1,  0, 6, PALM_LF),    # 正左
-        ( 1,  0, 6, PALM_LF),    # 正右
-        (-1, -1, 5, PALM_LFD),   # 左上45°
-        ( 1, -1, 5, PALM_LFD),   # 右上45°
-        ( 0, -1, 5, PALM_LFY),   # 正上
-        (-2, -1, 5, PALM_LF),    # 左偏上
-        ( 2, -1, 5, PALM_LF),    # 右偏上
-        (-1,  1, 4, PALM_LFD),   # 左下
-        ( 1,  1, 4, PALM_LFD),   # 右下
-        (-2,  1, 3, PALM_LF),    # 左偏下
-        ( 2,  1, 3, PALM_LF),    # 右偏下
-        (-1, -2, 4, PALM_LFY),   # 左上陡
-        ( 1, -2, 4, PALM_LFY),   # 右上陡
+    # 用扇形填充：在叶片之间插值补格，确保不断开
+    import math as _pm
+    # 定义扇区角度和长度（角度从正右顺时针，y轴向下）
+    # 上半圆（-180~0度）= 上方；下半圆 = 下方
+    # 用极坐标逐格扫描填充
+    _leaf_sectors = [
+        # (angle_deg, length, color)
+        (180, 6, PALM_LF),   # 正左
+        (150, 5, PALM_LF),
+        (135, 5, PALM_LFD),
+        (120, 5, PALM_LFD),
+        (105, 5, PALM_LFY),
+        ( 90, 5, PALM_LFY),  # 正上
+        ( 75, 5, PALM_LFY),
+        ( 60, 5, PALM_LFD),
+        ( 45, 5, PALM_LFD),
+        ( 30, 5, PALM_LF),
+        (  0, 6, PALM_LF),   # 正右
+        (210, 4, PALM_LFD),  # 左下
+        (240, 3, PALM_LFD),
+        (300, 3, PALM_LFD),
+        (330, 4, PALM_LFD),  # 右下
     ]
-    for ddx, ddy, length, lc in leaf_dirs:
+    for ang, length, lc in _leaf_sectors:
+        rad = _pm.radians(ang)
+        # 沿方向逐步走，每步补两格宽
+        dx = _pm.cos(rad); dy = -_pm.sin(rad)  # y轴向下取反
         for step in range(1, length+1):
-            bx = cx + ddx*step
-            by = ty + ddy*step
+            bx = round(cx + dx*step)
+            by = round(ty + dy*step)
             sp(bx, by, lc)
-            # 叶片加粗：垂直于叶片方向补1格
-            if ddy == 0:   # 水平叶 → 上下各补1
-                sp(bx, by-1, lc)
-            elif ddx == 0: # 垂直叶 → 左右各补1
-                sp(bx+1, by, lc)
-            else:           # 斜叶 → 顺着走向旁边补1
-                sp(bx, by+1, lc) if abs(ddx)>=abs(ddy) else sp(bx+1, by, lc)
+            # 垂直方向加粗（补相邻格）
+            pbx = round(cx + dx*(step-0.5))
+            pby = round(ty + dy*(step-0.5))
+            sp(pbx, pby, lc)
+    leaf_dirs = []  # 已用扇形替代
     sp(cx, ty, PALM_LFY); sp(cx+1, ty, PALM_LFY)
 
 def draw_oak(cx, base_y, r=4):
