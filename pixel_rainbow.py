@@ -177,6 +177,37 @@ draw_palm(19, 27, height=13)# 棕榈
 # 远处：小橡树+棕榈
 draw_palm(26, 23, height=8) # 远处棕榈
 
+# ── SF hillside colors ──
+HILL    = (122, 162,  88)
+HILL_D  = ( 92, 128,  65)
+HILL_LT = (155, 195, 112)
+H_WALL  = (232, 222, 205)
+H_ROOF  = (188,  78,  62)
+H_ROOF2 = ( 88, 148, 192)
+H_ROOF3 = (215, 178,  88)
+H_WIN   = (148, 198, 228)
+
+hill_profile = {
+    48: 24, 49: 22, 50: 19, 51: 17, 52: 14, 53: 13,
+    54: 12, 55: 12, 56: 12, 57: 12, 58: 12, 59: 12,
+    60: 12, 61: 12, 62: 13, 63: 15
+}
+
+# 山体 y>=24 部分（路面下层）
+for hx, hy_top in hill_profile.items():
+    y_start = max(hy_top, 24)
+    if y_start <= 35:
+        wcol(hx, y_start, 35, HILL)
+
+# 路面右侧到山体左边界的天空缺口填山体色（y=24~30）
+import math as _m2
+for _y in range(24, 31):
+    _t = (_y - 18) / 17.0
+    _cx = round(29 + (1-_t)**4 * 34)
+    _xr = min(63, _cx + round(10 + _t*36)//2)
+    if _xr + 1 <= 47:
+        wrow(_y, _xr+1, 47, HILL)
+
 # ── Road: 弧形弯道（向右弯出画面）──
 import math as _math
 for y in range(18, 36):
@@ -209,26 +240,13 @@ wrow(17, 51, 57, BRIDGE)
 sp(51, 17, BRIDGE_D)
 sp(57, 17, BRIDGE_D)
 sp(50, 17, BRIDGE_L)
-# ── SF hillside (right x=48~63, y=8~30) ──
-HILL    = (122, 162,  88)
-HILL_D  = ( 92, 128,  65)
-HILL_LT = (155, 195, 112)
-H_WALL  = (232, 222, 205)
-H_ROOF  = (188,  78,  62)
-H_ROOF2 = ( 88, 148, 192)
-H_ROOF3 = (215, 178,  88)
-H_WIN   = (148, 198, 228)
-
-# 山丘轮廓（从右侧延伸进来）
-hill_profile = {
-    48: 24, 49: 22, 50: 19, 51: 17, 52: 14, 53: 13,
-    54: 12, 55: 12, 56: 12, 57: 12, 58: 12, 59: 12,
-    60: 12, 61: 12, 62: 13, 63: 15
-}
+# ── SF hillside upper (y<=23，路面上层) ──
 for hx, hy_top in hill_profile.items():
-    wcol(hx, hy_top, 35, HILL)
-    sp(hx, hy_top, HILL_LT)
-    sp(hx, hy_top+1, HILL_D)
+    y_end = min(23, 35)
+    if hy_top <= y_end:
+        wcol(hx, hy_top, y_end, HILL)
+        sp(hx, hy_top, HILL_LT)
+        sp(hx, hy_top+1, HILL_D)
 
 # 山腰小房子（散布在山丘上）
 houses = [
@@ -237,12 +255,9 @@ houses = [
     (60, 21, H_ROOF),  (62, 20, H_ROOF2),
 ]
 for hx, hy, roof_c in houses:
-    # 屋身2x3
     fl(hy+1, hy+3, hx, hx+2, H_WALL)
-    # 屋顶三角（1格）
     wrow(hy, hx, hx+2, roof_c)
     sp(hx+1, hy-1, roof_c)
-    # 小窗
     sp(hx+1, hy+2, H_WIN)
 
 # ── Wheels (车体之前画) ──
