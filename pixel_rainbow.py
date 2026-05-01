@@ -193,13 +193,13 @@ def draw_palm(cx, base_y, height=10):
 
 # 沿路左侧摆树（base_y=路面行，树干贴路边xl左1格）
 # 近处：橡树打底，棕榈探出树顶
-draw_palm(5, 36, height=25) # 橡树旁棕榈探高
+draw_palm(5, 38, height=25) # 橡树旁棕榈探高
 # 中近：橡树+棕榈
-draw_palm(13, 32, height=17)# 棕榈探出
+draw_palm(13, 34, height=17)# 棕榈探出
 # 中段：橡树+棕榈
-draw_palm(19, 31, height=13)# 棕榈
+draw_palm(19, 33, height=13)# 棕榈
 # 远处：小橡树+棕榈
-draw_palm(26, 27, height=8) # 远处棕榈
+draw_palm(26, 29, height=8) # 远处棕榈
 
 # 右侧波峰云（x=48~63，最顶层，盖在山坡上方）
 _cld_r2 = {
