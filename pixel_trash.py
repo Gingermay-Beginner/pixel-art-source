@@ -318,14 +318,14 @@ sp(47, 31, BIN_WHL); sp(48, 31, BIN_WHL); sp(47, 32, BIN_WHL); sp(48, 32, (115,1
 # 蓝兔子（BX=58，匹克球原版坐标搬来，y不变）
 BX, BY = 54, 33
 # 耳朵
-# 左耳：y=17顶行只画内列（外列不画=圆角），y=18~20双列
-sp(BX-1, 17, BUN)
-for y in range(18,21): wrow(y, BX-2, BX-1, BUN)
-sp(BX-1, 18, BUN_IN); sp(BX-1, 19, BUN_IN); sp(BX-1, 20, BUN_IN)
-# 右耳：y=17顶行只画内列
-sp(BX+1, 17, BUN)
-for y in range(18,21): wrow(y, BX+1, BX+2, BUN)
-sp(BX+1, 18, BUN_IN); sp(BX+1, 19, BUN_IN); sp(BX+1, 20, BUN_IN)
+# 左耳：y=18顶行只画内列（外列不画=圆角），y=19~20双列
+sp(BX-1, 18, BUN)
+for y in range(19,21): wrow(y, BX-2, BX-1, BUN)
+sp(BX-1, 19, BUN_IN); sp(BX-1, 20, BUN_IN)
+# 右耳：y=18顶行只画内列
+sp(BX+1, 18, BUN)
+for y in range(19,21): wrow(y, BX+1, BX+2, BUN)
+sp(BX+1, 19, BUN_IN); sp(BX+1, 20, BUN_IN)
 # 头
 for y in range(22, 26): wrow(y, BX-3, BX+3, BUN)
 wrow(21, BX-2, BX+2, BUN)
