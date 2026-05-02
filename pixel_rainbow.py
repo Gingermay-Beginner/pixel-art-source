@@ -459,8 +459,8 @@ sp(BCX-3, BCY, BUN); sp(BCX-2, BCY, BUN); sp(BCX+3, BCY, BUN)  # 兔子
 # ── 小私人飞机（右上角，向右飞）──
 PL_BODY = (245, 245, 242); PL_WING = (228, 228, 222); PL_WIN = (148, 195, 225)
 # 尾迹（飞机左侧往左渐消）
-TRAIL   = (248, 250, 255)
-TRAIL_D = (225, 232, 242)
+TRAIL   = (228, 238, 248)
+TRAIL_D = (210, 222, 238)
 for _ti, _tx in enumerate(range(11, 46)):
     _tc = TRAIL if _ti % 2 == 0 else TRAIL_D
     sp(_tx, 5, _tc)
