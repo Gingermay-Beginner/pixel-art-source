@@ -139,15 +139,21 @@ for y in range(6, 18):
 
 
 
-# ── 3. 瓷砖腰线 y=22~24 ──
-for y in range(22, 25):
-    for x in range(0, 64):
-        if x % 8 < 4:
-            sp(x, y, TILE_A if y%2==0 else TILE_B)
+# ── 3. 横向绿条瓷砖腰线 y=22~29（拱门外两侧）──
+for _ly in range(22, 30):
+    for _lx in range(0, 64):
+        # 跳过拱门区域（框架和内部）
+        if 12 <= _lx <= 52:
+            continue
+        _loff = (_ly // 3) % 2
+        _lxmod = (_lx + _loff * 4) % 8
+        _lymod = _ly % 3
+        if _lymod == 0 or _lxmod == 0:
+            sp(_lx, _ly, TILE_GND)
+        elif _lymod == 1:
+            sp(_lx, _ly, TILE_GNL)
         else:
-            sp(x, y, TILE_B if y%2==0 else TILE_A)
-wrow(22, 0, 63, TILE_ACC)
-wrow(24, 0, 63, TILE_ACC)
+            sp(_lx, _ly, TILE_GN)
 # 拱门内不画腰线（覆盖回去）
 for _ty in range(22, 25):
     for _tx in range(14, 51):
