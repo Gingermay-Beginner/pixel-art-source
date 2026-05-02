@@ -332,18 +332,18 @@ def draw_frame(x1, y1, x2, y2, inner):
             else:
                 sp(fx, fy, inner)
 
-# 左侧挂画（靠左墙）
-draw_frame(-2, 3, 6, 12, FRM_IN1)   # 大画，超出左边
-draw_frame(1, 14, 8, 19, FRM_IN2)   # 中画
-draw_frame(-1, 21, 5, 26, FRM_IN3)  # 小画，超出左边
+# 左侧挂画（靠左墙，间距1行）
+draw_frame(-2, -2, 5, 5, FRM_IN1)   # 大画，超出左边
+draw_frame(1, 7, 7, 11, FRM_IN2)   # 中画
+draw_frame(-1, 13, 4, 17, FRM_IN3)  # 小画，超出左边
 
-# 右侧挂画（靠右墙）
-draw_frame(57, 2, 65, 13, FRM_IN2)  # 大画，超出右边
-draw_frame(55, 15, 63, 21, FRM_IN4) # 中画
-draw_frame(58, 23, 65, 28, FRM_IN1) # 小画，超出右边
+# 右侧挂画（靠右墙，间距1行）
+draw_frame(58, -3, 65, 6, FRM_IN2)  # 大画，超出右边
+draw_frame(56, 8, 63, 13, FRM_IN4) # 中画
+draw_frame(59, 15, 65, 19, FRM_IN1) # 小画，超出右边
 
 # 挂钩（细节）
-for _hx, _hy in [(3,3),(4,14),(2,21),(61,2),(59,15),(61,23)]:
+for _hx, _hy in [(2,-2),(3,7),(1,13),(62,-3),(60,8),(62,15)]:
     sp(_hx, _hy, FRM)
 
 img.save('/home/azureuser/.openclaw/workspace/pixel_mazra.png')
