@@ -24,9 +24,9 @@ def wcol(x, y1, y2, c):
         sp(x, y, c)
 
 # ── Colors ──
-SKY     = (178, 215, 242)
-SKY_TOP = (158, 205, 238)
-SKY_HZ  = (215, 232, 245)   # horizon glow
+SKY     = (155, 205, 242)
+SKY_TOP = (135, 192, 235)
+SKY_HZ  = (198, 225, 245)   # horizon glow
 
 WW_WALL = ( 62,  78, 102)
 WW_WIN  = ( 72, 155, 195)
@@ -65,7 +65,7 @@ fl(0, 35, 0, 63, SKY)
 
 # ── Rainbow ──
 RB_RAW = [(238,185,95),(238,225,105),(125,198,125),(95,175,222),(155,135,215)]
-SKY_C = (178, 215, 242)
+SKY_C = (155, 205, 242)
 _fade_start_x = 0
 _fade_full_x  = 0   # 全圈统一饱和度
 for _bi, _rc in enumerate(RB_RAW):
