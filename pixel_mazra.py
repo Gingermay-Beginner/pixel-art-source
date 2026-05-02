@@ -79,41 +79,51 @@ fl(24, 29, 0, 63, WALL_D)
 for y in range(0, 24, 6):
     wrow(y, 0, 63, WALL_D)
 
-# ── 2. 摩尔拱门（中央）──
+# ── 2. 摩尔拱门（宽版：x=13~51，顶部从y=6开始）──
 AX = 32
-# 拱门内部矩形
-fl(7, 24, 23, 41, ARCH_IN)
-# 拱顶半圆
-for y in range(0, 8):
-    for x in range(20, 45):
-        d = math.sqrt((x - AX)**2 + (y - 7)**2)
-        if d <= 10.5:
+# 拱门内部矩形（宽36格，高y=13~24）
+fl(13, 24, 14, 50, ARCH_IN)
+# 拱顶椭圆弧（均匀2格描边，中心(32,13)，半宽19，半高7.5）
+import math as _am
+_ea, _eb = 19.0, 7.5
+for y in range(4, 14):
+    for x in range(10, 55):
+        _ew = ((x - AX)**2) / _ea**2 + ((y - 13)**2) / _eb**2
+        if _ew <= 1.0:
             sp(x, y, ARCH_IN)
-        elif d <= 12.5:
-            sp(x, y, ARCH_FR)
+        else:
+            # 检查距椭圆边界的像素距离
+            _min_d = 99
+            for _ny in range(y-4, y+5):
+                for _nx in range(x-4, x+5):
+                    _nw = ((_nx - AX)**2) / _ea**2 + ((_ny - 13)**2) / _eb**2
+                    if _nw <= 1.0:
+                        _min_d = min(_min_d, _am.sqrt((_nx-x)**2+(_ny-y)**2))
+            if _min_d <= 2.5:
+                sp(x, y, ARCH_FR)
 
 # 拱门框架柱
-fl(7, 24, 21, 22, ARCH_FR)
-fl(7, 24, 42, 43, ARCH_FR)
+fl(13, 24, 12, 13, ARCH_FR)
+fl(13, 24, 51, 52, ARCH_FR)
 # 柱底座
-fl(24, 25, 20, 23, ARCH_D)
-fl(24, 25, 41, 44, ARCH_D)
+fl(24, 25, 11, 14, ARCH_D)
+fl(24, 25, 50, 53, ARCH_D)
 
 # 拱门内渐变（上部稍亮）
-for y in range(0, 14):
-    for x in range(24, 41):
-        d = math.sqrt((x - AX)**2 + (y - 7)**2)
-        if d <= 10:
+for y in range(6, 18):
+    for x in range(15, 50):
+        _ew = ((x - AX)**2) / 17.0**2 + ((y - 13)**2) / 7.0**2
+        if _ew <= 1.0:
             sp(x, y, ARCH_IN2)
 
 # 星星
-for sx, sy in [(27,2),(30,1),(35,2),(38,3),(32,0),(26,5),(36,4),(29,8),(37,7),(31,10),(34,12),(27,13),(39,11)]:
+for sx, sy in [(22,8),(26,7),(30,8),(35,7),(38,8),(42,9),(32,6),(27,11),(37,10),(31,13),(34,15),(24,14),(40,13),(29,17),(36,16),(22,16),(42,15)]:
     sp(sx, sy, ARCH_ST)
 
 # 月牙（右上角内）
-for y in range(3, 7):
-    for x in range(36, 41):
-        d = math.sqrt((x-37.5)**2 + (y-5)**2)
+for y in range(9, 13):
+    for x in range(40, 46):
+        d = math.sqrt((x-41.5)**2 + (y-11)**2)
         if 2 < d <= 3.5:
             sp(x, y, ARCH_ST)
 
@@ -127,9 +137,9 @@ for y in range(22, 25):
 wrow(22, 0, 63, TILE_ACC)
 wrow(24, 0, 63, TILE_ACC)
 # 拱门内不画腰线（覆盖回去）
-fl(22, 24, 23, 41, ARCH_IN)
-fl(22, 24, 21, 22, ARCH_FR)
-fl(22, 24, 42, 43, ARCH_FR)
+fl(22, 24, 14, 50, ARCH_IN)
+fl(22, 24, 12, 13, ARCH_FR)
+fl(22, 24, 51, 52, ARCH_FR)
 
 # ── 4. 几何花砖地板 y=30~35 ──
 for y in range(30, 36):
