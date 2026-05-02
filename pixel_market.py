@@ -372,8 +372,10 @@ BCX, BCY = 37, 21
 # 耳朵（粉色外侧）
 fl(BCY-4, BCY-1, BCX-1, BCX-1, BUN_BODY)
 fl(BCY-4, BCY-1, BCX+1, BCX+1, BUN_BODY)
-fl(BCY-3, BCY-1, BCX-2, BCX-2, BUN_IN)  # 左耳粉色外移+下延
-fl(BCY-3, BCY-1, BCX+2, BCX+2, BUN_IN)  # 右耳粉色外移+下延
+fl(BCY-3, BCY-1, BCX-1, BCX-1, BUN_IN)  # 左耳粉色内侧
+fl(BCY-3, BCY-1, BCX+1, BCX+1, BUN_IN)  # 右耳粉色内侧
+fl(BCY-3, BCY-1, BCX-2, BCX-2, BUN_BODY)  # 左耳外侧蓝
+fl(BCY-3, BCY-1, BCX+2, BCX+2, BUN_BODY)  # 右耳外侧蓝
 # 头（宽7格，四角挖空）
 wrow(BCY,   BCX-2, BCX+2, BUN_BODY)
 wrow(BCY+1, BCX-3, BCX+3, BUN_BODY)
