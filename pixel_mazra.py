@@ -30,8 +30,11 @@ WALL_D  = (178, 152, 112)
 WALL_LT = (225, 202, 165)
 ARCH_FR = (188, 155, 112)
 ARCH_D  = (148, 115, 78)
-ARCH_IN = (72, 58, 105)     # 拱门内部深紫蓝（夜色）
+ARCH_IN = (72, 58, 105)     # 拱门内部（保留，不用）
 ARCH_IN2= (95, 78, 138)
+TILE_GN  = (58, 128, 88)    # 绿色瓷砖主
+TILE_GND = (42, 98, 65)     # 绿色瓷砖暗缝
+TILE_GNL = (88, 162, 112)   # 绿色瓷砖亮
 ARCH_ST = (218, 215, 205)   # 星星
 TILE_A  = (215, 188, 148)
 TILE_B  = (185, 155, 112)
@@ -75,14 +78,27 @@ BUN_LT  = (142, 188, 232)
 fl(0, 29, 0, 63, WALL)
 fl(24, 29, 0, 63, WALL_D)
 
-# 墙面细纹（淡淡横线）
-for y in range(0, 24, 6):
-    wrow(y, 0, 63, WALL_D)
+# 墙面砖缝（错落）
+for _wy in range(0, 30):
+    for _wx in range(0, 64):
+        _woff = (_wy // 6) % 2
+        _wxmod = (_wx + _woff * 6) % 12
+        if _wy % 6 == 0 or _wxmod == 0:
+            if not (14 <= _wx <= 50 and _wy >= 6):  # 拱门内不画
+                sp(_wx, _wy, WALL_D)
 
 # ── 2. 摩尔拱门（宽版：x=13~51，顶部从y=6开始）──
 AX = 32
 # 拱门内部矩形（宽36格，高y=13~24）
-fl(13, 24, 14, 50, ARCH_IN)
+# 拱门内竖条瓷砖
+for _ty in range(13, 25):
+    for _tx in range(14, 51):
+        if _tx % 3 == 0 or _ty % 4 == 0:
+            sp(_tx, _ty, TILE_GND)
+        elif _tx % 3 == 1:
+            sp(_tx, _ty, TILE_GNL)
+        else:
+            sp(_tx, _ty, TILE_GN)
 # 拱顶椭圆弧（均匀2格描边，中心(32,13)，半宽19，半高7.5）
 import math as _am
 _ea, _eb = 19.0, 7.5
@@ -90,7 +106,12 @@ for y in range(4, 14):
     for x in range(10, 55):
         _ew = ((x - AX)**2) / _ea**2 + ((y - 13)**2) / _eb**2
         if _ew <= 1.0:
-            sp(x, y, ARCH_IN)
+            if x % 3 == 0 or y % 4 == 0:
+                sp(x, y, TILE_GND)
+            elif x % 3 == 1:
+                sp(x, y, TILE_GNL)
+            else:
+                sp(x, y, TILE_GN)
         else:
             # 检查距椭圆边界的像素距离
             _min_d = 99
@@ -114,18 +135,9 @@ for y in range(6, 18):
     for x in range(15, 50):
         _ew = ((x - AX)**2) / 17.0**2 + ((y - 13)**2) / 7.0**2
         if _ew <= 1.0:
-            sp(x, y, ARCH_IN2)
+            pass  # 瓷砖已画
 
-# 星星
-for sx, sy in [(22,8),(26,7),(30,8),(35,7),(38,8),(42,9),(32,6),(27,11),(37,10),(31,13),(34,15),(24,14),(40,13),(29,17),(36,16),(22,16),(42,15)]:
-    sp(sx, sy, ARCH_ST)
 
-# 月牙（右上角内）
-for y in range(9, 13):
-    for x in range(40, 46):
-        d = math.sqrt((x-41.5)**2 + (y-11)**2)
-        if 2 < d <= 3.5:
-            sp(x, y, ARCH_ST)
 
 # ── 3. 瓷砖腰线 y=22~24 ──
 for y in range(22, 25):
@@ -137,7 +149,14 @@ for y in range(22, 25):
 wrow(22, 0, 63, TILE_ACC)
 wrow(24, 0, 63, TILE_ACC)
 # 拱门内不画腰线（覆盖回去）
-fl(22, 24, 14, 50, ARCH_IN)
+for _ty in range(22, 25):
+    for _tx in range(14, 51):
+        if _tx % 3 == 0 or _ty % 4 == 0:
+            sp(_tx, _ty, TILE_GND)
+        elif _tx % 3 == 1:
+            sp(_tx, _ty, TILE_GNL)
+        else:
+            sp(_tx, _ty, TILE_GN)
 fl(22, 24, 12, 13, ARCH_FR)
 fl(22, 24, 51, 52, ARCH_FR)
 
