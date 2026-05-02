@@ -128,27 +128,32 @@ for _bi, _rc in enumerate(_RB_RAW_T):
                     _rb2 = tuple(round(_rc[i]*_mix + 238*(1-_mix)) for i in range(3))
                     sp(_cx2, _cy2, _rb2)
 # ── WeWork building (left x=0~16) ──
-fl(22, 35, 0, 16, WW_WALL)  # 墙体保持 x=0~16
+fl(26, 35, 0, 16, WW_WALL)   # y>25 不变
+fl(18, 25, 0, 12, WW_WALL)   # y<=25 x=0~12
 # 楼顶：深蓝 + 顶部反光线
-fl(18, 21, 0, 16, WW_TOP)
-wrow(18, 0, 16, (88, 118, 168))   # 顶部亮反光
-wrow(21, 0, 16, (55, 78, 118))    # 楼顶底边暗线
-# 楼层（x=0~16，全宽）
+fl(18, 21, 0, 12, WW_TOP)
+wrow(18, 0, 12, (88, 118, 168))   # 顶部亮反光
+wrow(21, 0, 12, (55, 78, 118))    # 楼顶底边暗线
+# 楼层（y<=25 部分 x=0~7，y>25 部分 x=0~15）
 for wy in range(22, 36, 8):
-    wrow(wy-1, 0, 15, (52, 78, 118))   # 楼层间暗腰线
-    fl(wy,   wy+3, 0, 15, WW_WIN)
-    wrow(wy, 0, 15, WW_WIN_L)
-    wrow(wy+1, 0, 15, (72, 128, 192))
-    fl(wy+4, min(wy+7, 35), 0, 15, WW_EDGE)
-    wrow(wy+4, 0, 15, (52, 75, 115))
-    if wy+7 <= 35: wrow(wy+7, 0, 15, (28, 42, 68))
+    _xl = 0
+    _xr = 11 if wy <= 25 else 15
+    wrow(wy-1, _xl, _xr, (52, 78, 118))
+    fl(wy,   wy+3, _xl, _xr, WW_WIN)
+    wrow(wy, _xl, _xr, WW_WIN_L)
+    wrow(wy+1, _xl, _xr, (72, 128, 192))
+    fl(wy+4, min(wy+7, 35), _xl, _xr, WW_EDGE)
+    wrow(wy+4, _xl, _xr, (52, 75, 115))
+    if wy+7 <= 35: wrow(wy+7, _xl, _xr, (28, 42, 68))
 # 竖向分隔线（x=4,8,12）
 for vx in range(3, 16, 4):
     for wy in range(22, 36, 8):
-        wcol(vx, wy, min(wy+3, 35), WW_WALL)
+        _xr2 = 12 if wy <= 25 else 16
+        if vx < _xr2:
+            wcol(vx, wy, min(wy+3, 35), WW_WALL)
 # Right edge shadow
-wcol(15, 18, 35, WW_EDGE)
-wcol(16, 18, 35, WW_EDGE)
+wcol(15, 26, 35, WW_EDGE)
+wcol(16, 26, 35, WW_EDGE)
 
 # ── Trees along left road edge ──
 PALM_TR  = (135, 112,  82)   # 棕榈干棕
