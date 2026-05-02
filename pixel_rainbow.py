@@ -156,6 +156,9 @@ wrow(26, 7, 10, (52, 75, 115))
 # Right edge shadow
 
 
+
+# x=12~16 y=18~35 补云色（WeWork右侧露空）
+fl(18, 35, 12, 16, CLD)
 # ── Trees along left road edge ──
 PALM_TR  = (135, 112,  82)   # 棕榈干棕
 PALM_TRD = (105,  85,  58)   # 干暗色
