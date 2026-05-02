@@ -454,6 +454,34 @@ for _fx in range(35, 38):
 # y=19 两侧脸颊补色
 sp(GCX-3, GCY, GB); sp(GCX+2, GCY, GB); sp(GCX+3, GCY, GB)  # 姜饼人
 sp(BCX-3, BCY, BUN); sp(BCX-2, BCY, BUN); sp(BCX+3, BCY, BUN)  # 兔子
+
+# ── 小私人飞机（右上角，向右飞）──
+PL_BODY = (245, 245, 242); PL_WING = (228, 228, 222); PL_WIN = (148, 195, 225)
+# 尾迹（飞机左侧往左渐消）
+TRAIL   = (248, 250, 255)
+TRAIL_D = (225, 232, 242)
+for _ti, _tx in enumerate(range(14, 49)):
+    _tc = TRAIL if _ti % 2 == 0 else TRAIL_D
+    sp(_tx, 5, _tc)
+for _ti, _tx in enumerate(range(16, 49)):
+    if _ti % 3 != 0:
+        sp(_tx, 6, TRAIL_D)
+# 机身 x=49~53 y=4~5
+wrow(4, 49, 53, PL_BODY)
+wrow(5, 48, 53, PL_BODY)
+# 机头
+sp(54, 4, PL_BODY); sp(54, 5, PL_BODY); sp(55, 5, PL_BODY)
+# 尾翼
+sp(48, 3, PL_WING)
+# 上翼
+wrow(3, 48, 51, PL_WING)
+# 下翼
+wrow(2, 47, 49, PL_WING)
+# 窗
+sp(52, 4, PL_WIN); sp(53, 4, PL_WIN)
+# 尾气
+wrow(5, 46, 47, PL_BODY)
+wrow(4, 45, 46, PL_BODY)
 # ── Great Egret 大白鹭（镜像，朝左）──
 EGRET    = (238, 245, 252)
 EGRET_BK = ( 58,  42,  25)
