@@ -253,7 +253,7 @@ for bx in list(range(0, 12)) + list(range(39, 63)):
     top = 23 - (1 if rng.random() > 0.5 else 0)
     for by in range(top, 28):
         r2 = rng.random()
-        sp(bx, by, BUSH_L if r2 > 0.72 else (BUSH_D if r2 < 0.22 else BUSH))
+        sp(bx, by, BUSH_D if r2 < 0.35 else BUSH)
 for fx, fy in [(0,23),(3,23),(7,22),(11,23),(41,23),(44,22),(48,23),(52,22),(56,23),(60,22),(62,23)]:
     sp(fx, fy, FLOWER); sp(fx, fy+1, (148,198,235))
 # x=12 y=23,24,26,27 灌木（被墙体覆盖修补）
@@ -263,7 +263,7 @@ sp(12, 23, BUSH); sp(12, 24, BUSH); sp(12, 26, BUSH); sp(12, 27, BUSH)
 import random as _rng2
 _r63 = random.Random(63)
 for _y63 in range(22, 28):
-    _c63 = BUSH_D if _r63.random() < 0.22 else (BUSH_L if _r63.random() > 0.72 else BUSH)
+    _c63 = BUSH_D if _r63.random() < 0.35 else BUSH
     sp(63, _y63, _c63)
 
 
