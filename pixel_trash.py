@@ -211,7 +211,7 @@ def draw_lemon_tree(cx, base_y, max_left=None, max_right=None):
 
     for (nx, cy) in crown_map:
         r2 = _r.random()
-        c = LM_LFL if r2 > 0.65 else (LM_LFD if r2 < 0.25 else LM_LF)
+        c = LM_LFD if r2 < 0.35 else LM_LF
         sp(nx, cy, c)
     # 柠檬果
     lemons = [(cx-2, base_y-7),(cx+2, base_y-8),(cx-1, base_y-11),(cx+3, base_y-10),
