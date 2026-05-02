@@ -81,24 +81,16 @@ fl(24, 29, 0, 63, WALL_D)
 # 墙面砖缝（错落）
 for _wy in range(0, 30):
     for _wx in range(0, 64):
-        _woff = (_wy // 6) % 2
-        _wxmod = (_wx + _woff * 6) % 12
-        if _wy % 6 == 0 or _wxmod == 0:
+        _woff = ((_wy + 4) // 6) % 2
+        _wxmod = ((_wx - 32) + _woff * 6) % 12
+        if (_wy + 4) % 6 == 0 or _wxmod == 0:
             if not (14 <= _wx <= 50 and _wy >= 6):  # 拱门内不画
                 sp(_wx, _wy, WALL_D)
 
 # ── 2. 摩尔拱门（宽版：x=13~51，顶部从y=6开始）──
 AX = 32
 # 拱门内部矩形（宽36格，高y=13~24）
-# 拱门内竖条瓷砖
-for _ty in range(13, 25):
-    for _tx in range(14, 51):
-        if _tx % 3 == 0 or _ty % 4 == 0:
-            sp(_tx, _ty, TILE_GND)
-        elif _tx % 3 == 1:
-            sp(_tx, _ty, TILE_GNL)
-        else:
-            sp(_tx, _ty, TILE_GN)
+fl(13, 24, 14, 50, ARCH_IN)
 # 拱顶椭圆弧（均匀2格描边，中心(32,13)，半宽19，半高7.5）
 import math as _am
 _ea, _eb = 19.0, 7.5
@@ -106,12 +98,7 @@ for y in range(4, 14):
     for x in range(10, 55):
         _ew = ((x - AX)**2) / _ea**2 + ((y - 13)**2) / _eb**2
         if _ew <= 1.0:
-            if x % 3 == 0 or y % 4 == 0:
-                sp(x, y, TILE_GND)
-            elif x % 3 == 1:
-                sp(x, y, TILE_GNL)
-            else:
-                sp(x, y, TILE_GN)
+            sp(x, y, ARCH_IN)
         else:
             # 检查距椭圆边界的像素距离
             _min_d = 99
@@ -135,7 +122,7 @@ for y in range(6, 18):
     for x in range(15, 50):
         _ew = ((x - AX)**2) / 17.0**2 + ((y - 13)**2) / 7.0**2
         if _ew <= 1.0:
-            pass  # 瓷砖已画
+            sp(x, y, ARCH_IN2)
 
 
 
@@ -143,11 +130,11 @@ for y in range(6, 18):
 for _ly in range(20, 30):
     for _lx in range(0, 64):
         # 跳过拱门区域（框架和内部）
-        if 12 <= _lx <= 52:
+        if 9 <= _lx <= 54:
             continue
         _rel = _ly - 20
         _loff = (_rel // 3) % 2
-        _lxmod = (_lx + _loff * 4) % 8
+        _lxmod = ((_lx - 32) + _loff * 4) % 8
         _lymod = _rel % 3
         if _lymod == 0 or _lxmod == 0:
             sp(_lx, _ly, TILE_GND)
@@ -156,16 +143,13 @@ for _ly in range(20, 30):
         else:
             sp(_lx, _ly, TILE_GN)
 # 拱门内不画腰线（覆盖回去）
-for _ty in range(22, 25):
-    for _tx in range(14, 51):
-        if _tx % 3 == 0 or _ty % 4 == 0:
-            sp(_tx, _ty, TILE_GND)
-        elif _tx % 3 == 1:
-            sp(_tx, _ty, TILE_GNL)
-        else:
-            sp(_tx, _ty, TILE_GN)
+fl(22, 24, 14, 50, ARCH_IN)
 fl(22, 24, 12, 13, ARCH_FR)
 fl(22, 24, 51, 52, ARCH_FR)
+
+# 重画拱门框架柱（盖住砖缝）
+fl(13, 29, 12, 13, ARCH_FR)
+fl(13, 29, 51, 52, ARCH_FR)
 
 # 横向瓷砖底边深色线
 for _bx in range(0, 64):
@@ -294,7 +278,7 @@ CAU_GN  = (68, 112, 48)    # 叶子绿
 CAU_GND = (48, 82, 32)     # 叶子深绿
 
 import math as _m
-_cx, _cy = 32, 21
+_cx, _cy = 32, 20
 # 球体主体（圆形）
 for _y in range(17, 26):
     for _x in range(27, 38):
@@ -314,9 +298,9 @@ for _y in range(17, 26):
             sp(_x, _y, CAU_D)
 
 # 底部叶子
-for _lx, _ly in [(28,25),(29,26),(30,25),(31,26),(32,25),(33,26),(34,25),(35,26),(36,25)]:
+for _lx, _ly in [(28,24),(29,25),(30,24),(31,25),(32,24),(33,25),(34,24),(35,25),(36,24)]:
     sp(_lx, _ly, CAU_GN)
-for _lx, _ly in [(29,25),(31,25),(33,25),(35,25)]:
+for _lx, _ly in [(29,24),(31,24),(33,24),(35,24)]:
     sp(_lx, _ly, CAU_GND)
 
 # 高光
@@ -327,6 +311,40 @@ sp(30, 18, CAU_LT); sp(31, 18, (235,210,130))
 # sp(15, 24, (248, 222, 128)); sp(16, 24, (245, 212, 108)); sp(17, 24, (248, 222, 128))
 # fl(25, 26, 15, 17, CANDLE_B)
 # wrow(26, 15, 17, LAMP_D)
+
+
+# ── 墙上挂画（两侧）──
+FRM   = (88, 62, 38)    # 画框深棕
+FRM_G = (135, 105, 65)  # 画框亮边
+FRM_IN1 = (148, 178, 148)  # 画1内容（绿）
+FRM_IN2 = (185, 155, 115)  # 画2内容（暖黄）
+FRM_IN3 = (105, 135, 178)  # 画3内容（蓝）
+FRM_IN4 = (178, 115, 95)   # 画4内容（橙红）
+
+def draw_frame(x1, y1, x2, y2, inner):
+    # 外框
+    for fx in range(max(0,x1), min(63,x2)+1):
+        for fy in range(max(0,y1), min(35,y2)+1):
+            if fx==x1 or fx==x2 or fy==y1 or fy==y2:
+                sp(fx, fy, FRM)
+            elif fx==x1+1 or fx==x2-1 or fy==y1+1 or fy==y2-1:
+                sp(fx, fy, FRM_G)
+            else:
+                sp(fx, fy, inner)
+
+# 左侧挂画（靠左墙）
+draw_frame(-2, 3, 6, 12, FRM_IN1)   # 大画，超出左边
+draw_frame(1, 14, 8, 19, FRM_IN2)   # 中画
+draw_frame(-1, 21, 5, 26, FRM_IN3)  # 小画，超出左边
+
+# 右侧挂画（靠右墙）
+draw_frame(57, 2, 65, 13, FRM_IN2)  # 大画，超出右边
+draw_frame(55, 15, 63, 21, FRM_IN4) # 中画
+draw_frame(58, 23, 65, 28, FRM_IN1) # 小画，超出右边
+
+# 挂钩（细节）
+for _hx, _hy in [(3,3),(4,14),(2,21),(61,2),(59,15),(61,23)]:
+    sp(_hx, _hy, FRM)
 
 img.save('/home/azureuser/.openclaw/workspace/pixel_mazra.png')
 print("Saved 768x432px")
