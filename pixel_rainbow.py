@@ -461,12 +461,26 @@ PL_BODY = (245, 245, 242); PL_WING = (228, 228, 222); PL_WIN = (148, 195, 225)
 # 尾迹（飞机左侧往左渐消）
 TRAIL   = (228, 238, 248)
 TRAIL_D = (210, 222, 238)
+# 尾迹带彩虹渐变（黄→绿→蓝，淡化混合）
+_trail_rb = [(238,210,140),(185,225,155),(155,215,238)]
 for _ti, _tx in enumerate(range(11, 46)):
-    _tc = TRAIL if _ti % 2 == 0 else TRAIL_D
+    _t = _ti / 34
+    _ri = min(int(_t * 3), 2)
+    _rt = _t * 3 - _ri
+    _c0 = _trail_rb[_ri]; _c1 = _trail_rb[min(_ri+1,2)]
+    _rb = tuple(round(_c0[j]*(1-_rt)+_c1[j]*_rt) for j in range(3))
+    _base = TRAIL if _ti % 2 == 0 else TRAIL_D
+    _tc = tuple(round(_base[j]*0.65 + _rb[j]*0.35) for j in range(3))
     sp(_tx, 5, _tc)
 for _ti, _tx in enumerate(range(13, 46)):
     if _ti % 3 != 0:
-        sp(_tx, 6, TRAIL_D)
+        _t = _ti / 32
+        _ri = min(int(_t * 3), 2)
+        _rt = _t * 3 - _ri
+        _c0 = _trail_rb[_ri]; _c1 = _trail_rb[min(_ri+1,2)]
+        _rb = tuple(round(_c0[j]*(1-_rt)+_c1[j]*_rt) for j in range(3))
+        _tc = tuple(round(TRAIL_D[j]*0.65 + _rb[j]*0.35) for j in range(3))
+        sp(_tx, 6, _tc)
 # 机身 x=50~54 y=4~5
 wrow(4, 50, 54, PL_BODY)
 wrow(5, 49, 54, PL_BODY)
