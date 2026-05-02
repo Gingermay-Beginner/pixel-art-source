@@ -28,19 +28,19 @@ SKY     = (205, 228, 242)
 SKY_TOP = (188, 218, 235)
 SKY_HZ  = (230, 238, 245)   # horizon glow
 
-WW_WALL = ( 38,  52,  68)
+WW_WALL = ( 45,  55,  72)
 WW_WIN  = ( 72, 155, 195)
 WW_WIN_L= (115, 185, 225)
 WW_EDGE = ( 48,  72, 105)   # 层间暗带（提亮）
 WW_TOP  = ( 55,  78, 112)   # 楼顶稍亮
 
-BRIDGE  = (168, 158, 132)
+BRIDGE  = (155, 152, 138)
 BRIDGE_D= (135, 125, 102)
 BRIDGE_L= (208, 200, 175)
 ROAD_L  = (238, 228, 185)
 
-TES     = ( 55,  95, 138)
-TES_D   = ( 35,  68, 108)
+TES     = ( 62, 108, 155)
+TES_D   = ( 42,  80, 125)
 TES_LT  = ( 82, 148, 212)
 TES_CHR = (248, 248, 220)
 WIND    = (172, 212, 238)
@@ -111,6 +111,22 @@ for _cx, _cy_top in _cld_top.items():
         sp(_cx, _cy, CLD)           # 云主体
     sp(_cx, _cld_bot, CLD_D)        # 云底阴影
 
+
+# 云层彩虹染色
+_RB_RAW_T = [(238,185,95),(238,225,105),(125,198,125),(95,175,222),(155,135,215)]
+for _bi, _rc in enumerate(_RB_RAW_T):
+    _r1 = 13.0 + _bi * 1.3
+    _r2 = _r1 + 1.3
+    for _cx2 in range(0, 64):
+        for _cy2 in range(0, 27):
+            _dist2 = math.sqrt((_cx2 - 32)**2 + (_cy2 - 21)**2)
+            if _r1 <= _dist2 < _r2:
+                _ct = _cld_top.get(_cx2, 99)
+                if _cy2 >= _ct and _cy2 <= _cld_bot:
+                    _base = pixels[_cy2][_cx2] if False else (238,242,248)
+                    _mix = 0.25
+                    _rb2 = tuple(round(_rc[i]*_mix + 238*(1-_mix)) for i in range(3))
+                    sp(_cx2, _cy2, _rb2)
 # ── WeWork building (left x=0~16) ──
 fl(22, 35, 0, 16, WW_WALL)  # 墙体保持 x=0~16
 # 楼顶：深蓝 + 顶部反光线
@@ -137,9 +153,9 @@ wcol(16, 18, 35, WW_EDGE)
 # ── Trees along left road edge ──
 PALM_TR  = (135, 112,  82)   # 棕榈干棕
 PALM_TRD = (105,  85,  58)   # 干暗色
-PALM_LF  = ( 88, 148,  88)   # 棕榈叶亮绿
-PALM_LFD = ( 62, 108,  65)   # 叶深绿
-PALM_LFY = (158, 178, 108)   # 叶黄绿
+PALM_LF  = ( 75, 148, 115)   # 棕榈叶亮绿
+PALM_LFD = ( 52, 108,  88)   # 叶深绿
+PALM_LFY = (125, 178, 138)   # 叶黄绿
 TREE_TR2 = ( 72,  52,  28)
 
 def draw_palm(cx, base_y, height=10):
@@ -213,9 +229,9 @@ for _cx, _cy_top in _cld_r2.items():
     sp(_cx, 27, CLD_D)
 
 # ── SF hillside colors ──
-HILL    = (128, 182,  88)
-HILL_D  = ( 95, 142,  62)
-HILL_LT = (168, 215, 112)
+HILL    = ( 88, 148, 118)
+HILL_D  = ( 62, 108,  88)
+HILL_LT = (118, 178, 148)
 H_WALL  = (242, 235, 215)
 H_ROOF  = (205,  88,  68)
 H_ROOF2 = ( 98, 165, 208)
@@ -430,7 +446,7 @@ for _fx in range(35, 38):
 sp(GCX-3, GCY, GB); sp(GCX+2, GCY, GB); sp(GCX+3, GCY, GB)  # 姜饼人
 sp(BCX-3, BCY, BUN); sp(BCX-2, BCY, BUN); sp(BCX+3, BCY, BUN)  # 兔子
 # ── Great Egret 大白鹭（镜像，朝左）──
-EGRET    = (248, 248, 248)
+EGRET    = (238, 245, 252)
 EGRET_BK = ( 58,  42,  25)
 EGRET_YL = (218, 178,  38)
 # 嘴（朝左，4格）
