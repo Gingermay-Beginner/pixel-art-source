@@ -140,14 +140,15 @@ for y in range(6, 18):
 
 
 # ── 3. 横向绿条瓷砖腰线 y=22~29（拱门外两侧）──
-for _ly in range(22, 30):
+for _ly in range(20, 30):
     for _lx in range(0, 64):
         # 跳过拱门区域（框架和内部）
         if 12 <= _lx <= 52:
             continue
-        _loff = (_ly // 3) % 2
+        _rel = _ly - 20
+        _loff = (_rel // 3) % 2
         _lxmod = (_lx + _loff * 4) % 8
-        _lymod = _ly % 3
+        _lymod = _rel % 3
         if _lymod == 0 or _lxmod == 0:
             sp(_lx, _ly, TILE_GND)
         elif _lymod == 1:
@@ -165,6 +166,11 @@ for _ty in range(22, 25):
             sp(_tx, _ty, TILE_GN)
 fl(22, 24, 12, 13, ARCH_FR)
 fl(22, 24, 51, 52, ARCH_FR)
+
+# 横向瓷砖底边深色线
+for _bx in range(0, 64):
+    if not (12 <= _bx <= 52):
+        sp(_bx, 29, TILE_GND)
 
 # ── 4. 几何花砖地板 y=30~35 ──
 for y in range(30, 36):
